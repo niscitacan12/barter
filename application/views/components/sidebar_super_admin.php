@@ -27,7 +27,7 @@
                         <i class="fa-solid fa-building fa-fw fa-lg me-3"></i><span>Organisasi</span>
                     </a>
                     <hr class="text-light">
-                    <a href="" class="text-light">
+                    <a href="<?php echo base_url('superadmin/admin') ?>" class="text-light">
                         <i class="fa-solid fa-chalkboard-user fa-fw fa-lg me-3"></i><span>Admin</span>
                     </a>
                     <hr class="text-light">

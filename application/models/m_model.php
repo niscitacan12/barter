@@ -6,5 +6,10 @@ class M_model extends CI_Model
     {
         $this->db->insert('admin', $data);
     }
+
+    // Mendapatkan semua data dari tabel tertentu
+    function get_data($table){
+        return $this->db->get($table);
+    }
 }
 ?>

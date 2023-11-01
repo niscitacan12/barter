@@ -15,6 +15,12 @@ class SuperAdmin extends CI_Controller
         $this->load->view('page/super_admin/dashboard');
     }
 
+    public function admin()
+    {
+        $data['admin'] = $this->m_model->get_data('admin')->result();
+        $this->load->view('page/super_admin/admin', $data);
+    }
+    
     public function tambah_admin()
     {
         $this->load->view('page/super_admin/tambah_admin');

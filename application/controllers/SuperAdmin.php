@@ -40,7 +40,7 @@ class SuperAdmin extends CI_Controller
                 PASSWORD_BCRYPT
             ),
             'image' => 'User.png',
-            'id_organisasi' => '1',
+            'id_organisasi' => $this->input->post('id_organisasi'),
             'id_superadmin' => '1',
             // sesuaikan dengan kolom lainnya
         ];

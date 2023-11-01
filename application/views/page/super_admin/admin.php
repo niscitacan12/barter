@@ -15,7 +15,7 @@
             <div class="card border shadow-5 mb-3">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5>Data Admin</h5>
-                    <a type="button" href="" class="custom-btn"><i class="fa-solid fa-plus"></i></a>
+                    <a type="button" href="<?php echo base_url('superadmin/tambah_admin')?>" class="custom-btn"><i class="fa-solid fa-plus"></i></a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -38,7 +38,7 @@
                                     <td><?php echo $row->username ?></td>
                                     <td><?php echo $row->nama_depan ?></td>
                                     <td><?php echo $row->nama_belakang ?></td>
-                                    <td><?php echo $row->id_organisasi ?></td>
+                                    <td><?php echo organisasi($row->id_organisasi) ?></td>
                                 </tr>
                                 <?php endforeach ?>
                             </tbody>

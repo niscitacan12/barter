@@ -6,7 +6,7 @@ class SuperAdmin extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->helper('url');
+        $this->load->helper('my_helper');
         $this->load->model('m_model');
     }
 
@@ -23,7 +23,8 @@ class SuperAdmin extends CI_Controller
     
     public function tambah_admin()
     {
-        $this->load->view('page/super_admin/tambah_admin');
+        $data['organisasi'] = $this->m_model->get_data('organisasi')->result();
+        $this->load->view('page/super_admin/tambah_admin', $data);
     }
 
     public function aksi_tambah_admin()
@@ -38,9 +39,9 @@ class SuperAdmin extends CI_Controller
                 $this->input->post('password'),
                 PASSWORD_BCRYPT
             ),
-            'image' => $this->input->post('image'),
-            'id_organisasi' => $this->input->post('id_organisasi'),
-            'id_superadmin' => $this->input->post('id_superadmin'),
+            'image' => 'User.png',
+            'id_organisasi' => '1',
+            'id_superadmin' => '1',
             // sesuaikan dengan kolom lainnya
         ];
 

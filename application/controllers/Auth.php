@@ -36,7 +36,7 @@ class Auth extends CI_Controller {
         $this->load->view('auth/login');
     }
 
-    public function aksi_login()
+    public function cccccccc()
     {
         // Ambil data email dan password dari form login
         $email = $this->input->post('email');

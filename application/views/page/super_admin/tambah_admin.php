@@ -5,39 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('./src/css/responsive.css'); ?>">
 </head>
 
 <body>
-    <h2>Tambah Admin</h2>
-    <form action="<?php echo base_url(
-        'superadmin/aksi_tambah_admin'
-    ); ?>" method="post">
-        <label for="email">Email:</label>
-        <input type="text" name="email" required><br>
+<?php $this->load->view('components/sidebar_super_admin'); ?>
+    <div class="main m-4">
+        <div class="container w-75">
+            <div class="card border shadow-5 mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>Tambah Admin</h5>
+                </div>
+                <div class="card-body">
+                <form>
+                    <!-- Nama Depan input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" name="Nama_Depan" id="form3Example3" class="form-control" />
+                        <label class="form-label" for="form3Example3">Nama Depan</label>
+                    </div>
 
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br>
+                    <!-- Nama Belakang input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" name="Nama_Belakang" id="form3Example3" class="form-control" />
+                        <label class="form-label" for="form3Example3">Nama Belakang</label>
+                    </div>
 
-        <label for="nama_depan">Nama Depan:</label>
-        <input type="text" name="nama_depan" required><br>
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="email" name="Email" id="form3Example3" class="form-control" />
+                        <label class="form-label" for="form3Example3">Email</label>
+                    </div>
 
-        <label for="nama_belakang">Nama Belakang:</label>
-        <input type="text" name="nama_belakang" required><br>
+                    <!-- Username input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" name="Username" id="form3Example3" class="form-control" />
+                        <label class="form-label" for="form3Example3">Username</label>
+                    </div>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="password" name="password" id="form3Example4" class="form-control" />
+                        <label class="form-label" for="form3Example4">Password</label>
+                    </div>
 
-        <label for="image">Image URL:</label>
-        <input type="file" name="image"><br>
+                    <!-- Organization select -->
+                    <div class="form-outline mb-4">
+                        <select class="form-select" id="formControlSelect">
+                        <option selected>Organisasi</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                        </select>
+                    </div>
 
-        <label for="id_organisasi">ID Organisasi:</label>
-        <input type="text" name="id_organisasi"><br>
-
-        <label for="id_superadmin">ID Superadmin:</label>
-        <input type="text" name="id_superadmin"><br>
-
-        <button type="submit">Tambah Admin</button>
-    </form>
+                    <!-- Submit button -->
+                    <button type="submit" class="custom-btn btn-block mb-4">Sign up</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

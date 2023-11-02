@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('./src/css/responsive.css'); ?>">
+    <title>Absensi App</title>
 </head>
 
 <body>
     <?php $this->load->view('components/sidebar_admin'); ?>
-    <div class="main m-4">
-        <div class="container w-75">
-
+    <div class="p-4 sm:ml-64">
+        <div class="p-5 mt-10">
+            <h1>ini Dashboard</h1>
         </div>
     </div>
 </body>

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 </head>
@@ -26,8 +27,9 @@
                     <a class="flex ml-2 md:mr-24">
 
                         <!-- Logo Aplikasi -->
-                        <img src="<?php echo base_url('./src/assets/image/absensi.png'); ?>" class="h-10 mr-3"
-                            alt="Absensi Logo" />
+                        <img src="<?php echo base_url(
+                            './src/assets/image/absensi.png'
+                        ); ?>" class="h-10 mr-3" alt="Absensi Logo" />
 
                         <!-- Nama Aplikasi -->
                         <span
@@ -70,7 +72,7 @@
 
                                 <!-- Menu Logout -->
                                 <li>
-                                    <a href="#"
+                                    <a href="javascript:void(0);" onclick="confirmLogout();" type="button"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Logout</a>
                                 </li>
@@ -91,7 +93,7 @@
 
                 <!-- Menu Dashboard -->
                 <li>
-                    <a href="#"
+                    <a href="<?php echo base_url('superadmin'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fas fa-tachometer-alt fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -101,7 +103,7 @@
 
                 <!-- Menu Organisasi -->
                 <li>
-                    <a href="#"
+                    <a href="<?php echo base_url('superadmin/organisasi'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-building fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -111,7 +113,7 @@
 
                 <!-- Menu Admin -->
                 <li>
-                    <a href="<?php echo base_url('superadmin/admin') ?>"
+                    <a href="<?php echo base_url('superadmin/admin'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-chalkboard-user fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -121,7 +123,7 @@
 
                 <!-- Menu User -->
                 <li>
-                    <a href="#"
+                    <a href="<?php echo base_url('superadmin/user'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-users fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -131,7 +133,7 @@
 
                 <!-- Menu Absensi -->
                 <li>
-                    <a href="#"
+                    <a href="<?php echo base_url('superadmin/absensi'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-address-card fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -145,7 +147,28 @@
     <div class="p-4 sm:ml-64">
     </div>
 </body>
-
+<script>
+// Fungsi untuk menampilkan konfirmasi SweetAlert saat tombol logout ditekan
+function confirmLogout() {
+    Swal.fire({
+        title: 'Yakin ingin logout?',
+        text: "Anda akan keluar dari akun Anda.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Logout',
+        cancelButtonText: 'Tidak'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Jika konfirmasi "Ya", maka alihkan ke logout
+            window.location.href = "<?php echo base_url(
+                'superadmin/logout'
+            ); ?>";
+        }
+    });
+}
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
 
 </html>

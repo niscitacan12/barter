@@ -20,7 +20,25 @@ class SuperAdmin extends CI_Controller
         $data['admin'] = $this->m_model->get_data('admin')->result();
         $this->load->view('page/super_admin/admin', $data);
     }
-    
+
+    public function organisasi()
+    {
+        $data['organisasi'] = $this->m_model->get_data('organisasi')->result();
+        $this->load->view('page/super_admin/organisasi', $data);
+    }
+
+    public function user()
+    {
+        $data['user'] = $this->m_model->get_data('user')->result();
+        $this->load->view('page/super_admin/user', $data);
+    }
+
+    public function absensi()
+    {
+        $data['absensi'] = $this->m_model->get_data('absensi')->result();
+        $this->load->view('page/super_admin/absensi', $data);
+    }
+
     public function tambah_admin()
     {
         $data['organisasi'] = $this->m_model->get_data('organisasi')->result();
@@ -51,5 +69,11 @@ class SuperAdmin extends CI_Controller
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin');
+    }
+
+    function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(base_url('auth/login'));
     }
 }

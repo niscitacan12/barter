@@ -3,11 +3,12 @@
 class M_model extends CI_Model
 {
     // Menambahkan data ke dalam tabel
-    public function tambah_data($table, $data) {
+    public function tambah_data($table, $data)
+    {
         $this->db->insert($table, $data);
         return $this->db->insert_id();
     }
-    
+
     public function addAdmin($data)
     {
         $this->db->insert('admin', $data);
@@ -40,11 +41,32 @@ class M_model extends CI_Model
         $this->db->insert('superadmin', $data);
     }
 
+    public function countData($table)
+    {
+        return $this->db->count_all($table);
+    }
+
     public function get_user_by_email($email)
     {
         $this->db->where('email', $email);
         $query = $this->db->get('superadmin'); // Gantilah 'superadmin' sesuai dengan tabel yang sesuai
         return $query->row(); // Mengembalikan satu baris hasil query
+    }
+
+    public function get_absensi_by_id_admin($id_admin)
+    {
+        $this->db->where('id_absensi', $id_admin);
+        return $this->db->get('absensi');
+    }
+
+    public function getUserByID($id)
+    {
+        $this->db->select('*');
+        $this->db->from('superadmin');
+        $this->db->where('id_superadmin', $id);
+        $query = $this->db->get();
+
+        return $query->row();
     }
 }
 ?>

@@ -12,7 +12,28 @@ class SuperAdmin extends CI_Controller
 
     public function index()
     {
-        $this->load->view('page/super_admin/dashboard');
+        $data['jumlah_organisasi'] = $this->m_model->countData('organisasi');
+        $data['jumlah_admin'] = $this->m_model->countData('admin');
+        $data['jumlah_user'] = $this->m_model->countData('user');
+        $this->load->view('page/super_admin/dashboard', $data);
+    }
+
+    public function countOrganisasi()
+    {
+        $data['jumlah_organisasi'] = $this->m_model->countData('organisasi');
+        $this->load->view('page/super_admin/dashboard', $data);
+    }
+
+    public function countAdmin()
+    {
+        $data['jumlah_admin'] = $this->m_model->countData('admin');
+        $this->load->view('page/super_admin/dashboard', $data);
+    }
+
+    public function countUser()
+    {
+        $data['jumlah_user'] = $this->m_model->countData('user');
+        $this->load->view('page/super_admin/dashboard', $data);
     }
 
     public function admin()
@@ -102,5 +123,17 @@ class SuperAdmin extends CI_Controller
     {
         $this->session->sess_destroy();
         redirect(base_url('auth/login'));
+    }
+
+    public function profile()
+    {
+        if ($this->session->userdata('id_superadmin')) {
+            $id = $this->session->userdata('id_superadmin');
+            $data['superadmin'] = $this->m_model->getUserById($id); // Perbaiki ini dari $user_id menjadi $id_superadmin
+
+            $this->load->view('page/super_admin/profile', $data);
+        } else {
+            redirect('auth/login');
+        }
     }
 }

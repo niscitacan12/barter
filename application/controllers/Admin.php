@@ -23,6 +23,9 @@ class Admin extends CI_Controller
 
     public function absensi()
     {
+        $data['user'] = $this->m_model->get_data('user')->result();
+        $this->load->view('page/admin/absensi', $data);
+
         // Dapatkan id_admin pengguna yang sedang masuk, misalkan dari session atau dari data pengguna saat login.
         $id_admin_pengguna = $this->session->userdata('id_admin'); // Gantilah ini sesuai dengan session Anda.
 
@@ -38,4 +41,12 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/profile');
     }
+
+    public function tambah_karyawan()
+    {
+        $data['user'] = $this->m_model->get_data('user')->result();
+        $this->load->view('page/admin/tambah_karyawan', $data);
+    
 }
+}
+?>

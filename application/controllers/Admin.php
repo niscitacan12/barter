@@ -6,6 +6,7 @@ class Admin extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->model('m_model');  
         $this->load->helper('url');
     }
 
@@ -13,8 +14,17 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/dashboard');
     }
-    public function absensi()
+
+    public function karyawan()
     {
-        $this->load->view('page/admin/absensi');
+        $data['user'] = $this->m_model->get_data('user')->result();
+        $this->load->view('page/admin/karyawan', $data);
     }
+
+    public function tambah_karyawan()
+    {
+        $data['user'] = $this->m_model->get_data('user')->result();
+        $this->load->view('page/admin/tambah_karyawan', $data);
+    
+}
 }

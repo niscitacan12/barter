@@ -87,6 +87,16 @@
                             </select>
                         </div>
 
+                        <div class="flex items-start mb-6">
+                            <div class="flex items-center h-5">
+                                <input id="showpass" type="checkbox" value=""
+                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                                    onchange="showPassword()" required>
+                            </div>
+                            <label for="showpass" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show
+                                Password</label>
+                        </div>
+
                         <!-- Button -->
                         <div class="flex justify-between">
                             <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
@@ -102,5 +112,17 @@
         </div>
     </div>
 </body>
+
+<script>
+function showPassword() {
+    var passwordInput = document.getElementById("password");
+    var showPassCheckbox = document.getElementById("showpass");
+    if (showPassCheckbox.checked) {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+</script>
 
 </html>

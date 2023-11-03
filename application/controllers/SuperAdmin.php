@@ -68,7 +68,34 @@ class SuperAdmin extends CI_Controller
         $this->m_model->addAdmin($data); // Panggil method pada model
 
         // Redirect kembali ke halaman dashboard superadmin
-        redirect('superadmin');
+        redirect('superadmin/admin');
+    }
+
+    public function tambah_organisasi()
+    {
+        $data['organisasi'] = $this->m_model->get_data('organisasi')->result();
+        $this->load->view('page/super_admin/tambah_organisasi', $data);
+    }
+
+    public function aksi_tambah_organisasi()
+    {
+        // Ambil data yang diperlukan dari form
+        $data = [
+            'nama_organisasi' => $this->input->post('nama_organisasi'),
+            'alamat' => $this->input->post('alamat'),
+            'nomor_telepon' => $this->input->post('nomor_telepon'),
+            'email_organisasi' => $this->input->post('email_organisasi'),
+            'kecamatan' => $this->input->post('kecamatan'),
+            'kabupaten' => $this->input->post('kabupaten'),
+            'provinsi' => $this->input->post('provinsi'),
+            // sesuaikan dengan kolom lainnya
+        ];
+
+        // Simpan data ke tabel "admin"
+        $this->m_model->tambah_data('organisasi', $data); // Panggil method pada model
+
+        // Redirect kembali ke halaman dashboard superadmin
+        redirect('superadmin/organisasi');
     }
 
     function logout()

@@ -14,8 +14,7 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/dashboard');
     }
-
-    
+ 
     public function karyawan()
     {
         $data['user'] = $this->m_model->get_data('user')->result();

@@ -23,6 +23,12 @@ class Admin extends CI_Controller
 
     public function absensi()
     {
-        $this->load->view('page/admin/absensi');
+        $data['absensi'] = $this->m_model->get_data('absensi')->result();
+        $this->load->view('page/admin/absensi', $data);
+    }
+    public function profile()
+    {
+       
+        $this->load->view('page/admin/profile');
     }
 }

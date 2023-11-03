@@ -53,7 +53,7 @@
                             </tr>
                         </thead>
                          <!-- Tabel Body -->
-                         <!-- <tbody>
+                        <tbody>
                             <?php
                             $no = 0;
                             foreach ($absensi as $row):
@@ -89,7 +89,7 @@
                             <?php
                             endforeach;
                             ?>
-                        </tbody> -->
+                        </tbody>
                     </table>
         </div>
     </div>

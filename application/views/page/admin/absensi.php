@@ -11,12 +11,12 @@
     <?php $this->load->view('components/sidebar_admin'); ?>
     <div class="p-4 sm:ml-64">
         <div class="p-5 mt-10">
-         <!-- Card -->
-         <div
+            <!-- Card -->
+            <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
-                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data User</h6>
-                </div>    
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Absensi</h6>
+                </div>
                 <hr>
 
                 <!-- Tabel -->
@@ -52,7 +52,7 @@
                                 </th>
                             </tr>
                         </thead>
-                         <!-- Tabel Body -->
+                        <!-- Tabel Body -->
                         <tbody>
                             <?php
                             $no = 0;
@@ -91,8 +91,8 @@
                             ?>
                         </tbody>
                     </table>
-        </div>
-    </div>
+                </div>
+            </div>
 </body>
 
 </html>

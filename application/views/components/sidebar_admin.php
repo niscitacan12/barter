@@ -26,8 +26,9 @@
                     <a class="flex ml-2 md:mr-24">
 
                         <!-- Logo Aplikasi -->
-                        <img src="<?php echo base_url('./src/assets/image/absensi.png'); ?>" class="h-10 mr-3"
-                            alt="Absensi Logo" />
+                        <img src="<?php echo base_url(
+                            './src/assets/image/absensi.png'
+                        ); ?>" class="h-10 mr-3" alt="Absensi Logo" />
 
                         <!-- Nama Aplikasi -->
                         <span
@@ -63,9 +64,9 @@
 
                                 <!-- Menu Profile -->
                                 <li>
-                                    <a href="#"
+                                    <a href="<?php echo base_url('admin/profile'); ?>"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        role="menuitem">Dashboard</a>
+                                        role="menuitem">Profil</a>
                                 </li>
 
                                 <!-- Menu Logout -->
@@ -101,7 +102,7 @@
 
                 <!-- Menu Karyawan -->
                 <li>
-                    <a href="<?php echo base_url('admin/karyawan') ?>"
+                    <a href="<?php echo base_url('admin/karyawan'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-users-gear fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -111,7 +112,7 @@
 
                 <!-- Menu Absen -->
                 <li>
-                    <a href="<?php echo base_url('admin/absensi') ?>"
+                    <a href="<?php echo base_url('admin/absensi'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-address-card fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>

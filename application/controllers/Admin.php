@@ -75,5 +75,11 @@ class Admin extends CI_Controller
         redirect('admin/karyawan');
     }
 
+    public function rekap_bulanan()
+    {
+        $data['title'] = 'Rekap Bulanan';
+        $this->load->view('page/admin/rekap_bulanan', $data); 
+    }
+
 }
 ?>

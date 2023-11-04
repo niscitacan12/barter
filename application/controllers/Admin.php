@@ -46,7 +46,11 @@ class Admin extends CI_Controller
     {
         $data['user'] = $this->m_model->get_data('user')->result();
         $this->load->view('page/admin/tambah_karyawan', $data);
-    
-}
+    }
+    public function rekap_harian()
+    {
+        $this->load->view('page/admin/rekap_harian');
+    }
+
 }
 ?>

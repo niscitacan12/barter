@@ -15,7 +15,7 @@
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
-                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Absensi</h6>
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Absensi</h6>
                 </div>
                 <hr>
 
@@ -27,33 +27,33 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    No
+                                    NO
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nama
+                                    NAMA
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Kegiatan
+                                    KEGIATAN
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Tanggal
+                                    TANGGAL
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Jam Masuk
+                                    JAM MASUK
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Jam Pulang
+                                    JAM PULANG
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Lokasi
+                                    LOKASI
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Keterangan
+                                    KETERANGAN
                                 </th>
                             </tr>
                         </thead>
                         <!-- Tabel Body -->
-                        <tbody>
+                        <!-- <tbody>
                             <?php
                             $no = 0;
                             foreach ($absensi as $row):
@@ -65,31 +65,22 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo nama_user($row->id_user); ?>
+                                    <?php echo $row->email; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->kegiatan; ?>
+                                    <?php echo $row->username; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->tanggal_absen; ?>
+                                    <?php echo $row->nama_depan; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->jam_masuk; ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo $row->jam_pulang; ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo $row->lokasi; ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo $row->keterangan_izin; ?>
+                                    <?php echo $row->nama_belakang; ?>
                                 </td>
                             </tr>
                             <?php
                             endforeach;
                             ?>
-                        </tbody>
+                        </tbody> -->
                     </table>
                 </div>
             </div>

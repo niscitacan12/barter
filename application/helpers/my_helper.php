@@ -22,4 +22,16 @@ function nama_user($id_user)
         return $tmt;
     }
 }
+
+
+function nama_admin($id_user)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db->where('id_admin', $id_user)->get('admin');
+    foreach ($result->result() as $c) {
+        $tmt = $c->username;
+        return $tmt;
+    }
+}
 ?>

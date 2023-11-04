@@ -41,12 +41,39 @@ class Admin extends CI_Controller
 
     public function tambah_karyawan()
     {
-        $data['user'] = $this->m_model->get_data('user')->result();
+        $data['admin'] = $this->m_model->get_data('admin')->result();
         $this->load->view('page/admin/tambah_karyawan', $data);
     }
     public function rekap_harian()
     {
         $this->load->view('page/admin/rekap_harian');
     }
+
+    public function aksi_tambah_karyawan() {
+        // Ambil data yang diperlukan dari form, termasuk admin_id yang dipilih
+        $data = [
+            'email' => $this->input->post('email'),
+            'username' => $this->input->post('username'),
+            'nama_depan' => $this->input->post('nama_depan'),
+            'nama_belakang' => $this->input->post('nama_belakang'),
+            'id_admin' =>'4', // Mengambil admin_id dari dropdown
+            'password' => password_hash(
+                $this->input->post('password'),
+                PASSWORD_BCRYPT
+            ),
+            'image' => 'User.png',
+            // sesuaikan dengan kolom lainnya
+        ];
+
+        // Load model
+        $this->load->model('M_model');
+
+        // Panggil function addUser pada model
+        $this->M_model->addUser($data);
+
+        // Redirect kembali ke halaman yang sesuai
+        redirect('admin/karyawan');
+    }
+
 }
 ?>

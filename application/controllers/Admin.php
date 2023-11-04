@@ -80,6 +80,10 @@ class Admin extends CI_Controller
         $data['title'] = 'Rekap Bulanan';
         $this->load->view('page/admin/rekap_bulanan', $data); 
     }
+    public function rekap_mingguan()
+    {
+        $this->load->view('page/admin/rekap_mingguan');
+    }
 
 }
 ?>

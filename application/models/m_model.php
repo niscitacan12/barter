@@ -68,5 +68,41 @@ class M_model extends CI_Model
 
         return $query->row();
     }
+
+    public function getAdminOptions() {
+        $this->db->select('id_admin, username'); // Sesuaikan kolom yang sesuai
+        $query = $this->db->get('admin'); // Gantilah 'admin' dengan nama tabel yang sesuai
+
+        if ($query->num_rows() > 0) {
+            $result = $query->result();
+            $admin_options = array();
+
+            foreach ($result as $admin) {
+                $admin_options[$admin->id_admin] = $admin->username;
+            }
+
+            return $admin_options;
+        } else {
+            return array(); // Kembalikan array kosong jika tidak ada admin
+        }
+    }
+
+
+    public function addUser($data) {
+        // Simpan data ke dalam tabel "user"
+        $this->db->insert('user', $data);
+
+        // Ambil ID user yang baru saja ditambahkan
+        $user_id = $this->db->insert_id();
+
+        // Hubungkan user dengan admin berdasarkan ID admin (asumsikan ID admin yang digunakan adalah 1)
+        $admin_id = 4; // Gantilah dengan ID admin yang sesuai
+        $user_admin_data = array(
+            'id_admin' => $admin_id
+        );
+
+        $this->db->where('id_user', $user_id);
+        $this->db->update('user', $user_admin_data);
+    }
 }
 ?>

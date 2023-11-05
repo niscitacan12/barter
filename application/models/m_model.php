@@ -46,13 +46,6 @@ class M_model extends CI_Model
         return $this->db->count_all($table);
     }
 
-    public function get_user_by_email($email)
-    {
-        $this->db->where('email', $email);
-        $query = $this->db->get('superadmin'); // Gantilah 'superadmin' sesuai dengan tabel yang sesuai
-        return $query->row(); // Mengembalikan satu baris hasil query
-    }
-
     public function get_absensi_by_id_admin($id_admin)
     {
         $this->db->where('id_absensi', $id_admin);
@@ -86,23 +79,10 @@ class M_model extends CI_Model
             return array(); // Kembalikan array kosong jika tidak ada admin
         }
     }
-
-
-    public function addUser($data) {
-        // Simpan data ke dalam tabel "user"
-        $this->db->insert('user', $data);
-
-        // Ambil ID user yang baru saja ditambahkan
-        $user_id = $this->db->insert_id();
-
-        // Hubungkan user dengan admin berdasarkan ID admin (asumsikan ID admin yang digunakan adalah 1)
-        $admin_id = 4; // Gantilah dengan ID admin yang sesuai
-        $user_admin_data = array(
-            'id_admin' => $admin_id
-        );
-
-        $this->db->where('id_user', $user_id);
-        $this->db->update('user', $user_admin_data);
+    
+    // Mendapatkan data dari tabel berdasarkan kondisi tertentu
+    function getwhere($table, $data){
+        return $this->db->get_where($table, $data);
     }
 }
 ?>

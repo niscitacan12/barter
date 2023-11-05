@@ -58,7 +58,7 @@
                         <tbody>
                             <?php
                             $no = 0;
-                            foreach ($admin as $row):
+                            foreach ($user as $row):
                                 $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">

@@ -6,84 +6,92 @@ class Admin extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->model('m_model');
-        $this->load->helper('url');
+        $this->load->model('admin_model');
+        $this->load->helper('my_helper');
+        if($this->session->userdata('logged_in')!=true || $this->session->userdata('role') != 'admin') {
+            redirect(base_url().'auth/login');
+        }
     }
 
+    // Page Dashboard
     public function index()
     {
         $this->load->view('page/admin/dashboard');
     }
 
-    public function karyawan()
+    // Page Organisasi
+    public function organisasi()
     {
-        $data['user'] = $this->m_model->get_data('user')->result();
-        $this->load->view('page/admin/karyawan', $data);
+        $this->load->view('page/admin/organisasi');
     }
 
+    // Page User
+    public function user()
+    {
+        $id_admin = $this->session->userdata('id');
+        $data['user'] = $this->admin_model->get_user();
+        $this->load->view('page/admin/user', $data);
+    }
+
+    // Page Absensi
     public function absensi()
     {
-        // Dapatkan id_admin pengguna yang sedang masuk, misalkan dari session atau dari data pengguna saat login.
-        $id_admin_pengguna = $this->session->userdata('id_admin'); // Gantilah ini sesuai dengan session Anda.
-
-        // Panggil model untuk mengambil data absen berdasarkan id_admin yang sesuai.
-        $data['absensi'] = $this->m_model
-            ->get_absensi_by_id_admin($id_admin_pengguna)
-            ->result();
-
+        $id_admin = $this->session->userdata('id');
+        $data['absensi'] = $this->admin_model->get_absen_by_admin($id_admin)->result();
         $this->load->view('page/admin/absensi', $data);
     }
 
+    // Page Profile
     public function profile()
     {
         $this->load->view('page/admin/profile');
     }
 
-    public function tambah_karyawan()
+    // Page tambah user
+    public function tambah_user()
     {
-        $data['admin'] = $this->m_model->get_data('admin')->result();
-        $this->load->view('page/admin/tambah_karyawan', $data);
+        $this->load->view('page/admin/tambah_user');
     }
+
+    // Page rekap harian
     public function rekap_harian()
     {
         $this->load->view('page/admin/rekap_harian');
     }
-
-    public function aksi_tambah_karyawan() {
+    
+    // Page rekap mingguan
+    public function rekap_mingguan()
+    {
+        $this->load->view('page/admin/rekap_mingguan');
+    }
+    
+    // Page rekap bulanan
+    public function rekap_bulanan()
+    {
+        $this->load->view('page/admin/rekap_bulanan'); 
+    }
+    
+    // Aksi tambah user
+    public function aksi_tambah_user() {
         // Ambil data yang diperlukan dari form, termasuk admin_id yang dipilih
+        $id_admin = $this->session->userdata('id');
         $data = [
             'email' => $this->input->post('email'),
             'username' => $this->input->post('username'),
             'nama_depan' => $this->input->post('nama_depan'),
             'nama_belakang' => $this->input->post('nama_belakang'),
-            'id_admin' =>'4', // Mengambil admin_id dari dropdown
-            'password' => password_hash(
-                $this->input->post('password'),
-                PASSWORD_BCRYPT
-            ),
+            'id_admin' => $this->input->post($id_admin),
+            'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
             'image' => 'User.png',
+            'role' => 'user',
             // sesuaikan dengan kolom lainnya
         ];
 
-        // Load model
-        $this->load->model('M_model');
-
-        // Panggil function addUser pada model
-        $this->M_model->addUser($data);
+        // Panggil function pada model
+        $this->admin_model->tambah_data('user', $data);
 
         // Redirect kembali ke halaman yang sesuai
-        redirect('admin/karyawan');
+        redirect('admin/user');
     }
-
-    public function rekap_bulanan()
-    {
-        $data['title'] = 'Rekap Bulanan';
-        $this->load->view('page/admin/rekap_bulanan', $data); 
-    }
-    public function rekap_mingguan()
-    {
-        $this->load->view('page/admin/rekap_mingguan');
-    }
-
 }
 ?>

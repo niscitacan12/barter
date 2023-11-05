@@ -16,7 +16,7 @@
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
                     <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Karyawan</h6>
-                    <a type="button" href="<?php echo base_url('admin/tambah_karyawan')?>"
+                    <a type="button" href="<?php echo base_url('admin/tambah_user')?>"
                         class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
                             class="fa-solid fa-plus"></i></a>
                 </div>
@@ -30,24 +30,24 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    NO
+                                    No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    EMAIL
+                                    Email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    USERNAME
+                                    Username
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    NAMA DEPAN
+                                    Nama Depan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    NAMA BELAKANG
+                                    Nama Belakang
                                 </th>
                             </tr>
                         </thead>
                         <!-- Tabel Body -->
-                        <!-- <tbody>
+                        <tbody>
                             <?php
                             $no = 0;
                             foreach ($user as $row):
@@ -74,7 +74,7 @@
                             <?php
                             endforeach;
                             ?>
-                        </tbody> -->
+                        </tbody>
                     </table>
                 </div>
             </div>

@@ -8,8 +8,11 @@ class Admin extends CI_Controller
         parent::__construct();
         $this->load->model('admin_model');
         $this->load->helper('my_helper');
-        if($this->session->userdata('logged_in')!=true || $this->session->userdata('role') != 'admin') {
-            redirect(base_url().'auth');
+        if (
+            $this->session->userdata('logged_in') != true ||
+            $this->session->userdata('role') != 'admin'
+        ) {
+            redirect(base_url() . 'auth');
         }
     }
 
@@ -33,16 +36,10 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/jabatan');
     }
 
-     // Page Lokasi
-     public function lokasi()
-     {
-         $this->load->view('page/admin/lokasi');
-     }
-
-    // Page Jam Kerja
-    public function shift()
+    // Page Lokasi
+    public function lokasi()
     {
-        $this->load->view('page/admin/shift');
+        $this->load->view('page/admin/lokasi');
     }
 
     // Page Permohonan Cuti
@@ -63,7 +60,9 @@ class Admin extends CI_Controller
     public function absensi()
     {
         $id_admin = $this->session->userdata('id');
-        $data['absensi'] = $this->admin_model->get_absen_by_admin($id_admin)->result();
+        $data['absensi'] = $this->admin_model
+            ->get_absen_by_admin($id_admin)
+            ->result();
         $this->load->view('page/admin/absensi', $data);
     }
 
@@ -84,21 +83,22 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/rekap_harian');
     }
-    
+
     // Page rekap mingguan
     public function rekap_mingguan()
     {
         $this->load->view('page/admin/rekap_mingguan');
     }
-    
+
     // Page rekap bulanan
     public function rekap_bulanan()
     {
-        $this->load->view('page/admin/rekap_bulanan'); 
+        $this->load->view('page/admin/rekap_bulanan');
     }
-    
+
     // Aksi tambah user
-    public function aksi_tambah_user() {
+    public function aksi_tambah_user()
+    {
         // Ambil data yang diperlukan dari form, termasuk admin_id yang dipilih
         $id_admin = $this->session->userdata('id');
         $data = [
@@ -123,6 +123,5 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/jam_kerja');
     }
-
 }
 ?>

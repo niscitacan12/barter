@@ -6,7 +6,7 @@ class User extends CI_Controller {
 		parent::__construct();
         $this->load->helper('my_helper');
 		if($this->session->userdata('logged_in')!=true || $this->session->userdata('role') != 'user') {
-            redirect(base_url().'auth/login');
+            redirect(base_url().'auth');
         }
 	}
 

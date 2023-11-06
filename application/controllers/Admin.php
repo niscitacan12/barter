@@ -9,7 +9,7 @@ class Admin extends CI_Controller
         $this->load->model('admin_model');
         $this->load->helper('my_helper');
         if($this->session->userdata('logged_in')!=true || $this->session->userdata('role') != 'admin') {
-            redirect(base_url().'auth/login');
+            redirect(base_url().'auth');
         }
     }
 

@@ -22,7 +22,33 @@ class Admin extends CI_Controller
     // Page Organisasi
     public function organisasi()
     {
-        $this->load->view('page/admin/organisasi');
+        $id_admin = $this->session->userdata('id');
+        $data['user'] = $this->admin_model->get_data('user')->result();
+        $this->load->view('page/admin/organisasi', $data);
+    }
+
+    // Page Jabatan
+    public function jabatan()
+    {
+        $this->load->view('page/admin/jabatan');
+    }
+
+     // Page Lokasi
+     public function lokasi()
+     {
+         $this->load->view('page/admin/lokasi');
+     }
+
+    // Page Jam Kerja
+    public function shift()
+    {
+        $this->load->view('page/admin/shift');
+    }
+
+    // Page Permohonan Cuti
+    public function cuti()
+    {
+        $this->load->view('page/admin/cuti');
     }
 
     // Page User
@@ -80,7 +106,7 @@ class Admin extends CI_Controller
             'username' => $this->input->post('username'),
             'nama_depan' => $this->input->post('nama_depan'),
             'nama_belakang' => $this->input->post('nama_belakang'),
-            'id_admin' => $this->input->post($id_admin),
+            'id_admin' => $id_admin,
             'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
             'image' => 'User.png',
             'role' => 'user',

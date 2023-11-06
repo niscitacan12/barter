@@ -26,5 +26,13 @@ class Admin_model extends CI_Model
         $this->db->insert($table, $data);
         return $this->db->insert_id();
     }
+
+    public function update($tabel, $data, $where)
+    {
+        $data = $this->db->update($tabel, $data, $where);
+        return $this->db->affected_rows();
+    }
+    
+
 }
 ?>

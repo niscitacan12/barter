@@ -9,7 +9,7 @@ class SuperAdmin extends CI_Controller
         $this->load->helper('my_helper');
         $this->load->model('super_model');
         if($this->session->userdata('logged_in')!=true || $this->session->userdata('role') != 'superadmin') {
-            redirect(base_url().'auth/login');
+            redirect(base_url().'auth');
         }
     }
 

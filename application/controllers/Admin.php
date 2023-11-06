@@ -119,5 +119,10 @@ class Admin extends CI_Controller
         // Redirect kembali ke halaman yang sesuai
         redirect('admin/user');
     }
+    public function jam_kerja()
+    {
+        $this->load->view('page/admin/jam_kerja');
+    }
+
 }
 ?>

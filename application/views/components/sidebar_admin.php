@@ -64,7 +64,9 @@
 
                                 <!-- Menu Profile -->
                                 <li>
-                                    <a href="<?php echo base_url('admin/profile'); ?>"
+                                    <a href="<?php echo base_url(
+                                        'admin/profile'
+                                    ); ?>"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Profil</a>
                                 </li>
@@ -98,6 +100,71 @@
                             class="fas fa-tachometer-alt fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="ml-3">Dashboard</span>
                     </a>
+                </li>
+
+                <!-- Dropdown Master Data -->
+                <li>
+                    <button type="button"
+                        class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        aria-controls="dropdown-masterdata" data-collapse-toggle="dropdown-masterdata">
+                        <i
+                            class="fa-solid fa-database fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 text-left whitespace-nowrap">Master Data</span>
+                        <i
+                            class="fa-solid fa-chevron-down fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                    </button>
+
+                    <ul id="dropdown-masterdata" class="hidden py-2 space-y-2">
+
+                        <!-- Menu Harian -->
+                        <li>
+                            <a href="<?php echo base_url(
+                                'admin/rekap_harian'
+                            ); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-users-gear fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Karyawan</span>
+                            </a>
+                        </li>
+
+                        <!-- Menu Mingguan -->
+                        <li>
+                            <a href="<?php echo base_url(
+                                'admin/rekap_mingguan'
+                            ); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-briefcase fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Jabatan</span>
+                            </a>
+                        </li>
+
+                        <!-- Menu Mingguan -->
+                        <li>
+                            <a href="<?php echo base_url(
+                                'admin/rekap_mingguan'
+                            ); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-business-time fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Jam Kerja</span>
+                            </a>
+                        </li>
+
+                        <!-- Menu Bulanan -->
+                        <li>
+                            <a href="<?php echo base_url(
+                                'admin/rekap_bulanan'
+                            ); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-map-location-dot fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Lokasi</span>
+                            </a>
+                        </li>
+                        </a>
+                    </ul>
                 </li>
 
                 <!-- Menu Organisasi -->
@@ -146,7 +213,9 @@
 
                         <!-- Menu Harian -->
                         <li>
-                            <a href="<?php echo base_url('admin/rekap_harian'); ?>"
+                            <a href="<?php echo base_url(
+                                'admin/rekap_harian'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-calendar-day fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -156,7 +225,9 @@
 
                         <!-- Menu Mingguan -->
                         <li>
-                            <a href="<?php echo base_url('admin/rekap_mingguan'); ?>"
+                            <a href="<?php echo base_url(
+                                'admin/rekap_mingguan'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-calendar-week fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -166,7 +237,9 @@
 
                         <!-- Menu Bulanan -->
                         <li>
-                            <a href="<?php echo base_url('admin/rekap_bulanan'); ?>"
+                            <a href="<?php echo base_url(
+                                'admin/rekap_bulanan'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-calendar fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>

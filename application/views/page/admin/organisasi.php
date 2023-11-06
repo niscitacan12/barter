@@ -20,7 +20,9 @@
                 <hr>
 
                 <div class="mt-5 text-left">
-
+                    <?php $no = 0; foreach ($user as $row): $no++; ?>
+                    <?= $row->id_organisasi ?>
+                    <?php endforeach;  ?>
                     <form>
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="mb-6 w-full">

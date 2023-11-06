@@ -116,11 +116,9 @@
 
                     <ul id="dropdown-masterdata" class="hidden py-2 space-y-2">
 
-                        <!-- Menu Harian -->
+                        <!-- Menu Karyawan -->
                         <li>
-                            <a href="<?php echo base_url(
-                                'admin/rekap_harian'
-                            ); ?>"
+                            <a href="<?php echo base_url('admin/user'); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-users-gear fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -128,10 +126,10 @@
                             </a>
                         </li>
 
-                        <!-- Menu Mingguan -->
+                        <!-- Menu Jabatan -->
                         <li>
                             <a href="<?php echo base_url(
-                                'admin/rekap_mingguan'
+                                'admin/jabatan'
                             ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
@@ -140,10 +138,10 @@
                             </a>
                         </li>
 
-                        <!-- Menu Mingguan -->
+                        <!-- Menu Jam Kerja -->
                         <li>
                             <a href="<?php echo base_url(
-                                'admin/rekap_mingguan'
+                                'admin/shift'
                             ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
@@ -152,10 +150,10 @@
                             </a>
                         </li>
 
-                        <!-- Menu Bulanan -->
+                        <!-- Menu Lokasi -->
                         <li>
                             <a href="<?php echo base_url(
-                                'admin/rekap_bulanan'
+                                'admin/lokasi'
                             ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
@@ -167,6 +165,16 @@
                     </ul>
                 </li>
 
+                <!-- Menu Permohonan Cuti -->
+                <li>
+                    <a href="<?php echo base_url('admin/cuti'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-calendar-alt fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Permohonan Cuti</span>
+                    </a>
+                </li>
+
                 <!-- Menu Organisasi -->
                 <li>
                     <a href="<?php echo base_url('admin/organisasi'); ?>"
@@ -174,16 +182,6 @@
                         <i
                             class="fa-solid fa-building fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Organisasi</span>
-                    </a>
-                </li>
-
-                <!-- Menu Karyawan -->
-                <li>
-                    <a href="<?php echo base_url('admin/user'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i
-                            class="fa-solid fa-users-gear fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Karyawan</span>
                     </a>
                 </li>
 

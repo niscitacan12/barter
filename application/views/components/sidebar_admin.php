@@ -188,6 +188,15 @@
                         <span class="flex-1 ml-3 whitespace-nowrap">Absensi</span>
                     </a>
                 </li>
+                <!-- Menu Pengaturan -->
+                <li>
+                    <a href="<?php echo base_url('admin/pengaturan'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-gear fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Pengaturan Web</span>
+                    </a>
+                </li>
 
                 <!-- Dropdown Rekapan -->
                 <li>

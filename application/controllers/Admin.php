@@ -95,6 +95,12 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/tambah_user');
     }
+    // Page tambah lokasi
+    public function tambah_lokasi()
+    {
+        $this->load->view('page/admin/tambah_lokasi');
+    }
+
 
     // Aksi tambah user
 

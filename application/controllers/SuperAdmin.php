@@ -1,3 +1,5 @@
+Superadmin.php:
+
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -9,8 +11,11 @@ class SuperAdmin extends CI_Controller
         $this->load->helper('my_helper');
         $this->load->model('super_model');
         $this->load->library('session');
-        if($this->session->userdata('logged_in')!=true || $this->session->userdata('role') != 'superadmin') {
-            redirect(base_url().'auth');
+        if (
+            $this->session->userdata('logged_in') != true ||
+            $this->session->userdata('role') != 'superadmin'
+        ) {
+            redirect(base_url() . 'auth');
         }
     }
 
@@ -18,7 +23,9 @@ class SuperAdmin extends CI_Controller
     public function index()
     {
         $id_superadmin = $this->session->userdata('id');
-        $data['organisasi'] = $this->super_model->get_data('organisasi')->num_rows();
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->num_rows();
         $data['admin'] = $this->super_model->get_admin_count();
         $data['user'] = $this->super_model->get_user_count();
         $this->load->view('page/super_admin/dashboard', $data);
@@ -27,10 +34,12 @@ class SuperAdmin extends CI_Controller
     // Page Organisasi
     public function organisasi()
     {
-        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->result();
         $this->load->view('page/super_admin/organisasi', $data);
     }
-    
+
     // Page Admin
     public function admin()
     {
@@ -61,7 +70,9 @@ class SuperAdmin extends CI_Controller
     public function tambah_admin()
     {
         // $data['id_superadmin'] = $this->session->userdata('id');
-        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->result();
         $this->load->view('page/super_admin/tambah_admin', $data);
     }
 
@@ -84,14 +95,16 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('admin', $data); // Panggil method pada model
-         
+
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/admin');
     }
 
     public function tambah_organisasi()
     {
-        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->result();
         $this->load->view('page/super_admin/tambah_organisasi', $data);
     }
 

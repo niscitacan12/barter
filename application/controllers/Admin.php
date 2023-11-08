@@ -65,6 +65,11 @@ class Admin extends CI_Controller
             ->result();
         $this->load->view('page/admin/absensi', $data);
     }
+    // Page Pengaturan
+    public function pengaturan()
+    {
+        $this->load->view('page/admin/pengaturan');
+    }
 
     // Page Profile
     public function profile()

@@ -15,7 +15,7 @@
         <!-- Login Card -->
         <div
             class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <form class="space-y-6" action="<?php echo base_url('auth/register_superadmin')?>" method="post">
+            <form class="space-y-6" action="<?php echo base_url('auth/aksi_register_superadmin')?>" method="post">
                 <h5 class="text-xl text-center font-medium text-gray-900 dark:text-white">Register</h5>
                 <hr>
 

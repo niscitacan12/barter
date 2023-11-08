@@ -1,16 +1,17 @@
-<?php 
+<?php
 class Admin_model extends CI_Model
 {
     // Menampilkan role user
     public function get_user()
     {
-        $this->db->where('role', 'user');
+        $this->db->where('id', 'user');
         $query = $this->db->get('user');
         return $query->result();
     }
 
     // Mendapatkan semua data dari tabel tertentu
-    function get_data($table){
+    function get_data($table)
+    {
         return $this->db->get($table);
     }
 
@@ -22,7 +23,8 @@ class Admin_model extends CI_Model
     }
 
     // Menambahkan data ke dalam tabel
-    public function tambah_data($table, $data) {
+    public function tambah_data($table, $data)
+    {
         $this->db->insert($table, $data);
         return $this->db->insert_id();
     }

@@ -10,7 +10,7 @@
 <body>
     <?php $this->load->view('components/sidebar_admin'); ?>
     <div class="p-4 sm:ml-64">
-        <div class="p-5 mt-10">
+        <div class="p-5 mt-5">
             <!-- Card -->
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -20,9 +20,6 @@
                 <hr>
 
                 <div class="mt-5 text-left">
-                    <?php $no = 0; foreach ($user as $row): $no++; ?>
-                    <?= $row->id_organisasi ?>
-                    <?php endforeach;  ?>
                     <form>
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="mb-6 w-full">
@@ -99,7 +96,8 @@
                         </div>
 
                         <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
+                                class="fa-solid fa-plus"></i></a></button>
                     </form>
                 </div>
 

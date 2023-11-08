@@ -15,31 +15,31 @@
         <!-- Login Card -->
         <div
             class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <form class="space-y-6" action="<?php echo base_url('auth/aksi_login')?>" method="post">
+            <form class="space-y-6" method="post" id="form-login">
                 <h5 class="text-xl text-center font-medium text-gray-900 dark:text-white">Login</h5>
                 <hr>
 
+                <div class="flex justify-between">
 
-                <!-- <div class="flex justify-between">
                     <div class="flex items-center mr-4">
-                        <input checked id="inline-checked-radio" type="radio" value="" name="inline-radio-group"
+                        <input checked id="login-user" type="radio" value="user" name="inline-radio-group"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="inline-checked-radio"
+                        <label for="login-user"
                             class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">User</label>
                     </div>
                     <div class="flex items-center mr-4">
-                        <input id="inline-2-radio" type="radio" value="" name="inline-radio-group"
+                        <input id="login-admin" type="radio" value="admin" name="inline-radio-group"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="inline-2-radio"
+                        <label for="login-admin"
                             class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Admin</label>
                     </div>
                     <div class="flex items-center mr-4">
-                        <input id="inline-radio" type="radio" value="" name="inline-radio-group"
+                        <input id="login-superadmin" type="radio" value="superadmin" name="inline-radio-group"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="inline-radio"
+                        <label for="login-superadmin"
                             class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Superadmin</label>
                     </div>
-                </div> -->
+                </div>
 
                 <!-- Input email -->
                 <div class="relative z-0 w-full mb-6 group">
@@ -93,23 +93,23 @@ function showPassword() {
     }
 }
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     const form = document.querySelector('form');
-//     const radios = document.querySelectorAll('input[type="radio"]');
-//     const url = "<?php echo base_url('auth/aksi_login_'); ?>";
+function setFormAction(action) {
+    // Mengatur aksi formulir dengan URL yang diberikan
+    document.getElementById('form-login').setAttribute('action', action);
+}
 
-//     radios.forEach(radio => {
-//         radio.addEventListener('click', function() {
-//             if (this.id === 'inline-radio') {
-//                 form.action = url + 'superadmin';
-//             } else if (this.id === 'inline-2-radio') {
-//                 form.action = url + 'admin';
-//             } else {
-//                 form.action = url + 'user';
-//             }
-//         });
-//     });
-// });
+const radioButtons = document.getElementsByName('inline-radio-group');
+radioButtons.forEach((radio) => {
+    radio.addEventListener('click', (event) => {
+        if (event.target.value === "user") {
+            setFormAction("<?php echo base_url('auth/aksi_login_user')?>");
+        } else if (event.target.value === "admin") {
+            setFormAction("<?php echo base_url('auth/aksi_login_admin')?>");
+        } else if (event.target.value === "superadmin") {
+            setFormAction("<?php echo base_url('auth/aksi_login_superadmin')?>");
+        }
+    });
+});
 </script>
 
 </html>

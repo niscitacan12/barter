@@ -8,8 +8,11 @@ class Admin extends CI_Controller
         parent::__construct();
         $this->load->model('admin_model');
         $this->load->helper('my_helper');
-        if($this->session->userdata('logged_in')!=true || $this->session->userdata('role') != 'admin') {
-            redirect(base_url().'auth');
+        if (
+            $this->session->userdata('logged_in') != true ||
+            $this->session->userdata('role') != 'admin'
+        ) {
+            redirect(base_url() . 'auth');
         }
     }
 
@@ -33,16 +36,10 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/jabatan');
     }
 
-     // Page Lokasi
-     public function lokasi()
-     {
-         $this->load->view('page/admin/lokasi');
-     }
-
-    // Page Jam Kerja
-    public function shift()
+    // Page Lokasi
+    public function lokasi()
     {
-        $this->load->view('page/admin/shift');
+        $this->load->view('page/admin/lokasi');
     }
 
     // Page Permohonan Cuti
@@ -63,7 +60,9 @@ class Admin extends CI_Controller
     public function absensi()
     {
         $id_admin = $this->session->userdata('id');
-        $data['absensi'] = $this->admin_model->get_absen_by_admin($id_admin)->result();
+        $data['absensi'] = $this->admin_model
+            ->get_absen_by_admin($id_admin)
+            ->result();
         $this->load->view('page/admin/absensi', $data);
     }
 
@@ -84,20 +83,21 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/rekap_harian');
     }
-    
+
     // Page rekap mingguan
     public function rekap_mingguan()
     {
         $this->load->view('page/admin/rekap_mingguan');
     }
-    
+
     // Page rekap bulanan
     public function rekap_bulanan()
     {
-        $this->load->view('page/admin/rekap_bulanan'); 
+        $this->load->view('page/admin/rekap_bulanan');
     }
-    
+
     // Aksi tambah user
+
    
  public function aksi_tambah_user() {
     // Ambil data yang diperlukan dari form, termasuk admin_id yang dipilih
@@ -116,6 +116,23 @@ class Admin extends CI_Controller
 
     // Panggil function pada model
     $this->admin_model->tambah_data('user', $data);
+
+    public function aksi_tambah_user()
+    {
+        // Ambil data yang diperlukan dari form, termasuk admin_id yang dipilih
+        $id_admin = $this->session->userdata('id');
+        $data = [
+            'email' => $this->input->post('email'),
+            'username' => $this->input->post('username'),
+            'nama_depan' => $this->input->post('nama_depan'),
+            'nama_belakang' => $this->input->post('nama_belakang'),
+            'id_admin' => $id_admin,
+            'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
+            'image' => 'User.png',
+            'role' => 'user',
+            // sesuaikan dengan kolom lainnya
+        ];
+
 
     // Redirect kembali ke halaman yang sesuai
     redirect('admin/user');
@@ -184,7 +201,25 @@ public function aksi_ubah_profile()
         $update_result = $this->admin_model->update('user', $data, array('id' => $this->session->userdata('id')));
         redirect(base_url('admin/profile'));
     }
+
   }
+
+    public function jam_kerja()
+    {
+        $this->load->view('page/admin/jam_kerja');
+    }
+
+     // Page tambah shift
+     public function tambah_shift()
+     {
+         $this->load->view('page/admin/tambah_shift');
+     }
+
+      // Page tambah jabatan
+      public function tambah_jabatan()
+      {
+          $this->load->view('page/admin/tambah_jabatan');
+      }
 
 }
 ?>

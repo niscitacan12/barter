@@ -78,11 +78,11 @@
                                 <td class="px-6 py-4">
                                     <?php echo $row->nama_belakang; ?>
                                 </td>
-                                <td class="px-6 py-4">
-                                    <?php echo organisasi(
-                                        $row->id_organisasi
-                                    ); ?>
-                                </td>
+                                <!-- <td class="px-6 py-4">
+                                    <?php foreach ($organisasi as $org): ?>
+                                    <?php echo $org->nama_organisasi; ?>
+                                    <?php endforeach; ?>
+                                </td> -->
                             </tr>
                             <?php
                             endforeach;

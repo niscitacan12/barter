@@ -8,6 +8,7 @@ class SuperAdmin extends CI_Controller
         parent::__construct();
         $this->load->helper('my_helper');
         $this->load->model('super_model');
+        $this->load->library('session');
         if($this->session->userdata('logged_in')!=true || $this->session->userdata('role') != 'superadmin') {
             redirect(base_url().'auth');
         }
@@ -33,7 +34,12 @@ class SuperAdmin extends CI_Controller
     // Page Admin
     public function admin()
     {
-        $data['user'] = $this->super_model->get_admin();
+        $data['user'] = $this->super_model->get_data('admin')->result();
+        // foreach ($data['user'] as $user) {
+        //     $id_admin = $user->id_admin; // Menyimpan ID admin dari setiap elemen pengguna
+        //     $organisasi = $this->super_model->getOrganisasiId($id_admin);
+        //     // Lakukan operasi yang diperlukan dengan data organisasi yang diperoleh
+        // }
         $this->load->view('page/super_admin/admin', $data);
     }
 
@@ -54,6 +60,7 @@ class SuperAdmin extends CI_Controller
     // Page Tambah Organisasi
     public function tambah_admin()
     {
+        // $data['id_superadmin'] = $this->session->userdata('id');
         $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
         $this->load->view('page/super_admin/tambah_admin', $data);
     }
@@ -69,14 +76,14 @@ class SuperAdmin extends CI_Controller
             'nama_belakang' => $this->input->post('nama_belakang'),
             'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
             'image' => 'User.png',
-            'id_organisasi' => $this->input->post('id_organisasi'),
+            // 'id_organisasi' => $this->input->post('id_organisasi'),
             'id_superadmin' => $id_superadmin,
             'role' => 'admin',
             // sesuaikan dengan kolom lainnya
         ];
 
         // Simpan data ke tabel
-        $this->super_model->tambah_data('user', $data); // Panggil method pada model
+        $this->super_model->tambah_data('admin', $data); // Panggil method pada model
          
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/admin');
@@ -90,6 +97,7 @@ class SuperAdmin extends CI_Controller
 
     public function aksi_tambah_organisasi()
     {
+        $id_superadmin = $this->session->userdata('id');
         // Ambil data yang diperlukan dari form
         $data = [
             'nama_organisasi' => $this->input->post('nama_organisasi'),
@@ -107,12 +115,6 @@ class SuperAdmin extends CI_Controller
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/organisasi');
-    }
-
-    function logout()
-    {
-        $this->session->sess_destroy();
-        redirect(base_url('auth/login'));
     }
 
     public function profile()

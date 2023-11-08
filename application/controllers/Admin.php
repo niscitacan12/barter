@@ -123,5 +123,17 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/jam_kerja');
     }
+
+     // Page tambah shift
+     public function tambah_shift()
+     {
+         $this->load->view('page/admin/tambah_shift');
+     }
+
+      // Page tambah jabatan
+      public function tambah_jabatan()
+      {
+          $this->load->view('page/admin/tambah_jabatan');
+      }
 }
 ?>

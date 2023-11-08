@@ -26,8 +26,9 @@
                 <div class="mt-5 text-left">
 
                     <!-- Form Input -->
-                    <form action="<?php echo base_url('SuperAdmin/aksi_tambah_admin') ?>" method="post"
-                        enctype="multipart/form-data">
+                    <form action="<?php echo base_url(
+                        'superAdmin/aksi_tambah_admin'
+                    ); ?>" method="post" enctype="multipart/form-data">
                         <!-- Email Input -->
                         <div class="relative z-0 w-full mb-6 group">
                             <input type="email" name="email" id="email"
@@ -80,10 +81,10 @@
                             <select name="id_organisasi"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                                 <option selected>Pilih Organisasi</option>
-                                <?php foreach ($organisasi as $row) : ?>
-                                <option value="<?php echo $row->id_organisasi ?>"> <?php echo $row->nama_organisasi ?>
+                                <?php foreach ($organisasi as $row): ?>
+                                <option value="<?php echo $row->id_organisasi; ?>"> <?php echo $row->nama_organisasi; ?>
                                 </option>
-                                <?php endforeach ?>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="flex items-start mb-6">

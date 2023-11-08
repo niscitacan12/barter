@@ -16,7 +16,7 @@
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
-                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Organisasi</h6>
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Permohonan Cuti</h6>
 
                     <form>
                         <label for="default-search"

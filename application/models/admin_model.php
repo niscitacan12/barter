@@ -4,7 +4,7 @@ class Admin_model extends CI_Model
     // Menampilkan role user
     public function get_user()
     {
-        $this->db->where('id', 'user');
+        $this->db->where('id_user', 'user');
         $query = $this->db->get('user');
         return $query->result();
     }
@@ -22,6 +22,12 @@ class Admin_model extends CI_Model
         return $this->db->get('absensi');
     }
 
+    public function get_user_by_id_admin($id_admin)
+    {
+        $this->db->where('id_admin', $id_admin);
+        return $this->db->get('user')->result();
+    }
+
     // Menambahkan data ke dalam tabel
     public function tambah_data($table, $data)
     {
@@ -34,7 +40,5 @@ class Admin_model extends CI_Model
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
     }
-    
-
 }
 ?>

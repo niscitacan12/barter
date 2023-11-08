@@ -10,14 +10,6 @@ class Super_model extends CI_Model
         return $query->num_rows();
     }
 
-    // Menampilkan role admin
-    public function get_admin()
-    {
-        $this->db->where('role', 'admin');
-        $query = $this->db->get('user');
-        return $query->result();
-    }
-
     // Menampilkan jumlah user
     public function get_user_count()
     {
@@ -43,6 +35,18 @@ class Super_model extends CI_Model
     public function tambah_data($table, $data) {
         $this->db->insert($table, $data);
         return $this->db->insert_id();
+    }
+
+    public function getOrganisasiId($id_admin) {
+        // Mengambil data organisasi dari basis data berdasarkan ID admin
+        $this->db->where('id_admin', $id_admin);
+        $query = $this->db->get('organisasi');
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return array(); // Mengembalikan array kosong jika tidak ada data yang ditemukan
+        }
     }
 }
 ?>

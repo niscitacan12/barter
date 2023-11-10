@@ -33,7 +33,27 @@ class Admin extends CI_Controller
     // Page Jabatan
     public function jabatan()
     {
-        $this->load->view('page/admin/jabatan');
+        $id_admin = $this->session->userdata('id');
+        $id_jabatan = $this->session->userdata('id');
+        $data['jabatan'] = $this->admin_model->get_jabatan_by_id_admin(
+            $id_jabatan
+        );
+        $data[
+            'employee_counts'
+        ] = $this->admin_model->get_employee_count_by_jabatan_and_admin(
+            $id_admin
+        );
+        $this->load->view('page/admin/jabatan', $data); // Memuat view dengan variabel $data
+    }
+
+    public function jam_kerja()
+    {
+        $id_shift = $this->session->userdata('id');
+        $data['shift'] = $this->admin_model->get_shift_by_id_admin($id_shift);
+        $data[
+            'employee_counts'
+        ] = $this->admin_model->get_employee_count_by_shift();
+        $this->load->view('page/admin/jam_kerja', $data);
     }
 
     // Page Lokasi
@@ -105,7 +125,6 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/tambah_lokasi');
     }
-
 
     // Aksi tambah user
 
@@ -211,11 +230,6 @@ class Admin extends CI_Controller
         }
     }
 
-    public function jam_kerja()
-    {
-        $this->load->view('page/admin/jam_kerja');
-    }
-
     // Page tambah shift
     public function tambah_shift()
     {
@@ -226,6 +240,29 @@ class Admin extends CI_Controller
     public function tambah_jabatan()
     {
         $this->load->view('page/admin/tambah_jabatan');
+    }
+
+    // Aksi Tambah Jabatan
+    public function aksi_tambah_jabatan()
+    {
+        $id_admin = $this->session->userdata('id_admin');
+
+        // Pastikan $id_admin memiliki nilai yang valid
+        if ($id_admin) {
+            $data = [
+                'nama_jabatan' => $this->input->post('nama_jabatan'),
+                'id_admin' => $id_admin,
+            ];
+
+            // Panggil function pada model untuk menambahkan jabatan
+            $this->admin_model->tambah_data('jabatan', $data);
+
+            // Redirect kembali ke halaman yang sesuai
+            redirect('admin/jabatan');
+        } else {
+            // Tampilkan pesan kesalahan atau arahkan kembali ke halaman yang sesuai
+            echo 'Terjadi kesalahan. Silakan coba lagi atau hubungi administrator.';
+        }
     }
 }
 ?>

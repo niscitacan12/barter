@@ -28,11 +28,52 @@ class Admin_model extends CI_Model
         return $this->db->get('user')->result();
     }
 
+    public function get_jabatan_by_id_admin($id_jabatan)
+    {
+        $this->db->where('id_jabatan', $id_jabatan);
+        return $this->db->get('jabatan')->result();
+    }
+
+    public function get_shift_by_id_admin($id_shift)
+    {
+        $this->db->where('id_shift', $id_shift);
+        return $this->db->get('shift')->result();
+    }
+
     // Menambahkan data ke dalam tabel
     public function tambah_data($table, $data)
     {
         $this->db->insert($table, $data);
         return $this->db->insert_id();
+    }
+
+    public function tambah_jabatan($data)
+    {
+        $this->db->insert('jabatan', $data);
+        // Jika Anda ingin mendapatkan ID jabatan yang baru ditambahkan, Anda bisa menggunakan $this->db->insert_id();
+    }
+
+    public function get_employee_count_by_jabatan_and_admin($id_admin)
+    {
+        $this->db->select(
+            'jabatan.nama_jabatan, COUNT(user.id_user) as jumlah_karyawan'
+        );
+        $this->db->from('jabatan');
+        $this->db->join('user', 'jabatan.id_jabatan = user.id_jabatan', 'left');
+        $this->db->where('jabatan.id_admin', $id_admin); // Menambahkan filter berdasarkan id_admin
+        $this->db->group_by('jabatan.nama_jabatan');
+        return $this->db->get()->result();
+    }
+
+    public function get_employee_count_by_shift()
+    {
+        $this->db->select(
+            'shift.nama_shift, COUNT(user.id_user) as jumlah_karyawan'
+        );
+        $this->db->from('shift');
+        $this->db->join('user', 'shift.id_shift = user.id_shift', 'left');
+        $this->db->group_by('shift.nama_shift');
+        return $this->db->get()->result();
     }
 
     public function update($tabel, $data, $where)

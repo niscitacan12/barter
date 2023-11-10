@@ -36,22 +36,22 @@
             <form action="#" method="post" enctype="multipart/form-data">
                 <div class="mb-4">
                     <label for="username" class="block mb-1 text-sm">Username</label>
-                    <input type="text" class="border rounded-md w-full p-2" value="JohnDoe" id="username" name="username">
+                    <input type="text" class="border rounded-md w-full p-2"  id="username" name="username">
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block mb-1 text-sm">Email address</label>
-                    <input type="text" value="johndoe@example.com" class="border rounded-md w-full p-2" id="email"
+                    <input type="text"  class="border rounded-md w-full p-2" id="email"
                         name="email">
                 </div>
                 <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
                     <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
                         <label for="firstName" class="block mb-1 text-sm">First name</label>
-                        <input type="text" class="border rounded-md w-full p-2" value="John" id="firstName"
+                        <input type="text" class="border rounded-md w-full p-2"  id="firstName"
                             name="firstName">
                     </div>
                     <div class="w-full lg:w-1/2">
                         <label for="lastName" class="block mb-1 text-sm">Last name</label>
-                        <input type="text" class="border rounded-md w-full p-2" value="Doe" id="lastName" name="lastName">
+                        <input type="text" class="border rounded-md w-full p-2" id="lastName" name="lastName">
                     </div>
                 </div>
                 <div class="mb-4">

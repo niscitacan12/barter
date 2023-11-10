@@ -90,6 +90,11 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/pengaturan');
     }
+    // Page Pengaturan Profile
+    public function profile_pengaturan()
+    {
+        $this->load->view('page/admin/profile_pengaturan');
+    }
 
     // Page Profile
     public function profile()

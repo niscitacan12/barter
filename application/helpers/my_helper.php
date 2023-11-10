@@ -23,12 +23,11 @@ function nama_user($id_user)
     }
 }
 
-
-function nama_admin($id_user)
+function nama_admin($id_admin)
 {
     $ci = &get_instance();
     $ci->load->database();
-    $result = $ci->db->where('id_admin', $id_user)->get('admin');
+    $result = $ci->db->where('id_admin', $id_admin)->get('admin');
     foreach ($result->result() as $c) {
         $tmt = $c->username;
         return $tmt;

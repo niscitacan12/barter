@@ -16,7 +16,9 @@
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
                     <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Jabatan</h6>
-                    <a type="button" href="<?php echo base_url('admin/tambah_jabatan')?>"
+                    <a type="button" href="<?php echo base_url(
+                        'admin/tambah_jabatan'
+                    ); ?>"
                         class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
                             class="fa-solid fa-plus"></i></a>
                 </div>
@@ -27,7 +29,8 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -43,9 +46,41 @@
                                 </th>
                             </tr>
                         </thead>
-                        <!-- Tabel Body -->
-                        <tbody>
-
+                        <tbody class="text-center">
+                            <?php
+                            $no = 0;
+                            foreach ($jabatan as $row):
+                                $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->nama_jabatan; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php
+                                    // Cari dan tampilkan jumlah karyawan yang sesuai
+                                    $employee_count = 0;
+                                    foreach ($employee_counts as $count) {
+                                        if (
+                                            $count->nama_jabatan ===
+                                            $row->nama_jabatan
+                                        ) {
+                                            $employee_count =
+                                                $count->jumlah_karyawan;
+                                            break;
+                                        }
+                                    }
+                                    echo $employee_count;
+                                    ?>
+                                </td>
+                            </tr>
+                            <?php
+                            endforeach;
+                            ?>
                         </tbody>
                     </table>
                 </div>

@@ -14,4 +14,8 @@ class User extends CI_Controller {
 	{
 		$this->load->view('page/user/dashboard');
 	}
+	public function izin()
+	{
+		$this->load->view('page/user/izin');
+	}
 }

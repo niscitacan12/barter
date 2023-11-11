@@ -31,7 +31,8 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -49,13 +50,13 @@
                                     Nama Belakang
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Organisasi
+                                    Aksi
                                 </th>
                             </tr>
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody>
+                        <tbody class="text-center">
                             <?php
                             $no = 0;
                             foreach ($user as $row):

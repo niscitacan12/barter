@@ -27,6 +27,9 @@ class Admin extends CI_Controller
     {
         $id_admin = $this->session->userdata('id');
         $data['user'] = $this->admin_model->get_data('user')->result();
+        $data['organisasi'] = $this->admin_model
+            ->get_data('organisasi')
+            ->result();
         $this->load->view('page/admin/organisasi', $data);
     }
 
@@ -100,6 +103,12 @@ class Admin extends CI_Controller
     public function profile()
     {
         $this->load->view('page/admin/profile');
+    }
+
+    // Page Tambah Organisasi
+    public function tambah_organisasi()
+    {
+        $this->load->view('page/admin/tambah_organisasi');
     }
 
     // Page rekap harian

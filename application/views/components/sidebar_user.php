@@ -26,8 +26,9 @@
                     <a class="flex ml-2 md:mr-24">
 
                         <!-- Logo Aplikasi -->
-                        <img src="<?php echo base_url('./src/assets/image/absensi.png'); ?>" class="h-10 mr-3"
-                            alt="Absensi Logo" />
+                        <img src="<?php echo base_url(
+                            './src/assets/image/absensi.png'
+                        ); ?>" class="h-10 mr-3" alt="Absensi Logo" />
 
                         <!-- Nama Aplikasi -->
                         <span
@@ -101,11 +102,21 @@
 
                 <!-- Menu Absen -->
                 <li>
-                    <a href="#"
+                    <a href="<?php echo base_url('user/absen'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-address-card fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Absen</span>
+                    </a>
+                </li>
+
+                <!-- Menu Cuti -->
+                <li>
+                    <a href="<?php echo base_url('user/cuti'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-mug-hot fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Cuti</span>
                     </a>
                 </li>
 
@@ -114,7 +125,7 @@
                     <a href="<?php echo base_url('user/izin'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
-                            class="fa-solid fa-address-card fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                            class="fa-solid fa-circle-xmark fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Izin</span>
                     </a>
                 </li>

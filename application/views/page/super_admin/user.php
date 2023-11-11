@@ -35,16 +35,10 @@
                                     Username
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nama Depan
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Nama Belakang
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Admin
+                                    Aksi
                                 </th>
                             </tr>
                         </thead>
@@ -65,16 +59,9 @@
                                     <?php echo $row->username; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->nama_depan; ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo $row->nama_belakang; ?>
-                                </td>
-                                <td class="px-6 py-4">
                                     <?php echo $row->email; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo nama_admin($row->id_admin); ?>
                                 </td>
                             </tr>
                             <?php

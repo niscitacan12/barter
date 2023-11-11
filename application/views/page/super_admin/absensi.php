@@ -35,9 +35,6 @@
                                     Nama
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Kegiatan
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -47,10 +44,7 @@
                                     Jam Pulang
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Lokasi
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Keterangan
+                                    Aksi
                                 </th>
                             </tr>
                         </thead>
@@ -71,9 +65,6 @@
                                     <?php echo nama_user($row->id_user); ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->kegiatan; ?>
-                                </td>
-                                <td class="px-6 py-4">
                                     <?php echo $row->tanggal_absen; ?>
                                 </td>
                                 <td class="px-6 py-4">
@@ -81,12 +72,6 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->jam_pulang; ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo $row->lokasi; ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo $row->keterangan_izin; ?>
                                 </td>
                             </tr>
                             <?php

@@ -10,101 +10,95 @@
 <body>
     <?php $this->load->view('components/sidebar_admin'); ?>
     <div class="p-4 sm:ml-64">
-        <div class="p-5 mt-5">
+        <div class="p-5 mt-10">
             <!-- Card -->
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
-                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Organisasi</h6>
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Organisasi</h6>
+                    <a type="button" href="<?php echo base_url(
+                        'admin/tambah_organisasi'
+                    ); ?>"
+                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
+                            class="fa-solid fa-plus"></i></a>
                 </div>
                 <hr>
 
-                <div class="mt-5 text-left">
-                    <form>
-                        <div class="grid md:grid-cols-2 md:gap-6">
-                            <div class="mb-6 w-full">
-                                <label for="alamat"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <!-- Tabel -->
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
+                        <!-- Tabel Head -->
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Nama Organisasi
-                                </label>
-                                <input type="text" id="alamat"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="" autocomplete="off">
-                            </div>
-
-                            <div class="mb-6 w-full">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Email
-                                </label>
-                                <input type="email" id="email"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="" autocomplete="off">
-                            </div>
-                        </div>
-
-                        <div class="grid md:grid-cols-2 md:gap-6">
-                            <div class="mb-6 w-full">
-                                <label for="alamat"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Alamat
-                                </label>
-                                <input type="text" id="alamat"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="" autocomplete="off">
-                            </div>
-
-                            <div class="mb-6 w-full">
-                                <label for="alamat"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     No Telp
-                                </label>
-                                <input type="text" id="alamat"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="" autocomplete="off">
-                            </div>
-                        </div>
-
-                        <div class="grid md:grid-cols-2 md:gap-6">
-                            <div class="mb-6 w-full">
-                                <label for="alamat"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Kecamatan
-                                </label>
-                                <input type="text" id="alamat"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="" autocomplete="off">
-                            </div>
-
-                            <div class="mb-6 w-full">
-                                <label for="alamat"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Kabupaten
-                                </label>
-                                <input type="text" id="alamat"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="" autocomplete="off">
-                            </div>
-                        </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Kecamatan
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Provinsi
+                                </th>
+                            </tr>
+                        </thead>
+                        <!-- Tabel Body -->
+                        <tbody>
+                            <?php
+                            $no = 0;
+                            foreach ($organisasi as $row):
+                                $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->nama_organisasi; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->email_organisasi; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->alamat; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->nomor_telepon; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->kabupaten; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->kecamatan; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->provinsi; ?>
+                                </td>
 
-                        <div class="mb-6 w-full">
-                            <label for="alamat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Provinsi
-                            </label>
-                            <input type="text" id="alamat"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="" autocomplete="off">
-                        </div>
-
-                        <button type="submit"
-                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
-                                class="fa-solid fa-plus"></i></a></button>
-                    </form>
+                            </tr>
+                            <?php
+                            endforeach;
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
-
             </div>
-        </div>
-    </div>
-    </div>
 </body>
 
 </html>

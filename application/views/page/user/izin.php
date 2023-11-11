@@ -25,49 +25,11 @@
                 <form action="#" method="post">
                     <!-- Field formulir untuk cuti dari -->
                     <div>
-                        <label for="leave_from" class="block text-gray-700 font-bold mb-1 text-left">Cuti Dari:</label>
-                        <input type="date" name="leave_from" id="leave_from"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
-                    </div>
-                    <br>
-
-                    <!-- Field formulir untuk cuti sampai -->
-                    <div>
-                        <label for="leave_to" class="block text-gray-700 font-bold mb-1 text-left">Cuti Sampai:</label>
-                        <input type="date" name="leave_to" id="leave_to"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
-                    </div>
-                    <br>
-
-                    <!-- Field formulir untuk waktu masuk kerja -->
-                    <div>
-                        <label for="start_time" class="block text-gray-700 font-bold mb-1 text-left">Masuk
-                            Kerja:</label>
-                        <input type="date" name="start_time" id="start_time"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
-                    </div>
-                    <br>
-
-                    <!-- Field formulir untuk jumlah cuti -->
-                    <div>
-                        <label for="leave_duration" class="block text-gray-700 font-bold mb-1 text-left">Jumlah Cuti
-                            (hari):</label>
-                        <input type="number" name="leave_duration" id="leave_duration"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
-                    </div>
-                    <br>
-
-                    <!-- Field formulir untuk keperluan cuti -->
-                    <div>
-                        <label for="leave_purpose" class="block text-gray-700 font-bold mb-1 text-left">Keperluan
-                            Cuti:</label>
-                        <input type="text" name="leave_purpose" id="leave_purpose"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
+                        <label for="leave_from" class="block text-gray-700 font-bold mb-1 text-left">Keterangan Izin
+                            :</label>
+                        <textarea id="message" rows="4"
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Keterangan . . ."></textarea>
                     </div>
                     <br>
 

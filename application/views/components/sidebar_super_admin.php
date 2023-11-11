@@ -103,16 +103,6 @@
                     </a>
                 </li>
 
-                <!-- Menu Organisasi -->
-                <li>
-                    <a href="<?php echo base_url('superadmin/organisasi'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i
-                            class="fa-solid fa-building fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Organisasi</span>
-                    </a>
-                </li>
-
                 <!-- Menu Admin -->
                 <li>
                     <a href="<?php echo base_url('superadmin/admin'); ?>"
@@ -120,6 +110,16 @@
                         <i
                             class="fa-solid fa-chalkboard-user fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Admin</span>
+                    </a>
+                </li>
+
+                <!-- Menu Organisasi -->
+                <li>
+                    <a href="<?php echo base_url('superadmin/organisasi'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-building fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Organisasi</span>
                     </a>
                 </li>
 

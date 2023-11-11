@@ -66,16 +66,32 @@ class SuperAdmin extends CI_Controller
         $this->load->view('page/super_admin/absensi', $data);
     }
 
-    // Page Tambah Organisasi
+    // Page Tambah Admin
     public function tambah_admin()
     {
         // $data['id_superadmin'] = $this->session->userdata('id');
-        $data['organisasi'] = $this->super_model
-            ->get_data('organisasi')
-            ->result();
+        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
         $this->load->view('page/super_admin/tambah_admin', $data);
     }
 
+    // Page Tambah Organisasi
+    public function tambah_organisasi()
+    {
+        $data['admin'] = $this->super_model->get_data('admin')->result();
+        $this->load->view('page/super_admin/tambah_organisasi', $data);
+    }
+    
+    // Page Tambah User
+    public function tambah_user()
+    {
+        $data['admin'] = $this->super_model->get_data('admin')->result();
+        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
+        $data['shift'] = $this->super_model->get_data('shift')->result();
+        $data['jabatan'] = $this->super_model->get_data('jabatan')->result();
+        $this->load->view('page/super_admin/tambah_user', $data);
+    }
+
+    // aksi tambah admin
     public function aksi_tambah_admin()
     {
         $id_superadmin = $this->session->userdata('id');
@@ -87,7 +103,6 @@ class SuperAdmin extends CI_Controller
             'nama_belakang' => $this->input->post('nama_belakang'),
             'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
             'image' => 'User.png',
-            // 'id_organisasi' => $this->input->post('id_organisasi'),
             'id_superadmin' => $id_superadmin,
             'role' => 'admin',
             // sesuaikan dengan kolom lainnya
@@ -100,14 +115,7 @@ class SuperAdmin extends CI_Controller
         redirect('superadmin/admin');
     }
 
-    public function tambah_organisasi()
-    {
-        $data['organisasi'] = $this->super_model
-            ->get_data('organisasi')
-            ->result();
-        $this->load->view('page/super_admin/tambah_organisasi', $data);
-    }
-
+    // aksi tambah organisasi
     public function aksi_tambah_organisasi()
     {
         $id_superadmin = $this->session->userdata('id');
@@ -120,6 +128,7 @@ class SuperAdmin extends CI_Controller
             'kecamatan' => $this->input->post('kecamatan'),
             'kabupaten' => $this->input->post('kabupaten'),
             'provinsi' => $this->input->post('provinsi'),
+            'id_admin' => $this->input->post('id_admin'),
             // sesuaikan dengan kolom lainnya
         ];
 
@@ -130,15 +139,34 @@ class SuperAdmin extends CI_Controller
         redirect('superadmin/organisasi');
     }
 
-    public function profile()
+    // aksi tambah user
+    public function aksi_tambah_user()
     {
-        if ($this->session->userdata('id_superadmin')) {
-            $id = $this->session->userdata('id_superadmin');
-            $data['superadmin'] = $this->m_model->getUserById($id); // Perbaiki ini dari $user_id menjadi $id_superadmin
+        // Ambil data yang diperlukan dari form
+        $data = [
+            'email' => $this->input->post('email'),
+            'username' => $this->input->post('username'),
+            'nama_depan' => $this->input->post('nama_depan'),
+            'nama_belakang' => $this->input->post('nama_belakang'),
+            'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
+            'id_admin' => $this->input->post('id_admin'),
+            'id_organisasi' => $this->input->post('id_organisasi'),
+            'id_shift' => $this->input->post('id_shift'),
+            'id_jabatan' => $this->input->post('id_jabatan'),
+            'image' => 'User.png',
+            'role' => 'user',
+            // sesuaikan dengan kolom lainnya
+        ];
 
-            $this->load->view('page/super_admin/profile', $data);
-        } else {
-            redirect('auth/login');
-        }
+        // Simpan data ke tabel
+        $this->super_model->tambah_data('user', $data); // Panggil method pada model
+
+        // Redirect kembali ke halaman dashboard superadmin
+        redirect('superadmin/admin');
+    }
+
+    public function profile()
+    { // Perbaiki ini dari $user_id menjadi $id_superadmin
+        $this->load->view('page/super_admin/profile');
     }
 }

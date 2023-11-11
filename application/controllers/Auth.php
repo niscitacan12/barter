@@ -80,7 +80,7 @@ class Auth extends CI_Controller {
                 'email' => $result['email'],
                 'username' => $result['username'],
                 'role' => $result['role'], // Menyimpan peran pengguna (admin/karyawan).
-                'id_superadmin' => $result['id_superadmin'],
+                'id' => $result['id_superadmin'],
             ];
             // Mengatur data sesi pengguna dengan informasi di atas.
             $this->session->set_userdata($data);

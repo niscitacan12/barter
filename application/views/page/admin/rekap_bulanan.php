@@ -14,7 +14,7 @@
             <main id="content" class="flex-1 p-4 sm:p-6">
                 <div class="bg-white rounded-lg shadow-md p-4">
                     <h1 class="text-2xl font-bold text-center mb-4">REKAP BULANAN</h1>
-                    <form action="" method="get" class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <form action="<?php base_url('') ?>" method="get" class="flex flex-col sm:flex-row justify-center items-center gap-4">
                         <select id="bulan" name="bulan">
                             <option>Pilih Bulan</option>
                             <option>Januari</option>
@@ -33,10 +33,9 @@
                         <button type="submit"
                             class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"><i
                                 class="fa-solid fa-filter"></i></button>
-                        <a href="<?= base_url('Admin/export_rekap_mingguan') ?>"
+                        <a href="<?= base_url('admin/export_rekap_bulanan') ?>"
                             class="exp bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block ml-auto"><i
                                 class="fa-solid fa-file-export"></i></a>
-                        <!-- Class "ml-auto" akan mendorong elemen ke kanan -->
                     </form>
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">

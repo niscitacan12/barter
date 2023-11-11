@@ -169,4 +169,15 @@ class SuperAdmin extends CI_Controller
     { // Perbaiki ini dari $user_id menjadi $id_superadmin
         $this->load->view('page/super_admin/profile');
     }
+
+     // Page Detail Organisasi
+     public function detail_organisasi()
+     {
+           // Mendefinisikan data yang akan digunakan dalam tampilan
+         $data = array(
+             'judul' => 'Detail Organisasi',
+             'deskripsi' => 'Ini adalah halaman detail organisasi.'
+         );
+         $this->load->view('page/super_admin/detail_organisasi', $data);
+     }
 }

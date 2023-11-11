@@ -34,4 +34,9 @@ class User extends CI_Controller
     {
         $this->load->view('page/user/izin');
     }
+
+	public function history_absensi()
+	{
+		$this->load->view('page/user/history_absensi');
+	}
 }

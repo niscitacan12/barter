@@ -50,6 +50,40 @@
             }
         });
         </script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.createElement('video');
+            var canvas = document.createElement('canvas');
+            var photoContainer = document.getElementById('photoContainer');
+            var takeSnapshotBtn = document.getElementById('takeSnapshot');
+
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function(err) {
+                    console.error('Error accessing webcam:', err);
+                });
+
+            takeSnapshotBtn.addEventListener('click', function() {
+                var context = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                var img = document.createElement('img');
+                img.src = canvas.toDataURL('image/png');
+
+                // Bersihkan konten sebelumnya di dalam photoContainer
+                photoContainer.innerHTML = '';
+                // Tambahkan gambar baru ke dalam photoContainer
+                photoContainer.appendChild(img);
+            });
+        });
+        </script>
 </body>
 
 </html>

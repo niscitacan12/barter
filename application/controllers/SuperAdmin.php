@@ -180,4 +180,10 @@ class SuperAdmin extends CI_Controller
          );
          $this->load->view('page/super_admin/detail_organisasi', $data);
      }
+     // Page Detail User
+     public function detail_user()
+     {
+       
+         $this->load->view('page/super_admin/detail_user');
+     }
 }

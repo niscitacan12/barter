@@ -43,12 +43,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     Username
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Nama Depan
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Nama Belakang
-                                </th>
+                                
                                 <th scope="col" class="px-6 py-3">
                                     Aksi
                                 </th>

@@ -171,5 +171,20 @@ class Super_model extends CI_Model
         }
         return $query->row_array();
     }
+
+    // Menampilkan Dan Mengget Data 
+    public function getOrganisasiData($id) {
+        // Sesuaikan dengan struktur tabel di database Anda
+        $this->db->select('*');
+        $this->db->from('organisasi');
+        $this->db->where('id_organisasi', $id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
 }
 ?>

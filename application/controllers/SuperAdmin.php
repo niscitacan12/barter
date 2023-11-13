@@ -194,13 +194,12 @@ class SuperAdmin extends CI_Controller
     }
 
     // Page Detail Organisasi
-    public function detail_organisasi()
-    {
+    public function detail_organisasi() {
         // Mendefinisikan data yang akan digunakan dalam tampilan
-        $data = [
+        $data = array(
             'judul' => 'Detail Organisasi',
-            'deskripsi' => 'Ini adalah halaman detail organisasi.',
-        ];
+            'deskripsi' => 'Ini adalah halaman detail organisasi.'
+        );
         $this->load->view('page/super_admin/detail_organisasi', $data);
     }
 

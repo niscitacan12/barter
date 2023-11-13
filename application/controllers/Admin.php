@@ -6,8 +6,9 @@ class Admin extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->database();
         $this->load->model('admin_model');
-        $this->load->helper('my_helper');
+        $this->load->helper('admin_helper');
         if (
             $this->session->userdata('logged_in') != true ||
             $this->session->userdata('role') != 'admin'
@@ -132,7 +133,11 @@ class Admin extends CI_Controller
     // Page tambah user
     public function tambah_user()
     {
-        $this->load->view('page/admin/tambah_user');
+        $data['admin'] = $this->admin_model->get_data('admin')->result();
+        $data['organisasi'] = $this->admin_model->get_data('organisasi') ->result();
+        $data['shift'] = $this->admin_model->get_data('shift')->result();
+        $data['jabatan'] = $this->admin_model->get_data('jabatan')->result();
+        $this->load->view('page/admin/tambah_user', $data);
     }
     // Page tambah lokasi
     public function tambah_lokasi()
@@ -144,26 +149,26 @@ class Admin extends CI_Controller
 
     public function aksi_tambah_user()
     {
-        // Ambil data yang diperlukan dari form, termasuk admin_id yang dipilih
-        $id_admin = $this->session->userdata('id');
-        $id_organisasi = 1;
+        // Ambil data yang diperlukan dari form
         $data = [
             'email' => $this->input->post('email'),
             'username' => $this->input->post('username'),
             'nama_depan' => $this->input->post('nama_depan'),
             'nama_belakang' => $this->input->post('nama_belakang'),
-            'id_admin' => $id_admin, // Set 'id_admin' to the value from the session
-            'id_organisasi' => $id_organisasi,
             'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
+            'id_admin' => $this->input->post('id_admin'),
+            'id_organisasi' => $this->input->post('id_organisasi'),
+            'id_shift' => $this->input->post('id_shift'),
+            'id_jabatan' => $this->input->post('id_jabatan'),
             'image' => 'User.png',
             'role' => 'user',
             // sesuaikan dengan kolom lainnya
         ];
 
-        // Panggil function pada model
-        $this->admin_model->tambah_data('user', $data);
+        // Simpan data ke tabel
+        $this->admin_model->tambah_data('user', $data); // Panggil method pada model
 
-        // Redirect kembali ke halaman yang sesuai
+        // Redirect kembali ke halaman dashboard superadmin
         redirect('admin/user');
     }
 

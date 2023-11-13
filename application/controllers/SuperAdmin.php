@@ -375,5 +375,13 @@ class SuperAdmin extends CI_Controller
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/admin');
     }
-
+   
+    public function your_method_name() {
+        // Fetch data from your model
+        // In your controller
+        $superadmin_data = $this->super_model->get_superadmin_data();
+        
+        // Pass data to the view
+        $this->load->view('superadmin', ['superadmin' => $superadmin_data]);
+    }
 }

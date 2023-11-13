@@ -147,5 +147,15 @@ class Super_model extends CI_Model
         $data = $this->db->delete($table, array($field => $id));
         return $data;
     }
+
+    public function get_superadmin_data() {
+        // Replace 'your_superadmin_table' with your actual table name
+            $query = $this->db->get('superadmin'); 
+        if (!$query) {
+           log_message('error', 'Database Error: ' . $this->db->error());
+            return false;
+        }
+        return $query->row_array();
+    }
 }
 ?>

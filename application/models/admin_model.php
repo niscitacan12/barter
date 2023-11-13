@@ -81,5 +81,6 @@ class Admin_model extends CI_Model
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
     }
+
 }
 ?>

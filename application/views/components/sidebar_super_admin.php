@@ -123,6 +123,26 @@
                     </a>
                 </li>
 
+                <!-- Menu Jabatan -->
+                <li>
+                    <a href="<?php echo base_url('superadmin/jabatan'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-briefcase fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Jabatan</span>
+                    </a>
+                </li>
+
+                <!-- Menu Shift -->
+                <li>
+                    <a href="<?php echo base_url('superadmin/shift'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-business-time fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Shift</span>
+                    </a>
+                </li>
+
                 <!-- Menu User -->
                 <li>
                     <a href="<?php echo base_url('superadmin/user'); ?>"

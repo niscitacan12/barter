@@ -98,16 +98,38 @@ class Super_model extends CI_Model
         }
     }
 
+    public function getJabatanId($id_jabatan)
+    {
+        $this->db->select('*');
+        $this->db->from('jabatan');
+        $this->db->where('id_jabatan', $id_jabatan);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    public function getShiftId($id_shift)
+    {
+        $this->db->select('*');
+        $this->db->from('shift');
+        $this->db->where('id_shift', $id_shift);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
     public function hapus_admin($id_admin)
     {
         $this->db->where('id_admin', $id_admin);
         $this->db->delete('admin');
     }
+
     public function hapus_organisasi($id_organisasi)
     {
         $this->db->where('id_organisasi', $id_organisasi);
         $this->db->delete('organisasi');
     }
+  
     public function getUserData($id) {
         // Sesuaikan dengan struktur tabel di database Anda
         $this->db->select('*');
@@ -120,6 +142,34 @@ class Super_model extends CI_Model
         } else {
             return false;
         }
+}
+
+    public function hapus_jabatan($id_jabatan)
+    {
+        $this->db->where('id_jabatan', $id_jabatan);
+        $this->db->delete('jabatan');
+    }
+
+    public function hapus_shift($id_shift)
+    {
+        $this->db->where('id_shift', $id_shift);
+        $this->db->delete('shift');
+    }
+
+    // Menghapus data dari tabel berdasarkan kondisi
+    public function delete($table, $field, $id) {
+        $data = $this->db->delete($table, array($field => $id));
+        return $data;
+    }
+
+    public function get_superadmin_data() {
+        // Replace 'your_superadmin_table' with your actual table name
+            $query = $this->db->get('superadmin'); 
+        if (!$query) {
+           log_message('error', 'Database Error: ' . $this->db->error());
+            return false;
+        }
+        return $query->row_array();
     }
 }
 ?>

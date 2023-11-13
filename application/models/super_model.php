@@ -108,5 +108,18 @@ class Super_model extends CI_Model
         $this->db->where('id_organisasi', $id_organisasi);
         $this->db->delete('organisasi');
     }
+    public function getUserData($id) {
+        // Sesuaikan dengan struktur tabel di database Anda
+        $this->db->select('*');
+        $this->db->from('user'); // Ganti 'user' sesuai dengan nama tabel Anda
+        $this->db->where('id_user', $id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
 }
 ?>

@@ -70,8 +70,43 @@ class SuperAdmin extends CI_Controller
     public function tambah_admin()
     {
         // $data['id_superadmin'] = $this->session->userdata('id');
-        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->result();
         $this->load->view('page/super_admin/tambah_admin', $data);
+    }
+
+    // Page Edit Admin
+    public function update_admin($id_admin)
+    {
+        // $id_admin = $this->session->userdata('id_admin');
+        $data['admin'] = $this->super_model->getAdminById($id_admin);
+        $this->load->view('page/super_admin/update_admin', $data);
+    }
+
+    public function aksi_edit_admin()
+    {
+        // Mendapatkan data dari form
+        $id_admin = $this->input->post('id_admin');
+        $email = $this->input->post('email');
+        $username = $this->input->post('username');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'email' => $email,
+            'username' => $username,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $this->super_model->update_admin($id_admin, $data);
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect('superadmin/admin'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
     }
 
     // Page Tambah Organisasi
@@ -80,12 +115,56 @@ class SuperAdmin extends CI_Controller
         $data['admin'] = $this->super_model->get_data('admin')->result();
         $this->load->view('page/super_admin/tambah_organisasi', $data);
     }
-    
+
+    // Page Update Organisasi
+    public function update_organisasi($id_organisasi)
+    {
+        $data['organisasi'] = $this->super_model->getOrganisasiById(
+            $id_organisasi
+        );
+        $this->load->view('page/super_admin/update_organisasi', $data);
+    }
+
+    // Aksi Update Organisasi
+
+    public function aksi_edit_organisasi()
+    {
+        // Mendapatkan data dari form
+        $id_organisasi = $this->input->post('id_organisasi');
+        $nama_organisasi = $this->input->post('nama_organisasi');
+        $nomor_telepon = $this->input->post('nomor_telepon');
+        $email_organisasi = $this->input->post('email_organisasi');
+        $kecamatan = $this->input->post('kecamatan');
+        $alamat = $this->input->post('alamat');
+        $kabupaten = $this->input->post('kabupaten');
+        $provinsi = $this->input->post('provinsi');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'nama_organisasi' => $nama_organisasi,
+            'email_organisasi' => $email_organisasi,
+            'nomor_telepon' => $nomor_telepon,
+            'kecamatan' => $kecamatan,
+            'alamat' => $alamat,
+            'kabupaten' => $kabupaten,
+            'provinsi' => $provinsi,
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $this->super_model->update_organisasi($id_organisasi, $data);
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect('superadmin/organisasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+    }
+
     // Page Tambah User
     public function tambah_user()
     {
         $data['admin'] = $this->super_model->get_data('admin')->result();
-        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->result();
         $data['shift'] = $this->super_model->get_data('shift')->result();
         $data['jabatan'] = $this->super_model->get_data('jabatan')->result();
         $this->load->view('page/super_admin/tambah_user', $data);
@@ -166,24 +245,36 @@ class SuperAdmin extends CI_Controller
     }
 
     public function profile()
-    { // Perbaiki ini dari $user_id menjadi $id_superadmin
+    {
+        // Perbaiki ini dari $user_id menjadi $id_superadmin
         $this->load->view('page/super_admin/profile');
     }
 
-     // Page Detail Organisasi
-     public function detail_organisasi()
-     {
-           // Mendefinisikan data yang akan digunakan dalam tampilan
-         $data = array(
-             'judul' => 'Detail Organisasi',
-             'deskripsi' => 'Ini adalah halaman detail organisasi.'
-         );
-         $this->load->view('page/super_admin/detail_organisasi', $data);
-     }
-     // Page Detail User
-     public function detail_user()
-     {
-       
-         $this->load->view('page/super_admin/detail_user');
-     }
+    // Page Detail Organisasi
+    public function detail_organisasi()
+    {
+        // Mendefinisikan data yang akan digunakan dalam tampilan
+        $data = [
+            'judul' => 'Detail Organisasi',
+            'deskripsi' => 'Ini adalah halaman detail organisasi.',
+        ];
+        $this->load->view('page/super_admin/detail_organisasi', $data);
+    }
+    // Page Detail User
+    public function detail_user()
+    {
+        $this->load->view('page/super_admin/detail_user');
+    }
+
+    public function hapus_admin($id_admin)
+    {
+        $this->super_model->hapus_admin($id_admin);
+        redirect('superadmin/admin');
+    }
+
+    public function hapus_organisasi($id_organisasi)
+    {
+        $this->super_model->hapus_organisasi($id_organisasi);
+        redirect('superadmin/organisasi');
+    }
 }

@@ -205,10 +205,6 @@ class SuperAdmin extends CI_Controller
     }
 
     // Page Detail User
-    public function detail_user()
-    {
-        $this->load->view('page/super_admin/detail_user');
-    }
 
     // aksi tambah jabatan
     public function aksi_tambah_jabatan()
@@ -375,13 +371,25 @@ class SuperAdmin extends CI_Controller
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/admin');
     }
-   
-    public function your_method_name() {
-        // Fetch data from your model
-        // In your controller
+
+    // Page Detail User
+    public function detail_user() {
+        // Fetch data from the model
         $superadmin_data = $this->super_model->get_superadmin_data();
-        
+
         // Pass data to the view
-        $this->load->view('superadmin', ['superadmin' => $superadmin_data]);
+        $data['superadmin'] = $superadmin_data;
+
+        // Load the view  
+       $this->load->view('page/super_admin/detail_user', $data);
     }
+    
+     public function your_method_name() {
+    // Fetch data from your model
+      // In your controller
+    $superadmin_data = $this->super_model->get_superadmin_data();
+
+    // Pass data to the view
+    $this->load->view('superadmin', ['superadmin' => $superadmin_data]);
+}
 }

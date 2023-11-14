@@ -96,5 +96,59 @@ class Admin_model extends CI_Model
         $this->db->from('absensi');
         return $this->db->count_all_results();
     }
+
+    public function hapus_organisasi($id_organisasi) {
+        // Misalnya, menggunakan query database untuk menghapus data organisasi berdasarkan ID
+        // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
+        $this->db->where('id_organisasi', $id_organisasi);
+        $this->db->delete('organisasi'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
+    }
+    public function get_superadmin_data() {
+        // Replace 'your_superadmin_table' with your actual table name
+            $query = $this->db->get('admin'); 
+        if (!$query) {
+           log_message('error', 'Database Error: ' . $this->db->error());
+            return false;
+        }
+        return $query->row_array();
+    }
+    
+
+    public function update_organisasi($id_organisasi, $data)
+    {
+        // Lakukan pembaruan data Admin
+        $this->db->where('id_organisasi', $id_organisasi);
+        $this->db->update('organisasi', $data);
+    }
+
+    public function getOrganisasiById($id_organisasi) {
+        // Misalnya, menggunakan query database untuk mengambil data organisasi berdasarkan ID
+        // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
+        $this->db->select('*');
+        $this->db->from('organisasi');
+        $this->db->where('id_organisasi', $id_organisasi);
+        $query = $this->db->get();
+
+        // Mengembalikan satu baris hasil query sebagai objek
+        return $query->row();
+    }
+
+    public function getOrganisasiData($id)
+    {
+        // Sesuaikan dengan struktur tabel di database Anda
+        $this->db->select('*');
+        $this->db->from('organisasi');
+        $this->db->where('id_organisasi', $id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
+
+   
+   
 }
 ?>

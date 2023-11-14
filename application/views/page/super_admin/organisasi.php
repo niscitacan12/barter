@@ -27,7 +27,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 mb-5">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
@@ -58,14 +58,12 @@
                         <!-- Tabel Body -->
                         <tbody class="text-center">
                             <?php
-                            $no = 0;
-                            foreach ($organisasi as $row):
-                                $no++; ?>
+                            foreach ($organisasi as $row): ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <?php echo $no; ?>
+                                    <?php echo ++$start; ?>
                                 </th>
                                 <td class="px-6 py-4">
                                     <?php echo $row->nama_organisasi; ?>
@@ -109,6 +107,10 @@
                             ?>
                         </tbody>
                     </table>
+                </div>
+                <hr class="my-8">
+                <div class="flex justify-end">
+                    <?= $this->pagination->create_links(); ?>
                 </div>
             </div>
         </div>

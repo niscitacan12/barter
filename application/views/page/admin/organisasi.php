@@ -10,7 +10,7 @@
 <body>
     <?php $this->load->view('components/sidebar_admin'); ?>
     <div class="p-4 sm:ml-64">
-        <div class="p-5">
+        <div class="p-5 mt-10">
 
             <!-- Card -->
             <div

@@ -391,4 +391,12 @@ class SuperAdmin extends CI_Controller
     // Pass data to the view
     $this->load->view('superadmin', ['superadmin' => $superadmin_data]);
 }
+public function detail_admin()
+{
+    // $data['id_superadmin'] = $this->session->userdata('id');
+    $data['organisasi'] = $this->super_model
+        ->get_data('organisasi')
+        ->result();
+    $this->load->view('page/super_admin/detail_admin', $data);
+}
 }

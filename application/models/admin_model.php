@@ -82,5 +82,19 @@ class Admin_model extends CI_Model
         return $this->db->affected_rows();
     }
 
+    // Menampilkan jumlah user
+    public function get_user_count()
+    {
+        $this->db->where('role', 'user');
+        $query = $this->db->get('user');
+        return $query->num_rows();
+    }
+
+     // Metode untuk menghitung jumlah data absensi
+    public function get_absensi_count() 
+    {
+        $this->db->from('absensi');
+        return $this->db->count_all_results();
+    }
 }
 ?>

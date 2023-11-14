@@ -20,6 +20,9 @@ class Admin extends CI_Controller
     // Page Dashboard
     public function index()
     {
+        $data['user'] = $this->admin_model->get_user_count();
+        $data['absensi'] = $this->admin_model->get_absensi_count();
+        // $data['cuti'] = $this->Admin_model->get_cuti_count();
         $this->load->view('page/admin/dashboard');
     }
 

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -55,5 +56,17 @@
         </div>
     </div>
 </body>
+
+<?php if($this->session->flashdata('login_success')){ ?>
+<script>
+Swal.fire({
+    title: 'Berhasil Login',
+    text: '<?php echo $this->session->flashdata('login_success'); ?>',
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1500
+})
+</script>
+<?php } ?>
 
 </html>

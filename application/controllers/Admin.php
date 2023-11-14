@@ -132,6 +132,75 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/rekap_bulanan');
     }
+   
+  public function hapus_organisasi($id_organisasi)
+    {
+        $this->admin_model->hapus_organisasi($id_organisasi);
+        redirect('admin/organisasi');
+    }
+
+    public function update_organisasi($id_organisasi)
+    {
+        $data['organisasi'] = $this->admin_model->getOrganisasiById(
+            $id_organisasi
+        );
+        $this->load->view('page/admin/update_organisasi', $data);
+    }
+
+
+public function aksi_edit_organisasi()
+    {
+        // Mendapatkan data dari form
+        $id_organisasi = $this->input->post('id_organisasi');
+        $nama_organisasi = $this->input->post('nama_organisasi');
+        $nomor_telepon = $this->input->post('nomor_telepon');
+        $email_organisasi = $this->input->post('email_organisasi');
+        $kecamatan = $this->input->post('kecamatan');
+        $alamat = $this->input->post('alamat');
+        $kabupaten = $this->input->post('kabupaten');
+        $provinsi = $this->input->post('provinsi');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'nama_organisasi' => $nama_organisasi,
+            'email_organisasi' => $email_organisasi,
+            'nomor_telepon' => $nomor_telepon,
+            'kecamatan' => $kecamatan,
+            'alamat' => $alamat,
+            'kabupaten' => $kabupaten,
+            'provinsi' => $provinsi,
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $this->admin_model->update_organisasi($id_organisasi, $data);
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect('admin/organisasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+    }
+
+	public function aksi_tambah_organisasi()
+    {
+        $id_admin = $this->session->userdata('id');
+        // Ambil data yang diperlukan dari form
+        $data = [
+            'nama_organisasi' => $this->input->post('nama_organisasi'),
+            'alamat' => $this->input->post('alamat'),
+            'nomor_telepon' => $this->input->post('nomor_telepon'),
+            'email_organisasi' => $this->input->post('email_organisasi'),
+            'kecamatan' => $this->input->post('kecamatan'),
+            'kabupaten' => $this->input->post('kabupaten'),
+            'provinsi' => $this->input->post('provinsi'),
+            'id_admin' => $this->input->post('id_admin'),
+            // sesuaikan dengan kolom lainnya
+        ];
+
+        // Simpan data ke tabel
+        $this->admin_model->tambah_data('organisasi', $data); // Panggil method pada model
+
+        // Redirect kembali ke halaman dashboard admin
+        redirect('admin/organisasi');
+    }
 
     // Page tambah user
     public function tambah_user()
@@ -286,5 +355,28 @@ class Admin extends CI_Controller
             echo 'Terjadi kesalahan. Silakan coba lagi atau hubungi administrator.';
         }
     }
-}
+
+    public function detail_organisasi() {
+        // Load your data here, assuming you have a method in Super_model to get the data
+        $id_organisasi = $this->input->get('id');
+    
+        if ($id_organisasi !== null) {
+            // Panggil model untuk mendapatkan data organisasi berdasarkan ID
+            $this->load->model('admin_model');
+            $data['organisasi'] = $this->admin_model->getOrganisasiData($id_organisasi);
+    
+            if ($data['organisasi']) {
+                // Load your view passing the data
+                $this->load->view('page/admin/detail_organisasi', $data);
+            } else {
+                // Handle the case when data is not found
+                echo 'Data organisasi tidak ditemukan.';
+            }
+        } else {
+            // Handle the case when ID is not valid or not found
+            echo 'ID tidak valid atau tidak ditemukan.';
+        }
+    }
+}    
+
 ?>

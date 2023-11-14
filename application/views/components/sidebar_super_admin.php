@@ -170,7 +170,6 @@
     </div>
 </body>
 <script>
-// Fungsi untuk menampilkan konfirmasi SweetAlert saat tombol logout ditekan
 function confirmLogout() {
     Swal.fire({
         title: 'Yakin ingin logout?',
@@ -183,9 +182,8 @@ function confirmLogout() {
         cancelButtonText: 'Tidak'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Jika konfirmasi "Ya", maka alihkan ke logout
             window.location.href = "<?php echo base_url(
-                'superadmin/logout'
+                'auth/logout'
             ); ?>";
         }
     });

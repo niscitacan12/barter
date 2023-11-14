@@ -16,7 +16,7 @@
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
-                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Jabatan</h6>
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Shift</h6>
                     <a type="button" href="<?php echo base_url(
                         'superadmin/tambah_shift'
                     ); ?>"
@@ -56,15 +56,12 @@
 
                         <!-- Tabel Body -->
                         <tbody>
-                            <?php
-                            $no = 0;
-                            foreach ($shift as $row):
-                                $no++; ?>
+                            <?php foreach ($shift as $row): ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <?php echo $no; ?>
+                                    <?php echo ++$start; ?>
                                 </th>
                                 <td class="px-6 py-4">
                                     <?php echo $row->nama_shift; ?>
@@ -107,6 +104,10 @@
                             ?>
                         </tbody>
                     </table>
+                </div>
+                <hr class="my-8">
+                <div class="flex justify-end">
+                    <?= $this->pagination->create_links(); ?>
                 </div>
             </div>
         </div>

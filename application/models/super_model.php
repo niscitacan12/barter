@@ -57,6 +57,13 @@ class Super_model extends CI_Model
         $this->db->update('organisasi', $data);
     }
 
+    public function update_user($id_user, $data)
+    {
+        // Lakukan pembaruan data Admin
+        $this->db->where('id_user', $id_user);
+        $this->db->update('user', $data);
+    }
+
     public function update_admin($id_admin, $data)
     {
         // Lakukan pembaruan data Admin
@@ -118,10 +125,26 @@ class Super_model extends CI_Model
         return $query->row();
     }
 
+    public function getUserId($id_user)
+    {
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
     public function hapus_admin($id_admin)
     {
         $this->db->where('id_admin', $id_admin);
         $this->db->delete('admin');
+    }
+
+    public function hapus_user($id_user)
+    {
+        $this->db->where('id_user', $id_user);
+        $this->db->delete('user');
     }
 
     public function hapus_organisasi($id_organisasi)
@@ -129,8 +152,21 @@ class Super_model extends CI_Model
         $this->db->where('id_organisasi', $id_organisasi);
         $this->db->delete('organisasi');
     }
-  
-    public function getUserData($id) {
+
+    public function getUserDetails($user_id)
+    {
+        $this->db->where('id_user', $user_id); // Sesuaikan kolom yang merepresentasikan ID pengguna
+        $query = $this->db->get('user'); // Sesuaikan 'users' dengan nama tabel pengguna
+
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris data user
+        } else {
+            return false; // Mengembalikan false jika tidak ada data ditemukan
+        }
+    }
+
+    public function getUserData($id)
+    {
         // Sesuaikan dengan struktur tabel di database Anda
         $this->db->select('*');
         $this->db->from('user'); // Ganti 'user' sesuai dengan nama tabel Anda
@@ -142,7 +178,7 @@ class Super_model extends CI_Model
         } else {
             return false;
         }
-}
+    }
 
     public function hapus_jabatan($id_jabatan)
     {
@@ -157,23 +193,26 @@ class Super_model extends CI_Model
     }
 
     // Menghapus data dari tabel berdasarkan kondisi
-    public function delete($table, $field, $id) {
-        $data = $this->db->delete($table, array($field => $id));
+    public function delete($table, $field, $id)
+    {
+        $data = $this->db->delete($table, [$field => $id]);
         return $data;
     }
 
-    public function get_superadmin_data() {
+    public function get_superadmin_data()
+    {
         // Replace 'your_superadmin_table' with your actual table name
-            $query = $this->db->get('superadmin'); 
+        $query = $this->db->get('superadmin');
         if (!$query) {
-           log_message('error', 'Database Error: ' . $this->db->error());
+            log_message('error', 'Database Error: ' . $this->db->error());
             return false;
         }
         return $query->row_array();
     }
 
-    // Menampilkan Dan Mengget Data 
-    public function getOrganisasiData($id) {
+    // Menampilkan Dan Mengget Data
+    public function getOrganisasiData($id)
+    {
         // Sesuaikan dengan struktur tabel di database Anda
         $this->db->select('*');
         $this->db->from('organisasi');

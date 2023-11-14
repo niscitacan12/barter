@@ -168,7 +168,7 @@ class SuperAdmin extends CI_Controller
     // Page Update Jabatan
     public function update_jabatan($id_jabatan)
     {
-        $data['jabatan']=$this->super_model->getJabatanId($id_jabatan);
+        $data['jabatan'] = $this->super_model->getJabatanId($id_jabatan);
         $this->load->view('page/super_admin/update_jabatan', $data);
     }
 
@@ -182,8 +182,39 @@ class SuperAdmin extends CI_Controller
     // Page Update Shift
     public function update_shift($id_shift)
     {
-        $data['shift']=$this->super_model->getShiftId($id_shift);
+        $data['shift'] = $this->super_model->getShiftId($id_shift);
         $this->load->view('page/super_admin/update_shift', $data);
+    }
+
+    // Page Update User
+    public function update_user($id_user)
+    {
+        $data['user'] = $this->super_model->getUserId($id_user);
+        $this->load->view('page/super_admin/update_user', $data);
+    }
+
+    // Aksi Update User
+    public function aksi_edit_user()
+    {
+        // Mendapatkan data dari form
+        $id_user = $this->input->post('id_user');
+        $username = $this->input->post('username');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'username' => $username,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $this->super_model->update_user($id_user, $data);
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect('superadmin/user'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
     }
 
     // Page Profile
@@ -194,16 +225,15 @@ class SuperAdmin extends CI_Controller
     }
 
     // Page Detail Organisasi
-    public function detail_organisasi() {
+    public function detail_organisasi()
+    {
         // Mendefinisikan data yang akan digunakan dalam tampilan
-        $data = array(
+        $data = [
             'judul' => 'Detail Organisasi',
-            'deskripsi' => 'Ini adalah halaman detail organisasi.'
-        );
+            'deskripsi' => 'Ini adalah halaman detail organisasi.',
+        ];
         $this->load->view('page/super_admin/detail_organisasi', $data);
     }
-
-    // Page Detail User
 
     // aksi tambah jabatan
     public function aksi_tambah_jabatan()
@@ -242,7 +272,7 @@ class SuperAdmin extends CI_Controller
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/shift');
     }
-    
+
     // aksi edit admin
     public function aksi_edit_admin()
     {
@@ -295,6 +325,13 @@ class SuperAdmin extends CI_Controller
     {
         $this->super_model->hapus_shift($id_shift);
         redirect('superadmin/shift');
+    }
+
+    // aksi hapus user
+    public function hapus_user($id_user)
+    {
+        $this->super_model->hapus_user($id_user);
+        redirect('superadmin/user');
     }
 
     // aksi tambah admin
@@ -368,27 +405,25 @@ class SuperAdmin extends CI_Controller
         $this->super_model->tambah_data('user', $data); // Panggil method pada model
 
         // Redirect kembali ke halaman dashboard superadmin
-        redirect('superadmin/admin');
+        redirect('superadmin/user');
     }
 
     // Page Detail User
-    public function detail_user() {
-        // Fetch data from the model
+    public function detail_user($user_id)
+    {
+        $data['user'] = $this->super_model->getUserDetails($user_id);
+
+        // Mengirim data pengguna ke view
+        $this->load->view('page/super_admin/detail_user', $data);
+    }
+
+    public function your_method_name()
+    {
+        // Fetch data from your model
+        // In your controller
         $superadmin_data = $this->super_model->get_superadmin_data();
 
         // Pass data to the view
-        $data['superadmin'] = $superadmin_data;
-
-        // Load the view  
-       $this->load->view('page/super_admin/detail_user', $data);
+        $this->load->view('superadmin', ['superadmin' => $superadmin_data]);
     }
-    
-     public function your_method_name() {
-    // Fetch data from your model
-      // In your controller
-    $superadmin_data = $this->super_model->get_superadmin_data();
-
-    // Pass data to the view
-    $this->load->view('superadmin', ['superadmin' => $superadmin_data]);
-}
 }

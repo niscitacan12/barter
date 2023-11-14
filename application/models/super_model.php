@@ -165,6 +165,18 @@ class Super_model extends CI_Model
         }
     }
 
+    public function getAdminDetails($admin_id)
+    {
+        $this->db->where('id_admin', $admin_id); // Sesuaikan kolom yang merepresentasikan ID pengguna
+        $query = $this->db->get('admin'); // Sesuaikan 'users' dengan nama tabel pengguna
+
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris data user
+        } else {
+            return false; // Mengembalikan false jika tidak ada data ditemukan
+        }
+    }
+
     public function getUserData($id)
     {
         // Sesuaikan dengan struktur tabel di database Anda

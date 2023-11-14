@@ -24,7 +24,7 @@
                 <div class="mt-5 text-left">
                     <!-- Form Input -->
                     <form action="<?php echo base_url(
-                        'superadmin/aksi_edit_organisasi'
+                        'superadmin/aksi_edit_shift'
                     ); ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id_shift" value="<?php echo $shift->id_shift; ?>">
 

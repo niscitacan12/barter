@@ -237,5 +237,19 @@ class Super_model extends CI_Model
             return false;
         }
     }
+
+    public function pagination($table_name, $limit, $offset) {
+        $this->db->limit($limit, $offset);
+        $query = $this->db->get($table_name);
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+        return array();
+    }
+
+    public function count_all($table_name){
+        return $this->db->get($table_name)->num_rows();
+    }
 }
 ?>

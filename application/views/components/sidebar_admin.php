@@ -73,7 +73,7 @@
 
                                 <!-- Menu Logout -->
                                 <li>
-                                    <a href="#"
+                                    <a href="javascript:void(0);" onclick="confirmLogout();" type="button"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Sign out</a>
                                 </li>
@@ -257,6 +257,27 @@
     <div class="p-4 sm:ml-64">
     </div>
 </body>
+
+<script>
+function confirmLogout() {
+    Swal.fire({
+        title: 'Yakin ingin logout?',
+        text: "Anda akan keluar dari akun Anda.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Logout',
+        cancelButtonText: 'Tidak'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "<?php echo base_url(
+                'auth/logout'
+            ); ?>";
+        }
+    });
+}
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
 

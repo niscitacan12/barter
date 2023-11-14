@@ -7,6 +7,7 @@
     <title>Document</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-indigo-500">
@@ -99,5 +100,29 @@ function showPassword() {
     }
 }
 </script>
+
+<?php if($this->session->flashdata('register_error')){ ?>
+<script>
+Swal.fire({
+    title: 'Register Gagal',
+    text: '<?php echo $this->session->flashdata('register_error'); ?>',
+    icon: 'error',
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
+
+<?php if($this->session->flashdata('error')){ ?>
+<script>
+Swal.fire({
+    title: 'Register Gagal',
+    text: '<?php echo $this->session->flashdata('error'); ?>',
+    icon: 'error',
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
 </html>

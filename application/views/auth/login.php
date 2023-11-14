@@ -7,6 +7,7 @@
     <title>Document</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-indigo-500">
@@ -40,6 +41,7 @@
                             class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Superadmin</label>
                     </div>
                 </div>
+
 
                 <!-- Input email -->
                 <div class="relative z-0 w-full mb-6 group">
@@ -100,6 +102,9 @@ function setFormAction(action) {
 
 const radioButtons = document.getElementsByName('inline-radio-group');
 radioButtons.forEach((radio) => {
+    // Menetapkan aksi formulir default saat halaman dimuat
+    setFormAction("<?php echo base_url('auth/aksi_login_user')?>");
+
     radio.addEventListener('click', (event) => {
         if (event.target.value === "user") {
             setFormAction("<?php echo base_url('auth/aksi_login_user')?>");
@@ -111,5 +116,29 @@ radioButtons.forEach((radio) => {
     });
 });
 </script>
+
+<?php if($this->session->flashdata('register_success')){ ?>
+<script>
+Swal.fire({
+    title: 'Registrasi Berhasil',
+    text: '<?php echo $this->session->flashdata('register_success'); ?>',
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
+
+<?php if($this->session->flashdata('login_error')){ ?>
+<script>
+Swal.fire({
+    title: 'Login Error',
+    text: '<?php echo $this->session->flashdata('login_error'); ?>',
+    icon: 'error',
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
 </html>

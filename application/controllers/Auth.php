@@ -27,7 +27,7 @@ class Auth extends CI_Controller {
             $this->session->set_flashdata('error', 'Semua field harus diisi.');
             redirect(base_url().'auth/register'); // sesuaikan dengan URL halaman registrasi .
         } elseif (strlen($password) < 8) {
-            $this->session->set_flashdata('register_gagal' , 'Password minimal 8 huruf.');
+            $this->session->set_flashdata('register_error' , 'Password minimal 8 huruf.');
             redirect(base_url('auth/register'));
         } else {
             // dengan menggunakan model untuk menyimpan data pengguna
@@ -43,7 +43,7 @@ class Auth extends CI_Controller {
         
             // memanggil model untuk menyimpan data pengguna
             $this->m_model->tambah_data('superadmin', $data);
-            $this->session->set_flashdata('register_success', 'Registrasi berhasil. Silakan login.');
+            $this->session->set_flashdata('register_success', 'Registrasi berhasil, Silakan login.');
         
             // Setelah data pengguna berhasil disimpan, dapat mengarahkan pengguna
             // ke halaman login atau halaman lain yang sesuai.
@@ -84,11 +84,12 @@ class Auth extends CI_Controller {
             ];
             // Mengatur data sesi pengguna dengan informasi di atas.
             $this->session->set_userdata($data);
+            $this->session->set_flashdata('login_success', 'Selamat Datang DiApplikasi Absensi.');
             // Mengarahkan pengguna ke halaman berdasarkan peran mereka.
             redirect(base_url()."superadmin");
         } else {
             // Jika login gagal, menampilkan pesan kesalahan kepada pengguna.
-           $this->session->set_flashdata('gagal_login', 'Silahkan coba kembali.');
+           $this->session->set_flashdata('login_error', 'Silahkan coba kembali.');
            redirect(base_url().'auth'); // Mengarahkan pengguna kembali ke halaman login.
         }
     }
@@ -121,11 +122,12 @@ class Auth extends CI_Controller {
             ];
             // Mengatur data sesi pengguna dengan informasi di atas.
             $this->session->set_userdata($data);
+            $this->session->set_flashdata('login_success', 'Selamat Datang DiApplikasi Absensi.');
             // Mengarahkan pengguna ke halaman berdasarkan peran mereka.
             redirect(base_url()."admin");
         } else {
             // Jika login gagal, menampilkan pesan kesalahan kepada pengguna.
-           $this->session->set_flashdata('gagal_login', 'Silahkan coba kembali.');
+           $this->session->set_flashdata('login_error', 'Silahkan coba kembali.');
            redirect(base_url().'auth'); // Mengarahkan pengguna kembali ke halaman login.
         }
     }
@@ -158,11 +160,12 @@ class Auth extends CI_Controller {
             ];
             // Mengatur data sesi pengguna dengan informasi di atas.
             $this->session->set_userdata($data);
+            $this->session->set_flashdata('login_success', 'Selamat Datang DiApplikasi Absensi.');
             // Mengarahkan pengguna ke halaman berdasarkan peran mereka.
             redirect(base_url()."user");
         } else {
             // Jika login gagal, menampilkan pesan kesalahan kepada pengguna.
-           $this->session->set_flashdata('gagal_login', 'Silahkan coba kembali.');
+           $this->session->set_flashdata('login_error', 'Silahkan coba kembali.');
            redirect(base_url().'auth'); // Mengarahkan pengguna kembali ke halaman login.
         }
     }

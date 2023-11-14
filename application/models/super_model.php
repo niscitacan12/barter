@@ -71,6 +71,20 @@ class Super_model extends CI_Model
         $this->db->update('admin', $data);
     }
 
+    public function update_jabatan($id_jabatan, $data)
+    {
+        // Lakukan pembaruan data Admin
+        $this->db->where('id_jabatan', $id_jabatan);
+        $this->db->update('jabatan', $data);
+    }
+
+    public function update_shift($id_shift, $data)
+    {
+        // Lakukan pembaruan data Admin
+        $this->db->where('id_shift', $id_shift);
+        $this->db->update('shift', $data);
+    }
+
     // Menampilkan role user
     public function get_user()
     {

@@ -355,10 +355,11 @@ class SuperAdmin extends CI_Controller
         ];
 
         // Lakukan pembaruan data Admin
-        $this->super_model->update_organisasi($id_organisasi, $data);
-
+        $eksekusi = $this->super_model->update_organisasi($id_organisasi, $data);
+        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
+        
         // Redirect ke halaman setelah pembaruan data
-        redirect('superadmin/organisasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+        redirect(base_url('superadmin/organisasi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
     }
 
     // Page Tambah User
@@ -427,6 +428,7 @@ class SuperAdmin extends CI_Controller
 
         // Lakukan pembaruan data Admin
         $this->super_model->update_user($id_user, $data);
+        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
 
         // Redirect ke halaman setelah pembaruan data
         redirect('superadmin/user'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
@@ -488,6 +490,52 @@ class SuperAdmin extends CI_Controller
         redirect('superadmin/shift');
     }
 
+    // aksi edit jabatan
+    public function aksi_edit_jabatan()
+    {
+        // Mendapatkan data dari form
+        $id_jabatan = $this->input->post('id_jabatan');
+        $nama_jabatan = $this->input->post('nama_jabatan');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'nama_jabatan' => $this->input->post('nama_jabatan'),
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $this->super_model->update_jabatan($id_jabatan, $data);
+        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
+
+        // Redirect kembali ke halaman dashboard superadmin
+        redirect('superadmin/jabatan');
+    }
+
+    // aksi edit jabatan
+    public function aksi_edit_shift()
+    {
+        // Mendapatkan data dari form
+        $id_shift = $this->input->post('id_shift');
+        $nama_shift = $this->input->post('nama_shift');
+        $jam_masuk = $this->input->post('jam_masuk');
+        $jam_pulang = $this->input->post('jam_pulang');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'nama_shift' => $this->input->post('nama_shift'),
+            'jam_masuk' => $this->input->post('jam_masuk'),
+            'jam_pulang' => $this->input->post('jam_pulang'),
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $this->super_model->update_shift($id_shift, $data);
+        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
+
+        // Redirect kembali ke halaman dashboard superadmin
+        redirect('superadmin/shift');
+    }
+
     // aksi edit admin
     public function aksi_edit_admin()
     {
@@ -509,6 +557,7 @@ class SuperAdmin extends CI_Controller
 
         // Lakukan pembaruan data Admin
         $this->super_model->update_admin($id_admin, $data);
+        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
 
         // Redirect ke halaman setelah pembaruan data
         redirect('superadmin/admin'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin

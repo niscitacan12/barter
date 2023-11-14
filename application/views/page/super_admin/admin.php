@@ -107,4 +107,16 @@
     </div>
 </body>
 
+<?php if($this->session->flashdata('berhasil_update')){ ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_update'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
+
 </html>

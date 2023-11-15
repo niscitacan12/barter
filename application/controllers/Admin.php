@@ -6,8 +6,8 @@ class Admin extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->database();
         $this->load->model('admin_model');
+        $this->load->library('upload');
         $this->load->helper('admin_helper');
         if (
             $this->session->userdata('logged_in') != true ||
@@ -24,6 +24,23 @@ class Admin extends CI_Controller
         $data['absensi'] = $this->admin_model->get_absensi_count();
         // $data['cuti'] = $this->Admin_model->get_cuti_count();
         $this->load->view('page/admin/dashboard');
+    }
+
+    public function upload_image_admin($value)
+    {
+        $kode = round(microtime(true) * 1000);
+        $config['upload_path'] = './images/admin/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            $fn = $this->upload->data();
+            $nama = $fn['file_name'];
+            return [true, $nama];
+        }
     }
 
     // Page Organisasi
@@ -76,7 +93,9 @@ class Admin extends CI_Controller
 
         // Jika ada kata kunci, lakukan pencarian
         if ($keyword !== null && $keyword !== '') {
-            $data['cuti'] = $this->admin_model->search_data('cuti', $keyword)->result();
+            $data['cuti'] = $this->admin_model
+                ->search_data('cuti', $keyword)
+                ->result();
         } else {
             // Jika tidak ada kata kunci, ambil semua data cuti
             $data['cuti'] = $this->admin_model->get_data('cuti')->result();
@@ -116,7 +135,68 @@ class Admin extends CI_Controller
     // Page Profile
     public function profile()
     {
-        $this->load->view('page/admin/profile');
+        if ($this->session->userdata('id')) {
+            $user_id = $this->session->userdata('id');
+            $data['admin'] = $this->admin_model->getAdminByID($user_id);
+
+            $this->load->view('page/admin/profile', $data);
+        } else {
+            redirect('auth');
+        }
+    }
+
+    public function aksi_ubah_akun()
+    {
+        $image = $this->upload_image_admin('image');
+
+        $user_id = $this->session->userdata('id');
+        $admin = $this->admin_model->getAdminByID($user_id);
+
+        if ($image[0] == true) {
+            $admin->image = $image[1];
+        }
+
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+        $email = $this->input->post('email');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+        $username = $this->input->post('username');
+
+        $data = [
+            'image' => $image[1],
+            'email' => $email,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+            'username' => $username,
+        ];
+
+        // Check if new password is provided
+        if (!empty($password_baru)) {
+            // Check if the new password matches the confirmation
+            if ($password_baru === $konfirmasi_password) {
+                $data['password'] = md5($password_baru);
+            } else {
+                $this->session->set_flashdata(
+                    'message',
+                    'Password baru dan Konfirmasi password harus sama'
+                );
+                redirect(base_url('admin/profile'));
+            }
+        }
+
+        // Update the admin data in the database
+        $update_result = $this->admin_model->update('admin', $data, [
+            'id_admin' => $user_id,
+        ]);
+
+        if ($update_result) {
+            $this->session->set_flashdata('message', 'Profil berhasil diubah');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal mengubah profil');
+        }
+
+        redirect(base_url('admin/profile'));
     }
 
     // Page Tambah Organisasi
@@ -142,7 +222,7 @@ class Admin extends CI_Controller
     {
         $this->load->view('page/admin/rekap_bulanan');
     }
-   
+
     public function hapus_organisasi($id_organisasi)
     {
         $this->admin_model->hapus_organisasi($id_organisasi);
@@ -156,7 +236,6 @@ class Admin extends CI_Controller
         );
         $this->load->view('page/admin/update_organisasi', $data);
     }
-
 
     public function aksi_edit_organisasi()
     {
@@ -189,7 +268,7 @@ class Admin extends CI_Controller
         redirect('admin/organisasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
     }
 
-	public function aksi_tambah_organisasi()
+    public function aksi_tambah_organisasi()
     {
         $id_admin = $this->session->userdata('id');
         // Ambil data yang diperlukan dari form
@@ -216,12 +295,14 @@ class Admin extends CI_Controller
     public function tambah_user()
     {
         $data['admin'] = $this->admin_model->get_data('admin')->result();
-        $data['organisasi'] = $this->admin_model->get_data('organisasi') ->result();
+        $data['organisasi'] = $this->admin_model
+            ->get_data('organisasi')
+            ->result();
         $data['shift'] = $this->admin_model->get_data('shift')->result();
         $data['jabatan'] = $this->admin_model->get_data('jabatan')->result();
         $this->load->view('page/admin/tambah_user', $data);
     }
-    
+
     // Page tambah lokasi
     public function tambah_lokasi()
     {
@@ -253,83 +334,6 @@ class Admin extends CI_Controller
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('admin/user');
-    }
-
-    public function aksi_ubah_profile()
-    {
-        $foto = $_FILES['image']['name'];
-        $foto_temp = $_FILES['image']['tmp_name'];
-        $password_baru = $this->input->post('password');
-        $konfirmasi_password = $this->input->post('con_pass');
-        $username = $this->input->post('username');
-        $nama_depan = $this->input->post('nama_depan');
-        $nama_belakang = $this->input->post('nama_belakang');
-
-        if ($foto) {
-            $kode = round(microtime(true) * 1000);
-            $file_name = $kode . '_' . $foto;
-            $upload_path = './images/' . $file_name;
-            $old_file = $this->m_model->get_foto_by_id(
-                $this->session->userdata('id')
-            );
-            if ($old_file != 'User.png') {
-                unlink('./images/' . $old_file);
-            }
-            if (move_uploaded_file($foto_temp, $upload_path)) {
-                $data = [
-                    'image' => $file_name,
-                    'username' => $username,
-                    'nama_depan' => $nama_depan,
-                    'nama_belakang' => $nama_belakang,
-                ];
-
-                if (!empty($password_baru) && strlen($password_baru) >= 8) {
-                    if ($password_baru === $konfirmasi_password) {
-                        $data['password'] = md5($password_baru);
-                    } else {
-                        $this->session->set_flashdata(
-                            'message',
-                            'Password baru dan konfirmasi password harus sama'
-                        );
-                        redirect(base_url('admin/profile'));
-                    }
-                }
-
-                $this->session->set_userdata($data);
-                $update_result = $this->admin_model->update('user', $data, [
-                    'id' => $this->session->userdata('id'),
-                ]);
-                redirect(base_url('admin/profile'));
-            } else {
-                // Gagal mengunggah foto baru
-                redirect(base_url('admin/profile'));
-            }
-        } else {
-            // Jika tidak ada foto yang diunggah
-            $data = [
-                'username' => $username,
-                'nama_depan' => $nama_depan,
-                'nama_belakang' => $nama_belakang,
-            ];
-
-            if (!empty($password_baru) && strlen($password_baru) >= 8) {
-                if ($password_baru === $konfirmasi_password) {
-                    $data['password'] = md5($password_baru);
-                } else {
-                    $this->session->set_flashdata(
-                        'message',
-                        'Password baru dan konfirmasi password harus sama'
-                    );
-                    redirect(base_url('admin/profile'));
-                }
-            }
-
-            $this->session->set_userdata($data);
-            $update_result = $this->admin_model->update('user', $data, [
-                'id' => $this->session->userdata('id'),
-            ]);
-            redirect(base_url('admin/profile'));
-        }
     }
 
     // Page tambah shift
@@ -367,15 +371,18 @@ class Admin extends CI_Controller
         }
     }
 
-    public function detail_organisasi() {
+    public function detail_organisasi()
+    {
         // Load your data here, assuming you have a method in Super_model to get the data
         $id_organisasi = $this->input->get('id');
-    
+
         if ($id_organisasi !== null) {
             // Panggil model untuk mendapatkan data organisasi berdasarkan ID
             $this->load->model('admin_model');
-            $data['organisasi'] = $this->admin_model->getOrganisasiData($id_organisasi);
-    
+            $data['organisasi'] = $this->admin_model->getOrganisasiData(
+                $id_organisasi
+            );
+
             if ($data['organisasi']) {
                 // Load your view passing the data
                 $this->load->view('page/admin/detail_organisasi', $data);
@@ -408,29 +415,29 @@ class Admin extends CI_Controller
         $data['user'] = $this->admin_model->getUserId($id_user);
         $this->load->view('page/admin/update_user', $data);
     }
-     // Aksi Update User
-     public function aksi_edit_user()
-     {
-         // Mendapatkan data dari form
-         $id_user = $this->input->post('id_user');
-         $username = $this->input->post('username');
-         $nama_depan = $this->input->post('nama_depan');
-         $nama_belakang = $this->input->post('nama_belakang');
- 
-         // Buat data yang akan diupdate
-         $data = [
-             'username' => $username,
-             'nama_depan' => $nama_depan,
-             'nama_belakang' => $nama_belakang,
-             // Tambahkan field lain jika ada
-         ];
- 
-         // Lakukan pembaruan data Admin
-         $this->admin_model->edit_user($id_user, $data);
- 
-         // Redirect ke halaman setelah pembaruan data
-         redirect('admin/user'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
-     }
-}    
+    // Aksi Update User
+    public function aksi_edit_user()
+    {
+        // Mendapatkan data dari form
+        $id_user = $this->input->post('id_user');
+        $username = $this->input->post('username');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'username' => $username,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $this->admin_model->edit_user($id_user, $data);
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect('admin/user'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+    }
+}
 
 ?>

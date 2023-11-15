@@ -133,7 +133,7 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/rekap_bulanan');
     }
    
-  public function hapus_organisasi($id_organisasi)
+    public function hapus_organisasi($id_organisasi)
     {
         $this->admin_model->hapus_organisasi($id_organisasi);
         redirect('admin/organisasi');
@@ -148,7 +148,7 @@ class Admin extends CI_Controller
     }
 
 
-public function aksi_edit_organisasi()
+    public function aksi_edit_organisasi()
     {
         // Mendapatkan data dari form
         $id_organisasi = $this->input->post('id_organisasi');
@@ -211,6 +211,7 @@ public function aksi_edit_organisasi()
         $data['jabatan'] = $this->admin_model->get_data('jabatan')->result();
         $this->load->view('page/admin/tambah_user', $data);
     }
+    
     // Page tambah lokasi
     public function tambah_lokasi()
     {

@@ -465,6 +465,7 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('jabatan', $data); // Panggil method pada model
+        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/jabatan');
@@ -485,6 +486,7 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('shift', $data); // Panggil method pada model
+        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/shift');
@@ -617,6 +619,7 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('admin', $data); // Panggil method pada model
+        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/admin');
@@ -641,6 +644,7 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('organisasi', $data); // Panggil method pada model
+        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/organisasi');
@@ -667,6 +671,7 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('user', $data); // Panggil method pada model
+        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/user');

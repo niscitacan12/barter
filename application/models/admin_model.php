@@ -148,6 +148,13 @@ class Admin_model extends CI_Model
         }
     }
 
+    // Searching
+    public function search_data($table, $keyword) {
+        $this->db->like('nama_user', $keyword); // Sesuaikan field_name dengan field yang ingin dicari
+        $query = $this->db->get($table); // Sesuaikan table_name dengan nama tabel yang ingin dicari
+
+        return $query->result(); // Mengembalikan hasil pencarian
+    }   
     public function edit_user($id_user, $data)
     {
         // Lakukan pembaruan data Admin

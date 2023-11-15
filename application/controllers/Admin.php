@@ -72,7 +72,17 @@ class Admin extends CI_Controller
     // Page Permohonan Cuti
     public function cuti()
     {
-        $this->load->view('page/admin/cuti');
+        $keyword = $this->input->get('keyword'); // Mendapatkan kata kunci dari form
+
+        // Jika ada kata kunci, lakukan pencarian
+        if ($keyword !== null && $keyword !== '') {
+            $data['cuti'] = $this->admin_model->search_data('cuti', $keyword)->result();
+        } else {
+            // Jika tidak ada kata kunci, ambil semua data cuti
+            $data['cuti'] = $this->admin_model->get_data('cuti')->result();
+        }
+
+        $this->load->view('page/admin/cuti', $data);
     }
 
     // Page User

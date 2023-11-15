@@ -72,7 +72,17 @@ class Admin extends CI_Controller
     // Page Permohonan Cuti
     public function cuti()
     {
-        $this->load->view('page/admin/cuti');
+        $keyword = $this->input->get('keyword'); // Mendapatkan kata kunci dari form
+
+        // Jika ada kata kunci, lakukan pencarian
+        if ($keyword !== null && $keyword !== '') {
+            $data['cuti'] = $this->admin_model->search_data('cuti', $keyword)->result();
+        } else {
+            // Jika tidak ada kata kunci, ambil semua data cuti
+            $data['cuti'] = $this->admin_model->get_data('cuti')->result();
+        }
+
+        $this->load->view('page/admin/cuti', $data);
     }
 
     // Page User
@@ -133,7 +143,7 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/rekap_bulanan');
     }
    
-  public function hapus_organisasi($id_organisasi)
+    public function hapus_organisasi($id_organisasi)
     {
         $this->admin_model->hapus_organisasi($id_organisasi);
         redirect('admin/organisasi');
@@ -148,7 +158,7 @@ class Admin extends CI_Controller
     }
 
 
-public function aksi_edit_organisasi()
+    public function aksi_edit_organisasi()
     {
         // Mendapatkan data dari form
         $id_organisasi = $this->input->post('id_organisasi');
@@ -211,6 +221,7 @@ public function aksi_edit_organisasi()
         $data['jabatan'] = $this->admin_model->get_data('jabatan')->result();
         $this->load->view('page/admin/tambah_user', $data);
     }
+    
     // Page tambah lokasi
     public function tambah_lokasi()
     {
@@ -377,6 +388,49 @@ public function aksi_edit_organisasi()
             echo 'ID tidak valid atau tidak ditemukan.';
         }
     }
+    // Page Detail User
+    public function detail_user($user_id)
+    {
+        $data['user'] = $this->admin_model->getUserDetails($user_id);
+
+        // Mengirim data pengguna ke view
+        $this->load->view('page/admin/detail_user', $data);
+    }
+    // Hapus User
+    public function hapus_user($id_user)
+    {
+        $this->admin_model->hapus_user($id_user);
+        redirect('admin/user');
+    }
+    // Page Update User
+    public function update_user($id_user)
+    {
+        $data['user'] = $this->admin_model->getUserId($id_user);
+        $this->load->view('page/admin/update_user', $data);
+    }
+     // Aksi Update User
+     public function aksi_edit_user()
+     {
+         // Mendapatkan data dari form
+         $id_user = $this->input->post('id_user');
+         $username = $this->input->post('username');
+         $nama_depan = $this->input->post('nama_depan');
+         $nama_belakang = $this->input->post('nama_belakang');
+ 
+         // Buat data yang akan diupdate
+         $data = [
+             'username' => $username,
+             'nama_depan' => $nama_depan,
+             'nama_belakang' => $nama_belakang,
+             // Tambahkan field lain jika ada
+         ];
+ 
+         // Lakukan pembaruan data Admin
+         $this->admin_model->edit_user($id_user, $data);
+ 
+         // Redirect ke halaman setelah pembaruan data
+         redirect('admin/user'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+     }
 }    
 
 ?>

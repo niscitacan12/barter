@@ -31,7 +31,8 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -55,7 +56,7 @@
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody>
+                        <tbody class="text-center">
                             <?php foreach ($shift as $row): ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -113,5 +114,29 @@
         </div>
     </div>
 </body>
+
+<?php if($this->session->flashdata('berhasil_update')){ ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_update'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
+
+<?php if($this->session->flashdata('berhasil_tambah')){ ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_tambah'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
 </html>

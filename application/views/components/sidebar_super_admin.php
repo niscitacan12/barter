@@ -103,65 +103,110 @@
                     </a>
                 </li>
 
-                <!-- Menu Admin -->
+                <!-- Dropdown Data Admin -->
                 <li>
-                    <a href="<?php echo base_url('superadmin/admin'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <button type="button"
+                        class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        aria-controls="dropdown-data-admin" data-collapse-toggle="dropdown-data-admin">
                         <i
-                            class="fa-solid fa-chalkboard-user fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Admin</span>
-                    </a>
+                            class="fa-solid fa-database fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 text-left whitespace-nowrap">Data Admin</span>
+                        <i
+                            class="fa-solid fa-chevron-down fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                    </button>
+
+                    <ul id="dropdown-data-admin" class="hidden py-2 space-y-2">
+
+                        <!-- Menu Admin -->
+                        <li>
+                            <a href="<?php echo base_url('superadmin/admin'); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-chalkboard-user fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Admin</span>
+                            </a>
+                        </li>
+
+                        <!-- Menu Organisasi -->
+                        <li>
+                            <a href="<?php echo base_url('superadmin/organisasi'); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-building fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Organisasi</span>
+                            </a>
+                        </li>
+
+                        <!-- Menu Jabatan -->
+                        <li>
+                            <a href="<?php echo base_url('superadmin/jabatan'); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-briefcase fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Jabatan</span>
+                            </a>
+                        </li>
+
+                        <!-- Menu Jam Kerja -->
+                        <li>
+                            <a href="<?php echo base_url('superadmin/shift'); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-business-time fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Shift</span>
+                            </a>
+                        </li>
+
+                        </a>
+                    </ul>
                 </li>
 
-                <!-- Menu Organisasi -->
+                <!-- Dropdown Data User -->
                 <li>
-                    <a href="<?php echo base_url('superadmin/organisasi'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <button type="button"
+                        class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        aria-controls="dropdown-data-user" data-collapse-toggle="dropdown-data-user">
                         <i
-                            class="fa-solid fa-building fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Organisasi</span>
-                    </a>
-                </li>
+                            class="fa-solid fa-database fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 text-left whitespace-nowrap">Data User</span>
+                        <i
+                            class="fa-solid fa-chevron-down fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                    </button>
 
-                <!-- Menu Jabatan -->
-                <li>
-                    <a href="<?php echo base_url('superadmin/jabatan'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i
-                            class="fa-solid fa-briefcase fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Jabatan</span>
-                    </a>
-                </li>
+                    <ul id="dropdown-data-user" class="hidden py-2 space-y-2">
 
-                <!-- Menu Shift -->
-                <li>
-                    <a href="<?php echo base_url('superadmin/shift'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i
-                            class="fa-solid fa-business-time fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Shift</span>
-                    </a>
-                </li>
+                        <!-- Menu User -->
+                        <li>
+                            <a href="<?php echo base_url('superadmin/user'); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-users fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">User</span>
+                            </a>
+                        </li>
 
-                <!-- Menu User -->
-                <li>
-                    <a href="<?php echo base_url('superadmin/user'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i
-                            class="fa-solid fa-users fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">User</span>
-                    </a>
+                        <!-- Menu Absensi -->
+                        <li>
+                            <a href="<?php echo base_url('superadmin/absensi'); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-address-card fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Absensi</span>
+                            </a>
+                        </li>
+                        </a>
+                    </ul>
                 </li>
 
                 <!-- Menu Absensi -->
-                <li>
+                <!-- <li>
                     <a href="<?php echo base_url('superadmin/absensi'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-address-card fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Absensi</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </aside>

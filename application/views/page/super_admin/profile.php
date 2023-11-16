@@ -51,12 +51,12 @@
                                     class="border rounded-md w-full p-2" id="email" name="email" readonly>
                             </div>
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
-                                <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
+                                <div class="w-full lg:w-1/2  m-2 mb-4 lg:mb-0">
                                     <label for="firstName" class="block mb-1 text-sm">First name</label>
                                     <input type="text" class="border rounded-md w-full p-2"
                                         value="<?php echo $superadmin->nama_depan; ?>" id="firstName" name="nama_depan">
                                 </div>
-                                <div class="w-full lg:w-1/2">
+                                <div class="w-full lg:w-1/2 m-2">
                                     <label for="lastName" class="block mb-1 text-sm">Last name</label>
                                     <input type="text" class="border rounded-md w-full p-2"
                                         value="<?php echo $superadmin->nama_belakang; ?>" id="lastName"
@@ -64,19 +64,18 @@
                                 </div>
                             </div>
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
-                                <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
+                                <div class="w-full lg:w-1/2 m-2 mb-4 lg:mb-0">
                                     <label for="firstName" class="block mb-1 text-sm">Password Baru</label>
                                     <input type="password" class="border rounded-md w-full p-2" id="firstName"
                                         name="password_baru">
                                 </div>
-                                <div class="w-full lg:w-1/2">
+                                <div class="w-full lg:w-1/2 m-2">
                                     <label for="lastName" class="block mb-1 text-sm">Konfirmasi Password</label>
                                     <input type="password" class="border rounded-md w-full p-2" id="lastName"
                                         name="konfirmasi_password">
                                 </div>
                             </div>
-                            <button class="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit">Save
-                                changes</button>
+                            <button class="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit"> <i class="fas fa-save mr-2"></i></button>
                         </form>
                     </div>
                 </div>

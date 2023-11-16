@@ -147,14 +147,48 @@ class Admin_model extends CI_Model
             return false;
         }
     }
-
+    
     // Searching
     public function search_data($table, $keyword) {
         $this->db->like('nama_user', $keyword); // Sesuaikan field_name dengan field yang ingin dicari
         $query = $this->db->get($table); // Sesuaikan table_name dengan nama tabel yang ingin dicari
 
         return $query->result(); // Mengembalikan hasil pencarian
-    }   
+    }
+    public function edit_user($id_user, $data)
+    {
+        // Lakukan pembaruan data Admin
+        $this->db->where('id_user', $id_user);
+        $this->db->update('user', $data);
+    }
+
+    public function getUserDetails($user_id)
+    {
+        $this->db->where('id_user', $user_id); // Sesuaikan kolom yang merepresentasikan ID pengguna
+        $query = $this->db->get('user'); // Sesuaikan 'users' dengan nama tabel pengguna
+
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris data user
+        } else {
+            return false; // Mengembalikan false jika tidak ada data ditemukan
+        }
+    }
+    public function getUserId($id_user)
+    {
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+    
+    public function hapus_user($id_user) {
+        // Misalnya, menggunakan query database untuk menghapus data organisasi berdasarkan ID
+        // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
+        $this->db->where('id_user', $id_user);
+        $this->db->delete('user'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
+    }
    
 }
 ?>

@@ -435,8 +435,7 @@ class Admin extends CI_Controller
             'nama_shift' => $this->input->post('name'),
            'jam_masuk' => $this->input->post('time_masuk'),
            'jam_pulang' => $this->input->post('time_pulang'),
-           'id_admin' => $this->input->post('id_admin'),
-            // sesuaikan dengan kolom lainnya
+           'id_admin' => $this->session->userdata('id'),
         ];
 
         // Simpan data ke tabel

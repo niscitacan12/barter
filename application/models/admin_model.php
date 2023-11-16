@@ -210,5 +210,74 @@ class Admin_model extends CI_Model
         return $query->result(); // Mengembalikan hasil pencarian
     }   
    
+    
+   public function get_all_lokasi() {
+    // Ganti 'lokasi' dengan nama tabel yang sesuai di database Anda
+    $query = $this->db->get('lokasi');
+
+    // Mengembalikan hasil query sebagai array
+    return $query->result_array();
+}
+
+public function tambah_lokasi($data)
+{
+    $this->db->insert('lokasi', $data);
+}
+
+public function getLokasiData($id_lokasi)
+{
+    // Assuming 'lokasi' is your table name
+    $this->db->where('id_lokasi', $id_lokasi);
+    $query = $this->db->get('lokasi');
+
+    if ($query->num_rows() > 0) {
+        return $query->result();
+    } else {
+        return false;
+    }
+}
+
+public function detail_lokasi($lokasi_id)
+{
+$data['lokasi'] = $this->admin_model->getLokasiData($lokasi_id);
+
+// Mengirim data lokasi ke view
+$this->load->view('page/admin/detail_lokasi', $data);
+}
+
+
+public function getLokasiById($id_lokasi)
+{
+// Assuming 'lokasi' is the table name in your database
+$query = $this->db->get_where('lokasi', array('id_lokasi' => $id_lokasi));
+
+
+
+// Return the result as an object
+return $query->row();
+}
+
+
+public function update_lokasi($id_lokasi, $data)
+{
+// Update lokasi berdasarkan id_lokasi
+$this->db->where('id_lokasi', $id_lokasi);
+$this->db->update('lokasi', $data);
+}
+
+// In your Admin_model.php
+public function hapus_lokasi($id_lokasi)
+{
+// Your deletion logic here
+$this->db->where('id_lokasi', $id_lokasi);
+$this->db->delete('lokasi');
+}
+
+public function get_all_user() {
+// Gantilah dengan metode yang sesuai untuk mengambil data pengguna dari database
+$query = $this->db->get('user');
+return $query->result();
+}
+
 }
 ?>

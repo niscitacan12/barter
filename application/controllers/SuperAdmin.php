@@ -24,7 +24,9 @@ class SuperAdmin extends CI_Controller
     public function index()
     {
         $id_superadmin = $this->session->userdata('id');
-        $data['organisasi'] = $this->super_model->get_data('organisasi')->num_rows();
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->num_rows();
         $data['admin'] = $this->super_model->get_admin_count();
         $data['user'] = $this->super_model->get_user_count();
         $this->load->view('page/super_admin/dashboard', $data);
@@ -39,38 +41,49 @@ class SuperAdmin extends CI_Controller
         $config['per_page'] = 3;
 
         // Styling pagination
-        $config['full_tag_open'] = '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
         $config['full_tag_close'] = '</ul></nav>';
 
         $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['first_tag_close'] = '</li>';
 
         $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['last_tag_close'] = '</li>';
 
         $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['next_tag_close'] = '</li>';
 
         $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['prev_tag_close'] = '</li>';
 
-        $config['cur_tag_open'] = '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
         $config['cur_tag_close'] = '</li>';
 
         // Applying Tailwind Classes
-        $config['num_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['num_tag_close'] = '</li>';
 
         // Initialize
         $this->pagination->initialize($config);
-        $data['start']= $this->uri->segment(3);
+        $data['start'] = $this->uri->segment(3);
 
         // Data Organisasi
-        $data['organisasi'] = $this->super_model->pagination('organisasi', $config['per_page'], $data['start']);
+        $data['organisasi'] = $this->super_model->pagination(
+            'organisasi',
+            $config['per_page'],
+            $data['start']
+        );
         $this->load->view('page/super_admin/organisasi', $data);
     }
 
@@ -83,38 +96,49 @@ class SuperAdmin extends CI_Controller
         $config['per_page'] = 3;
 
         // Styling pagination
-        $config['full_tag_open'] = '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
         $config['full_tag_close'] = '</ul></nav>';
 
         $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['first_tag_close'] = '</li>';
 
         $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['last_tag_close'] = '</li>';
 
         $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['next_tag_close'] = '</li>';
 
         $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['prev_tag_close'] = '</li>';
 
-        $config['cur_tag_open'] = '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
         $config['cur_tag_close'] = '</li>';
 
         // Applying Tailwind Classes
-        $config['num_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['num_tag_close'] = '</li>';
 
         // Initialize
         $this->pagination->initialize($config);
-        $data['start']= $this->uri->segment(3);
+        $data['start'] = $this->uri->segment(3);
 
         // Data User
-        $data['user'] = $this->super_model->pagination('admin', $config['per_page'], $data['start']);
+        $data['user'] = $this->super_model->pagination(
+            'admin',
+            $config['per_page'],
+            $data['start']
+        );
         $this->load->view('page/super_admin/admin', $data);
     }
 
@@ -127,38 +151,50 @@ class SuperAdmin extends CI_Controller
         $config['per_page'] = 1;
 
         // Styling pagination
-        $config['full_tag_open'] = '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
         $config['full_tag_close'] = '</ul></nav>';
 
         $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['first_tag_close'] = '</li>';
 
         $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['last_tag_close'] = '</li>';
 
         $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['next_tag_close'] = '</li>';
 
         $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['prev_tag_close'] = '</li>';
 
-        $config['cur_tag_open'] = '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
         $config['cur_tag_close'] = '</li>';
 
         // Applying Tailwind Classes
-        $config['num_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['num_tag_close'] = '</li>';
 
         // Initialize
         $this->pagination->initialize($config);
-        $data['start']= $this->uri->segment(3);
+        $data['start'] = $this->uri->segment(3);
 
         // Data User
-        $data['user'] = $this->super_model->pagination('user', $config['per_page'], $data['start']);
+        $user_id = $this->session->userdata('id');
+        $data['user'] = $this->super_model->pagination(
+            'user',
+            $config['per_page'],
+            $data['start']
+        );
         $this->load->view('page/super_admin/user', $data);
     }
 
@@ -171,38 +207,49 @@ class SuperAdmin extends CI_Controller
         $config['per_page'] = 1;
 
         // Styling pagination
-        $config['full_tag_open'] = '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
         $config['full_tag_close'] = '</ul></nav>';
 
         $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['first_tag_close'] = '</li>';
 
         $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['last_tag_close'] = '</li>';
 
         $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['next_tag_close'] = '</li>';
 
         $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['prev_tag_close'] = '</li>';
 
-        $config['cur_tag_open'] = '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
         $config['cur_tag_close'] = '</li>';
 
         // Applying Tailwind Classes
-        $config['num_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['num_tag_close'] = '</li>';
 
         // Initialize
         $this->pagination->initialize($config);
-        $data['start']= $this->uri->segment(3);
+        $data['start'] = $this->uri->segment(3);
 
         // Data absensi
-        $data['absensi'] = $this->super_model->pagination('absensi', $config['per_page'], $data['start']);
+        $data['absensi'] = $this->super_model->pagination(
+            'absensi',
+            $config['per_page'],
+            $data['start']
+        );
         $this->load->view('page/super_admin/absensi', $data);
     }
 
@@ -233,38 +280,49 @@ class SuperAdmin extends CI_Controller
         $config['per_page'] = 1;
 
         // Styling pagination
-        $config['full_tag_open'] = '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
         $config['full_tag_close'] = '</ul></nav>';
 
         $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['first_tag_close'] = '</li>';
 
         $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['last_tag_close'] = '</li>';
 
         $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['next_tag_close'] = '</li>';
 
         $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['prev_tag_close'] = '</li>';
 
-        $config['cur_tag_open'] = '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
         $config['cur_tag_close'] = '</li>';
 
         // Applying Tailwind Classes
-        $config['num_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['num_tag_close'] = '</li>';
 
         // Initialize
         $this->pagination->initialize($config);
-        $data['start']= $this->uri->segment(3);
+        $data['start'] = $this->uri->segment(3);
 
         // Data n
-        $data['jabatan'] = $this->super_model->pagination('jabatan', $config['per_page'], $data['start']);
+        $data['jabatan'] = $this->super_model->pagination(
+            'jabatan',
+            $config['per_page'],
+            $data['start']
+        );
         $this->load->view('page/super_admin/jabatan', $data);
     }
 
@@ -277,38 +335,49 @@ class SuperAdmin extends CI_Controller
         $config['per_page'] = 1;
 
         // Styling pagination
-        $config['full_tag_open'] = '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
         $config['full_tag_close'] = '</ul></nav>';
 
         $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['first_tag_close'] = '</li>';
 
         $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['last_tag_close'] = '</li>';
 
         $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['next_tag_close'] = '</li>';
 
         $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['prev_tag_close'] = '</li>';
 
-        $config['cur_tag_open'] = '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
         $config['cur_tag_close'] = '</li>';
 
         // Applying Tailwind Classes
-        $config['num_tag_open'] = '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
         $config['num_tag_close'] = '</li>';
 
         // Initialize
         $this->pagination->initialize($config);
-        $data['start']= $this->uri->segment(3);
+        $data['start'] = $this->uri->segment(3);
 
         // Data Shift
-        $data['shift'] = $this->super_model->pagination('shift', $config['per_page'], $data['start']);
+        $data['shift'] = $this->super_model->pagination(
+            'shift',
+            $config['per_page'],
+            $data['start']
+        );
         // $data['shift'] = $this->super_model->get_data('shift')->result();
         $this->load->view('page/super_admin/shift', $data);
     }
@@ -355,9 +424,15 @@ class SuperAdmin extends CI_Controller
         ];
 
         // Lakukan pembaruan data Admin
-        $eksekusi = $this->super_model->update_organisasi($id_organisasi, $data);
-        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
-        
+        $eksekusi = $this->super_model->update_organisasi(
+            $id_organisasi,
+            $data
+        );
+        $this->session->set_flashdata(
+            'berhasil_update',
+            'Berhasil mengubah data'
+        );
+
         // Redirect ke halaman setelah pembaruan data
         redirect(base_url('superadmin/organisasi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
     }
@@ -428,7 +503,10 @@ class SuperAdmin extends CI_Controller
 
         // Lakukan pembaruan data Admin
         $this->super_model->update_user($id_user, $data);
-        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
+        $this->session->set_flashdata(
+            'berhasil_update',
+            'Berhasil mengubah data'
+        );
 
         // Redirect ke halaman setelah pembaruan data
         redirect('superadmin/user'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
@@ -465,7 +543,10 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('jabatan', $data); // Panggil method pada model
-        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
+        $this->session->set_flashdata(
+            'berhasil_tambah',
+            'Berhasil Menambahkan Data'
+        );
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/jabatan');
@@ -486,7 +567,10 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('shift', $data); // Panggil method pada model
-        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
+        $this->session->set_flashdata(
+            'berhasil_tambah',
+            'Berhasil Menambahkan Data'
+        );
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/shift');
@@ -507,7 +591,10 @@ class SuperAdmin extends CI_Controller
 
         // Lakukan pembaruan data Admin
         $this->super_model->update_jabatan($id_jabatan, $data);
-        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
+        $this->session->set_flashdata(
+            'berhasil_update',
+            'Berhasil mengubah data'
+        );
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/jabatan');
@@ -532,7 +619,10 @@ class SuperAdmin extends CI_Controller
 
         // Lakukan pembaruan data Admin
         $this->super_model->update_shift($id_shift, $data);
-        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
+        $this->session->set_flashdata(
+            'berhasil_update',
+            'Berhasil mengubah data'
+        );
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/shift');
@@ -559,7 +649,10 @@ class SuperAdmin extends CI_Controller
 
         // Lakukan pembaruan data Admin
         $this->super_model->update_admin($id_admin, $data);
-        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
+        $this->session->set_flashdata(
+            'berhasil_update',
+            'Berhasil mengubah data'
+        );
 
         // Redirect ke halaman setelah pembaruan data
         redirect('superadmin/admin'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
@@ -619,7 +712,10 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('admin', $data); // Panggil method pada model
-        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
+        $this->session->set_flashdata(
+            'berhasil_tambah',
+            'Berhasil Menambahkan Data'
+        );
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/admin');
@@ -644,7 +740,10 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('organisasi', $data); // Panggil method pada model
-        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
+        $this->session->set_flashdata(
+            'berhasil_tambah',
+            'Berhasil Menambahkan Data'
+        );
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/organisasi');
@@ -671,7 +770,10 @@ class SuperAdmin extends CI_Controller
 
         // Simpan data ke tabel
         $this->super_model->tambah_data('user', $data); // Panggil method pada model
-        $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
+        $this->session->set_flashdata(
+            'berhasil_tambah',
+            'Berhasil Menambahkan Data'
+        );
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('superadmin/user');
@@ -699,7 +801,9 @@ class SuperAdmin extends CI_Controller
     public function detail_admin($admin_id)
     {
         // $data['id_superadmin'] = $this->session->userdata('id');
+        $user_id = $this->session->userdata('id');
         $data['admin'] = $this->super_model->getAdminDetails($admin_id);
         $this->load->view('page/super_admin/detail_admin', $data);
     }
 }
+

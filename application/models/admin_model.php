@@ -34,9 +34,9 @@ class Admin_model extends CI_Model
         return $this->db->get('jabatan')->result();
     }
 
-    public function get_shift_by_id_admin($id_shift)
+    public function get_shift_by_id_admin($id_admin)
     {
-        $this->db->where('id_shift', $id_shift);
+        $this->db->where('id_admin', $id_admin);
         return $this->db->get('shift')->result();
     }
 
@@ -65,6 +65,23 @@ class Admin_model extends CI_Model
         return $this->db->get()->result();
     }
 
+    public function update_admin($id_admin, $data)
+    {
+        $this->db->where('id_admin', $id_admin);
+        $this->db->update('admin', $data);
+        return $this->db->affected_rows();
+    }
+
+    public function getAdminByID($id)
+    {
+        $this->db->select('*');
+        $this->db->from('admin');
+        $this->db->where('id_admin', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
     public function get_employee_count_by_shift()
     {
         $this->db->select(
@@ -90,29 +107,30 @@ class Admin_model extends CI_Model
         return $query->num_rows();
     }
 
-     // Metode untuk menghitung jumlah data absensi
-    public function get_absensi_count() 
+    // Metode untuk menghitung jumlah data absensi
+    public function get_absensi_count()
     {
         $this->db->from('absensi');
         return $this->db->count_all_results();
     }
 
-    public function hapus_organisasi($id_organisasi) {
+    public function hapus_organisasi($id_organisasi)
+    {
         // Misalnya, menggunakan query database untuk menghapus data organisasi berdasarkan ID
         // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
         $this->db->where('id_organisasi', $id_organisasi);
         $this->db->delete('organisasi'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
-    public function get_superadmin_data() {
+    public function get_superadmin_data()
+    {
         // Replace 'your_superadmin_table' with your actual table name
-            $query = $this->db->get('admin'); 
+        $query = $this->db->get('admin');
         if (!$query) {
-           log_message('error', 'Database Error: ' . $this->db->error());
+            log_message('error', 'Database Error: ' . $this->db->error());
             return false;
         }
         return $query->row_array();
     }
-    
 
     public function update_organisasi($id_organisasi, $data)
     {
@@ -121,7 +139,8 @@ class Admin_model extends CI_Model
         $this->db->update('organisasi', $data);
     }
 
-    public function getOrganisasiById($id_organisasi) {
+    public function getOrganisasiById($id_organisasi)
+    {
         // Misalnya, menggunakan query database untuk mengambil data organisasi berdasarkan ID
         // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
         $this->db->select('*');
@@ -147,14 +166,8 @@ class Admin_model extends CI_Model
             return false;
         }
     }
-    
-    // Searching
-    public function search_data($table, $keyword) {
-        $this->db->like('nama_user', $keyword); // Sesuaikan field_name dengan field yang ingin dicari
-        $query = $this->db->get($table); // Sesuaikan table_name dengan nama tabel yang ingin dicari
 
-        return $query->result(); // Mengembalikan hasil pencarian
-    }
+<<<<<<<<< Temporary merge branch 1
     public function edit_user($id_user, $data)
     {
         // Lakukan pembaruan data Admin
@@ -182,13 +195,23 @@ class Admin_model extends CI_Model
 
         return $query->row();
     }
-    
-    public function hapus_user($id_user) {
+
+    public function hapus_user($id_user)
+    {
         // Misalnya, menggunakan query database untuk menghapus data organisasi berdasarkan ID
         // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
         $this->db->where('id_user', $id_user);
         $this->db->delete('user'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
+=========
+    // Searching
+    public function search_data($table, $keyword) {
+        $this->db->like('nama_user', $keyword); // Sesuaikan field_name dengan field yang ingin dicari
+        $query = $this->db->get($table); // Sesuaikan table_name dengan nama tabel yang ingin dicari
+
+        return $query->result(); // Mengembalikan hasil pencarian
+    }   
+>>>>>>>>> Temporary merge branch 2
    
 }
 ?>

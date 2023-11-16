@@ -33,20 +33,32 @@
                     </div>
                     <!-- Waktu Masuk & Waktu Pulang Input -->
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="time" name="time" id="time"
+                        <input type="time" name="time_masuk" id="time_masuk"
                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                placeholder=" " autocomplete="off" required>
-                        <label for="time"
+                        <label for="time_masuk"
                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Waktu Masuk
                         </label>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="time" name="time" id="time"
+                        <input type="time" name="time_pulang" id="time_pulang"
                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                placeholder=" " autocomplete="off" required>
-                        <label for="time"
+                        <label for="time_pulang"
                                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Waktu Pulang
                         </label>
+                    </div>
+                    <!-- Admin Input -->
+                    <div class="relative z-0 w-full mb-6 group">
+                        <select id="id_admin" name="id_admin"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                            <option value="" selected>Pilih Admin</option>
+                            <?php foreach ($admin as $row): ?>
+                                <option value="<?php echo $row->id_admin; ?>">
+                                    <?php echo $row->email; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <!-- Button -->
                     <div class="flex justify-between">

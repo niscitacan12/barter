@@ -9,7 +9,7 @@
 
 <body>
     <?php $this->load->view('components/sidebar_admin'); ?>
-    <div class="p-4 sm:ml-64">
+    <div class="p-5 sm:ml-64">
         <div class="p-5 mt-10">
             <div class="flex flex-col lg:flex-row mx-auto max-w-7xl py-6 px-4 lg:px-0">
                 <!-- Profile Picture -->
@@ -17,14 +17,20 @@
                     <div class="bg-white rounded-lg shadow-md p-4">
                         <div class="text-xl font-semibold mb-2">Profile Picture</div>
                         <div class="text-center">
-                            <img class="w-32 h-32 rounded-full mx-auto mb-2" src="profile.jpg" alt="Profile Picture">
+
                             <p class="text-xs text-gray-500 mb-4">JPG or PNG no larger than 5 MB</p>
-                            <form action="#" method="post" enctype="multipart/form-data">
+                            <form method="post" action="<?= base_url(
+                                'superadmin/aksi_ubah_akun'
+                            ) ?>" enctype="multipart/form-data">
+                                <img class="w-32 h-32 rounded-full mx-auto mb-2" src="<?= base_url(
+                                    'images/superadmin/' . $superadmin->image
+                                ) ?>" alt="Profile Picture">
                                 <label for="image" class="block mb-1">Upload new image</label>
                                 <input type="file" name="image" id="image" accept="image/*"
                                     class="border rounded-md p-1">
+
                                 <!-- Add preview image if needed -->
-                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -36,30 +42,38 @@
                         <form action="#" method="post" enctype="multipart/form-data">
                             <div class="mb-4">
                                 <label for="username" class="block mb-1 text-sm">Username</label>
-                                <input type="text" class="border rounded-md w-full p-2" value="JohnDoe" id="username"
-                                    name="username">
+                                <input type="text" class="border rounded-md w-full p-2"
+                                    value="<?php echo $superadmin->username; ?>" id="username" name="username">
                             </div>
                             <div class="mb-4">
                                 <label for="email" class="block mb-1 text-sm">Email address</label>
                                 <input type="text" value="<?php echo $superadmin->email; ?>"
-                                    class="border rounded-md w-full p-2" id="email" name="email">
+                                    class="border rounded-md w-full p-2" id="email" name="email" readonly>
                             </div>
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
                                 <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
                                     <label for="firstName" class="block mb-1 text-sm">First name</label>
-                                    <input type="text" class="border rounded-md w-full p-2" value="John" id="firstName"
-                                        name="firstName">
+                                    <input type="text" class="border rounded-md w-full p-2"
+                                        value="<?php echo $superadmin->nama_depan; ?>" id="firstName" name="nama_depan">
                                 </div>
                                 <div class="w-full lg:w-1/2">
                                     <label for="lastName" class="block mb-1 text-sm">Last name</label>
-                                    <input type="text" class="border rounded-md w-full p-2" value="Doe" id="lastName"
-                                        name="lastName">
+                                    <input type="text" class="border rounded-md w-full p-2"
+                                        value="<?php echo $superadmin->nama_belakang; ?>" id="lastName"
+                                        name="nama_belakang">
                                 </div>
                             </div>
-                            <div class="mb-4">
-                                <label for="password" class="block mb-1 text-sm">Password</label>
-                                <input type="password" class="border rounded-md w-full p-2" id="password"
-                                    name="password">
+                            <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
+                                <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
+                                    <label for="firstName" class="block mb-1 text-sm">Password Baru</label>
+                                    <input type="password" class="border rounded-md w-full p-2" id="firstName"
+                                        name="password_baru">
+                                </div>
+                                <div class="w-full lg:w-1/2">
+                                    <label for="lastName" class="block mb-1 text-sm">Konfirmasi Password</label>
+                                    <input type="password" class="border rounded-md w-full p-2" id="lastName"
+                                        name="konfirmasi_password">
+                                </div>
                             </div>
                             <button class="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit">Save
                                 changes</button>

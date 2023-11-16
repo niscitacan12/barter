@@ -34,9 +34,9 @@ class Admin_model extends CI_Model
         return $this->db->get('jabatan')->result();
     }
 
-    public function get_shift_by_id_admin($id_shift)
+    public function get_shift_by_id_admin($id_admin)
     {
-        $this->db->where('id_shift', $id_shift);
+        $this->db->where('id_admin', $id_admin);
         return $this->db->get('shift')->result();
     }
 
@@ -65,6 +65,23 @@ class Admin_model extends CI_Model
         return $this->db->get()->result();
     }
 
+    public function update_admin($id_admin, $data)
+    {
+        $this->db->where('id_admin', $id_admin);
+        $this->db->update('admin', $data);
+        return $this->db->affected_rows();
+    }
+
+    public function getAdminByID($id)
+    {
+        $this->db->select('*');
+        $this->db->from('admin');
+        $this->db->where('id_admin', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
     public function get_employee_count_by_shift()
     {
         $this->db->select(
@@ -90,29 +107,30 @@ class Admin_model extends CI_Model
         return $query->num_rows();
     }
 
-     // Metode untuk menghitung jumlah data absensi
-    public function get_absensi_count() 
+    // Metode untuk menghitung jumlah data absensi
+    public function get_absensi_count()
     {
         $this->db->from('absensi');
         return $this->db->count_all_results();
     }
 
-    public function hapus_organisasi($id_organisasi) {
+    public function hapus_organisasi($id_organisasi)
+    {
         // Misalnya, menggunakan query database untuk menghapus data organisasi berdasarkan ID
         // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
         $this->db->where('id_organisasi', $id_organisasi);
         $this->db->delete('organisasi'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
-    public function get_superadmin_data() {
+    public function get_superadmin_data()
+    {
         // Replace 'your_superadmin_table' with your actual table name
-            $query = $this->db->get('admin'); 
+        $query = $this->db->get('admin');
         if (!$query) {
-           log_message('error', 'Database Error: ' . $this->db->error());
+            log_message('error', 'Database Error: ' . $this->db->error());
             return false;
         }
         return $query->row_array();
     }
-    
 
     public function update_organisasi($id_organisasi, $data)
     {
@@ -121,7 +139,8 @@ class Admin_model extends CI_Model
         $this->db->update('organisasi', $data);
     }
 
-    public function getOrganisasiById($id_organisasi) {
+    public function getOrganisasiById($id_organisasi)
+    {
         // Misalnya, menggunakan query database untuk mengambil data organisasi berdasarkan ID
         // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
         $this->db->select('*');
@@ -148,13 +167,6 @@ class Admin_model extends CI_Model
         }
     }
 
-    // Searching
-    public function search_data($table, $keyword) {
-        $this->db->like('nama_user', $keyword); // Sesuaikan field_name dengan field yang ingin dicari
-        $query = $this->db->get($table); // Sesuaikan table_name dengan nama tabel yang ingin dicari
-
-        return $query->result(); // Mengembalikan hasil pencarian
-    }   
     public function edit_user($id_user, $data)
     {
         // Lakukan pembaruan data Admin
@@ -162,7 +174,7 @@ class Admin_model extends CI_Model
         $this->db->update('user', $data);
     }
 
- public function getUserDetails($user_id)
+    public function getUserDetails($user_id)
     {
         $this->db->where('id_user', $user_id); // Sesuaikan kolom yang merepresentasikan ID pengguna
         $query = $this->db->get('user'); // Sesuaikan 'users' dengan nama tabel pengguna
@@ -182,13 +194,143 @@ class Admin_model extends CI_Model
 
         return $query->row();
     }
-    
-    public function hapus_user($id_user) {
+
+    public function hapus_user($id_user)
+    {
         // Misalnya, menggunakan query database untuk menghapus data organisasi berdasarkan ID
         // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
         $this->db->where('id_user', $id_user);
         $this->db->delete('user'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
+    // Searching
+    public function search_data($table, $keyword) {
+        $this->db->like('nama_user', $keyword); // Sesuaikan field_name dengan field yang ingin dicari
+        $query = $this->db->get($table); // Sesuaikan table_name dengan nama tabel yang ingin dicari
+
+        return $query->result(); // Mengembalikan hasil pencarian
+    }   
    
+    
+   public function get_all_lokasi() {
+    // Ganti 'lokasi' dengan nama tabel yang sesuai di database Anda
+    $query = $this->db->get('lokasi');
+
+    // Mengembalikan hasil query sebagai array
+    return $query->result_array();
+}
+
+public function tambah_lokasi($data)
+{
+    $this->db->insert('lokasi', $data);
+}
+
+public function getLokasiData($id_lokasi)
+{
+    // Assuming 'lokasi' is your table name
+    $this->db->where('id_lokasi', $id_lokasi);
+    $query = $this->db->get('lokasi');
+
+    if ($query->num_rows() > 0) {
+        return $query->result();
+    } else {
+        return false;
+    }
+}
+
+public function detail_lokasi($lokasi_id)
+{
+$data['lokasi'] = $this->admin_model->getLokasiData($lokasi_id);
+
+// Mengirim data lokasi ke view
+$this->load->view('page/admin/detail_lokasi', $data);
+}
+
+
+public function getLokasiById($id_lokasi)
+{
+// Assuming 'lokasi' is the table name in your database
+$query = $this->db->get_where('lokasi', array('id_lokasi' => $id_lokasi));
+
+
+
+// Return the result as an object
+return $query->row();
+}
+
+
+public function update_lokasi($id_lokasi, $data)
+{
+// Update lokasi berdasarkan id_lokasi
+$this->db->where('id_lokasi', $id_lokasi);
+$this->db->update('lokasi', $data);
+}
+
+// In your Admin_model.php
+public function hapus_lokasi($id_lokasi)
+{
+// Your deletion logic here
+$this->db->where('id_lokasi', $id_lokasi);
+$this->db->delete('lokasi');
+}
+
+public function get_all_user() {
+// Gantilah dengan metode yang sesuai untuk mengambil data pengguna dari database
+$query = $this->db->get('user');
+return $query->result();
+}
+
+// Menampilkan Dan Mengget Data
+public function getShiftData($id)
+{
+    // Sesuaikan dengan struktur tabel di database Anda
+    $this->db->select('*');
+    $this->db->from('shift');
+    $this->db->where('id_shift', $id);
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        return $query->row(); // Menggunakan row() untuk mendapatkan satu baris
+    } else {
+        return false;
+    }
+}
+
+//  GET ID Shift
+public function getShiftId($id_shift)
+{
+    $this->db->select('*');
+    $this->db->from('shift');
+    $this->db->where('id_shift', $id_shift);
+    $query = $this->db->get();
+
+    return $query->row();
+}
+
+// Update
+public function update_shift($id_shift, $data)
+{
+    // Lakukan pembaruan data Admin
+    $this->db->where('id_shift', $id_shift);
+    $this->db->update('shift', $data);
+}
+
+// GET Admin Shift
+public function get_admin_data() {
+    $query = $this->db->get('admin'); 
+    return $query->result();
+}
+
+public function get_last_shift()
+{
+    // Ambil semua data shift
+    $query = $this->db->get('shift');
+    return $query->result(); 
+}
+
+public function hapus_shift($id_shift) 
+{
+    $this->db->where('id_shift', $id_shift);
+    $this->db->delete('shift'); 
+}
 }
 ?>

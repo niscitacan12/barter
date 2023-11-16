@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Lokasi</title>
-    <!-- Sertakan tautan CSS di sini -->
-    <link rel="stylesheet" href="path/to/your/css/file.css">
+    <title>Absensi App</title>
 </head>
 
 <body>
@@ -17,64 +15,57 @@
             <!-- Card -->
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-
-                <!-- Header -->
                 <div class="flex justify-between">
-                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Tambah Lokasi</h6>
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Update Shift</h6>
                 </div>
 
                 <hr>
 
                 <div class="mt-5 text-left">
-                    <form method="post" action="<?php echo site_url('admin/tambah_lokasi'); ?>">
-                        <!-- Form Input -->
+                    <!-- Form Input -->
+                    <form action="<?php echo base_url('admin/aksi_edit_shift'); ?>" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id_shift" value="<?php echo $shift->id_shift; ?>">
+
                         <div class="grid md:grid-cols-2 md:gap-6">
-                            <!-- Nama Lokasi Input -->
+
+                            <!-- Shift Input -->
                             <div class="relative z-0 w-full mb-6 group">
-                                <input type="text" name="nama_lokasi" id="nama_lokasi"
+                                <input type="text" name="nama_shift" id="nama_shift"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " autocomplete="off"
-                                    value="<?php echo isset($nama_lokasi) ? $nama_lokasi : ''; ?>" required />
-                                <label for="nama_lokasi"
+                                    placeholder=" " autocomplete="off" required
+                                    value="<?php echo $shift->nama_shift; ?>" />
+                                <label for="nama_shift"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Nama Lokasi
+                                    Nama
                                 </label>
                             </div>
 
-                            <!-- Alamat Kantor Input -->
+                            <!-- Jam Masuk Input -->
                             <div class="relative z-0 w-full mb-6 group">
-                                <input type="text" name="alamat_kantor" id="alamat_kantor"
+                                <input type="time" name="jam_masuk" id="jam_masuk"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " autocomplete="off"
-                                    value="<?php echo isset($alamat) ? $alamat : ''; ?>" required />
-                                <label for="alamat_kantor"
+                                    placeholder=" " autocomplete="off" required
+                                    value="<?php echo $shift->jam_masuk; ?>" />
+                                <label for="jam_masuk"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Alamat Kantor
+                                    Jam Masuk
                                 </label>
                             </div>
                         </div>
 
                         <div class="grid md:grid-cols-2 md:gap-6">
-                            <!-- Pilihan User -->
+
+                            <!-- Jam Pulang Input -->
                             <div class="relative z-0 w-full mb-6 group">
-                                <select id="custom_id" name="custom_id"
+                                <input type="time" name="jam_pulang" id="jam_pulang"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    required>
-                                    <option value="" selected>Pilih User</option>
-                                    <?php if (!empty($user)): ?>
-                                    <?php foreach ($user as $row): ?>
-                                    <option value="<?php echo $row->id_user; ?>">
-                                        <?php echo $row->email; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                    <?php else: ?>
-                                    <option value="" disabled>Data User Tidak Tersedia</option>
-                                    <?php endif; ?>
-                                </select>
-                                <label for="custom_id"
-                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                </label>
+                                    placeholder=" " autocomplete="off" required
+                                    value="<?php echo $shift->jam_pulang; ?>" />
+                                <label for="jam_pulang"
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Jam
+                                    Pulang</label>
                             </div>
+
                         </div>
 
                         <!-- Button -->
@@ -83,7 +74,7 @@
                                 href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i></a>
                             <button type="submit"
                                 class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
-                                    class="fa-solid fa-plus"></i></button>
+                                    class="fa-solid fa-floppy-disk"></i></button>
                         </div>
                     </form>
                 </div>
@@ -91,17 +82,5 @@
         </div>
     </div>
 </body>
-
-<script>
-function showPassword() {
-    var passwordInput = document.getElementById("password");
-    var showPassCheckbox = document.getElementById("showpass");
-    if (showPassCheckbox.checked) {
-        passwordInput.type = "text";
-    } else {
-        passwordInput.type = "password";
-    }
-}
-</script>
 
 </html>

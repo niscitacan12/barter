@@ -167,7 +167,6 @@ class Admin_model extends CI_Model
         }
     }
 
-<<<<<<<<< Temporary merge branch 1
     public function edit_user($id_user, $data)
     {
         // Lakukan pembaruan data Admin
@@ -203,7 +202,6 @@ class Admin_model extends CI_Model
         $this->db->where('id_user', $id_user);
         $this->db->delete('user'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
-=========
     // Searching
     public function search_data($table, $keyword) {
         $this->db->like('nama_user', $keyword); // Sesuaikan field_name dengan field yang ingin dicari
@@ -211,7 +209,6 @@ class Admin_model extends CI_Model
 
         return $query->result(); // Mengembalikan hasil pencarian
     }   
->>>>>>>>> Temporary merge branch 2
    
 }
 ?>

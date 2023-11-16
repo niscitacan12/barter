@@ -72,11 +72,9 @@ class Admin extends CI_Controller
 
     public function jam_kerja()
     {
-        $id_shift = $this->session->userdata('id');
-        $data['shift'] = $this->admin_model->get_shift_by_id_admin($id_shift);
-        $data[
-            'employee_counts'
-        ] = $this->admin_model->get_employee_count_by_shift();
+        $id_admin = $this->session->userdata('id');
+        $data['shift'] = $this->admin_model->get_shift_by_id_admin($id_admin);
+        $data['employee_counts'] = $this->admin_model->get_employee_count_by_shift();
         $this->load->view('page/admin/jam_kerja', $data);
     }
 
@@ -339,7 +337,8 @@ class Admin extends CI_Controller
     // Page tambah shift
     public function tambah_shift()
     {
-        $this->load->view('page/admin/tambah_shift');
+        $data['admin'] = $this->admin_model->get_data('admin')->result();
+        $this->load->view('page/admin/tambah_shift', $data);
     }
 
     // Page tambah jabatan
@@ -438,6 +437,73 @@ class Admin extends CI_Controller
         // Redirect ke halaman setelah pembaruan data
         redirect('admin/user'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
     }
+
+    // aksi Tambah Shift
+    public function aksi_tambah_shift()
+    {
+        // Ambil data yang diperlukan dari form
+        $data = [
+            'nama_shift' => $this->input->post('name'),
+           'jam_masuk' => $this->input->post('time_masuk'),
+           'jam_pulang' => $this->input->post('time_pulang'),
+           'id_admin' => $this->input->post('id_admin'),
+            // sesuaikan dengan kolom lainnya
+        ];
+
+        // Simpan data ke tabel
+        $this->admin_model->tambah_data('shift', $data); // Panggil method pada model
+
+        // Redirect kembali ke halaman dashboard superadmin
+        redirect('admin/jam_kerja');
+    }
+   
+   // Page Detail Shift
+   public function detail_shift() 
+   {
+       // Mendefinisikan data yang akan digunakan dalam tampilan
+       $data = array(
+           'judul' => 'Detail Shift',
+           'deskripsi' => 'Ini adalah halaman detail shift.'
+       );
+       $this->load->view('page/admin/detail_shift', $data);
+   }
+
+   // Page Update Shift
+   public function update_shift($id_shift)                                                                                                                                         
+   {
+       $data['shift'] = $this->admin_model->getShiftId($id_shift);
+       $this->load->view('page/admin/update_shift', $data);
+   }
+
+   // Aksi Update Shift
+   public function aksi_edit_shift()
+   {
+       // Mendapatkan data dari form
+       $id_shift = $this->input->post('id_shift');
+       $nama_shift = $this->input->post('nama_shift');
+       $jam_masuk = $this->input->post('jam_masuk');
+       $jam_pulang = $this->input->post('jam_pulang');
+
+       // Buat data yang akan diupdate
+       $data = [
+           'nama_shift' => $nama_shift,
+           'jam_masuk' => $jam_masuk,
+           'jam_pulang' => $jam_pulang,
+       ];
+
+       // Lakukan pembaruan data Admin
+       $this->admin_model->update_shift($id_shift, $data);
+
+       // Redirect ke halaman setelah pembaruan data
+       redirect('admin/jam_kerja'); 
+   }
+
+   // Hapus Shift
+   public function hapus_shift($id_shift)
+   {
+       $this->admin_model->hapus_shift($id_shift);
+       redirect('admin/jam_kerja');
+   }
 }
 
 ?>

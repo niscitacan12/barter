@@ -34,9 +34,9 @@ class Admin_model extends CI_Model
         return $this->db->get('jabatan')->result();
     }
 
-    public function get_shift_by_id_admin($id_shift)
+    public function get_shift_by_id_admin($id_admin)
     {
-        $this->db->where('id_shift', $id_shift);
+        $this->db->where('id_admin', $id_admin);
         return $this->db->get('shift')->result();
     }
 
@@ -210,5 +210,59 @@ class Admin_model extends CI_Model
         $this->db->where('id_user', $id_user);
         $this->db->delete('user'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
+
+    // Menampilkan Dan Mengget Data
+    public function getShiftData($id)
+    {
+        // Sesuaikan dengan struktur tabel di database Anda
+        $this->db->select('*');
+        $this->db->from('shift');
+        $this->db->where('id_shift', $id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Menggunakan row() untuk mendapatkan satu baris
+        } else {
+            return false;
+        }
+    }
+
+   //  GET ID Shift
+   public function getShiftId($id_shift)
+   {
+       $this->db->select('*');
+       $this->db->from('shift');
+       $this->db->where('id_shift', $id_shift);
+       $query = $this->db->get();
+
+       return $query->row();
+   }
+
+   // Update
+   public function update_shift($id_shift, $data)
+   {
+       // Lakukan pembaruan data Admin
+       $this->db->where('id_shift', $id_shift);
+       $this->db->update('shift', $data);
+   }
+
+   // GET Admin Shift
+   public function get_admin_data() {
+       $query = $this->db->get('admin'); 
+       return $query->result();
+   }
+
+   public function get_last_shift()
+   {
+       // Ambil semua data shift
+       $query = $this->db->get('shift');
+       return $query->result(); 
+   }
+
+   public function hapus_shift($id_shift) 
+   {
+       $this->db->where('id_shift', $id_shift);
+       $this->db->delete('shift'); 
+   }
 }
 ?>

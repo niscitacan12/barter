@@ -114,6 +114,15 @@ class Admin_model extends CI_Model
         return $this->db->count_all_results();
     }
 
+    // Menampilkan Jumlah Cuti
+    public function get_cuti_count()
+    {
+        $this->db->select('COUNT(*) as cuti_count');
+        $query = $this->db->get('cuti');
+
+        return $query->row()->cuti_count;
+    }
+
     public function hapus_organisasi($id_organisasi)
     {
         // Misalnya, menggunakan query database untuk menghapus data organisasi berdasarkan ID

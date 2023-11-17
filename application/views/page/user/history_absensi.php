@@ -21,7 +21,7 @@
                     <div class="flex justify-between items-center p-4"> 
 
                         <!-- Form Bulan -->
-                        <form action="<?php base_url('') ?>" method="get" class="flex flex-col items-center gap-4 mx-10">
+                        <form id="form-bulan" action="<?php echo base_url('history_absensi/aksi_form_bulan') ?>" method="get" class="flex flex-col items-center gap-4 mx-10">
                             <div class="relative flex items-center">
                                 <label for="bulan" class="mx-10 mb-2 text-gray-900 dark:text-white sm:mr-4"></label>
                                 <select id="bulan-select" name="bulan" class="w-40 sm:w-64 sm:w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mx-3">
@@ -43,7 +43,7 @@
                         </form>
 
                         <!-- Form Tanggal -->
-                        <form action="<?php base_url('') ?>" method="get" class="flex flex-col items-center gap-4">
+                        <form id="form-tanggal" action="<?php echo base_url('history_absensi/aksi_form_tanggal') ?>" method="get" class="flex flex-col items-center gap-4">
                             <div class="relative flex items-center mx-3">
                                 <input type="text" id="tanggal" name="tanggal" class="w-40 sm:w-64 sm:w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mx-3" placeholder="Pilih Tanggal" min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d') ?>">
                                 <label for="tanggal" class="mx-2 mb-2 absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-900 dark:text-white mx-3 "></label>
@@ -51,13 +51,13 @@
                         </form>
 
                         <!-- Form Tahun -->
-                        <form action="<?php base_url('') ?>" method="get" class="flex flex-col items-center gap-4">
+                        <form id="form-tahun" action="<?php echo base_url('history_absensi/aksi_form_tahun') ?>" method="get" class="flex flex-col items-center gap-4">
                             <div class="relative flex items-center">
                                 <input type="number" id="tahun" name="tahun" class="w-40 sm:w-64 sm:w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-3 " placeholder="Pilih Tahun" pattern="[0-9]{4}">
                                 <label for="tahun" class="mx-2 mb-2 absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-900 dark:text-white ml-auto">
                                 </label>
                             </div>
-                        </form>
+                        </form> 
 
                         <!-- Tombol untuk Semua Form -->
                         <button type="button" id="submit-button" class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block ml-auto">
@@ -140,6 +140,34 @@
                                     </th>
                                 </tr>
                             </thead>
+                            <tbody class="text-center">
+                                <?php $no = 0; foreach ($absensi as $row): $no++ ?>
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <?php echo $no; ?>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            <?php echo $row->kegiatan; ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <?php echo $row->tanggal_absen; ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <?php echo $row->keterangan_izin; ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <?php echo $row->jam_masuk; ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <?php echo $row->jam_pulang; ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <?php echo $row->lokasi; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>   
+                            </tbody>
                         </table>
                     </div>
             </div>

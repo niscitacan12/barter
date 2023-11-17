@@ -1,17 +1,20 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
-    function __construct(){
-        parent::__construct(); 
+class Auth extends CI_Controller
+{
+    function __construct()
+    {
+        parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('m_model');
-    } 
+    }
 
-    public function register(){
+    public function register()
+    {
         $this->load->view('auth/register');
     }
-    
+
     // Aksi register untuk registrasi karyawan
     public function aksi_register_superadmin()
     {
@@ -25,38 +28,45 @@ class Auth extends CI_Controller {
         if (empty($username) || empty($nama_depan) || empty($password)) {
             // Tampilkan pesan error jika ada input yang kosong
             $this->session->set_flashdata('error', 'Semua field harus diisi.');
-            redirect(base_url().'auth/register'); // sesuaikan dengan URL halaman registrasi .
+            redirect(base_url() . 'auth/register'); // sesuaikan dengan URL halaman registrasi .
         } elseif (strlen($password) < 8) {
-            $this->session->set_flashdata('register_error' , 'Password minimal 8 huruf.');
+            $this->session->set_flashdata(
+                'register_error',
+                'Password minimal 8 huruf.'
+            );
             redirect(base_url('auth/register'));
         } else {
             // dengan menggunakan model untuk menyimpan data pengguna
-            $data = array(
+            $data = [
                 'username' => $username,
                 'email' => $email,
                 'nama_depan' => $nama_depan,
                 'nama_belakang' => $nama_belakang,
                 'image' => 'User.png',
                 'password' => md5($password), // Simpan kata sandi yang telah di-MD5
-                'role' => 'superadmin' // Atur peran menjadi superadmin
-            );
-        
+                'role' => 'superadmin', // Atur peran menjadi superadmin
+            ];
+
             // memanggil model untuk menyimpan data pengguna
             $this->m_model->tambah_data('superadmin', $data);
-            $this->session->set_flashdata('register_success', 'Registrasi berhasil, Silakan login.');
-        
+            $this->session->set_flashdata(
+                'register_success',
+                'Registrasi berhasil, Silakan login.'
+            );
+
             // Setelah data pengguna berhasil disimpan, dapat mengarahkan pengguna
             // ke halaman login atau halaman lain yang sesuai.
-            redirect(base_url().'auth'); // sesuaikan dengan URL halaman login
+            redirect(base_url() . 'auth'); // sesuaikan dengan URL halaman login
         }
     }
 
-    public function index(){
+    public function index()
+    {
         $this->load->view('auth/login');
     }
 
     // Aksi untuk login
-	public function aksi_login_superadmin()
+    public function aksi_login_superadmin()
     {
         // Mengambil data email dan password yang dikirimkan melalui form login.
         $email = $this->input->post('email', true);
@@ -69,14 +79,14 @@ class Auth extends CI_Controller {
         $query = $this->m_model->getwhere('superadmin', $data);
         // Mengambil hasil pencarian dalam bentuk array asosiatif.
         $result = $query->row_array();
- 
+
         // Memeriksa apakah hasil pencarian tidak kosong dan kata sandi cocok.
         if (!empty($result) && md5($password) === $result['password']) {
             // Jika berhasil login:
- 
+
             // Membuat array $data_sess untuk sesi pengguna.
             $data = [
-                'logged_in' => TRUE, // Menandakan bahwa pengguna sudah login.
+                'logged_in' => true, // Menandakan bahwa pengguna sudah login.
                 'email' => $result['email'],
                 'username' => $result['username'],
                 'role' => $result['role'], // Menyimpan peran pengguna (admin/karyawan).
@@ -84,17 +94,23 @@ class Auth extends CI_Controller {
             ];
             // Mengatur data sesi pengguna dengan informasi di atas.
             $this->session->set_userdata($data);
-            $this->session->set_flashdata('login_success', 'Selamat Datang DiApplikasi Absensi.');
+            $this->session->set_flashdata(
+                'login_success',
+                'Selamat Datang DiApplikasi Absensi.'
+            );
             // Mengarahkan pengguna ke halaman berdasarkan peran mereka.
-            redirect(base_url()."superadmin");
+            redirect(base_url() . 'superadmin');
         } else {
             // Jika login gagal, menampilkan pesan kesalahan kepada pengguna.
-           $this->session->set_flashdata('login_error', 'Silahkan coba kembali.');
-           redirect(base_url().'auth'); // Mengarahkan pengguna kembali ke halaman login.
+            $this->session->set_flashdata(
+                'login_error',
+                'Silahkan coba kembali.'
+            );
+            redirect(base_url() . 'auth'); // Mengarahkan pengguna kembali ke halaman login.
         }
     }
-    
-	public function aksi_login_admin()
+
+    public function aksi_login_admin()
     {
         // Mengambil data email dan password yang dikirimkan melalui form login.
         $email = $this->input->post('email', true);
@@ -107,14 +123,14 @@ class Auth extends CI_Controller {
         $query = $this->m_model->getwhere('admin', $data);
         // Mengambil hasil pencarian dalam bentuk array asosiatif.
         $result = $query->row_array();
- 
+
         // Memeriksa apakah hasil pencarian tidak kosong dan kata sandi cocok.
         if (!empty($result) && md5($password) === $result['password']) {
             // Jika berhasil login:
- 
+
             // Membuat array $data_sess untuk sesi pengguna.
             $data = [
-                'logged_in' => TRUE, // Menandakan bahwa pengguna sudah login.
+                'logged_in' => true, // Menandakan bahwa pengguna sudah login.
                 'email' => $result['email'],
                 'username' => $result['username'],
                 'role' => $result['role'], // Menyimpan peran pengguna (admin/karyawan).
@@ -122,17 +138,23 @@ class Auth extends CI_Controller {
             ];
             // Mengatur data sesi pengguna dengan informasi di atas.
             $this->session->set_userdata($data);
-            $this->session->set_flashdata('login_success', 'Selamat Datang DiApplikasi Absensi.');
+            $this->session->set_flashdata(
+                'login_success',
+                'Selamat Datang DiApplikasi Absensi.'
+            );
             // Mengarahkan pengguna ke halaman berdasarkan peran mereka.
-            redirect(base_url()."admin");
+            redirect(base_url() . 'admin');
         } else {
             // Jika login gagal, menampilkan pesan kesalahan kepada pengguna.
-           $this->session->set_flashdata('login_error', 'Silahkan coba kembali.');
-           redirect(base_url().'auth'); // Mengarahkan pengguna kembali ke halaman login.
+            $this->session->set_flashdata(
+                'login_error',
+                'Silahkan coba kembali.'
+            );
+            redirect(base_url() . 'auth'); // Mengarahkan pengguna kembali ke halaman login.
         }
     }
 
-	public function aksi_login_user()
+    public function aksi_login_user()
     {
         // Mengambil data email dan password yang dikirimkan melalui form login.
         $email = $this->input->post('email', true);
@@ -145,14 +167,14 @@ class Auth extends CI_Controller {
         $query = $this->m_model->getwhere('user', $data);
         // Mengambil hasil pencarian dalam bentuk array asosiatif.
         $result = $query->row_array();
- 
+
         // Memeriksa apakah hasil pencarian tidak kosong dan kata sandi cocok.
         if (!empty($result) && md5($password) === $result['password']) {
             // Jika berhasil login:
- 
+
             // Membuat array $data_sess untuk sesi pengguna.
             $data = [
-                'logged_in' => TRUE, // Menandakan bahwa pengguna sudah login.
+                'logged_in' => true, // Menandakan bahwa pengguna sudah login.
                 'email' => $result['email'],
                 'username' => $result['username'],
                 'role' => $result['role'], // Menyimpan peran pengguna (admin/karyawan).
@@ -160,21 +182,32 @@ class Auth extends CI_Controller {
             ];
             // Mengatur data sesi pengguna dengan informasi di atas.
             $this->session->set_userdata($data);
-            $this->session->set_flashdata('login_success', 'Selamat Datang DiApplikasi Absensi.');
+            $this->session->set_flashdata(
+                'login_success',
+                'Selamat Datang DiApplikasi Absensi.'
+            );
             // Mengarahkan pengguna ke halaman berdasarkan peran mereka.
-            redirect(base_url()."user");
+            redirect(base_url() . 'user');
         } else {
             // Jika login gagal, menampilkan pesan kesalahan kepada pengguna.
-           $this->session->set_flashdata('login_error', 'Silahkan coba kembali.');
-           redirect(base_url().'auth'); // Mengarahkan pengguna kembali ke halaman login.
+            $this->session->set_flashdata(
+                'login_error',
+                'Silahkan coba kembali.'
+            );
+            redirect(base_url() . 'auth'); // Mengarahkan pengguna kembali ke halaman login.
         }
     }
 
     // Aksi logout
-	function logout()
+    function logout()
     {
         $this->session->sess_destroy();
         redirect(base_url('auth'));
+    }
+
+    public function lupa_password()
+    {
+        $this->load->view('auth/lupa_password');
     }
 }
 ?>

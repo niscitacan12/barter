@@ -17,49 +17,35 @@
         <div
             class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
             <form class="space-y-6" method="post" id="form-login">
-                <h5 class="text-xl text-center font-medium text-gray-900 dark:text-white">Login</h5>
+                <h5 class="text-xl text-center font-medium text-gray-900 dark:text-white">Reset Password</h5>
                 <hr>
 
-                <div class="flex justify-between">
 
-                    <div class="flex items-center mr-4">
-                        <input checked id="login-user" type="radio" value="user" name="inline-radio-group"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="login-user"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">User</label>
-                    </div>
-                    <div class="flex items-center mr-4">
-                        <input id="login-admin" type="radio" value="admin" name="inline-radio-group"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="login-admin"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Admin</label>
-                    </div>
-                    <div class="flex items-center mr-4">
-                        <input id="login-superadmin" type="radio" value="superadmin" name="inline-radio-group"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="login-superadmin"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Superadmin</label>
-                    </div>
-                </div>
-
-
-                <!-- Input email -->
+                <!-- Input Password -->
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="email" name="email" id="email"
+                    <input type="password" name="password" id="password" value="<?php echo set_value(
+                        'password'
+                    ); ?>"
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " autocomplete="off" required />
                     <label for="email"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password
+                        Baru</label>
                 </div>
-
+                <p> <?php echo form_error('password'); ?> </p>
                 <!-- Password Input -->
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="password" name="password" id="password"
+                    <input type="password" name="passconf" id="password" value="<?php echo set_value(
+                        'passconf'
+                    ); ?>"
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " autocomplete="off" required />
                     <label for="password"
-                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Konfirmasi
+                        Password</label>
                 </div>
+
+                <p> <?php echo form_error('passconf'); ?> </p>
 
                 <div class="flex items-start">
                     <div class="flex items-center h-5">
@@ -72,15 +58,9 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
-                <!-- Login text -->
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Tidak Memiliki Akun? <a href="register"
-                        class="text-blue-700 hover:underline dark:text-blue-500">Registrasi
-                        sekarang</a> <br>
-                    Lupa Password? <a href="lupa_password" class="text-blue-700 hover:underline dark:text-blue-500">Lupa
-                        Password</a>
-                </div>
+                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Reset
+                    Password</button>
+
             </form>
         </div>
 

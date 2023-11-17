@@ -38,7 +38,15 @@ class User extends CI_Controller
 
 	public function history_absensi()
 	{
-		$this->load->view('page/user/history_absensi');
+		// Ambil data dari formulir
+		$bulan = $this->input->get('bulan');
+		$tanggal = $this->input->get('tanggal');
+		$tahun = $this->input->get('tahun');
+
+		// Kirim data ke model untuk mengambil data absensi
+		$data['absensi'] = $this->user_model->GetDataAbsensi($bulan, $tanggal, $tahun);
+
+		$this->load->view('page/user/history_absensi', $data);
 	}
 
     // Aksi penambahan data absensi karyawan
@@ -66,27 +74,36 @@ class User extends CI_Controller
 		redirect(base_url('page/user/absen'));
 	}
 
-    // Aksi izin yang diajukan oleh karyawan
+    // Aksi Izin
 	public function aksi_izin() {
 		$id_user = $this->session->userdata('id');
 		$tanggal_sekarang = date('Y-m-d');
 	
-		$data = [
-			'id_user' => $id_user,
-			'kegiatan' => '-',
-			'tanggal_absen' => $tanggal_sekarang,
-			'keterangan_izin' => $this->input->post('keterangan_izin'),
-			'jam_masuk' => '00:00:00',
-			'foto_masuk' => '-',
-			'jam_pulang' => '00:00:00',
-			'foto_pulang' => '-',
-			'lokasi' => '-',
-			'status' => 'true',
-		];
-
-		$this->user_model->tambah_data('absensi', $data);
-		$this->session->set_flashdata('berhasil_izin', 'Berhasil Izin.');
+		$keterangan_izin = $this->input->post('keterangan_izin');
 	
-		redirect(base_url('karyawan/absen'));
+		// Periksa apakah 'keterangan_izin' tidak kosong
+		if (!empty($keterangan_izin)) {
+			$data = [
+				'id_user' => $id_user,
+				'kegiatan' => '-',
+				'tanggal_absen' => $tanggal_sekarang,
+				'keterangan_izin' => $this->input->post('keterangan_izin'),
+				'jam_masuk' => '00:00:00',
+				// 'foto_masuk' => '-',
+				'jam_pulang' => '00:00:00',
+				// 'foto_pulang' => '-',
+				'lokasi' => '-',
+				'status' => 'true',
+			];
+	
+			$this->user_model->tambah_data('absensi', $data);
+			$this->session->set_flashdata('berhasil_izin', 'Berhasil Izin.');
+	
+			redirect(base_url('user/history_absensi'));
+		} else {
+			// Tampilkan pesan kesalahan jika 'keterangan_izin' kosong
+			$this->session->set_flashdata('gagal_izin', 'Gagal Izin. Keterangan Izin tidak boleh kosong.');
+			redirect(base_url('page/user/izin'));
+		}
 	}
 }

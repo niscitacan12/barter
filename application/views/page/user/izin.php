@@ -22,12 +22,12 @@
                 <hr class="mb-7">
 
                 <!-- Formulir untuk permintaan izin -->
-                <form action="#" method="post">
+                <form action="<?php echo base_url('user/aksi_izin')?>" method="post">
                     <!-- Field formulir untuk cuti dari -->
                     <div>
                         <label for="leave_from" class="block text-gray-700 font-bold mb-1 text-left">Keterangan Izin
                             :</label>
-                        <textarea id="message" rows="4"
+                        <textarea id="message" name="keterangan_izin" rows="4"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Keterangan . . ."></textarea>
                     </div>

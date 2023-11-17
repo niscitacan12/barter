@@ -265,5 +265,21 @@ class Super_model extends CI_Model
     public function count_all($table_name){
         return $this->db->get($table_name)->num_rows();
     }
+
+    public function getSuperAdminByID($id)
+    {
+        $this->db->select('*');
+        $this->db->from('superadmin');
+        $this->db->where('id_superadmin', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    public function update($tabel, $data, $where)
+    {
+        $data = $this->db->update($tabel, $data, $where);
+        return $this->db->affected_rows();
+    }
 }
 ?>

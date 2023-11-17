@@ -10,6 +10,7 @@ class SuperAdmin extends CI_Controller
         parent::__construct();
         $this->load->helper('my_helper');
         $this->load->model('super_model');
+        $this->load->library('upload');
         $this->load->library('session');
         $this->load->library('pagination');
         if (
@@ -30,6 +31,23 @@ class SuperAdmin extends CI_Controller
         $data['admin'] = $this->super_model->get_admin_count();
         $data['user'] = $this->super_model->get_user_count();
         $this->load->view('page/super_admin/dashboard', $data);
+    }
+
+    public function upload_image_superadmin($value)
+    {
+        $kode = round(microtime(true) * 1000);
+        $config['upload_path'] = './images/superadmin/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            $fn = $this->upload->data();
+            $nama = $fn['file_name'];
+            return [true, $nama];
+        }
     }
 
     // Page Organisasi
@@ -515,8 +533,68 @@ class SuperAdmin extends CI_Controller
     // Page Profile
     public function profile()
     {
-        // Perbaiki ini dari $user_id menjadi $id_superadmin
-        $this->load->view('page/super_admin/profile');
+        if ($this->session->userdata('id')) {
+            $user_id = $this->session->userdata('id');
+            $data['superadmin'] = $this->super_model->getSuperAdminByID($user_id);
+
+            $this->load->view('page/super_admin/profile', $data);
+        } else {
+            redirect('auth');
+        }
+    }
+
+    public function aksi_ubah_akun()
+    {
+        $image = $this->upload_image_superadmin('image');
+
+        $user_id = $this->session->userdata('id');
+        $admin = $this->super_model->getSuperAdminByID($user_id);
+
+        if ($image[0] == true) {
+            $admin->image = $image[1];
+        }
+
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+        $email = $this->input->post('email');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+        $username = $this->input->post('username');
+
+        $data = [
+            'image' => $image[1],
+            'email' => $email,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+            'username' => $username,
+        ];
+
+        // Check if new password is provided
+        if (!empty($password_baru)) {
+            // Check if the new password matches the confirmation
+            if ($password_baru === $konfirmasi_password) {
+                $data['password'] = md5($password_baru);
+            } else {
+                $this->session->set_flashdata(
+                    'message',
+                    'Password baru dan Konfirmasi password harus sama'
+                );
+                redirect(base_url('superadmin/profile'));
+            }
+        }
+
+        // Update the admin data in the database
+        $update_result = $this->super_model->update('superadmin', $data, [
+            'id_superadmin' => $user_id,
+        ]);
+
+        if ($update_result) {
+            $this->session->set_flashdata('message', 'Profil berhasil diubah');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal mengubah profil');
+        }
+
+        redirect(base_url('superadmin/profile'));
     }
 
     // Page Detail Organisasi
@@ -806,4 +884,3 @@ class SuperAdmin extends CI_Controller
         $this->load->view('page/super_admin/detail_admin', $data);
     }
 }
-

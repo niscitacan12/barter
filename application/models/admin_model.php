@@ -28,9 +28,9 @@ class Admin_model extends CI_Model
         return $this->db->get('user')->result();
     }
 
-    public function get_jabatan_by_id_admin($id_jabatan)
+    public function get_jabatan_by_id_admin($id_admin)
     {
-        $this->db->where('id_jabatan', $id_jabatan);
+        $this->db->where('id_admin', $id_admin);
         return $this->db->get('jabatan')->result();
     }
 
@@ -185,15 +185,16 @@ class Admin_model extends CI_Model
             return false; // Mengembalikan false jika tidak ada data ditemukan
         }
     }
-    public function getUserId($id_user)
-    {
-        $this->db->select('*');
-        $this->db->from('user');
-        $this->db->where('id_user', $id_user);
-        $query = $this->db->get();
 
-        return $query->row();
-    }
+    public function getUserId($id_user)
+{
+    $this->db->select('*');
+    $this->db->from('user');
+    $this->db->where('id_user', $id_user);
+    $query = $this->db->get();
+
+    return $query->row();
+}
 
     public function hapus_user($id_user)
     {
@@ -256,7 +257,6 @@ $query = $this->db->get_where('lokasi', array('id_lokasi' => $id_lokasi));
 // Return the result as an object
 return $query->row();
 }
-
 
 public function update_lokasi($id_lokasi, $data)
 {
@@ -327,10 +327,48 @@ public function get_last_shift()
     return $query->result(); 
 }
 
+// Hapus Shift
 public function hapus_shift($id_shift) 
 {
     $this->db->where('id_shift', $id_shift);
     $this->db->delete('shift'); 
 }
+
+public function getJabatanId($id_jabatan)
+{
+    $this->db->select('*');
+    $this->db->from('jabatan');
+    $this->db->where('id_jabatan', $id_jabatan);
+    $query = $this->db->get();
+
+    return $query->row();
+}
+
+// hapus jabatan
+public function hapus_jabatan($id_jabatan) 
+{
+    $this->db->where('id_jabatan', $id_jabatan);
+    $this->db->delete('jabatan'); 
+}
+
+public function getJabatanDetails($id_jabatan) {
+    // Gantilah 'nama_table' dengan nama tabel yang sesuai di database Anda
+    $this->db->where('id_jabatan', $id_jabatan);
+    $query = $this->db->get('jabatan'); // Gantilah 'nama_table' dengan nama tabel yang sesuai di database Anda
+
+    // Jika query berhasil dan ada hasil
+    if ($query->num_rows() > 0) {
+        return $query->row(); // Mengembalikan satu baris hasil sebagai objek
+    } else {
+        return null; // Mengembalikan null jika tidak ada hasil
+    }
+}
+public function update_jabatan($id_jabatan, $data)
+{
+    // Gantilah 'jabatan' dengan nama tabel yang sesuai di database Anda
+    $this->db->where('id_jabatan', $id_jabatan);
+    $this->db->update('jabatan', $data);
+}
+
 }
 ?>

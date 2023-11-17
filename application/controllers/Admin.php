@@ -60,7 +60,7 @@ class Admin extends CI_Controller
         $id_admin = $this->session->userdata('id');
         $id_jabatan = $this->session->userdata('id');
         $data['jabatan'] = $this->admin_model->get_jabatan_by_id_admin(
-            $id_jabatan
+            $id_admin
         );
         $data[
             'employee_counts'
@@ -339,24 +339,20 @@ class Admin extends CI_Controller
     // Aksi Tambah Jabatan
     public function aksi_tambah_jabatan()
     {
-        $id_admin = $this->session->userdata('id_admin');
+        $id_admin = $this->session->userdata('id');
 
-        // Pastikan $id_admin memiliki nilai yang valid
-        if ($id_admin) {
-            $data = [
-                'nama_jabatan' => $this->input->post('nama_jabatan'),
-                'id_admin' => $id_admin,
-            ];
+        // Ambil data yang diperlukan dari form
+        $data = [
+            'nama_jabatan' => $this->input->post('nama_jabatan'),
+            'id_admin' => $id_admin,
+            // sesuaikan dengan kolom lainnya
+        ];
 
-            // Panggil function pada model untuk menambahkan jabatan
-            $this->admin_model->tambah_data('jabatan', $data);
+        // Simpan data ke tabel
+        $this->admin_model->tambah_data('jabatan', $data); // Panggil method pada model
 
-            // Redirect kembali ke halaman yang sesuai
-            redirect('admin/jabatan');
-        } else {
-            // Tampilkan pesan kesalahan atau arahkan kembali ke halaman yang sesuai
-            echo 'Terjadi kesalahan. Silakan coba lagi atau hubungi administrator.';
-        }
+        // Redirect kembali ke halaman dashboard superadmin
+        redirect('admin/jabatan');
     }
 
     public function detail_organisasi()
@@ -534,8 +530,6 @@ public function tambah_lokasi()
     }
 }
 
-
-
     public function detail_lokasi($lokasi_id)
     {
         $data['lokasi'] = $this->admin_model->getLokasiData($lokasi_id);
@@ -584,6 +578,59 @@ public function tambah_lokasi()
         redirect('admin/lokasi');
 
 }
+
+public function detail_jabatan($id_jabatan)
+    {
+        $data['jabatan'] = $this->admin_model->getJabatanDetails($id_jabatan);
+
+        // Mengirim data pengguna ke view
+        $this->load->view('page/admin/detail_jabatan', $data);
+    }
+
+    public function update_jabatan($id_jabatan) 
+{   
+    $data['jabatan'] = $this->admin_model->getJabatanId($id_jabatan);
+
+    // Menampilkan view update_jabatan dengan data jabatan
+    $this->load->view('page/admin/update_jabatan', $data);
+}
+
+// aksi ubah jabatan
+public function aksi_edit_jabatan()
+{
+    // Mendapatkan data dari form
+    $id_jabatan = $this->input->post('id_jabatan');
+    $nama_jabatan = $this->input->post('nama_jabatan');
+
+    // Buat data yang akan diupdate
+    $data = [
+        'nama_jabatan' => $nama_jabatan,
+        // Tambahkan field lain jika ada
+    ];
+
+    // Lakukan pembaruan data Jabatan
+    $this->admin_model->update_jabatan($id_jabatan, $data);
+
+    // Redirect ke halaman setelah pembaruan data
+    redirect('admin/jabatan'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Jabatan
+}
+
+
+
+public function edit_jabatan($id_jabatan, $data) {
+    // Gantilah 'jabatan' dengan nama tabel yang sesuai di database Anda
+    $this->db->where('id_jabatan', $id_jabatan);
+    $this->db->update('jabatan', $data);
+}
+    
+    // Hapus Jabatan
+    public function hapus_jabatan($id_jabatan)
+    {
+        $this->admin_model->hapus_jabatan($id_jabatan);
+        redirect('admin/jabatan');
+    }
+ 
+
 
 }
 ?>

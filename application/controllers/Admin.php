@@ -17,6 +17,7 @@ class Admin extends CI_Controller
         }
     }
 
+    // 1. Page
     // Page Dashboard
     public function index()
     {
@@ -27,23 +28,6 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/dashboard', $data);
     }
 
-    public function upload_image_admin($value)
-    {
-        $kode = round(microtime(true) * 1000);
-        $config['upload_path'] = './images/admin/';
-        $config['allowed_types'] = 'jpg|png|jpeg';
-        $config['max_size'] = 30000;
-        $config['file_name'] = $kode;
-        $this->upload->initialize($config);
-        if (!$this->upload->do_upload($value)) {
-            return [false, ''];
-        } else {
-            $fn = $this->upload->data();
-            $nama = $fn['file_name'];
-            return [true, $nama];
-        }
-    }
-
     // Page Organisasi
     public function organisasi()
     {
@@ -52,7 +36,7 @@ class Admin extends CI_Controller
         $data['organisasi'] = $this->admin_model
             ->get_data('organisasi')
             ->result();
-        $this->load->view('page/admin/organisasi', $data);
+        $this->load->view('page/admin/organisasi/organisasi', $data);
     }
 
     // Page Jabatan
@@ -68,15 +52,7 @@ class Admin extends CI_Controller
         ] = $this->admin_model->get_employee_count_by_jabatan_and_admin(
             $id_admin
         );
-        $this->load->view('page/admin/jabatan', $data); // Memuat view dengan variabel $data
-    }
-
-    public function jam_kerja()
-    {
-        $id_admin = $this->session->userdata('id');
-        $data['shift'] = $this->admin_model->get_shift_by_id_admin($id_admin);
-        $data['employee_counts'] = $this->admin_model->get_employee_count_by_shift();
-        $this->load->view('page/admin/jam_kerja', $data);
+        $this->load->view('page/admin/jabatan/jabatan', $data); // Memuat view dengan variabel $data
     }
 
     // Page Permohonan Cuti
@@ -94,7 +70,7 @@ class Admin extends CI_Controller
             $data['cuti'] = $this->admin_model->get_data('cuti')->result();
         }
 
-        $this->load->view('page/admin/cuti', $data);
+        $this->load->view('page/admin/cuti/cuti', $data);
     }
 
     // Page User
@@ -102,7 +78,7 @@ class Admin extends CI_Controller
     {
         $id_admin = $this->session->userdata('id');
         $data['user'] = $this->admin_model->get_user_by_id_admin($id_admin);
-        $this->load->view('page/admin/user', $data);
+        $this->load->view('page/admin/user/user', $data);
     }
 
     // Page Absensi
@@ -112,17 +88,18 @@ class Admin extends CI_Controller
         $data['absensi'] = $this->admin_model
             ->get_absen_by_admin($id_admin)
             ->result();
-        $this->load->view('page/admin/absensi', $data);
+        $this->load->view('page/admin/absen/absensi', $data);
     }
     // Page Pengaturan
     public function pengaturan()
     {
-        $this->load->view('page/admin/pengaturan');
+        $this->load->view('page/admin/pengaturan/pengaturan');
     }
+    
     // Page Pengaturan Profile
     public function profile_pengaturan()
     {
-        $this->load->view('page/admin/profile_pengaturan');
+        $this->load->view('page/admin/profile/profile_pengaturan');
     }
 
     // Page Profile
@@ -132,12 +109,337 @@ class Admin extends CI_Controller
             $user_id = $this->session->userdata('id');
             $data['admin'] = $this->admin_model->getAdminByID($user_id);
 
-            $this->load->view('page/admin/profile', $data);
+            $this->load->view('page/admin/profile/profile', $data);
         } else {
             redirect('auth');
         }
     }
 
+   // Page Detail Shift
+   public function detail_shift() 
+   {
+       // Mendefinisikan data yang akan digunakan dalam tampilan
+       $data = array(
+           'judul' => 'Detail Shift',
+           'deskripsi' => 'Ini adalah halaman detail shift.'
+       );
+       $this->load->view('page/admin/shift/detail_shift', $data);
+   }
+
+   // Page Update Shift
+   public function update_shift($id_shift)                                                                                                                                         
+   {
+       $data['shift'] = $this->admin_model->getShiftId($id_shift);
+       $this->load->view('page/admin/shift/update_shift', $data);
+   }
+
+    // Page Tambah Organisasi
+    public function tambah_organisasi()
+    {
+        $this->load->view('page/admin/organisasi/tambah_organisasi');
+    }
+
+    // Page rekap harian
+    public function rekap_harian()
+    {
+        $this->load->view('page/admin/rekap/rekap_harian');
+    }
+
+    // Page rekap mingguan
+    public function rekap_mingguan()
+    {
+        $this->load->view('page/admin/rekap/rekap_mingguan');
+    }
+
+    // Page rekap bulanan
+    public function rekap_bulanan()
+    {
+        $this->load->view('page/admin/rekap/rekap_bulanan');
+    }
+
+    // Page Detail Organisasi
+    public function detail_organisasi()
+    {
+        // Load your data here, assuming you have a method in Super_model to get the data
+        $id_organisasi = $this->input->get('id');
+
+        if ($id_organisasi !== null) {
+            // Panggil model untuk mendapatkan data organisasi berdasarkan ID
+            $this->load->model('admin_model');
+            $data['organisasi'] = $this->admin_model->getOrganisasiData(
+                $id_organisasi
+            );
+
+            if ($data['organisasi']) {
+                // Load your view passing the data
+                $this->load->view('page/admin/organisasi/detail_organisasi', $data);
+            } else {
+                // Handle the case when data is not found
+                echo 'Data organisasi tidak ditemukan.';
+            }
+        } else {
+            // Handle the case when ID is not valid or not found
+            echo 'ID tidak valid atau tidak ditemukan.';
+        }
+    }
+
+    // Page Detail User
+    public function detail_user($user_id)
+    {
+        $data['user'] = $this->admin_model->getUserDetails($user_id);
+
+        // Mengirim data pengguna ke view
+        $this->load->view('page/admin/user/detail_user', $data);
+    }
+
+    // Page tambah user
+    public function tambah_user()
+    {
+        $data['admin'] = $this->admin_model->get_data('admin')->result();
+        $data['organisasi'] = $this->admin_model
+            ->get_data('organisasi')
+            ->result();
+        $data['shift'] = $this->admin_model->get_data('shift')->result();
+        $data['jabatan'] = $this->admin_model->get_data('jabatan')->result();
+        $this->load->view('page/admin/user/tambah_user', $data);
+    }
+
+    // Page tambah shift
+    public function tambah_shift()
+    {
+        $data['admin'] = $this->admin_model->get_data('admin')->result();
+        $this->load->view('page/admin/shift/tambah_shift', $data);
+    }
+
+    // Page tambah jabatan
+    public function tambah_jabatan()
+    {
+        $this->load->view('page/admin/jabatan/tambah_jabatan');
+    }
+    
+    // Page update organisasi
+    public function update_organisasi($id_organisasi)
+    {
+        $data['organisasi'] = $this->admin_model->getOrganisasiById(
+            $id_organisasi
+        );
+        $this->load->view('page/admin/organisasi/update_organisasi', $data);
+    }
+
+    // Page Update User
+    public function update_user($id_user)
+    {
+        $data['user'] = $this->admin_model->getUserId($id_user);
+        $this->load->view('page/admin/user/update_user', $data);
+    }
+    
+    // Page lokasi
+    public function lokasi() {
+        // Mengambil data lokasi dan pengguna dari model
+        $this->load->model('admin_model');
+        $data['lokasi'] = $this->admin_model->get_all_lokasi();
+        $data['user'] = $this->admin_model->get_all_user();
+
+        // Menampilkan view dengan data
+        $this->load->view('page/admin/lokasi/lokasi', $data);
+    }
+
+    // page tambah lokasi
+    public function tambah_lokasi()
+    {
+        $this->load->model('admin_model');
+        $data['user'] = $this->admin_model->get_all_user(); // Ganti dengan metode yang sesuai di model
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya
+            $lokasi_data = array(
+                'nama_lokasi' => $this->input->post('nama_lokasi'),
+                'alamat' => $this->input->post('alamat_kantor'),
+                'id_user' => $this->input->post('custom_id'),
+                // tambahkan kolom lainnya sesuai kebutuhan
+            );
+
+            // Tidak perlu menggunakan $this->db->set($data);
+            // Setelah mendapatkan data, baru Anda bisa menggunakan metode set untuk operasi insert
+            // Anda perlu mengatur setiap kolom yang ingin diinsert
+            foreach ($lokasi_data as $key => $value) {
+                $this->db->set($key, $value);
+            }
+
+            $this->db->insert('lokasi');
+
+            // Redirect ke halaman admin/lokasi setelah menambahkan data
+            redirect('admin/lokasi');
+        } else {
+            // Form belum disubmit, ambil data pengguna dan tampilkan view untuk mengisi form
+            $this->load->view('page/admin/lokasi/tambah_lokasi', $data);
+        }
+    }
+
+    // page detail lokasi
+    public function detail_lokasi($lokasi_id)
+    {
+        $data['lokasi'] = $this->admin_model->getLokasiData($lokasi_id);
+    
+        // Mengirim data lokasi ke view
+        $this->load->view('page/admin/lokasi/detail_lokasi', $data);
+    }
+    
+    // page update lokasi
+    public function update_lokasi($id_lokasi)
+    {
+        // Load necessary models or helpers here
+        $this->load->model('admin_model');
+    
+        // Assuming you have a method in your model to get location details by ID
+        $data['lokasi'] = $this->admin_model->getLokasiById($id_lokasi);
+    
+        // Load the view for updating location details
+        $this->load->view('page/admin/lokasi/update_lokasi', $data);
+    }
+    
+    // page detail jabatan
+    public function detail_jabatan($id_jabatan)
+    {
+        $data['jabatan'] = $this->admin_model->getJabatanDetails($id_jabatan);
+
+        // Mengirim data pengguna ke view
+        $this->load->view('page/admin/jabatan/detail_jabatan', $data);
+    }
+
+    // page update jabatan
+    public function update_jabatan($id_jabatan) 
+    {   
+        $data['jabatan'] = $this->admin_model->getJabatanId($id_jabatan);
+
+        // Menampilkan view update_jabatan dengan data jabatan
+        $this->load->view('page/admin/jabatan/update_jabatan', $data);
+    }
+
+    // page shift
+    public function shift()
+    {
+        $id_admin = $this->session->userdata('id');
+        $data['shift'] = $this->admin_model->get_shift_by_id_admin($id_admin);
+        $data['employee_counts'] = $this->admin_model->get_employee_count_by_shift();
+        $this->load->view('page/admin/shift/shift', $data);
+    }
+
+
+    // 2. Aksi
+    // aksi hapus organisasi
+    public function hapus_organisasi($id_organisasi)
+    {
+        $this->admin_model->hapus_organisasi($id_organisasi);
+        redirect('admin/organisasi');
+    }
+
+    // aksi update organisasi
+    public function aksi_edit_organisasi()
+    {
+        // Mendapatkan data dari form
+        $id_organisasi = $this->input->post('id_organisasi');
+        $nama_organisasi = $this->input->post('nama_organisasi');
+        $nomor_telepon = $this->input->post('nomor_telepon');
+        $email_organisasi = $this->input->post('email_organisasi');
+        $kecamatan = $this->input->post('kecamatan');
+        $alamat = $this->input->post('alamat');
+        $kabupaten = $this->input->post('kabupaten');
+        $provinsi = $this->input->post('provinsi');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'nama_organisasi' => $nama_organisasi,
+            'email_organisasi' => $email_organisasi,
+            'nomor_telepon' => $nomor_telepon,
+            'kecamatan' => $kecamatan,
+            'alamat' => $alamat,
+            'kabupaten' => $kabupaten,
+            'provinsi' => $provinsi,
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $this->admin_model->update_organisasi($id_organisasi, $data);
+        $this->session->set_flashdata('berhasil_update', 'Berhasil mengubah data');
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect('admin/organisasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+    }
+
+    // aksi tambah organisasi
+    public function aksi_tambah_organisasi()
+    {
+        $id_admin = $this->session->userdata('id');
+        // Ambil data yang diperlukan dari form
+        $data = [
+            'nama_organisasi' => $this->input->post('nama_organisasi'),
+            'alamat' => $this->input->post('alamat'),
+            'nomor_telepon' => $this->input->post('nomor_telepon'),
+            'email_organisasi' => $this->input->post('email_organisasi'),
+            'kecamatan' => $this->input->post('kecamatan'),
+            'kabupaten' => $this->input->post('kabupaten'),
+            'provinsi' => $this->input->post('provinsi'),
+            'id_admin' => $id_admin,
+            // sesuaikan dengan kolom lainnya
+        ];
+
+        // Simpan data ke tabel
+        $this->admin_model->tambah_data('organisasi', $data); // Panggil method pada model
+        $this->session->set_flashdata( 'berhasil_tambah', 'Berhasil Menambahkan Data' );
+
+        // Redirect kembali ke halaman dashboard admin
+        redirect('admin/organisasi');
+    }
+
+    // Aksi tambah user
+    public function aksi_tambah_user()
+    {
+        // Ambil data yang diperlukan dari form
+        $data = [
+            'email' => $this->input->post('email'),
+            'username' => $this->input->post('username'),
+            'nama_depan' => $this->input->post('nama_depan'),
+            'nama_belakang' => $this->input->post('nama_belakang'),
+            'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
+            'id_admin' => $this->input->post('id_admin'),
+            'id_organisasi' => $this->input->post('id_organisasi'),
+            'id_shift' => $this->input->post('id_shift'),
+            'id_jabatan' => $this->input->post('id_jabatan'),
+            'image' => 'User.png',
+            'role' => 'user',
+            // sesuaikan dengan kolom lainnya
+        ];
+
+        // Simpan data ke tabel
+        $this->admin_model->tambah_data('user', $data); // Panggil method pada model
+        $this->session->set_flashdata( 'berhasil_tambah', 'Berhasil Menambahkan Data' );
+
+        // Redirect kembali ke halaman dashboard superadmin
+        redirect('admin/user');
+    }
+
+    // Aksi Tambah Jabatan
+    public function aksi_tambah_jabatan()
+    {
+        $id_admin = $this->session->userdata('id');
+
+        // Ambil data yang diperlukan dari form
+        $data = [
+            'nama_jabatan' => $this->input->post('nama_jabatan'),
+            'id_admin' => $id_admin,
+            // sesuaikan dengan kolom lainnya
+        ];
+
+        // Simpan data ke tabel
+        $this->admin_model->tambah_data('jabatan', $data); // Panggil method pada model
+        $this->session->set_flashdata( 'berhasil_tambah', 'Berhasil Menambahkan Data' );
+
+        // Redirect kembali ke halaman dashboard superadmin
+        redirect('admin/jabatan');
+    }
+
+    // aksi ubah akun
     public function aksi_ubah_akun()
     {
         $image = $this->upload_image_admin('image');
@@ -192,214 +494,13 @@ class Admin extends CI_Controller
         redirect(base_url('admin/profile'));
     }
 
-    // Page Tambah Organisasi
-    public function tambah_organisasi()
-    {
-        $this->load->view('page/admin/tambah_organisasi');
-    }
-
-    // Page rekap harian
-    public function rekap_harian()
-    {
-        $this->load->view('page/admin/rekap_harian');
-    }
-
-    // Page rekap mingguan
-    public function rekap_mingguan()
-    {
-        $this->load->view('page/admin/rekap_mingguan');
-    }
-
-    // Page rekap bulanan
-    public function rekap_bulanan()
-    {
-        $this->load->view('page/admin/rekap_bulanan');
-    }
-
-    public function hapus_organisasi($id_organisasi)
-    {
-        $this->admin_model->hapus_organisasi($id_organisasi);
-        redirect('admin/organisasi');
-    }
-
-    public function update_organisasi($id_organisasi)
-    {
-        $data['organisasi'] = $this->admin_model->getOrganisasiById(
-            $id_organisasi
-        );
-        $this->load->view('page/admin/update_organisasi', $data);
-    }
-
-    public function aksi_edit_organisasi()
-    {
-        // Mendapatkan data dari form
-        $id_organisasi = $this->input->post('id_organisasi');
-        $nama_organisasi = $this->input->post('nama_organisasi');
-        $nomor_telepon = $this->input->post('nomor_telepon');
-        $email_organisasi = $this->input->post('email_organisasi');
-        $kecamatan = $this->input->post('kecamatan');
-        $alamat = $this->input->post('alamat');
-        $kabupaten = $this->input->post('kabupaten');
-        $provinsi = $this->input->post('provinsi');
-
-        // Buat data yang akan diupdate
-        $data = [
-            'nama_organisasi' => $nama_organisasi,
-            'email_organisasi' => $email_organisasi,
-            'nomor_telepon' => $nomor_telepon,
-            'kecamatan' => $kecamatan,
-            'alamat' => $alamat,
-            'kabupaten' => $kabupaten,
-            'provinsi' => $provinsi,
-            // Tambahkan field lain jika ada
-        ];
-
-        // Lakukan pembaruan data Admin
-        $this->admin_model->update_organisasi($id_organisasi, $data);
-
-        // Redirect ke halaman setelah pembaruan data
-        redirect('admin/organisasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
-    }
-
-    public function aksi_tambah_organisasi()
-    {
-        $id_admin = $this->session->userdata('id');
-        // Ambil data yang diperlukan dari form
-        $data = [
-            'nama_organisasi' => $this->input->post('nama_organisasi'),
-            'alamat' => $this->input->post('alamat'),
-            'nomor_telepon' => $this->input->post('nomor_telepon'),
-            'email_organisasi' => $this->input->post('email_organisasi'),
-            'kecamatan' => $this->input->post('kecamatan'),
-            'kabupaten' => $this->input->post('kabupaten'),
-            'provinsi' => $this->input->post('provinsi'),
-            'id_admin' => $this->input->post('id_admin'),
-            // sesuaikan dengan kolom lainnya
-        ];
-
-        // Simpan data ke tabel
-        $this->admin_model->tambah_data('organisasi', $data); // Panggil method pada model
-
-        // Redirect kembali ke halaman dashboard admin
-        redirect('admin/organisasi');
-    }
-
-    // Page tambah user
-    public function tambah_user()
-    {
-        $data['admin'] = $this->admin_model->get_data('admin')->result();
-        $data['organisasi'] = $this->admin_model
-            ->get_data('organisasi')
-            ->result();
-        $data['shift'] = $this->admin_model->get_data('shift')->result();
-        $data['jabatan'] = $this->admin_model->get_data('jabatan')->result();
-        $this->load->view('page/admin/tambah_user', $data);
-    }
-
-
-    // Aksi tambah user
-
-    public function aksi_tambah_user()
-    {
-        // Ambil data yang diperlukan dari form
-        $data = [
-            'email' => $this->input->post('email'),
-            'username' => $this->input->post('username'),
-            'nama_depan' => $this->input->post('nama_depan'),
-            'nama_belakang' => $this->input->post('nama_belakang'),
-            'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
-            'id_admin' => $this->input->post('id_admin'),
-            'id_organisasi' => $this->input->post('id_organisasi'),
-            'id_shift' => $this->input->post('id_shift'),
-            'id_jabatan' => $this->input->post('id_jabatan'),
-            'image' => 'User.png',
-            'role' => 'user',
-            // sesuaikan dengan kolom lainnya
-        ];
-
-        // Simpan data ke tabel
-        $this->admin_model->tambah_data('user', $data); // Panggil method pada model
-
-        // Redirect kembali ke halaman dashboard superadmin
-        redirect('admin/user');
-    }
-
-    // Page tambah shift
-    public function tambah_shift()
-    {
-        $data['admin'] = $this->admin_model->get_data('admin')->result();
-        $this->load->view('page/admin/tambah_shift', $data);
-    }
-
-    // Page tambah jabatan
-    public function tambah_jabatan()
-    {
-        $this->load->view('page/admin/tambah_jabatan');
-    }
-
-    // Aksi Tambah Jabatan
-    public function aksi_tambah_jabatan()
-    {
-        $id_admin = $this->session->userdata('id');
-
-        // Ambil data yang diperlukan dari form
-        $data = [
-            'nama_jabatan' => $this->input->post('nama_jabatan'),
-            'id_admin' => $id_admin,
-            // sesuaikan dengan kolom lainnya
-        ];
-
-        // Simpan data ke tabel
-        $this->admin_model->tambah_data('jabatan', $data); // Panggil method pada model
-
-        // Redirect kembali ke halaman dashboard superadmin
-        redirect('admin/jabatan');
-    }
-
-    public function detail_organisasi()
-    {
-        // Load your data here, assuming you have a method in Super_model to get the data
-        $id_organisasi = $this->input->get('id');
-
-        if ($id_organisasi !== null) {
-            // Panggil model untuk mendapatkan data organisasi berdasarkan ID
-            $this->load->model('admin_model');
-            $data['organisasi'] = $this->admin_model->getOrganisasiData(
-                $id_organisasi
-            );
-
-            if ($data['organisasi']) {
-                // Load your view passing the data
-                $this->load->view('page/admin/detail_organisasi', $data);
-            } else {
-                // Handle the case when data is not found
-                echo 'Data organisasi tidak ditemukan.';
-            }
-        } else {
-            // Handle the case when ID is not valid or not found
-            echo 'ID tidak valid atau tidak ditemukan.';
-        }
-    }
-    // Page Detail User
-    public function detail_user($user_id)
-    {
-        $data['user'] = $this->admin_model->getUserDetails($user_id);
-
-        // Mengirim data pengguna ke view
-        $this->load->view('page/admin/detail_user', $data);
-    }
     // Hapus User
     public function hapus_user($id_user)
     {
         $this->admin_model->hapus_user($id_user);
         redirect('admin/user');
     }
-    // Page Update User
-    public function update_user($id_user)
-    {
-        $data['user'] = $this->admin_model->getUserId($id_user);
-        $this->load->view('page/admin/update_user', $data);
-    }
+
     // Aksi Update User
     public function aksi_edit_user()
     {
@@ -419,6 +520,7 @@ class Admin extends CI_Controller
 
         // Lakukan pembaruan data Admin
         $this->admin_model->edit_user($id_user, $data);
+        $this->session->set_flashdata( 'berhasil_update', 'Berhasil mengubah data' );
 
         // Redirect ke halaman setelah pembaruan data
         redirect('admin/user'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
@@ -436,30 +538,13 @@ class Admin extends CI_Controller
         ];
 
         // Simpan data ke tabel
-        $this->admin_model->tambah_data('shift', $data); // Panggil method pada model
+        $this->admin_model->tambah_data('shift', $data); // Panggil method pada 
+        $this->session->set_flashdata( 'berhasil_tambah', 'Berhasil Menambahkan Data' );
 
         // Redirect kembali ke halaman dashboard superadmin
-        redirect('admin/jam_kerja');
+        redirect('admin/shift');
     }
    
-   // Page Detail Shift
-   public function detail_shift() 
-   {
-       // Mendefinisikan data yang akan digunakan dalam tampilan
-       $data = array(
-           'judul' => 'Detail Shift',
-           'deskripsi' => 'Ini adalah halaman detail shift.'
-       );
-       $this->load->view('page/admin/detail_shift', $data);
-   }
-
-   // Page Update Shift
-   public function update_shift($id_shift)                                                                                                                                         
-   {
-       $data['shift'] = $this->admin_model->getShiftId($id_shift);
-       $this->load->view('page/admin/update_shift', $data);
-   }
-
    // Aksi Update Shift
    public function aksi_edit_shift()
    {
@@ -478,80 +563,20 @@ class Admin extends CI_Controller
 
        // Lakukan pembaruan data Admin
        $this->admin_model->update_shift($id_shift, $data);
+       $this->session->set_flashdata( 'berhasil_update', 'Berhasil mengubah data' );
 
        // Redirect ke halaman setelah pembaruan data
-       redirect('admin/jam_kerja'); 
+       redirect('admin/shift'); 
    }
 
    // Hapus Shift
    public function hapus_shift($id_shift)
    {
        $this->admin_model->hapus_shift($id_shift);
-       redirect('admin/jam_kerja');
+       redirect('admin/shift');
    }
 
-   public function lokasi() {
-    // Mengambil data lokasi dan pengguna dari model
-    $this->load->model('admin_model');
-    $data['lokasi'] = $this->admin_model->get_all_lokasi();
-    $data['user'] = $this->admin_model->get_all_user();
-
-    // Menampilkan view dengan data
-    $this->load->view('page/admin/lokasi', $data);
-}
-
-public function tambah_lokasi()
-{
-    $this->load->model('admin_model');
-    $data['user'] = $this->admin_model->get_all_user(); // Ganti dengan metode yang sesuai di model
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya
-        $lokasi_data = array(
-            'nama_lokasi' => $this->input->post('nama_lokasi'),
-            'alamat' => $this->input->post('alamat_kantor'),
-            'id_user' => $this->input->post('custom_id'),
-            // tambahkan kolom lainnya sesuai kebutuhan
-        );
-
-        // Tidak perlu menggunakan $this->db->set($data);
-        // Setelah mendapatkan data, baru Anda bisa menggunakan metode set untuk operasi insert
-        // Anda perlu mengatur setiap kolom yang ingin diinsert
-        foreach ($lokasi_data as $key => $value) {
-            $this->db->set($key, $value);
-        }
-
-        $this->db->insert('lokasi');
-
-        // Redirect ke halaman admin/lokasi setelah menambahkan data
-        redirect('admin/lokasi');
-    } else {
-        // Form belum disubmit, ambil data pengguna dan tampilkan view untuk mengisi form
-        $this->load->view('page/admin/tambah_lokasi', $data);
-    }
-}
-
-    public function detail_lokasi($lokasi_id)
-    {
-        $data['lokasi'] = $this->admin_model->getLokasiData($lokasi_id);
-    
-        // Mengirim data lokasi ke view
-        $this->load->view('page/admin/detail_lokasi', $data);
-    }
-    
-   
-    public function update_lokasi($id_lokasi)
-    {
-        // Load necessary models or helpers here
-        $this->load->model('admin_model');
-    
-        // Assuming you have a method in your model to get location details by ID
-        $data['lokasi'] = $this->admin_model->getLokasiById($id_lokasi);
-    
-        // Load the view for updating location details
-        $this->load->view('page/admin/update_lokasi', $data);
-    }
-    
+    //    aksi update
     public function aksi_edit_lokasi()
     {
         // Mendapatkan data dari form
@@ -568,61 +593,40 @@ public function tambah_lokasi()
     
         // Lakukan pembaruan data Lokasi
         $this->admin_model->update_lokasi($id_lokasi, $data);
+        $this->session->set_flashdata( 'berhasil_update', 'Berhasil mengubah data' );
     
         // Redirect ke halaman setelah pembaruan data
         redirect('admin/lokasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Lokasi
     }
     
+    // aksi hapus lokasi
     public function hapus_lokasi($id_lokasi)
     {
         $this->admin_model->hapus_lokasi($id_lokasi); // Assuming you have a method 'hapus_lokasi' in the model
         redirect('admin/lokasi');
 
-}
-
-public function detail_jabatan($id_jabatan)
-    {
-        $data['jabatan'] = $this->admin_model->getJabatanDetails($id_jabatan);
-
-        // Mengirim data pengguna ke view
-        $this->load->view('page/admin/detail_jabatan', $data);
     }
 
-    public function update_jabatan($id_jabatan) 
-{   
-    $data['jabatan'] = $this->admin_model->getJabatanId($id_jabatan);
+    // aksi ubah jabatan
+    public function aksi_edit_jabatan()
+    {
+        // Mendapatkan data dari form
+        $id_jabatan = $this->input->post('id_jabatan');
+        $nama_jabatan = $this->input->post('nama_jabatan');
 
-    // Menampilkan view update_jabatan dengan data jabatan
-    $this->load->view('page/admin/update_jabatan', $data);
-}
+        // Buat data yang akan diupdate
+        $data = [
+            'nama_jabatan' => $nama_jabatan,
+            // Tambahkan field lain jika ada
+        ];
 
-// aksi ubah jabatan
-public function aksi_edit_jabatan()
-{
-    // Mendapatkan data dari form
-    $id_jabatan = $this->input->post('id_jabatan');
-    $nama_jabatan = $this->input->post('nama_jabatan');
+        // Lakukan pembaruan data Jabatan
+        $this->admin_model->update_jabatan($id_jabatan, $data);
+        $this->session->set_flashdata( 'berhasil_update', 'Berhasil mengubah data' );
 
-    // Buat data yang akan diupdate
-    $data = [
-        'nama_jabatan' => $nama_jabatan,
-        // Tambahkan field lain jika ada
-    ];
-
-    // Lakukan pembaruan data Jabatan
-    $this->admin_model->update_jabatan($id_jabatan, $data);
-
-    // Redirect ke halaman setelah pembaruan data
-    redirect('admin/jabatan'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Jabatan
-}
-
-
-
-public function edit_jabatan($id_jabatan, $data) {
-    // Gantilah 'jabatan' dengan nama tabel yang sesuai di database Anda
-    $this->db->where('id_jabatan', $id_jabatan);
-    $this->db->update('jabatan', $data);
-}
+        // Redirect ke halaman setelah pembaruan data
+        redirect('admin/jabatan'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Jabatan
+    }
     
     // Hapus Jabatan
     public function hapus_jabatan($id_jabatan)
@@ -630,8 +634,25 @@ public function edit_jabatan($id_jabatan, $data) {
         $this->admin_model->hapus_jabatan($id_jabatan);
         redirect('admin/jabatan');
     }
- 
-
+    
+    // 3. Lain-lain
+    // upload image
+    public function upload_image_admin($value)
+    {
+        $kode = round(microtime(true) * 1000);
+        $config['upload_path'] = './images/admin/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            $fn = $this->upload->data();
+            $nama = $fn['file_name'];
+            return [true, $nama];
+        }
+    }
 
 }
 ?>

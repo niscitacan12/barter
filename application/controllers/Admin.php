@@ -55,18 +55,15 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/jabatan/jabatan', $data); // Memuat view dengan variabel $data
     }
 
-    // Page Permohonan Cuti
     public function cuti()
     {
-        $keyword = $this->input->get('keyword'); // Mendapatkan kata kunci dari form
+        $keyword = $this->input->get('keyword');
 
-        // Jika ada kata kunci, lakukan pencarian
         if ($keyword !== null && $keyword !== '') {
             $data['cuti'] = $this->admin_model
-                ->search_data('cuti', $keyword)
+                ->search_data('cuti', 'keperluan_cuti', $keyword)
                 ->result();
         } else {
-            // Jika tidak ada kata kunci, ambil semua data cuti
             $data['cuti'] = $this->admin_model->get_data('cuti')->result();
         }
 
@@ -85,9 +82,25 @@ class Admin extends CI_Controller
     public function absensi()
     {
         $id_admin = $this->session->userdata('id');
-        $data['absensi'] = $this->admin_model
-            ->get_absen_by_admin($id_admin)
-            ->result();
+        // Ambil data dari formulir
+        $bulan = $this->input->get('bulan');
+        $tanggal = $this->input->get('tanggal');
+        $tahun = $this->input->get('tahun');
+        $data['absensi'] = $this->admin_model->GetDataAbsensi(
+            $bulan,
+            $tanggal,
+            $tahun
+        );
+        $keyword = $this->input->get('keyword');
+        if ($keyword !== null && $keyword !== '') {
+            $data['absensi'] = $this->admin_model
+                ->search_data('absensi', 'keterangan', $keyword)
+                ->result();
+        } else {
+            $data['absensi'] = $this->admin_model
+                ->get_data('absensi')
+                ->result();
+        }
         $this->load->view('page/admin/absen/absensi', $data);
     }
     // Page Pengaturan

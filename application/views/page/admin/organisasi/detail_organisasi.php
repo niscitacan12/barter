@@ -29,7 +29,7 @@
                 <br>
 
                 <!-- GET Data dan ID -->
-                <?php
+                <!-- <?php
                 $id_organisasi = isset($_GET['id']) ? $_GET['id'] : null;
                 if ($id_organisasi !== null) {
                     // Panggil model untuk mendapatkan data organisasi berdasarkan ID
@@ -49,7 +49,7 @@
                 } else {
                     echo 'ID tidak valid atau tidak ditemukan.';
                 }
-                ?>
+                ?> -->
 
                 <div class="mt-5 text-left">
                     <?php foreach ($organisasi as $row): ?>

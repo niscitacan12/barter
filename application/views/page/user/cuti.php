@@ -22,11 +22,11 @@
                 <hr class="mb-7">
 
                 <!-- Formulir untuk permintaan izin -->
-                <form action="#" method="post">
+                <form action="<?php echo base_url('user/aksi_cuti') ?>" method="post">
                     <!-- Field formulir untuk cuti dari -->
                     <div>
-                        <label for="leave_from" class="block text-gray-700 font-bold mb-1 text-left">Cuti Dari:</label>
-                        <input type="date" name="leave_from" id="leave_from"
+                        <label for="awal_cuti" class="block text-gray-700 font-bold mb-1 text-left">Cuti Dari:</label>
+                        <input type="date" name="awal_cuti" id="awal_cuti"
                             class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
                             required>
                     </div>
@@ -34,8 +34,8 @@
 
                     <!-- Field formulir untuk cuti sampai -->
                     <div>
-                        <label for="leave_to" class="block text-gray-700 font-bold mb-1 text-left">Cuti Sampai:</label>
-                        <input type="date" name="leave_to" id="leave_to"
+                        <label for="akhir_cuti" class="block text-gray-700 font-bold mb-1 text-left">Cuti Sampai:</label>
+                        <input type="date" name="akhir_cuti" id="akhir_cuti"
                             class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
                             required>
                     </div>
@@ -43,29 +43,18 @@
 
                     <!-- Field formulir untuk waktu masuk kerja -->
                     <div>
-                        <label for="start_time" class="block text-gray-700 font-bold mb-1 text-left">Masuk
+                        <label for="masuk_kerja" class="block text-gray-700 font-bold mb-1 text-left">Masuk
                             Kerja:</label>
-                        <input type="date" name="start_time" id="start_time"
+                        <input type="date" name="masuk_kerja" id="masuk_kerja"
                             class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
                             required>
                     </div>
                     <br>
-
-                    <!-- Field formulir untuk jumlah cuti -->
-                    <div>
-                        <label for="leave_duration" class="block text-gray-700 font-bold mb-1 text-left">Jumlah Cuti
-                            (hari):</label>
-                        <input type="number" name="leave_duration" id="leave_duration"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
-                    </div>
-                    <br>
-
                     <!-- Field formulir untuk keperluan cuti -->
                     <div>
-                        <label for="leave_purpose" class="block text-gray-700 font-bold mb-1 text-left">Keperluan
+                        <label for="keperluan_cuti" class="block text-gray-700 font-bold mb-1 text-left">Keperluan
                             Cuti:</label>
-                        <input type="text" name="leave_purpose" id="leave_purpose"
+                        <input type="text" name="keperluan_cuti" id="keperluan_cuti"
                             class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
                             required>
                     </div>

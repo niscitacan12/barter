@@ -20,17 +20,10 @@
                 </div>
 
                 <hr>
-                <!-- Profile -->
-                <div class="mt-5 text-center">
-                    <!-- You can replace the image source with the appropriate data for the location -->
-                    <img class="rounded-full w-96 h-96 mx-auto"
-                        src="https://cdnwpseller.gramedia.net/wp-content/uploads/2021/06/29145808/Bunga-Lavender.jpg"
-                        alt="image description">
-                </div>
                 <br>
 
                 <!-- GET Data dan ID -->
-                <?php
+                <!-- <?php
                 $lokasiId = isset($_GET['id']) ? $_GET['id'] : null;
                 if ($lokasiId !== null) {
                     // Panggil model untuk mendapatkan data lokasi berdasarkan ID
@@ -48,12 +41,14 @@
                 } else {
                     echo 'ID ';
                 }
-                ?>
+                ?> -->
 
                 <div class="mt-5 text-left">
                     <?php foreach ($lokasi as $lokasi): ?>
                     <!-- Form Input -->
-                    <form action="<?php echo base_url(''); ?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo base_url(
+                        ''
+                    ); ?>" method="post" enctype="multipart/form-data">
                         <!-- Nama & Alamat Input -->
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="relative z-0 w-full mb-6 group">

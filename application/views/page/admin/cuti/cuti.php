@@ -50,7 +50,7 @@
                     </div>
 
                     <!-- Search -->
-                    <form>
+                    <form action="<?= base_url('admin/cuti') ?>" method="get">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -108,7 +108,10 @@
 
                         <!-- Tabel Body -->
                         <tbody class="text-center">
-                            <?php $no = 0; foreach ($cuti as $row): $no++ ?>
+                            <?php
+                            $no = 0;
+                            foreach ($cuti as $row):
+                                $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"

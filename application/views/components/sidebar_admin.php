@@ -114,7 +114,7 @@
 
                         <!-- Menu Jam Kerja -->
                         <li>
-                            <a href="<?php echo base_url('admin/jam_kerja'); ?>"
+                            <a href="<?php echo base_url('admin/shift'); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-business-time fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>

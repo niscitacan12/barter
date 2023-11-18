@@ -75,7 +75,8 @@
                                         name="konfirmasi_password">
                                 </div>
                             </div>
-                            <button class="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit"> <i class="fas fa-save mr-2"></i></button>
+                            <button class="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit"> <i
+                                    class="fas fa-save mr-2"></i></button>
                         </form>
                     </div>
                 </div>

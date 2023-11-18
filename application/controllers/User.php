@@ -36,43 +36,54 @@ class User extends CI_Controller
         $this->load->view('page/user/izin');
     }
 
-	public function history_absensi()
-	{
-		// Ambil data dari formulir
-		$bulan = $this->input->get('bulan');
-		$tanggal = $this->input->get('tanggal');
-		$tahun = $this->input->get('tahun');
-
-		// Kirim data ke model untuk mengambil data absensi
-		$data['absensi'] = $this->user_model->GetDataAbsensi($bulan, $tanggal, $tahun);
-
-		$this->load->view('page/user/history_absensi', $data);
-	}
-
-    // Aksi penambahan data absensi karyawan
-	public function aksi_absen() {
-		$id_user = $this->session->userdata('id');
-		$tanggal_sekarang = date('Y-m-d');
-        $current_time = date("H:i:s");
 	
-		$data = [
-			'id_user' => $id_user,
-			'kegiatan' => 'coba',
-			'tanggal_absen' => $tanggal_sekarang,
-			'keterangan_izin' => 'masuk',
-			'jam_masuk' => $current_time,
-			'foto_masuk' => $this->input->post('foto_masuk'),
-			'jam_pulang' => '00:00:00',
-			'foto_pulang' => '-',
-			'lokasi' => $this->input->post('lokasi'),
-			'status' => 'false',
-		];
-        
-		$this->user_model->tambah_data('absensi', $data);
-		$this->session->set_flashdata('berhasil_absen', 'Berhasil Absen.');
-	
-		redirect(base_url('page/user/absen'));
-	}
+public function history_absensi() {
+	// Assuming $data is an array that you pass to the view
+	$data['user'] = $this->user_model->get_all_user(); // Use the correct case
+	$data['absensi'] = $this->user_model->get_absensi_data(); // You need to replace this with your actual data retrieval logic
+	$this->load->view('page/user/history_absensi', $data);
+}
+
+// application/controllers/User.php
+public function aksi_absen()
+{
+$id_user = $this->session->userdata('id');
+date_default_timezone_set('Asia/Jakarta');
+$tanggal_sekarang = date('Y-m-d H:i:s');
+$lokasi = $this->input->post('lokasi');
+$foto_masuk = $this->input->post('foto_masuk');
+$kegiatan = $this->input->post('kegiatan');
+
+// Debugging: Check the value of $kegiatan before conditional check
+var_dump("Before conditional check - Value of kegiatan: ", $kegiatan);
+
+// Check if $kegiatan is NULL, empty, or contains only whitespace
+
+
+// Debugging: Check the value of $kegiatan after conditional check
+var_dump("After conditional check - Value of kegiatan: ", $kegiatan);
+
+// Rest of your code
+$data = [
+	'id_user' => $id_user,
+	'kegiatan' => $kegiatan,
+	'tanggal_absen' => $tanggal_sekarang,
+	'keterangan_izin' => 'masuk',
+	'jam_masuk' => $tanggal_sekarang,
+	'foto_masuk' => $foto_masuk,
+	'jam_pulang' => '00:00:00',
+	'foto_pulang' => '-',
+	'lokasi' => $lokasi,
+	'status' => 'false',
+];
+
+$this->user_model->tambah_data('absensi', $data);
+$this->session->set_flashdata('berhasil_absen', 'Berhasil Absen.');
+
+redirect(base_url('user/history_absensi'));
+}
+
+
 
     // Aksi Izin
 	public function aksi_izin() {

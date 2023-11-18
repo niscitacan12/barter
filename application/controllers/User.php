@@ -106,4 +106,35 @@ class User extends CI_Controller
 			redirect(base_url('page/user/izin'));
 		}
 	}
+	// Tambahkan fungsi ini dalam controller Anda, misalnya User.php
+	public function aksi_cuti() {
+		$id_user = $this->session->userdata('id');
+		$tanggal_sekarang = date('Y-m-d');
+	
+		$awal_cuti = $this->input->post('awal_cuti');
+		$akhir_cuti = $this->input->post('akhir_cuti');
+		$masuk_kerja = $this->input->post('masuk_kerja');
+		$keperluan_cuti = $this->input->post('keperluan_cuti');
+	
+		// Periksa apakah data tidak kosong
+		if (!empty($awal_cuti) && !empty($akhir_cuti) && !empty($masuk_kerja) && !empty($keperluan_cuti)) {
+			$data = [
+				'id_user' => $id_user,
+				'awal_cuti' => $awal_cuti,
+				'akhir_cuti' => $akhir_cuti,
+				'masuk_kerja' => $masuk_kerja,
+				'keperluan_cuti' => $keperluan_cuti,
+			];
+	
+			// Panggil model untuk menyimpan data cuti
+			$this->user_model->tambah_data('cuti', $data);
+			$this->session->set_flashdata('berhasil_cuti', 'Berhasil mengajukan cuti.');
+	
+			redirect(base_url('user/cuti')); // Mengasumsikan 'user/history_cuti' adalah halaman untuk melihat riwayat cuti
+		} else {
+			// Tampilkan pesan kesalahan jika ada data yang kosong
+			$this->session->set_flashdata('gagal_cuti', 'Gagal mengajukan cuti. Semua field harus diisi.');
+			redirect(base_url('user/cuti'));
+		}
+	}
 }

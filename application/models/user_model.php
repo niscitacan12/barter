@@ -37,5 +37,21 @@ class User_model extends CI_Model
             return false;
         }
     }
+
+    public function get_absensi_data() {
+        // Assuming you have a table named 'absensi'
+        $query = $this->db->get('absensi');
+
+        // Assuming 'absensi' is the name of the table
+        return $query->result(); // This assumes you want to get multiple rows as a result
+    }
+    public function get_all_user() {
+        
+        // Replace 'user' with your actual table name
+                $query = $this->db->get('user');
+        
+        return $query->result();
+            }
+
 }
 ?>

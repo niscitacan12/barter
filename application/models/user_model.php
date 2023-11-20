@@ -81,5 +81,23 @@ class User_model extends CI_Model
   
           return $query->row()->absensi_count;
       }
+
+      public function getUserByID($id)
+    {
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where('id_user', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    public function update($tabel, $data, $where)
+    {
+        $data = $this->db->update($tabel, $data, $where);
+        return $this->db->affected_rows();
+    }
+
+
 }
 ?>

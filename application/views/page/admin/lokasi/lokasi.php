@@ -39,6 +39,9 @@
                                     Alamat
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Jumlah Karyawan
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Aksi
                                 </th>
                             </tr>
@@ -51,6 +54,7 @@
                             <td class="px-6 py-4"><?php echo isset($data['nama_lokasi']) ? $data['nama_lokasi'] : ''; ?>
                             </td>
                             <td class="px-6 py-4"><?php echo isset($data['alamat']) ? $data['alamat'] : ''; ?></td>
+                            <td class="px-6 py-4"><?php echo jumlah_karyawan($data['id_lokasi']); ?></td>
                             <td class="px-6 py-4" style="padding-right: 20px;">
                                 <!-- Sesuaikan padding kanan sesuai kebutuhan -->
                                 <div class="flex items-center space-x-2">

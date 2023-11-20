@@ -63,7 +63,7 @@
                                             <?php echo $row->nama_jabatan; ?>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <?php echo nama_admin($row->id_admin); ?>
+                                            <?php echo jumlah_karyawan($row->id_jabatan); ?>
                                         </td>
                                         <td class="px-6 py-4">
 

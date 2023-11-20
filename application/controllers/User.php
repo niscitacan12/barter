@@ -8,6 +8,7 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->helper('my_helper');
         $this->load->model('user_model');
+		$this->load->library('upload');
         if (
             $this->session->userdata('logged_in') != true ||
             $this->session->userdata('role') != 'user'
@@ -32,6 +33,19 @@ class User extends CI_Controller
     {
         $this->load->view('page/user/absen');
     }
+
+	public function profile()
+    {
+        if ($this->session->userdata('id')) {
+            $user_id = $this->session->userdata('id');
+            $data['user'] = $this->user_model->getUserByID($user_id);
+
+            $this->load->view('page/user/profile', $data);
+        } else {
+            redirect('auth');
+        }
+    }
+
 
     public function cuti()
     {
@@ -158,4 +172,77 @@ class User extends CI_Controller
             redirect(base_url('user/cuti'));
         }
     }
+
+	public function aksi_ubah_akun()
+    {
+        $image = $this->upload_image_user('image');
+
+        $user_id = $this->session->userdata('id');
+        $admin = $this->user_model->getUserByID($user_id);
+
+        if ($image[0] == true) {
+            $admin->image = $image[1];
+        }
+
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+        $email = $this->input->post('email');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+        $username = $this->input->post('username');
+
+        $data = [
+            'image' => $image[1],
+            'email' => $email,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+            'username' => $username,
+        ];
+
+        // Check if new password is provided
+        if (!empty($password_baru)) {
+            // Check if the new password matches the confirmation
+            if ($password_baru === $konfirmasi_password) {
+                $data['password'] = md5($password_baru);
+            } else {
+                $this->session->set_flashdata(
+                    'message',
+                    'Password baru dan Konfirmasi password harus sama'
+                );
+                redirect(base_url('user/profile'));
+            }
+        }
+
+        // Update the admin data in the database
+        $update_result = $this->user_model->update('user', $data, [
+            'id_user' => $user_id,
+        ]);
+
+        if ($update_result) {
+            $this->session->set_flashdata('message', 'Profil berhasil diubah');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal mengubah profil');
+        }
+
+        redirect(base_url('user/profile'));
+    }
+
+	 // 3. Lain-lain
+	public function upload_image_user($value)
+    {
+        $kode = round(microtime(true) * 1000);
+        $config['upload_path'] = './images/user/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            $fn = $this->upload->data();
+            $nama = $fn['file_name'];
+            return [true, $nama];
+        }
+    }
+
 }

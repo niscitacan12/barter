@@ -75,8 +75,13 @@
                                         name="konfirmasi_password">
                                 </div>
                             </div>
-                            <button class="bg-gray-800 text-white px-4 py-2 rounded-md" type="submit"> <i
-                                    class="fas fa-save mr-2"></i></button>
+                            <button
+                                class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+                                type="submit">
+                                <i class="fa-solid fa-check"></i> </button>
+                            <a href="javascript:void(0);" onclick="confirmLogout();" type="button"
+                                class="text-white bg-red-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
+                                    class="fa-solid fa-right-from-bracket"></i></a>
                         </form>
                     </div>
                 </div>
@@ -84,6 +89,26 @@
 
         </div>
     </div>
+    <script>
+    // Fungsi untuk menampilkan konfirmasi SweetAlert saat tombol logout ditekan
+    function confirmLogout() {
+        Swal.fire({
+            title: 'Yakin ingin logout?',
+            text: "Anda akan keluar dari akun Anda.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Logout',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika konfirmasi "Ya", maka alihkan ke logout
+                window.location.href = "<?php echo base_url('auth/logout'); ?>";
+            }
+        });
+    }
+    </script>
 </body>
 
 </html>

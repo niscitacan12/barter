@@ -8,7 +8,7 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->helper('my_helper');
         $this->load->model('user_model');
-		$this->load->library('upload');
+        $this->load->library('upload');
         if (
             $this->session->userdata('logged_in') != true ||
             $this->session->userdata('role') != 'user'
@@ -29,12 +29,24 @@ class User extends CI_Controller
         $this->load->view('page/user/dashboard', $data);
     }
 
+    // Controller User.php
+
     public function absen()
     {
-        $this->load->view('page/user/absen');
+        // Mendapatkan data user atau informasi yang diperlukan
+        $data['user'] = $this->user_model->get_data('user')->result();
+
+        // Mengatur zona waktu ke Waktu Indonesia Barat (WIB)
+        date_default_timezone_set('Asia/Jakarta');
+
+        // Mendapatkan tanggal dan waktu saat ini
+        $data['currentDateTime'] = date('d F Y H:i:s'); // Format: tanggal bulan tahun jam:menit:detik
+
+        // Load view dengan data yang diperlukan
+        $this->load->view('page/user/absen', $data);
     }
 
-	public function profile()
+    public function profile()
     {
         if ($this->session->userdata('id')) {
             $user_id = $this->session->userdata('id');
@@ -45,7 +57,6 @@ class User extends CI_Controller
             redirect('auth');
         }
     }
-
 
     public function cuti()
     {
@@ -173,7 +184,7 @@ class User extends CI_Controller
         }
     }
 
-	public function aksi_ubah_akun()
+    public function aksi_ubah_akun()
     {
         $image = $this->upload_image_user('image');
 
@@ -227,8 +238,8 @@ class User extends CI_Controller
         redirect(base_url('user/profile'));
     }
 
-	 // 3. Lain-lain
-	public function upload_image_user($value)
+    // 3. Lain-lain
+    public function upload_image_user($value)
     {
         $kode = round(microtime(true) * 1000);
         $config['upload_path'] = './images/user/';
@@ -244,5 +255,4 @@ class User extends CI_Controller
             return [true, $nama];
         }
     }
-
 }

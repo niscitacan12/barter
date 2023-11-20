@@ -44,45 +44,18 @@
                                 class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-8 h-8 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                    alt="user photo">
+                                <a href="<?php echo base_url(
+                                    'superadmin/profile'
+                                ); ?>"><img class="w-8 h-8 rounded-full"
+                                        src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                                        alt="user photo"></a>
                             </button>
                         </div>
 
-                        <!-- Profile Info -->
-                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
-                            id="dropdown-user">
-                            <div class="px-4 py-3" role="none">
-                                <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                    Neil Sims
-                                </p>
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                    neil.sims@flowbite.com
-                                </p>
-                            </div>
-                            <ul class="py-1" role="none">
-
-                                <!-- Menu Profile -->
-                                <li>
-                                    <a href="<?php echo base_url(
-                                        'superadmin/profile'
-                                    ); ?>"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        role="menuitem">Profile</a>
-                                </li>
-
-                                <!-- Menu Logout -->
-                                <li>
-                                    <a href="javascript:void(0);" onclick="confirmLogout();" type="button"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        role="menuitem">Logout</a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </nav>
 
@@ -119,7 +92,9 @@
 
                         <!-- Menu Admin -->
                         <li>
-                            <a href="<?php echo base_url('superadmin/admin'); ?>"
+                            <a href="<?php echo base_url(
+                                'superadmin/admin'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-chalkboard-user fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -129,7 +104,9 @@
 
                         <!-- Menu Organisasi -->
                         <li>
-                            <a href="<?php echo base_url('superadmin/organisasi'); ?>"
+                            <a href="<?php echo base_url(
+                                'superadmin/organisasi'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-building fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -139,7 +116,9 @@
 
                         <!-- Menu Jabatan -->
                         <li>
-                            <a href="<?php echo base_url('superadmin/jabatan'); ?>"
+                            <a href="<?php echo base_url(
+                                'superadmin/jabatan'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-briefcase fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -149,7 +128,9 @@
 
                         <!-- Menu Jam Kerja -->
                         <li>
-                            <a href="<?php echo base_url('superadmin/shift'); ?>"
+                            <a href="<?php echo base_url(
+                                'superadmin/shift'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-business-time fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -187,7 +168,9 @@
 
                         <!-- Menu Absensi -->
                         <li>
-                            <a href="<?php echo base_url('superadmin/absensi'); ?>"
+                            <a href="<?php echo base_url(
+                                'superadmin/absensi'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-address-card fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
@@ -227,9 +210,7 @@ function confirmLogout() {
         cancelButtonText: 'Tidak'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "<?php echo base_url(
-                'auth/logout'
-            ); ?>";
+            window.location.href = "<?php echo base_url('auth/logout'); ?>";
         }
     });
 }

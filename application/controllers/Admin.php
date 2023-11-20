@@ -34,8 +34,9 @@ class Admin extends CI_Controller
     {
         $id_admin = $this->session->userdata('id');
         $data['user'] = $this->admin_model->get_data('user')->result();
-        $data['organisasi'] = $this->admin_model
-            ->get_organisasi_pusat($id_admin);
+        $data['organisasi'] = $this->admin_model->get_organisasi_pusat(
+            $id_admin
+        );
         $this->load->view('page/admin/organisasi/organisasi', $data);
     }
 
@@ -94,7 +95,6 @@ class Admin extends CI_Controller
         $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
-
         // Data Jabatan
         $data['jabatan'] = $this->admin_model->pagination(
             'jabatan',
@@ -123,7 +123,7 @@ class Admin extends CI_Controller
     public function user()
     {
         // Config
-        $config['base_url'] = base_url('superadmin/user');
+        $config['base_url'] = base_url('admin/user');
         $config['total_rows'] = $this->admin_model->count_all('user'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
         $config['per_page'] = 10;
 
@@ -165,7 +165,6 @@ class Admin extends CI_Controller
         $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
-
         $id_admin = $this->session->userdata('id');
         // Ambil data user untuk pagination berdasarkan id_admin
         $data['user'] = $this->admin_model->pagination_by_id_admin(
@@ -203,7 +202,7 @@ class Admin extends CI_Controller
         }
         $this->load->view('page/admin/absen/absensi', $data);
     }
-    
+
     // Page Pengaturan
     public function pengaturan()
     {

@@ -40,7 +40,7 @@ class SuperAdmin extends CI_Controller
         // Config
         $config['base_url'] = base_url('superadmin/organisasi');
         $config['total_rows'] = $this->super_model->count_all('organisasi'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 3;
+        $config['per_page'] = 10;
 
         // Styling pagination
         $config['full_tag_open'] =
@@ -122,7 +122,7 @@ class SuperAdmin extends CI_Controller
         // Config
         $config['base_url'] = base_url('superadmin/admin');
         $config['total_rows'] = $this->super_model->count_all('admin'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 3;
+        $config['per_page'] = 10;
 
         // Styling pagination
         $config['full_tag_open'] =
@@ -204,7 +204,7 @@ class SuperAdmin extends CI_Controller
         // Config
         $config['base_url'] = base_url('superadmin/user');
         $config['total_rows'] = $this->super_model->count_all('user'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 1;
+        $config['per_page'] = 10;
 
         // Styling pagination
         $config['full_tag_open'] =
@@ -288,7 +288,7 @@ class SuperAdmin extends CI_Controller
         // Config
         $config['base_url'] = base_url('superadmin/absensi');
         $config['total_rows'] = $this->super_model->count_all('absensi'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 1;
+        $config['per_page'] = 10;
 
         // Styling pagination
         $config['full_tag_open'] =
@@ -343,7 +343,7 @@ class SuperAdmin extends CI_Controller
         // Config
         $config['base_url'] = base_url('superadmin/jabatan');
         $config['total_rows'] = $this->super_model->count_all('jabatan'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 1;
+        $config['per_page'] = 10;
 
         // Styling pagination
         $config['full_tag_open'] =
@@ -412,7 +412,7 @@ class SuperAdmin extends CI_Controller
         // Config
         $config['base_url'] = base_url('superadmin/shift');
         $config['total_rows'] = $this->super_model->count_all('shift'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 1;
+        $config['per_page'] = 10;
 
         // Styling pagination
         $config['full_tag_open'] =

@@ -9,6 +9,7 @@ class Admin extends CI_Controller
         $this->load->model('admin_model');
         $this->load->library('upload');
         $this->load->helper('admin_helper');
+        $this->load->library('pagination');
         if (
             $this->session->userdata('logged_in') != true ||
             $this->session->userdata('role') != 'admin'
@@ -34,23 +35,71 @@ class Admin extends CI_Controller
         $id_admin = $this->session->userdata('id');
         $data['user'] = $this->admin_model->get_data('user')->result();
         $data['organisasi'] = $this->admin_model
-            ->get_data('organisasi')
-            ->result();
+            ->get_organisasi_pusat($id_admin);
         $this->load->view('page/admin/organisasi/organisasi', $data);
+    }
+
+    // Page Tabel Organisasi
+    public function all_organisasi()
+    {
+        $id_admin = $this->session->userdata('id');
+        $data['user'] = $this->admin_model->get_data('user')->result();
+        $data['organisasi'] = $this->admin_model->get_all_organisasi($id_admin);
+        $this->load->view('page/admin/organisasi/all_organisasi', $data);
     }
 
     // Page Jabatan
     public function jabatan()
     {
-        $id_admin = $this->session->userdata('id');
-        $id_jabatan = $this->session->userdata('id');
-        $data['jabatan'] = $this->admin_model->get_jabatan_by_id_admin(
-            $id_admin
-        );
-        $data[
-            'employee_counts'
-        ] = $this->admin_model->get_employee_count_by_jabatan_and_admin(
-            $id_admin
+        // Config
+        $config['base_url'] = base_url('superadmin/jabatan');
+        $config['total_rows'] = $this->admin_model->count_all('jabatan'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
+        $config['per_page'] = 10;
+
+        // Styling pagination
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_close'] = '</li>';
+
+        // Applying Tailwind Classes
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_close'] = '</li>';
+
+        // Initialize
+        $this->pagination->initialize($config);
+        $data['start'] = $this->uri->segment(3);
+
+
+        // Data Jabatan
+        $data['jabatan'] = $this->admin_model->pagination(
+            'jabatan',
+            $config['per_page'],
+            $data['start']
         );
         $this->load->view('page/admin/jabatan/jabatan', $data); // Memuat view dengan variabel $data
     }
@@ -73,8 +122,59 @@ class Admin extends CI_Controller
     // Page User
     public function user()
     {
+        // Config
+        $config['base_url'] = base_url('superadmin/user');
+        $config['total_rows'] = $this->admin_model->count_all('user'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
+        $config['per_page'] = 10;
+
+        // Styling pagination
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_close'] = '</li>';
+
+        // Applying Tailwind Classes
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_close'] = '</li>';
+
+        // Initialize
+        $this->pagination->initialize($config);
+        $data['start'] = $this->uri->segment(3);
+
+
         $id_admin = $this->session->userdata('id');
-        $data['user'] = $this->admin_model->get_user_by_id_admin($id_admin);
+        // Ambil data user untuk pagination berdasarkan id_admin
+        $data['user'] = $this->admin_model->pagination_by_id_admin(
+            'user',
+            $config['per_page'],
+            $data['start'],
+            $id_admin
+        );
+        // Ambil data user berdasarkan id_admin
         $this->load->view('page/admin/user/user', $data);
     }
 
@@ -103,6 +203,7 @@ class Admin extends CI_Controller
         }
         $this->load->view('page/admin/absen/absensi', $data);
     }
+    
     // Page Pengaturan
     public function pengaturan()
     {

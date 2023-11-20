@@ -405,5 +405,55 @@ class Admin_model extends CI_Model
         $this->db->where('id_jabatan', $id_jabatan);
         $this->db->update('jabatan', $data);
     }
+
+    
+    public function pagination($table_name, $limit, $offset) {
+        $this->db->limit($limit, $offset);
+        $query = $this->db->get($table_name);
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+        return array();
+    }
+    
+    public function count_all($table_name){
+        return $this->db->get($table_name)->num_rows();
+    }
+
+    // Pagination by id_admin
+    public function pagination_by_id_admin($tableName, $perPage, $start, $id_admin) {
+        $this->db->where('id_admin', $id_admin);
+        return $this->db->get($tableName, $perPage, $start)->result_array();
+    }
+
+    // Pagination absen per id_admin
+    public function pagination_absen_by_admin($tableName, $perPage, $start, $id_admin) {
+        $this->db->where('id_admin', $id_admin);
+        return $this->db->get($tableName, $perPage, $start)->result_array();
+    }
+
+    // Pagination organisasi
+    public function pagination_organisasi($tableName, $perPage, $start, $id_admin) {
+        $this->db->select('*');
+        $this->db->from($tableName);
+        $this->db->where('id_admin', $id_admin);
+        $this->db->limit($perPage, $start);
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    public function get_organisasi_pusat($id_admin) {
+        $this->db->where('id_admin', $id_admin);
+        $this->db->where('status', 'pusat');
+        return $this->db->get('organisasi')->result();
+    }
+
+    function get_all_organisasi($id_admin)
+    {
+        $this->db->where('id_admin', $id_admin);
+        return $this->db->get('organisasi')->result();
+    }
 }
 ?>

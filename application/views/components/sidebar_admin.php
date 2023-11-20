@@ -118,7 +118,7 @@
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-business-time fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                                <span class="flex-1 ml-3 whitespace-nowrap">Jam Kerja</span>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Shift</span>
                             </a>
                         </li>
 
@@ -133,16 +133,6 @@
                         </li>
                         </a>
                     </ul>
-                </li>
-
-                <!-- Menu Permohonan Cuti -->
-                <li>
-                    <a href="<?php echo base_url('admin/cuti'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i
-                            class="fa-solid fa-calendar-alt fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Permohonan Cuti</span>
-                    </a>
                 </li>
 
                 <!-- Menu Organisasi -->
@@ -164,15 +154,26 @@
                         <span class="flex-1 ml-3 whitespace-nowrap">Absensi</span>
                     </a>
                 </li>
-                <!-- Menu Pengaturan -->
+
+                <!-- Menu Permohonan Cuti -->
                 <li>
+                    <a href="<?php echo base_url('admin/cuti'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fa-solid fa-calendar-alt fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Permohonan Cuti</span>
+                    </a>
+                </li>
+
+                <!-- Menu Pengaturan -->
+                <!-- <li>
                     <a href="<?php echo base_url('admin/pengaturan'); ?>"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i
                             class="fa-solid fa-gear fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                         <span class="flex-1 ml-3 whitespace-nowrap">Pengaturan Web</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Dropdown Rekapan -->
                 <li>

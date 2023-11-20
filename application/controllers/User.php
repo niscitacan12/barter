@@ -17,9 +17,16 @@ class User extends CI_Controller
     }
 
     public function index()
-    {
-        $this->load->view('page/user/dashboard');
-    }
+	{
+		$data['cuti_count'] = $this->user_model->get_cuti_count();
+		$data['absensi'] = $this->user_model->get_izin_count();
+		$data['absensi_count'] = $this->user_model->get_absensi_count();
+		
+		// Hitung total absen dan izin
+		$data['total'] = $data['absensi'] + $data['absensi_count'];
+
+		$this->load->view('page/user/dashboard', $data);
+	}
 
 	public function absen()
     {

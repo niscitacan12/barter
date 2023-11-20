@@ -38,20 +38,48 @@ class User_model extends CI_Model
         }
     }
 
-    public function get_absensi_data() {
+    public function get_absensi_data() 
+    {
         // Assuming you have a table named 'absensi'
         $query = $this->db->get('absensi');
 
         // Assuming 'absensi' is the name of the table
         return $query->result(); // This assumes you want to get multiple rows as a result
     }
-    public function get_all_user() {
-        
+
+    public function get_all_user() 
+    {
         // Replace 'user' with your actual table name
                 $query = $this->db->get('user');
         
         return $query->result();
-            }
+    }
 
+     // Menampilkan Jumlah Cuti
+     public function get_cuti_count()
+     {
+         $this->db->select('COUNT(*) as cuti_count');
+         $query = $this->db->get('cuti'); 
+ 
+         return $query->row()->cuti_count;
+     }
+ 
+     // Menampilkan Jumlah Izin
+     public function get_izin_count()
+     {
+         $this->db->select('COUNT(*) as izin_count');
+         $query = $this->db->get('absensi');
+ 
+         return $query->row()->izin_count;
+     }
+ 
+      // Menampilkan Jumlah Absen
+      public function get_absensi_count()
+      {
+          $this->db->select('COUNT(*) as absensi_count');
+          $query = $this->db->get('absensi'); 
+  
+          return $query->row()->absensi_count;
+      }
 }
 ?>

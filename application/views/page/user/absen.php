@@ -14,13 +14,9 @@
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <!-- Form untuk Absen -->
-                <form id="absenForm" action="<?php echo base_url('user/aksi_absen'); ?>" method="post">
-                    <div class="mb-4 text-left">
-                        <label for="kegiatan" class="block text-sm font-semibold mb-2">Kegiatan:</label>
-                        <input type="text" id="kegiatan" name="kegiatan"
-                            class="w-full py-2.5 px-4 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder="Masukkan kegiatan Anda" required>
-                    </div>
+                <form id="absenForm" action="<?php echo base_url(
+                    'user/aksi_absen'
+                ); ?>" method="post">
 
                     <div class="mb-4 text-left">
                         <label for="location" class="block text-sm font-semibold mb-2">Lokasi:</label>
@@ -30,10 +26,6 @@
                                 readonly>
                                 <!-- Lokasi akan ditampilkan di sini -->
                             </span>
-                            <button type="button" id="getLocation"
-                                class="bg-indigo-500 text-white px-4 py-2 rounded-md">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </button>
                         </div>
                     </div>
 
@@ -58,13 +50,18 @@
                 </form>
 
                 <script>
-                document.getElementById('getLocation').addEventListener('click', function() {
+                document.addEventListener('DOMContentLoaded', function() {
+                    getAndDisplayLocation();
+                });
+
+                function getAndDisplayLocation() {
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function(position) {
                             var latitude = position.coords.latitude;
                             var longitude = position.coords.longitude;
                             var geoData = document.getElementById('geoData');
                             geoData.innerText = 'Bujur: ' + longitude + ', Lintang: ' + latitude;
+
                             // Set the value of hidden input for form submission
                             document.getElementById('lokasi').value = 'Bujur: ' + longitude +
                                 ', Lintang: ' + latitude;
@@ -81,7 +78,7 @@
                         geoData.innerText = 'Geolocation is not supported by this browser.';
                         alert('Geolocation is not supported by this browser.');
                     }
-                });
+                }
 
                 document.getElementById('takeSnapshot').addEventListener('click', function() {
                     var video = document.createElement('video');

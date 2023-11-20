@@ -306,5 +306,57 @@ class Super_model extends CI_Model
             return null;
         }
     }
+
+    public function get_all_lokasi()
+    {
+        // Ganti 'lokasi' dengan nama tabel yang sesuai di database Anda
+        $query = $this->db->get('lokasi');
+
+        // Mengembalikan hasil query sebagai array
+        return $query->result_array();
+    }
+
+    public function get_all_user() {
+        // Sesuaikan nama tabel dan field sesuai dengan struktur database Anda
+        $query = $this->db->get('user');
+        return $query->result();
+    }
+    public function getLokasiData($id_lokasi)
+    {
+        // Assuming 'lokasi' is your table name
+        $this->db->where('id_lokasi', $id_lokasi);
+        $query = $this->db->get('lokasi');
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
+
+    public function getLokasiById($id_lokasi)
+    {
+        // Assuming 'lokasi' is the table name in your database
+        $query = $this->db->get_where('lokasi', ['id_lokasi' => $id_lokasi]);
+
+        // Return the result as an object
+        return $query->row();
+    }
+
+    public function update_lokasi($id_lokasi, $data)
+    {
+        // Update lokasi berdasarkan id_lokasi
+        $this->db->where('id_lokasi', $id_lokasi);
+        $this->db->update('lokasi', $data);
+    }
+
+       // In your Admin_model.php
+       public function hapus_lokasi($id_lokasi)
+       {
+           // Your deletion logic here
+           $this->db->where('id_lokasi', $id_lokasi);
+           $this->db->delete('lokasi');
+       }
+
 }
 ?>

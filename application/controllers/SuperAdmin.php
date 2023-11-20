@@ -916,4 +916,101 @@ class SuperAdmin extends CI_Controller
       }
   }
 
+  public function lokasi()
+  {
+      // Mengambil data lokasi dan pengguna dari model
+      $this->load->model('super_model');
+      $data['lokasi'] = $this->super_model->get_all_lokasi();
+      $data['user'] = $this->super_model->get_all_user();
+  
+      // Menampilkan view dengan data
+      $this->load->view('page/super_admin/lokasi/lokasi', $data);
+  }    
+
+  // page tambah lokasi
+  public function tambah_lokasi()
+  {
+      $this->load->model('super_model');
+      $data['user'] = $this->super_model->get_all_user(); // Ganti dengan metode yang sesuai di model
+
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+          // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya
+          $lokasi_data = [
+              'nama_lokasi' => $this->input->post('nama_lokasi'),
+              'alamat' => $this->input->post('alamat_kantor'),
+              'id_user' => $this->input->post('custom_id'),
+              // tambahkan kolom lainnya sesuai kebutuhan
+          ];
+
+          // Tidak perlu menggunakan $this->db->set($data);
+          // Setelah mendapatkan data, baru Anda bisa menggunakan metode set untuk operasi insert
+          // Anda perlu mengatur setiap kolom yang ingin diinsert
+          foreach ($lokasi_data as $key => $value) {
+              $this->db->set($key, $value);
+          }
+
+          $this->db->insert('lokasi');
+
+          // Redirect ke halaman admin/lokasi setelah menambahkan data
+          redirect('superadmin/lokasi');
+      } else {
+          // Form belum disubmit, ambil data pengguna dan tampilkan view untuk mengisi form
+          $this->load->view('page/super_admin/lokasi/tambah_lokasi', $data);
+      }
+  }
+
+  // page detail lokasi
+  public function detail_lokasi($lokasi_id)
+  {
+      $data['lokasi'] = $this->super_model->getLokasiData($lokasi_id);
+
+      // Mengirim data lokasi ke view
+      $this->load->view('page/super_admin/lokasi/detail_lokasi', $data);
+  }
+
+  // page update lokasi
+  public function update_lokasi($id_lokasi)
+  {
+      // Load necessary models or helpers here
+      $this->load->model('super_model');
+
+      // Assuming you have a method in your model to get location details by ID
+      $data['lokasi'] = $this->super_model->getLokasiById($id_lokasi);
+
+      // Load the view for updating location details
+      $this->load->view('page/super_admin/lokasi/update_lokasi', $data);
+  }
+
+  public function aksi_edit_lokasi()
+  {
+      // Mendapatkan data dari form
+      $id_lokasi = $this->input->post('id_lokasi');
+      $nama_lokasi = $this->input->post('nama_lokasi');
+      $alamat = $this->input->post('alamat');
+
+      // Buat data yang akan diupdate
+      $data = [
+          'nama_lokasi' => $nama_lokasi,
+          'alamat' => $alamat,
+          // Tambahkan field lain jika ada
+      ];
+
+      // Lakukan pembaruan data Lokasi
+      $this->super_model->update_lokasi($id_lokasi, $data);
+      $this->session->set_flashdata(
+          'berhasil_update',
+          'Berhasil mengubah data'
+      );
+
+      // Redirect ke halaman setelah pembaruan data
+      redirect('superadmin/lokasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Lokasi
+  }
+
+  public function hapus_lokasi($id_lokasi)
+  {
+      $this->super_model->hapus_lokasi($id_lokasi); // Assuming you have a method 'hapus_lokasi' in the model
+      redirect('superadmin/lokasi');
+  }
+
+
 }

@@ -281,5 +281,30 @@ class Super_model extends CI_Model
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
     }
+
+    public function getJabatanDetails($id_jabatan)
+    {
+        // Gantilah 'nama_table' dengan nama tabel yang sesuai di database Anda
+        $this->db->where('id_jabatan', $id_jabatan);
+        $query = $this->db->get('jabatan'); // Gantilah 'jabatan' dengan nama tabel yang sesuai di database Anda
+
+        // Jika query berhasil dan ada hasil
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris hasil sebagai objek
+        } else {
+            return null; // Mengembalikan null jika tidak ada hasil
+        }
+    }
+    public function getShiftDetails($id_shift)
+    {
+        $this->db->where('id_shift', $id_shift);
+        $query = $this->db->get('shift'); // Sesuaikan dengan nama tabel untuk shift pada database Anda
+
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris hasil sebagai objek
+        } else {
+            return null;
+        }
+    }
 }
 ?>

@@ -889,5 +889,31 @@ class SuperAdmin extends CI_Controller
         // Pass data to the view
         $this->load->view('superadmin', ['superadmin' => $superadmin_data]);
     }
+  // page detail jabatan
+  public function detail_jabatan($id_jabatan)
+  {
+      $data['jabatan'] = $this->super_model->getJabatanDetails($id_jabatan);
+
+      // Mengirim data pengguna ke view
+      $this->load->view('page/super_admin/jabatan/detail_jabatan', $data);
+  }
+
+  public function detail_shift($id_shift)
+  {
+      // Memanggil method getShiftDetails untuk mendapatkan data shift berdasarkan ID
+      $data['shift'] = $this->super_model->getShiftDetails($id_shift);
+  
+      if ($data['shift']) {
+          // Jika data shift ditemukan, tambahkan informasi lain yang dibutuhkan ke dalam data
+          $data['judul'] = 'Detail Shift - Superadmin';
+          $data['deskripsi'] = 'Ini adalah halaman detail shift untuk superadmin.';
+          $this->load->view('page/super_admin/shift/detail_shift', $data);
+      } else {
+          // Jika data shift tidak ditemukan, lakukan sesuai kebutuhan aplikasi Anda
+          // Misalnya, tampilkan pesan error atau lakukan redirect ke halaman lain
+          // Contoh: $this->load->view('page/error/not_found');
+          // atau: redirect('superadmin/shift_not_found');
+      }
+  }
 
 }

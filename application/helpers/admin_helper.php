@@ -31,6 +31,24 @@ function nama_user($id_user)
         return $tmt;
     }
 }
+function jumlah_karyawan($id_jabatan)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db->where('id_jabatan', $id_jabatan)->get('user');
+    foreach ($result->result() as $c) {
+        $tmt = $c->username;
+        return $result->num_rows();
+    }
+}
+function jumlah_karyawan_lokasi($id_lokasi)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db->where('id_lokasi', $id_lokasi)->get('user');
+    return $result->num_rows();
+}
+
 
 // Format tanggal Indonesia
 function convDate($date) 

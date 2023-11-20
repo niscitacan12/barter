@@ -19,6 +19,30 @@
                 ); ?>" method="post">
 
                     <div class="mb-4 text-left">
+                        <?php
+                        // Mendapatkan nama user dari session
+                        $username = $this->session->userdata('username');
+
+                        // Mendapatkan jam dari currentDateTime
+                        $currentHour = date('H', strtotime($currentDateTime));
+
+                        // Tampilkan salam berdasarkan jam
+                        $greeting = '';
+                        if ($currentHour >= 1 && $currentHour < 10) {
+                            $greeting = 'Selamat Pagi';
+                        } elseif ($currentHour >= 10 && $currentHour < 15) {
+                            $greeting = 'Selamat Siang';
+                        } elseif ($currentHour >= 15 && $currentHour < 19) {
+                            $greeting = 'Selamat Sore';
+                        } else {
+                            $greeting = 'Selamat Malam';
+                        }
+                        ?>
+                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+                            <?php echo $currentDateTime; ?><br><?php echo $greeting; ?> <span><?php echo $this->session->userdata(
+     'username'
+ ); ?></span></h6>
+                        <hr class="mb-7">
                         <label for="location" class="block text-sm font-semibold mb-2">Lokasi:</label>
                         <div class="flex items-center justify-between">
                             <span id="geoData"

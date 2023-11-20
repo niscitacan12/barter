@@ -32,7 +32,7 @@
                 </div>
 
                 <!-- Account Details -->
-                <div class="lg:w-2/3">
+                <div class="lg:w-2/3 relative">
                     <div class="bg-white rounded-lg shadow-md p-4">
                         <div class="text-xl font-semibold mb-4">Detail Akun</div>
                         <form method="post" action="<?= base_url(

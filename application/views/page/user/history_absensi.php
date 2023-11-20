@@ -45,6 +45,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     Lokasi
                                 </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Aksi
+                                </th>
                             </tr>
                         </thead>
                         <?php
@@ -73,6 +76,18 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <?php echo $row->lokasi; ?>
+                                    </td>
+                                    <td class="px-5 py-3">
+                                        <?php
+                                        // Pastikan izin_diterima adalah properti yang ada pada objek $row dan nilainya true
+                                        $isIzinDiterima = property_exists($row, 'izin_diterima') && $row->izin_diterima === true;
+                                        $disabledAttribute = $isIzinDiterima ? 'disabled' : '';
+                                        ?>
+                                        <a href="<?php echo site_url('user/pulang/' . $row->id_absensi); ?>"
+                                            class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                            <?php echo $disabledAttribute; ?>>
+                                            <i class="fas fa-house-user"></i>
+                                        </a>
                                     </td>
                             </tr>
                             <?php

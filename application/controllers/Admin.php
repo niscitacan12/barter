@@ -797,5 +797,22 @@ class Admin extends CI_Controller
             return [true, $nama];
         }
     }
+
+     // Untuk Aksi Setuju & Tidak Cuti
+     public function setujuCuti($cutiId) 
+     {
+         $this->admin_model->updateStatusCuti($cutiId, 'Disetujui');
+         
+         // Anda dapat memberikan respons JSON jika diperlukan.
+         echo json_encode(array('status' => 'Disetujui'));
+     }
+ 
+     public function tidakSetujuCuti($cutiId) 
+     {
+         $this->admin_model->updateStatusCuti($cutiId, 'Tidak Disetujui');
+         
+         // Anda dapat memberikan respons JSON jika diperlukan.
+         echo json_encode(array('status' => 'Tidak Disetujui'));
+     }
 }
 ?>

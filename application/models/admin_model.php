@@ -455,5 +455,11 @@ class Admin_model extends CI_Model
         $this->db->where('id_admin', $id_admin);
         return $this->db->get('organisasi')->result();
     }
+
+    public function updateStatusCuti($cutiId, $newStatus) 
+    {
+        $this->db->where('id_cuti', $cutiId);
+        $this->db->update('cuti', array('status' => $newStatus));
+    }
 }
 ?>

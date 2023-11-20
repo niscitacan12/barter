@@ -68,13 +68,12 @@ class User extends CI_Controller
         $this->load->view('page/user/izin');
     }
 
-    public function history_absensi()
-    {
-        // Assuming $data is an array that you pass to the view
-        $data['user'] = $this->user_model->get_all_user(); // Use the correct case
-        $data['absensi'] = $this->user_model->get_absensi_data(); // You need to replace this with your actual data retrieval logic
-        $this->load->view('page/user/history_absensi', $data);
-    }
+    public function history_absensi() {
+		// Assuming $data is an array that you pass to the view
+		$data['user'] = $this->user_model->get_all_user(); 
+		$data['absensi'] = $this->user_model->get_absensi_data();
+		$this->load->view('page/user/history_absensi', $data);
+	}
 
     // application/controllers/User.php
     public function aksi_absen()
@@ -255,4 +254,19 @@ class User extends CI_Controller
             return [true, $nama];
         }
     }
+
+	// Aksi Pulang
+	public function pulang($id_absensi) 
+	{ 
+	   if ($this->session->userdata('role') === 'user') { 
+		   $this->user_model->setAbsensiPulang($id_absensi); 
+	
+		   // Set pesan sukses 
+		   $this->session->set_flashdata('success', 'Jam pulang berhasil diisi.'); 
+	
+		   redirect('user/history_absensi'); 
+	   } else { 
+		   redirect('user/history_absensi'); 
+	   } 
+   }
 }

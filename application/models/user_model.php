@@ -107,5 +107,19 @@ class User_model extends CI_Model
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
     }
+
+    // Fungsi untuk melakukan update kolom jam_pulang di database
+    public function setAbsensiPulang($id_absensi) 
+    { 
+        date_default_timezone_set('Asia/Jakarta');
+        $data = array( 
+            'jam_pulang' => date('H:i:s'), 
+            'status' => 'pulang' 
+        ); 
+ 
+        // Ubah data absensi berdasarkan id_absensi. 
+        $this->db->where('id_absensi', $id_absensi); 
+        $this->db->update('absensi', $data); 
+    }
 }
 ?>

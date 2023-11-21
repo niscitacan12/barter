@@ -508,5 +508,48 @@ class Admin_model extends CI_Model
 
         return $result;
     }
+
+    // Mendapatkan data per hari berdasarkan tanggal
+    public function getPerHari($tanggal)
+    {
+        $this->db->select('absensi.*, user.*');
+        $this->db->from('absensi');
+        $this->db->join('user', 'absensi.id_user = user.id_user', 'left');
+        $this->db->where('tanggal_absen', $tanggal);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    // Mendapatkan rekap per minggu berdasarkan rentang tanggal
+    public function getRekapPerMinggu($start_date, $end_date) {
+        $this->db->select('absensi.*, user.*');
+        $this->db->from('absensi');
+        $this->db->join('user', 'absensi.id_user = user.id_user', 'left');
+        $this->db->where('tanggal_absen >=', $start_date);
+        $this->db->where('tanggal_absen <=', $end_date);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    // Mendapatkan rekap harian berdasarkan bulan
+    public function getRekapHarianByBulan($bulan) {
+        $this->db->select('absensi.*, user.*');
+        $this->db->from('absensi');
+        $this->db->join('user', 'absensi.id_user = user.id_user', 'left');
+        $this->db->where('MONTH(absensi.tanggal_absen)', $bulan);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    // Mendapatkan data bulanan berdasarkan bulan
+    public function getBulanan($bulan)
+    {
+        $this->db->select("absensi.*, user.*");
+        $this->db->from("absensi");
+        $this->db->join("user", "absensi.id_user = user.id_user", "left");
+        $this->db->where("DATE_FORMAT(tanggal_absen, '%m') = ", $bulan);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
 ?>

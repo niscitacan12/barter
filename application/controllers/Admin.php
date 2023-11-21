@@ -261,19 +261,33 @@ class Admin extends CI_Controller
     // Page rekap harian
     public function rekap_harian()
     {
-        $this->load->view('page/admin/rekap/rekap_harian');
+        $tanggal = $this->input->get('tanggal');
+        $data['perhari'] = $this->admin_model->getPerHari($tanggal);
+        $this->load->view('page/admin/rekap/rekap_harian', $data);
     }
 
     // Page rekap mingguan
     public function rekap_mingguan()
     {
-        $this->load->view('page/admin/rekap/rekap_mingguan');
+        $start_date = $this->input->get('start_date');
+        $end_date = $this->input->get('end_date');
+
+        if ($start_date) {
+            $end_date = date('Y-m-d', strtotime($start_date. ' + 7 days'));
+            $data['perminggu'] = $this->admin_model->getRekapPerMinggu($start_date, $end_date);
+        } else {
+            $data['perminggu'] = [];
+        }
+
+        $this->load->view('page/admin/rekap/rekap_mingguan', $data);
     }
 
     // Page rekap bulanan
     public function rekap_bulanan()
     {
-        $this->load->view('page/admin/rekap/rekap_bulanan');
+        $bulan = $this->input->get('bulan');
+        $data['perbulan'] = $this->admin_model->getRekapHarianByBulan($bulan);
+        $this->load->view('page/admin/rekap/rekap_bulanan', $data);
     }
 
     // Page Detail Organisasi

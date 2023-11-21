@@ -498,6 +498,7 @@ class Admin_model extends CI_Model
         // Gantilah 'nama_tabel_absensi' dengan nama tabel absensi di database Anda
         $this->db->select('tanggal_absen, COUNT(*) as absensi_count');
         $this->db->from('absensi');
+        $this->db->where('keterangan_izin', 'Masuk'); // Gantilah 'keterangan_izin' dengan nama kolom yang sesuai di tabel absensi
         $this->db->group_by('tanggal_absen');
         $this->db->order_by('tanggal_absen', 'DESC');
         $this->db->limit(6); // Sesuaikan dengan jumlah label yang ingin ditampilkan

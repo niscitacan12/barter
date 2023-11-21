@@ -68,12 +68,13 @@ class User extends CI_Controller
         $this->load->view('page/user/izin');
     }
 
-    public function history_absensi() {
-		// Assuming $data is an array that you pass to the view
-		$data['user'] = $this->user_model->get_all_user(); 
-		$data['absensi'] = $this->user_model->get_absensi_data();
-		$this->load->view('page/user/history_absensi', $data);
-	}
+    public function history_absensi()
+    {
+        // Assuming $data is an array that you pass to the view
+        $data['user'] = $this->user_model->get_all_user();
+        $data['absensi'] = $this->user_model->get_absensi_data();
+        $this->load->view('page/user/history_absensi', $data);
+    }
 
     // application/controllers/User.php
     public function aksi_absen()
@@ -88,7 +89,7 @@ class User extends CI_Controller
         $data = [
             'id_user' => $id_user,
             'tanggal_absen' => $tanggal_sekarang,
-            'keterangan_izin' => 'masuk',
+            'keterangan_izin' => 'Masuk',
             'jam_masuk' => $tanggal_sekarang,
             'foto_masuk' => $foto_masuk,
             'jam_pulang' => '00:00:00',
@@ -255,18 +256,30 @@ class User extends CI_Controller
         }
     }
 
-	// Aksi Pulang
-	public function pulang($id_absensi) 
-	{ 
-	   if ($this->session->userdata('role') === 'user') { 
-		   $this->user_model->setAbsensiPulang($id_absensi); 
-	
-		   // Set pesan sukses 
-		   $this->session->set_flashdata('success', 'Jam pulang berhasil diisi.'); 
-	
-		   redirect('user/history_absensi'); 
-	   } else { 
-		   redirect('user/history_absensi'); 
-	   } 
-   }
+    // Aksi Pulang
+    public function pulang($id_absensi)
+    {
+        if ($this->session->userdata('role') === 'user') {
+            $this->user_model->setAbsensiPulang($id_absensi);
+
+            // Set pesan sukses
+            $this->session->set_flashdata(
+                'success',
+                'Jam pulang berhasil diisi.'
+            );
+
+            redirect('user/history_absensi');
+        } else {
+            redirect('user/history_absensi');
+        }
+    }
+
+    public function get_realtime_absensi()
+    {
+        // Panggil metode di dalam model untuk mendapatkan data absensi real-time
+        $realtime_absensi = $this->user_model->get_realtime_absensi();
+
+        // Mengirim data dalam format JSON
+        echo json_encode($realtime_absensi);
+    }
 }

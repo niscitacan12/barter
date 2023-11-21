@@ -25,6 +25,12 @@ class Admin extends CI_Controller
         $id_admin = $this->session->userdata('id');
         $data['user_count'] = $this->admin_model->get_user_count();
         $data['absensi'] = $this->admin_model->get_absensi_count();
+
+        // Modifikasi baris di bawah untuk mendapatkan data absen berdasarkan tanggal
+        $data[
+            'absensi_by_date'
+        ] = $this->admin_model->get_absensi_count_by_date('2023-11-21'); // Ganti '2023-11-21' dengan tanggal yang diinginkan
+
         $data['cuti'] = $this->admin_model->get_cuti_count();
         $this->load->view('page/admin/dashboard', $data);
     }
@@ -798,21 +804,30 @@ class Admin extends CI_Controller
         }
     }
 
-     // Untuk Aksi Setuju & Tidak Cuti
-     public function setujuCuti($cutiId) 
-     {
-         $this->admin_model->updateStatusCuti($cutiId, 'Disetujui');
-         
-         // Anda dapat memberikan respons JSON jika diperlukan.
-         echo json_encode(array('status' => 'Disetujui'));
-     }
- 
-     public function tidakSetujuCuti($cutiId) 
-     {
-         $this->admin_model->updateStatusCuti($cutiId, 'Tidak Disetujui');
-         
-         // Anda dapat memberikan respons JSON jika diperlukan.
-         echo json_encode(array('status' => 'Tidak Disetujui'));
-     }
+    // Untuk Aksi Setuju & Tidak Cuti
+    public function setujuCuti($cutiId)
+    {
+        $this->admin_model->updateStatusCuti($cutiId, 'Disetujui');
+
+        // Anda dapat memberikan respons JSON jika diperlukan.
+        echo json_encode(['status' => 'Disetujui']);
+    }
+
+    public function tidakSetujuCuti($cutiId)
+    {
+        $this->admin_model->updateStatusCuti($cutiId, 'Tidak Disetujui');
+
+        // Anda dapat memberikan respons JSON jika diperlukan.
+        echo json_encode(['status' => 'Tidak Disetujui']);
+    }
+
+    public function get_realtime_absensi()
+    {
+        // Panggil metode di dalam model untuk mendapatkan data absensi real-time
+        $realtime_absensi = $this->admin_model->get_realtime_absensi();
+
+        // Mengirim data dalam format JSON
+        echo json_encode($realtime_absensi);
+    }
 }
 ?>

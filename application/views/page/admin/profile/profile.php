@@ -40,8 +40,8 @@
                         ) ?>">
                             <div class="mb-4">
                                 <label for="username" class="block mb-1 text-sm">Username</label>
-                                <input type="text" class="border rounded-md w-full p-2" id="username" name="username"
-                                    value="<?php echo $admin->username; ?>">
+                                <input type="text" autocomplete="off" class="border rounded-md w-full p-2" id="username"
+                                    name="username" value="<?php echo $admin->username; ?>">
                             </div>
                             <div class="mb-4">
                                 <label for="email" class="block mb-1 text-sm">Email</label>
@@ -51,13 +51,13 @@
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
                                 <div class="w-full lg:w-1/2 m-2 mb-4 lg:mb-0">
                                     <label for="firstName" class="block mb-2 text-sm">Nama Depan</label>
-                                    <input type="text" class="border rounded-md w-full p-2" id="firstName"
-                                        name="nama_depan" value="<?php echo $admin->nama_depan; ?>">
+                                    <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
+                                        id="firstName" name="nama_depan" value="<?php echo $admin->nama_depan; ?>">
                                 </div>
                                 <div class="w-full lg:w-1/2  m-2 mb-2 lg:mb-0">
                                     <label for="lastName" class="block mb-2 text-sm">Nama Belakang</label>
-                                    <input type="text" class="border rounded-md w-full p-2" id="lastName"
-                                        name="nama_belakang" value="<?php echo $admin->nama_belakang; ?>">
+                                    <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
+                                        id="lastName" name="nama_belakang" value="<?php echo $admin->nama_belakang; ?>">
                                 </div>
                             </div>
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">

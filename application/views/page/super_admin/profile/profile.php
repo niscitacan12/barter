@@ -42,7 +42,7 @@
                         <form action="#" method="post" enctype="multipart/form-data">
                             <div class="mb-4">
                                 <label for="username" class="block mb-1 text-sm">Username</label>
-                                <input type="text" class="border rounded-md w-full p-2"
+                                <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
                                     value="<?php echo $superadmin->username; ?>" id="username" name="username">
                             </div>
                             <div class="mb-4">
@@ -52,13 +52,14 @@
                             </div>
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
                                 <div class="w-full lg:w-1/2  m-2 mb-4 lg:mb-0">
-                                    <label for="firstName" class="block mb-1 text-sm">First name</label>
+                                    <label for="firstName" autocomplete="off" class="block mb-1 text-sm">First
+                                        name</label>
                                     <input type="text" class="border rounded-md w-full p-2"
                                         value="<?php echo $superadmin->nama_depan; ?>" id="firstName" name="nama_depan">
                                 </div>
                                 <div class="w-full lg:w-1/2 m-2">
                                     <label for="lastName" class="block mb-1 text-sm">Last name</label>
-                                    <input type="text" class="border rounded-md w-full p-2"
+                                    <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
                                         value="<?php echo $superadmin->nama_belakang; ?>" id="lastName"
                                         name="nama_belakang">
                                 </div>

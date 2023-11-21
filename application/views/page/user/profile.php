@@ -40,8 +40,8 @@
                         <div class="text-xl font-semibold mb-4">Account Details</div>
                         <div class="mb-4">
                             <label for="username" class="block mb-1 text-sm">Username</label>
-                            <input type="text" class="border rounded-md w-full p-2" id="username" name="username"
-                                value="<?php echo $user->username; ?>">
+                            <input type="text" class="border rounded-md w-full p-2" autocomplete="off" id="username"
+                                name="username" value="<?php echo $user->username; ?>">
                             </sdiv>
 
                             <div class="mb-4">
@@ -52,13 +52,14 @@
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
                                 <div class="w-full lg:w-1/2 m-2 mb-4 lg:mb-0">
                                     <label for="nama_depan" class="block mb-1 text-sm">Nama Depan</label>
-                                    <input type="text" class="border rounded-md w-full p-2" id="nama_depan"
-                                        name="nama_depan" value="<?php echo $user->nama_depan; ?>">
+                                    <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
+                                        id="nama_depan" name="nama_depan" value="<?php echo $user->nama_depan; ?>">
                                 </div>
                                 <div class="w-full m-2 lg:w-1/2">
                                     <label for="nama_belakang" class="block mb-1 text-sm">Nama Belakang</label>
-                                    <input type="text" class="border rounded-md w-full p-2" id="nama_belakang"
-                                        name="nama_belakang" value="<?php echo $user->nama_belakang; ?>">
+                                    <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
+                                        id="nama_belakang" name="nama_belakang"
+                                        value="<?php echo $user->nama_belakang; ?>">
                                 </div>
                             </div>
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
@@ -102,7 +103,9 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika konfirmasi "Ya", maka alihkan ke logout
-                    window.location.href = "<?php echo base_url('auth/logout'); ?>";
+                    window.location.href = "<?php echo base_url(
+                        'auth/logout'
+                    ); ?>";
                 }
             });
         }

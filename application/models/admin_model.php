@@ -406,35 +406,51 @@ class Admin_model extends CI_Model
         $this->db->update('jabatan', $data);
     }
 
-    
-    public function pagination($table_name, $limit, $offset) {
+    public function pagination($table_name, $limit, $offset)
+    {
         $this->db->limit($limit, $offset);
         $query = $this->db->get($table_name);
 
         if ($query->num_rows() > 0) {
             return $query->result();
         }
-        return array();
+        return [];
     }
-    
-    public function count_all($table_name){
+
+    public function count_all($table_name)
+    {
         return $this->db->get($table_name)->num_rows();
     }
 
     // Pagination by id_admin
-    public function pagination_by_id_admin($tableName, $perPage, $start, $id_admin) {
+    public function pagination_by_id_admin(
+        $tableName,
+        $perPage,
+        $start,
+        $id_admin
+    ) {
         $this->db->where('id_admin', $id_admin);
         return $this->db->get($tableName, $perPage, $start)->result_array();
     }
 
     // Pagination absen per id_admin
-    public function pagination_absen_by_admin($tableName, $perPage, $start, $id_admin) {
+    public function pagination_absen_by_admin(
+        $tableName,
+        $perPage,
+        $start,
+        $id_admin
+    ) {
         $this->db->where('id_admin', $id_admin);
         return $this->db->get($tableName, $perPage, $start)->result_array();
     }
 
     // Pagination organisasi
-    public function pagination_organisasi($tableName, $perPage, $start, $id_admin) {
+    public function pagination_organisasi(
+        $tableName,
+        $perPage,
+        $start,
+        $id_admin
+    ) {
         $this->db->select('*');
         $this->db->from($tableName);
         $this->db->where('id_admin', $id_admin);
@@ -444,7 +460,8 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
-    public function get_organisasi_pusat($id_admin) {
+    public function get_organisasi_pusat($id_admin)
+    {
         $this->db->where('id_admin', $id_admin);
         $this->db->where('status', 'pusat');
         return $this->db->get('organisasi')->result();
@@ -456,10 +473,39 @@ class Admin_model extends CI_Model
         return $this->db->get('organisasi')->result();
     }
 
-    public function updateStatusCuti($cutiId, $newStatus) 
+    public function updateStatusCuti($cutiId, $newStatus)
     {
         $this->db->where('id_cuti', $cutiId);
-        $this->db->update('cuti', array('status' => $newStatus));
+        $this->db->update('cuti', ['status' => $newStatus]);
+    }
+
+    public function get_absensi_count_by_date($date)
+    {
+        // Gantilah 'nama_tabel_absensi' dengan nama tabel absensi di database Anda
+        $this->db->select('COUNT(*) as absensi_count');
+        $this->db->from('absensi');
+        $this->db->where('tanggal_absen', $date); // Gantilah 'tanggal_absen' dengan nama kolom tanggal di tabel absensi
+
+        $query = $this->db->get();
+        $result = $query->row();
+
+        // Mengembalikan jumlah absen pada tanggal tertentu
+        return isset($result->absensi_count) ? $result->absensi_count : 0;
+    }
+
+    public function get_realtime_absensi()
+    {
+        // Gantilah 'nama_tabel_absensi' dengan nama tabel absensi di database Anda
+        $this->db->select('tanggal_absen, COUNT(*) as absensi_count');
+        $this->db->from('absensi');
+        $this->db->group_by('tanggal_absen');
+        $this->db->order_by('tanggal_absen', 'DESC');
+        $this->db->limit(6); // Sesuaikan dengan jumlah label yang ingin ditampilkan
+
+        $query = $this->db->get();
+        $result = $query->result_array();
+
+        return $result;
     }
 }
 ?>

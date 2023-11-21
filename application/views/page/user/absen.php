@@ -5,9 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
+    <!-- Add Font Awesome library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha384-...">
+
+    <style>
+    /* Add your custom styles here */
+    </style>
 </head>
 
 <body>
+    <!-- Your existing code -->
     <?php $this->load->view('components/sidebar_user'); ?>
     <div class="p-4 sm:ml-64">
         <div class="p-5 mt-10">
@@ -52,13 +60,13 @@
                             </span>
                         </div>
                     </div>
-
+                    <!-- Camera Icon -->
                     <div class="mb-4 text-left">
                         <label for="webcam" class="block text-sm font-semibold mb-2">Foto:</label>
                         <div class="flex items-center justify-between">
                             <div id="photoContainer" class="border border-gray-300 rounded-md"></div>
                             <button id="takeSnapshot" class="bg-indigo-500 text-white px-4 py-2 rounded-md mr-4">
-                                <i class="fa-solid fa-camera"></i>
+                                <i class="fas fa-camera"></i>
                             </button>
                         </div>
                     </div>
@@ -69,7 +77,7 @@
 
                     <!-- Tombol submit untuk mengirimkan formulir -->
                     <button type="submit" id="absen" class="bg-green-500 text-white px-4 py-2 rounded-md">
-                        <i class="fa-solid fa-check"></i>
+                        <i class="fas fa-check"></i>
                     </button>
                 </form>
 
@@ -143,12 +151,10 @@
                 });
 
                 document.getElementById('absenForm').addEventListener('submit', function(event) {
-                    var kegiatanValue = document.getElementById('kegiatan').value;
-
                     // Periksa apakah kegiatan tidak kosong sebelum mengirimkan formulir
-                    if (kegiatanValue.trim() === '') {
-                        alert('Kegiatan tidak boleh kosong.');
-                        event.preventDefault(); // Mencegah pengiriman formulir jika kegiatan kosong
+                    if (document.getElementById('foto_masuk').value.trim() === '') {
+                        alert('Anda harus mengambil foto terlebih dahulu.');
+                        event.preventDefault(); // Mencegah pengiriman formulir jika foto tidak diambil
                     }
                 });
                 </script>

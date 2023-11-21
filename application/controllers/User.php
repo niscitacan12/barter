@@ -256,24 +256,6 @@ class User extends CI_Controller
         }
     }
 
-    // Aksi Pulang
-    public function pulang($id_absensi)
-    {
-        if ($this->session->userdata('role') === 'user') {
-            $this->user_model->setAbsensiPulang($id_absensi);
-
-            // Set pesan sukses
-            $this->session->set_flashdata(
-                'success',
-                'Jam pulang berhasil diisi.'
-            );
-
-            redirect('user/history_absensi');
-        } else {
-            redirect('user/history_absensi');
-        }
-    }
-
     public function get_realtime_absensi()
     {
         // Panggil metode di dalam model untuk mendapatkan data absensi real-time
@@ -281,5 +263,18 @@ class User extends CI_Controller
 
         // Mengirim data dalam format JSON
         echo json_encode($realtime_absensi);
+    }
+
+     // Aksi Button Pulang
+	public function aksi_pulang($id_absensi)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu_sekarang = date('Y-m-d H:i:s');
+        $data = [
+            'jam_pulang' => $waktu_sekarang,
+            'status' => 'true',
+        ];
+        $this->user_model->update('absensi', $data, ['id_absensi' => $id_absensi]);
+        redirect(base_url('user/history_absensi'));
     }
 }

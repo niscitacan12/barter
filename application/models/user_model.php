@@ -107,21 +107,7 @@ class User_model extends CI_Model
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
     }
-
-    // Fungsi untuk melakukan update kolom jam_pulang di database
-    public function setAbsensiPulang($id_absensi)
-    {
-        date_default_timezone_set('Asia/Jakarta');
-        $data = [
-            'jam_pulang' => date('H:i:s'),
-            'status' => 'pulang',
-        ];
-
-        // Ubah data absensi berdasarkan id_absensi.
-        $this->db->where('id_absensi', $id_absensi);
-        $this->db->update('absensi', $data);
-    }
-
+    
     public function get_absensi_count_by_date($date)
     {
         // Gantilah 'nama_tabel_absensi' dengan nama tabel absensi di database Anda
@@ -150,6 +136,29 @@ class User_model extends CI_Model
         $result = $query->result_array();
 
         return $result;
+    }
+
+    // Aksi Butoon Pulang Absen & Izin
+    public function setAbsensiPulang($id_absensi)
+    {
+        $data = [
+            'jam_pulang' => date('H:i:s'),
+            'status' => 'DONE',
+        ];
+
+        $this->db->where('id_absensi', $id_absensi);
+        $this->db->update('absensi', $data);
+    }
+
+    public function batalPulang($id_absensi)
+    {
+        $data = [
+            'jam_pulang' => null,
+            'status' => 'NOT',
+        ];
+
+        $this->db->where('id_absensi', $id_absensi);
+        $this->db->update('absensi', $data);
     }
 }
 ?>

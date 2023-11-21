@@ -109,17 +109,47 @@ class User_model extends CI_Model
     }
 
     // Fungsi untuk melakukan update kolom jam_pulang di database
-    public function setAbsensiPulang($id_absensi) 
-    { 
+    public function setAbsensiPulang($id_absensi)
+    {
         date_default_timezone_set('Asia/Jakarta');
-        $data = array( 
-            'jam_pulang' => date('H:i:s'), 
-            'status' => 'pulang' 
-        ); 
- 
-        // Ubah data absensi berdasarkan id_absensi. 
-        $this->db->where('id_absensi', $id_absensi); 
-        $this->db->update('absensi', $data); 
+        $data = [
+            'jam_pulang' => date('H:i:s'),
+            'status' => 'pulang',
+        ];
+
+        // Ubah data absensi berdasarkan id_absensi.
+        $this->db->where('id_absensi', $id_absensi);
+        $this->db->update('absensi', $data);
+    }
+
+    public function get_absensi_count_by_date($date)
+    {
+        // Gantilah 'nama_tabel_absensi' dengan nama tabel absensi di database Anda
+        $this->db->select('COUNT(*) as absensi_count');
+        $this->db->from('absensi');
+        $this->db->where('tanggal_absen', $date); // Gantilah 'tanggal_absen' dengan nama kolom tanggal di tabel absensi
+
+        $query = $this->db->get();
+        $result = $query->row();
+
+        // Mengembalikan jumlah absen pada tanggal tertentu
+        return isset($result->absensi_count) ? $result->absensi_count : 0;
+    }
+
+    public function get_realtime_absensi()
+    {
+        // Gantilah 'nama_tabel_absensi' dengan nama tabel absensi di database Anda
+        $this->db->select('tanggal_absen, COUNT(*) as absensi_count');
+        $this->db->from('absensi');
+        $this->db->where('keterangan_izin', 'Masuk'); // Gantilah 'keterangan_izin' dengan nama kolom yang sesuai di tabel absensi
+        $this->db->group_by('tanggal_absen');
+        $this->db->order_by('tanggal_absen', 'DESC');
+        $this->db->limit(6); // Sesuaikan dengan jumlah label yang ingin ditampilkan
+
+        $query = $this->db->get();
+        $result = $query->result_array();
+
+        return $result;
     }
 }
 ?>

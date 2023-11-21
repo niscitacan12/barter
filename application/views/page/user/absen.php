@@ -46,11 +46,13 @@
                             $greeting = 'Selamat Malam';
                         }
                         ?>
-                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Absen
                             <?php echo $currentDateTime; ?><br><?php echo $greeting; ?> <span><?php echo $this->session->userdata(
      'username'
  ); ?></span></h6>
                         <hr class="mb-7">
+                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+                        </h6>
                         <label for="location" class="block text-sm font-semibold mb-2">Lokasi:</label>
                         <div class="flex items-center justify-between">
                             <span id="geoData"

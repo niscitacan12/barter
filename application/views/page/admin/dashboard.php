@@ -94,7 +94,7 @@
     }
 
     // Set interval untuk memperbarui grafik setiap beberapa detik
-    setInterval(updateChart, 5000); // Ganti sesuai dengan kebutuhan
+    setInterval(updateChart, 1000); // Ganti sesuai dengan kebutuhan
 
     const myChart = new Chart(ctx, {
         type: 'bar',

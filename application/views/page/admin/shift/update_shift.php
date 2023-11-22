@@ -16,14 +16,15 @@
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
-                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Update Shift</h6>
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Edit Shift</h6>
                 </div>
 
                 <hr>
 
                 <div class="mt-5 text-left">
                     <!-- Form Input -->
-                    <form action="<?php echo base_url('admin/aksi_edit_shift'); ?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo base_url('admin/aksi_edit_shift'); ?>" method="post"
+                        enctype="multipart/form-data">
                         <input type="hidden" name="id_shift" value="<?php echo $shift->id_shift; ?>">
 
                         <div class="grid md:grid-cols-2 md:gap-6">

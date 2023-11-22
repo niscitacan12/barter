@@ -140,13 +140,14 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex justify-content-between">
-                                        <a href="javascript:void(0);" onclick="setujuCuti(<?= $row->id_cuti ?>)"
+                                        <a href="javascript:void(0);"
+                                            onclick="konfirmasiSetujuCuti(<?= $row->id_cuti ?>)"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                            <i class="fa-solid fa-check"></i>
+                                            <i class="fa-solid fa-circle-check"></i>
                                         </a>
-                                        <a href="javascript:void(0);" onclick="tidakSetujuCuti(<?= $row->id_cuti ?>)"
+                                        <a href="javascript:void(0);" onclick="BatalkanCuti(<?= $row->id_cuti ?>)"
                                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
-                                            <i class="fa-solid fa-x"></i>
+                                            <i class="fa-solid fa-circle-xmark"></i>
                                         </a>
                                         <a type="button" href="<?php echo base_url(
                                             ''
@@ -169,36 +170,68 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    function setujuCuti(cutiId) {
-        // Menggunakan AJAX untuk mengirim aksi ke server
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '<?= base_url('admin/setujuCuti/') ?>' + cutiId, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // Di sini, Anda dapat menangani respons dari server jika diperlukan
-                console.log(xhr.responseText);
+function konfirmasiSetujuCuti(idCuti) {
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah yakin ingin menyetujui izin cuti ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Setuju!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            setujuCuti(idCuti);
+        }
+    });
+}
 
-                // Contoh: Refresh halaman setelah tombol diklik
-                location.reload();
-            }
-        };
-        xhr.send();
-    }
+function BatalkanCuti(idCuti) {
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah yakin ingin membatalkan izin cuti ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'rgb(185 28 28)',
+        confirmButtonText: 'Ya, Batalkan!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            tidakSetujuCuti(idCuti);
+        }
+    });
+}
 
-    function tidakSetujuCuti(cutiId) {
-        // Menggunakan AJAX untuk mengirim aksi ke server
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '<?= base_url('admin/tidakSetujuCuti/') ?>' + cutiId, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // Di sini, Anda dapat menangani respons dari server jika diperlukan
-                console.log(xhr.responseText);
+function setujuCuti(cutiId) {
+    // Menggunakan AJAX untuk mengirim aksi ke server
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '<?= base_url('admin/setujuCuti/') ?>' + cutiId, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Di sini, Anda dapat menangani respons dari server jika diperlukan
+            console.log(xhr.responseText);
 
-                // Contoh: Refresh halaman setelah tombol diklik
-                location.reload();
-            }
-        };
-        xhr.send();
-    }
+            // Contoh: Refresh halaman setelah tombol diklik
+            location.reload();
+        }
+    };
+    xhr.send();
+}
+
+function tidakSetujuCuti(cutiId) {
+    // Menggunakan AJAX untuk mengirim aksi ke server
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '<?= base_url('admin/tidakSetujuCuti/') ?>' + cutiId, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Di sini, Anda dapat menangani respons dari server jika diperlukan
+            console.log(xhr.responseText);
+
+            // Contoh: Refresh halaman setelah tombol diklik
+            location.reload();
+        }
+    };
+    xhr.send();
+}
 </script>
+
 </html>

@@ -522,6 +522,7 @@ class Admin extends CI_Controller
             'kabupaten' => $this->input->post('kabupaten'),
             'provinsi' => $this->input->post('provinsi'),
             'id_admin' => $id_admin,
+            'status' => 'cabang',
             // sesuaikan dengan kolom lainnya
         ];
 
@@ -798,6 +799,24 @@ class Admin extends CI_Controller
         $this->admin_model->hapus_jabatan($id_jabatan);
         redirect('admin/jabatan');
     }
+    
+    // Untuk Aksi Setuju & Tidak Cuti
+    public function setujuCuti($cutiId)
+    {
+        $this->admin_model->updateStatusCuti($cutiId, 'Disetujui');
+
+        // Anda dapat memberikan respons JSON jika diperlukan.
+        echo json_encode(['status' => 'Disetujui']);
+    }
+
+    public function tidakSetujuCuti($cutiId)
+    {
+        $this->admin_model->updateStatusCuti($cutiId, 'Tidak Disetujui');
+
+        // Anda dapat memberikan respons JSON jika diperlukan.
+        echo json_encode(['status' => 'Tidak Disetujui']);
+    }
+
 
     // 3. Lain-lain
     // upload image
@@ -816,23 +835,6 @@ class Admin extends CI_Controller
             $nama = $fn['file_name'];
             return [true, $nama];
         }
-    }
-
-    // Untuk Aksi Setuju & Tidak Cuti
-    public function setujuCuti($cutiId)
-    {
-        $this->admin_model->updateStatusCuti($cutiId, 'Disetujui');
-
-        // Anda dapat memberikan respons JSON jika diperlukan.
-        echo json_encode(['status' => 'Disetujui']);
-    }
-
-    public function tidakSetujuCuti($cutiId)
-    {
-        $this->admin_model->updateStatusCuti($cutiId, 'Tidak Disetujui');
-
-        // Anda dapat memberikan respons JSON jika diperlukan.
-        echo json_encode(['status' => 'Tidak Disetujui']);
     }
 
     public function get_realtime_absensi()

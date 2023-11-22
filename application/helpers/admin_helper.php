@@ -45,7 +45,7 @@ function jumlah_karyawan_lokasi($id_lokasi)
 {
     $ci = &get_instance();
     $ci->load->database();
-    $result = $ci->db->where('id_lokasi', $id_lokasi)->get('user');
+    $result = $ci->db->where('id_lokasi', $id_lokasi)->get('lokasi');
     return $result->num_rows();
 }
 

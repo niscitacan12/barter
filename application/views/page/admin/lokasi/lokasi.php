@@ -55,7 +55,13 @@
                             <td class="px-6 py-4"><?php echo isset($data['nama_lokasi']) ? $data['nama_lokasi'] : ''; ?>
                             </td>
                             <td class="px-6 py-4"><?php echo isset($data['alamat']) ? $data['alamat'] : ''; ?></td>
-                            <td class="px-6 py-4"><?php echo jumlah_karyawan($data['id_lokasi']); ?></td>
+                            <td class="px-6 py-4">
+                                <?php
+                                // Cari dan tampilkan jumlah karyawan yang sesuai
+                                $employee_count = jumlah_karyawan_lokasi($data['id_lokasi']);
+                                echo $employee_count;
+                                ?>
+                            </td>
                             <td class="px-6 py-4" style="padding-right: 20px;">
                                 <!-- Sesuaikan padding kanan sesuai kebutuhan -->
                                 <div class="flex items-center space-x-2">

@@ -48,7 +48,8 @@
                         </thead>
                         <!-- Tabel Body -->
                         <?php foreach ($lokasi as $data): ?>
-                        <tr>
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-6 py-4"><?php echo isset($data['id_lokasi']) ? $data['id_lokasi'] : ''; ?>
                             </td>
                             <td class="px-6 py-4"><?php echo isset($data['nama_lokasi']) ? $data['nama_lokasi'] : ''; ?>

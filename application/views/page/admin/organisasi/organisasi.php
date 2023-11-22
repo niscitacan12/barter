@@ -138,7 +138,7 @@
                         <div class="flex justify-between">
                             <!-- Tombol untuk Menyimpan -->
                             <button type="submit"
-                                class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"><i
+                                class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
                                     class="fa-solid fa-floppy-disk"></i>
                             </button>
                             <a href="<?php echo base_url('admin/all_organisasi') ?>"

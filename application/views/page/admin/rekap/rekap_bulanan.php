@@ -13,10 +13,18 @@
         <div class="p-5 mt-10">
             <main id="content" class="flex-1 p-4 sm:p-6">
                 <div class="bg-white rounded-lg shadow-md p-4">
-                    <h1 class="text-2xl font-bold text-center mb-4">REKAP BULANAN</h1>
+                    <div class="flex justify-between">
+                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Rekap Bulanan</h6>
+                        <!-- <a type="button" href="<?php echo base_url('admin/tambah_lokasi') ?>"
+                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
+                            class="fa-solid fa-plus"></i></a> -->
+                    </div>
+                    <hr>
                     <form action="<?php base_url('admin/rekap_bulanan') ?>" method="get"
-                        class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                        <select class="form-control m-2" id="bulan" name="bulan">
+                        class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
+                        <select
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            id="bulan" name="bulan">
                             <option>Pilih Bulan</option>
                             <option value="1"
                                 <?php if(isset($_GET['bulan']) && $_GET['bulan'] == '1') echo 'selected'; ?>>Januari
@@ -59,12 +67,18 @@
                             class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"><i
                                 class="fa-solid fa-filter"></i></button>
                         <a href="<?= base_url('admin/export_rekap_bulanan') ?>"
-                            class="exp bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block ml-auto"><i
+                            class="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"><i
                                 class="fa-solid fa-file-export"></i></a>
                     </form>
-
+                    <?php if (empty($perbulan)): ?>
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">
+                        <h1 class="text-2xl font-bold text-center text-gray-900 dark:text-white mt-5 mb-3">Data Kosong!!
+                        </h1>
+                        <p class="text-center">Silahkan pilih bulan lain</p>
+                    </div>
+                    <?php else: ?>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                        <table class="w-full whitespace-nowrap">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -127,7 +141,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <?php endif; ?>
                 </div>
+            </main>
         </div>
     </div>
 </body>

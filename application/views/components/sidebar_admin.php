@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 </head>
 
 <body>
@@ -234,6 +235,20 @@
     <div class="p-4 sm:ml-64">
     </div>
 </body>
+
+<script>
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('33407527b00e1d0ff775', {
+    cluster: 'ap1'
+});
+
+var channel = pusher.subscribe('ExcAbsensiVersi1');
+channel.bind('my-event', function(data) {
+    alert(JSON.stringify(data.message));
+});
+</script>
 
 <script>
 function confirmLogout() {

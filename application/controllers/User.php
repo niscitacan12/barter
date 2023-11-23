@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use Pusher\Pusher;
+
 class User extends CI_Controller
 {
     function __construct()
@@ -29,21 +31,64 @@ class User extends CI_Controller
         $this->load->view('page/user/dashboard', $data);
     }
 
-    // Controller User.php
-
     public function absen()
     {
-        // Mendapatkan data user atau informasi yang diperlukan
-        $data['user'] = $this->user_model->get_data('user')->result();
-
-        // Mengatur zona waktu ke Waktu Indonesia Barat (WIB)
+        setlocale(LC_TIME, 'id_ID');
         date_default_timezone_set('Asia/Jakarta');
-
-        // Mendapatkan tanggal dan waktu saat ini
-        $data['currentDateTime'] = date('d F Y H:i:s'); // Format: tanggal bulan tahun jam:menit:detik
-
-        // Load view dengan data yang diperlukan
+        $username = $this->session->userdata('username');
+        $currentDateTime = date('d F Y H:i:s');
+        $currentHour = date('H', strtotime($currentDateTime));
+        $date = date('l, d F Y', strtotime($currentDateTime));
+        $greeting = '';
+    
+        if ($currentHour >= 1 && $currentHour < 10) {
+            $greeting = 'Selamat Pagi';
+        } elseif ($currentHour >= 10 && $currentHour < 15) {
+            $greeting = 'Selamat Siang';
+        } elseif ($currentHour >= 15 && $currentHour < 19) {
+            $greeting = 'Selamat Sore';
+        } else {
+            $greeting = 'Selamat Malam';
+        }
+    
+        // Melewatkan variabel ke view menggunakan array
+        $data = array(
+            'username' => $username,
+            'greeting' => $greeting,
+            'date' => $date,
+        );
+    
         $this->load->view('page/user/absen', $data);
+    }
+    
+    public function pulang($id_absensi)
+    {
+        setlocale(LC_TIME, 'id_ID');
+        date_default_timezone_set('Asia/Jakarta');
+        $username = $this->session->userdata('username');
+        $currentDateTime = date('d F Y H:i:s');
+        $currentHour = date('H', strtotime($currentDateTime));
+        $date = date('l, d F Y', strtotime($currentDateTime));
+        $greeting = '';
+    
+        if ($currentHour >= 1 && $currentHour < 10) {
+            $greeting = 'Selamat Pagi';
+        } elseif ($currentHour >= 10 && $currentHour < 15) {
+            $greeting = 'Selamat Siang';
+        } elseif ($currentHour >= 15 && $currentHour < 19) {
+            $greeting = 'Selamat Sore';
+        } else {
+            $greeting = 'Selamat Malam';
+        }
+    
+        // Melewatkan variabel ke view menggunakan array
+        $data = array(
+            'username' => $username,
+            'greeting' => $greeting,
+            'date' => $date,
+        );
+
+        $this->load->view('page/user/pulang', $data);
     }
 
     public function profile()
@@ -65,7 +110,34 @@ class User extends CI_Controller
 
     public function izin()
     {
-        $this->load->view('page/user/izin');
+        setlocale(LC_TIME, 'id_ID');
+        date_default_timezone_set('Asia/Jakarta');
+        $username = $this->session->userdata('username');
+        $currentDateTime = date('d F Y H:i:s');
+        $currentHour = date('H', strtotime($currentDateTime));
+        $date = date('l, d F Y', strtotime($currentDateTime));
+        $time = date('H:i', strtotime($currentDateTime));
+        $greeting = '';
+    
+        if ($currentHour >= 1 && $currentHour < 10) {
+            $greeting = 'Selamat Pagi';
+        } elseif ($currentHour >= 10 && $currentHour < 15) {
+            $greeting = 'Selamat Siang';
+        } elseif ($currentHour >= 15 && $currentHour < 19) {
+            $greeting = 'Selamat Sore';
+        } else {
+            $greeting = 'Selamat Malam';
+        }
+    
+        // Melewatkan variabel ke view menggunakan array
+        $data = array(
+            'username' => $username,
+            'greeting' => $greeting,
+            'date' => $date,
+            'time' => $time,
+        );
+
+        $this->load->view('page/user/izin', $data);
     }
 
     public function history_absensi()
@@ -76,39 +148,63 @@ class User extends CI_Controller
         $this->load->view('page/user/history_absensi', $data);
     }
 
-    // application/controllers/User.php
+    // Aksi Absen
     public function aksi_absen()
     {
         $id_user = $this->session->userdata('id');
+        $email = $this->session->userdata('email');
         date_default_timezone_set('Asia/Jakarta');
-        $tanggal_sekarang = date('Y-m-d H:i:s');
-        $lokasi = $this->input->post('lokasi');
-        $foto_masuk = $this->input->post('foto_masuk');
+        $tanggal = date('Y-m-d');
+        $jam = date('H:i:s');
 
         // Rest of your code
         $data = [
             'id_user' => $id_user,
-            'tanggal_absen' => $tanggal_sekarang,
-            'keterangan_izin' => 'Masuk',
-            'jam_masuk' => $tanggal_sekarang,
-            'foto_masuk' => $foto_masuk,
+            'tanggal_absen' => $tanggal,
+            'keterangan_izin' => '-',
+            'jam_masuk' => $jam,
+            'foto_masuk' => $this->input->post('foto_masuk'),
             'jam_pulang' => '00:00:00',
             'foto_pulang' => '-',
-            'lokasi' => $lokasi,
+            'lokasi' => $this->input->post('lokasi'),
             'status' => 'false',
         ];
 
-        $this->user_model->tambah_data('absensi', $data);
-        $this->session->set_flashdata('berhasil_absen', 'Berhasil Absen.');
+        // Menyisipkan data absen ke dalam database
+        $inserted = $this->user_model->tambah_data('absensi', $data);
 
-        redirect(base_url('user/history_absensi'));
+        if ($inserted) {
+            // Jika berhasil disisipkan, tambahkan notifikasi berhasil
+            $this->session->set_flashdata('berhasil_absen', 'Berhasil Absen.');
+
+            $options = array(
+                'cluster' => 'ap1',
+                'useTLS' => true
+            );
+            $pusher = new Pusher(
+                '33407527b00e1d0ff775',
+                '9fb7fb6f4c554ecba9fb',
+                '1712968',
+                $options
+            );
+            $message['message'] = $email . ' melakukan absen masuk';
+            $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
+
+            redirect(base_url('user/history_absensi'));
+        } else {
+            // Jika gagal disisipkan, tambahkan notifikasi gagal
+            $this->session->set_flashdata('gagal_absen', 'Gagal Absen. Silakan coba lagi.');
+
+            redirect(base_url('user/absen'));
+        }
     }
 
     // Aksi Izin
     public function aksi_izin()
     {
         $id_user = $this->session->userdata('id');
-        $tanggal_sekarang = date('Y-m-d');
+        $email = $this->session->userdata('email');
+        $tanggal = date('Y-m-d');
 
         $keterangan_izin = $this->input->post('keterangan_izin');
 
@@ -116,13 +212,12 @@ class User extends CI_Controller
         if (!empty($keterangan_izin)) {
             $data = [
                 'id_user' => $id_user,
-                'kegiatan' => '-',
-                'tanggal_absen' => $tanggal_sekarang,
+                'tanggal_absen' => $tanggal,
                 'keterangan_izin' => $this->input->post('keterangan_izin'),
                 'jam_masuk' => '00:00:00',
-                // 'foto_masuk' => '-',
+                'foto_masuk' => '-',
                 'jam_pulang' => '00:00:00',
-                // 'foto_pulang' => '-',
+                'foto_pulang' => '-',
                 'lokasi' => '-',
                 'status' => 'true',
             ];
@@ -130,6 +225,19 @@ class User extends CI_Controller
             $this->user_model->tambah_data('absensi', $data);
             $this->session->set_flashdata('berhasil_izin', 'Berhasil Izin.');
 
+            $options = array(
+                'cluster' => 'ap1',
+                'useTLS' => true
+            );
+            $pusher = new Pusher(
+                '33407527b00e1d0ff775',
+                '9fb7fb6f4c554ecba9fb',
+                '1712968',
+                $options
+            );
+            $message['message'] = $email . ' mengajukan izin baru.';
+            $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
+            
             redirect(base_url('user/history_absensi'));
         } else {
             // Tampilkan pesan kesalahan jika 'keterangan_izin' kosong
@@ -140,10 +248,12 @@ class User extends CI_Controller
             redirect(base_url('page/user/izin'));
         }
     }
-    // Tambahkan fungsi ini dalam controller Anda, misalnya User.php
+
+    // Aksi Cuti
     public function aksi_cuti()
     {
         $id_user = $this->session->userdata('id');
+        $email = $this->session->userdata('email');
         $tanggal_sekarang = date('Y-m-d');
 
         $awal_cuti = $this->input->post('awal_cuti');
@@ -172,6 +282,19 @@ class User extends CI_Controller
                 'berhasil_cuti',
                 'Berhasil mengajukan cuti.'
             );
+
+            $options = array(
+                'cluster' => 'ap1',
+                'useTLS' => true
+            );
+            $pusher = new Pusher(
+                '33407527b00e1d0ff775',
+                '9fb7fb6f4c554ecba9fb',
+                '1712968',
+                $options
+            );
+            $message['message'] = $email . ' mengajukan cuti pada ' . $awal_cuti . ' sampai ' . $akhir_cuti;
+            $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
 
             redirect(base_url('user/cuti')); // Mengasumsikan 'user/history_cuti' adalah halaman untuk melihat riwayat cuti
         } else {
@@ -238,6 +361,35 @@ class User extends CI_Controller
         redirect(base_url('user/profile'));
     }
 
+    // Aksi Button Pulang
+	public function aksi_pulang($id_absensi)
+    {
+        $email = $this->session->userdata('email');
+        date_default_timezone_set('Asia/Jakarta');
+        $waktu_sekarang = date('Y-m-d H:i:s');
+        $data = [
+            'jam_pulang' => $waktu_sekarang,
+            'status' => 'true',
+        ];
+        $this->user_model->update('absensi', $data, ['id_absensi' => $id_absensi]);
+
+        $options = array(
+            'cluster' => 'ap1',
+            'useTLS' => true
+        );
+        $pusher = new Pusher(
+            '33407527b00e1d0ff775',
+            '9fb7fb6f4c554ecba9fb',
+            '1712968',
+            $options
+        );
+        $message['message'] = $email . ' melakukan absen pulang';
+        $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
+
+        redirect(base_url('user/history_absensi'));
+    }
+
+
     // 3. Lain-lain
     public function upload_image_user($value)
     {
@@ -263,18 +415,5 @@ class User extends CI_Controller
 
         // Mengirim data dalam format JSON
         echo json_encode($realtime_absensi);
-    }
-
-     // Aksi Button Pulang
-	public function aksi_pulang($id_absensi)
-    {
-        date_default_timezone_set('Asia/Jakarta');
-        $waktu_sekarang = date('Y-m-d H:i:s');
-        $data = [
-            'jam_pulang' => $waktu_sekarang,
-            'status' => 'true',
-        ];
-        $this->user_model->update('absensi', $data, ['id_absensi' => $id_absensi]);
-        redirect(base_url('user/history_absensi'));
     }
 }

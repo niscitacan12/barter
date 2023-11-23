@@ -34,7 +34,8 @@
 
                     <!-- Field formulir untuk cuti sampai -->
                     <div>
-                        <label for="akhir_cuti" class="block text-gray-700 font-bold mb-1 text-left">Cuti Sampai:</label>
+                        <label for="akhir_cuti" class="block text-gray-700 font-bold mb-1 text-left">Cuti
+                            Sampai:</label>
                         <input type="date" name="akhir_cuti" id="akhir_cuti"
                             class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
                             required>
@@ -56,7 +57,7 @@
                             Cuti:</label>
                         <input type="text" name="keperluan_cuti" id="keperluan_cuti"
                             class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
+                            required autocomplete="off">
                     </div>
                     <br>
 
@@ -64,7 +65,7 @@
                     <div class="text-right">
                         <button type="submit"
                             class="bg-indigo-500 hover:bg-indigo500 text-white py-2 px-4 rounded-md"><i
-                                class="fa-solid fa-plus"></i></button>
+                                class="fa-solid fa-paper-plane"></i></button>
                     </div>
 
                 </form>

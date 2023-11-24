@@ -31,7 +31,7 @@
                         <button type="submit"
                             class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"><i
                                 class="fa-solid fa-filter"></i></button>
-                        <a href="<?= base_url('Admin/export_rekap_mingguan') ?>"
+                        <a href="<?= base_url('Admin/export_mingguan') ?>"
                             class="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"><i
                                 class="fa-solid fa-file-export"></i></a>
                     </form>

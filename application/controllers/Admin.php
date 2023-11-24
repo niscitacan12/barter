@@ -276,7 +276,7 @@ class Admin extends CI_Controller
 
         if ($start_date) {
             $end_date = date('Y-m-d', strtotime($start_date. ' + 7 days'));
-            $data['perminggu'] = $this->admin_model->getRekapPerMinggu($start_date, $end_date);
+            $data['perminggu'] = $this->admin_model->RekapPerMinggu($start_date, $end_date);
         } else {
             $data['perminggu'] = [];
         }
@@ -851,7 +851,7 @@ class Admin extends CI_Controller
     public function export_bulanan()
     {
         $bulan = $this->input->get('bulan');
-        $absensi = $this->admin_model->GetBulanan($bulan);
+        $bulanan = $this->admin_model->getBulanan($bulan);
         
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -937,17 +937,17 @@ class Admin extends CI_Controller
         
         $bulanan = $this->admin_model->getBulanan($bulan);
         
-        $no = 1;
+        $no = 0;
         $numrow = 4;
-        foreach ($bulanan as $row) {
+        foreach ($bulanan as $data) {
             $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue('B' . $numrow, $row->kegiatan);
-            $sheet->setCellValue('C' . $numrow, $row->Tanggal);
-            $sheet->setCellValue('D' . $numrow, $row->Keterangan);
-            $sheet->setCellValue('E' . $numrow, $row->jam_masuk);
-            $sheet->setCellValue('F' . $numrow, $row->jam_pulang);
-            $sheet->setCellValue('G' . $numrow, $row->lokasi);
-            $sheet->setCellValue('H' . $numrow, $row->status);
+            $sheet->setCellValue('B' . $numrow, $data->kegiatan);
+            $sheet->setCellValue('C' . $numrow, $data->tanggal_absen);
+            $sheet->setCellValue('D' . $numrow, $data->keterangan_izin);
+            $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
+            $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
+            $sheet->setCellValue('G' . $numrow, $data->lokasi);
+            $sheet->setCellValue('H' . $numrow, $data->status);
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -988,5 +988,296 @@ class Admin extends CI_Controller
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
     }
+    // Untuk mengexport data per minggu
+  public function export_mingguan()
+  {
+      $start_date = $this->input->get('start_date');
+      $end_date = $this->input->get('end_date');
+      
+      if ($start_date) {
+          $end_date = date('Y-m-d', strtotime($start_date . ' + 7 days'));
+          $data['perminggu'] = $this->admin_model->getRekapPerMinggu($start_date, $end_date);
+      } else {
+          $data['perminggu'] = [];  
+      }
+  
+      $spreadsheet = new Spreadsheet();
+      $sheet = $spreadsheet->getActiveSheet();
+
+      $style_col = [
+          'font' => ['bold' => true],
+          'alignment' => [
+              'horizontal' =>
+                  \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+              'vertical' =>
+                  \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+          ],
+          'borders' => [
+              'top' => [
+                  'borderStyle' =>
+                      \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              ],
+              'right' => [
+                  'borderStyle' =>
+                      \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              ],
+              'bottom' => [
+                  'borderStyle' =>
+                      \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              ],
+              'left' => [
+                  'borderStyle' =>
+                      \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              ],
+          ],
+      ];
+
+      $style_row = [
+          'font' => ['bold' => true],
+          'alignment' => [
+              'vertical' =>
+                  \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+          ],
+          'borders' => [
+              'top' => [
+                  'borderStyle' =>
+                      \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              ],
+              'right' => [
+                  'borderStyle' =>
+                      \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              ],
+              'bottom' => [
+                  'borderStyle' =>
+                      \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              ],
+              'left' => [
+                  'borderStyle' =>
+                      \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+              ],
+          ],
+      ];
+
+      $sheet->setCellValue('A1', 'Rekap Mingguan');
+      $sheet->mergeCells('A1:G1');
+      $sheet
+          ->getStyle('A1')
+          ->getFont()
+          ->setBold(true);
+
+      $sheet->setCellValue('A3', 'NO');
+      $sheet->setCellValue('B3', 'KEGIATAN');
+      $sheet->setCellValue('C3', 'TANGGAL');
+      $sheet->setCellValue('D3', 'KETERANGAN');
+      $sheet->setCellValue('E3', 'JAM MASUK');
+      $sheet->setCellValue('F3', 'JAM PULANG');
+      $sheet->setCellValue('G3', 'LOKASI');
+      $sheet->setCellValue('H3', 'STATUS');
+
+      $sheet->getStyle('A3')->applyFromArray($style_col);
+      $sheet->getStyle('B3')->applyFromArray($style_col);
+      $sheet->getStyle('C3')->applyFromArray($style_col);
+      $sheet->getStyle('D3')->applyFromArray($style_col);
+      $sheet->getStyle('E3')->applyFromArray($style_col);
+      $sheet->getStyle('F3')->applyFromArray($style_col);
+      $sheet->getStyle('G3')->applyFromArray($style_col);
+      $sheet->getStyle('H3')->applyFromArray($style_col);
+
+      $perminggu = $this->admin_model->getRekapPerMinggu($start_date, $end_date);
+      $no = 1;
+        $numrow = 4;
+        foreach ($perminggu as $data) {
+            $sheet->setCellValue('A' . $numrow, $no);
+            $sheet->setCellValue('B' . $numrow, $data->kegiatan);
+            $sheet->setCellValue('C' . $numrow, $data->Tanggal);
+            $sheet->setCellValue('D' . $numrow, $data->Keterangan);
+            $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
+            $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
+            $sheet->setCellValue('G' . $numrow, $data->lokasi);
+            $sheet->setCellValue('H' . $numrow, $data->status);
+
+            $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
+
+            $no++;
+            $numrow++;
+        }
+
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(25);
+        $sheet->getColumnDimension('C')->setWidth(25);
+        $sheet->getColumnDimension('D')->setWidth(25);
+        $sheet->getColumnDimension('E')->setWidth(25);
+        $sheet->getColumnDimension('F')->setWidth(25);
+        $sheet->getColumnDimension('G')->setWidth(25);
+        $sheet->getColumnDimension('H')->setWidth(25);
+
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+
+        $sheet
+            ->getPageSetup()
+            ->setOrientation(
+                \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
+            );
+
+        $sheet->setTitle('Rekap Mingguan');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Rekap Mingguan.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+     // Untuk mengexport data per hari
+	public function export_harian()
+    {
+		$tanggal = $this->input->get('tanggal');
+    	
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $style_col = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' =>
+                    \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' =>
+                    \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'top' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'right' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'bottom' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'left' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $style_row = [
+            'font' => ['bold' => true],
+            'alignment' => [
+                'vertical' =>
+                    \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'top' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'right' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'bottom' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+                'left' => [
+                    'borderStyle' =>
+                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $sheet->setCellValue('A1', 'Rekap Harian');
+        $sheet->mergeCells('A1:G1');
+        $sheet
+            ->getStyle('A1')
+            ->getFont()
+            ->setBold(true);
+
+        $sheet->setCellValue('A3', 'No');
+        $sheet->setCellValue('B3', 'Kegiatan');
+        $sheet->setCellValue('C3', 'Tanggal');
+        $sheet->setCellValue('D3', 'Keterangan');
+        $sheet->setCellValue('E3', 'Jam Masuk');
+        $sheet->setCellValue('F3', 'Jam Pulang');
+        $sheet->setCellValue('G3', 'Lokasi');
+        $sheet->setCellValue('H3', 'Status');
+
+        $sheet->getStyle('A3')->applyFromArray($style_col);
+        $sheet->getStyle('B3')->applyFromArray($style_col);
+        $sheet->getStyle('C3')->applyFromArray($style_col);
+        $sheet->getStyle('D3')->applyFromArray($style_col);
+        $sheet->getStyle('E3')->applyFromArray($style_col);
+        $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
+        $sheet->getStyle('H3')->applyFromArray($style_col);
+
+        $harian = $this->admin_model->getPerHari($tanggal);
+
+
+        if (!empty($harian)) {
+            $no = 1;
+            $numrow = 4;
+            foreach ($harian as $row) 
+            $sheet->setCellValue('A' . $numrow, $no);
+            $sheet->setCellValue('B' . $numrow, $row->kegiatan);
+            $sheet->setCellValue('C' . $numrow, $row->tanggal_absen);
+            $sheet->setCellValue('D' . $numrow, $row->keterangan_izin);
+            $sheet->setCellValue('E' . $numrow, $row->jam_masuk);
+            $sheet->setCellValue('F' . $numrow, $row->jam_pulang);
+            $sheet->setCellValue('G' . $numrow, $row->status);
+            $sheet->setCellValue('H' . $numrow, $row->lokasi);
+
+            $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
+
+            $no++;
+            $numrow++;
+        }
+
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(25);
+        $sheet->getColumnDimension('C')->setWidth(25);
+        $sheet->getColumnDimension('D')->setWidth(20);
+        $sheet->getColumnDimension('E')->setWidth(30);
+        $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('G')->setWidth(30);
+        $sheet->getColumnDimension('H')->setWidth(30);
+
+        $sheet->getDefaultRowDimension()->setRowHeight(-1);
+
+        $sheet
+            ->getPageSetup()
+            ->setOrientation(
+                \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
+            );
+
+        $sheet->setTitle('Rekap Harian');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Rekap Harian.xlsx"');
+        header('Cache-Control: max-age=0');
+
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
 }
 ?>

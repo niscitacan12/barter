@@ -1070,7 +1070,7 @@ class Admin extends CI_Controller
             ],
         ];
 
-        $sheet->setCellValue('A1', 'Rekap Mingguan');
+        $sheet->setCellValue('A1', 'REKAP HARIAN');
         $sheet->mergeCells('A1:G1');
         $sheet
             ->getStyle('A1')
@@ -1078,13 +1078,11 @@ class Admin extends CI_Controller
             ->setBold(true);
 
         $sheet->setCellValue('A3', 'NO');
-        $sheet->setCellValue('B3', 'KEGIATAN');
-        $sheet->setCellValue('C3', 'TANGGAL');
-        $sheet->setCellValue('D3', 'KETERANGAN');
-        $sheet->setCellValue('E3', 'JAM MASUK');
-        $sheet->setCellValue('F3', 'JAM PULANG');
-        $sheet->setCellValue('G3', 'LOKASI');
-        $sheet->setCellValue('H3', 'STATUS');
+        $sheet->setCellValue('B3', 'TANGGAL');
+        $sheet->setCellValue('C3', 'KETERANGAN');
+        $sheet->setCellValue('D3', 'JAM MASUK');
+        $sheet->setCellValue('E3', 'JAM PULANG');
+        $sheet->setCellValue('F3', 'STATUS');
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -1092,24 +1090,20 @@ class Admin extends CI_Controller
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
-        $sheet->getStyle('G3')->applyFromArray($style_col);
-        $sheet->getStyle('H3')->applyFromArray($style_col);
+        
 
-        $perminggu = $this->admin_model->getRekapPerMinggu(
-            $start_date,
-            $end_date
-        );
+        $data = $this->admin_model->getRekapPerMinggu();
+
         $no = 1;
         $numrow = 4;
-        foreach ($perminggu as $data) {
+        foreach ($data as $row) {
             $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue('B' . $numrow, $data->kegiatan);
-            $sheet->setCellValue('C' . $numrow, $data->Tanggal);
-            $sheet->setCellValue('D' . $numrow, $data->Keterangan);
-            $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
-            $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
-            $sheet->setCellValue('G' . $numrow, $data->lokasi);
-            $sheet->setCellValue('H' . $numrow, $data->status);
+            $sheet->setCellValue('B' . $numrow, $row->tanggal_absen);
+            $sheet->setCellValue('C' . $numrow, $row->keterangan_izin);
+            $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
+            $sheet->setCellValue('E' . $numrow, $row->jam_pulang);
+            $sheet->setCellValue('F' . $numrow, $row->status);
+           
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -1117,9 +1111,7 @@ class Admin extends CI_Controller
             $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
-            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
-            $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
-
+          
             $no++;
             $numrow++;
         }
@@ -1127,11 +1119,10 @@ class Admin extends CI_Controller
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(25);
         $sheet->getColumnDimension('C')->setWidth(25);
-        $sheet->getColumnDimension('D')->setWidth(25);
-        $sheet->getColumnDimension('E')->setWidth(25);
-        $sheet->getColumnDimension('F')->setWidth(25);
-        $sheet->getColumnDimension('G')->setWidth(25);
-        $sheet->getColumnDimension('H')->setWidth(25);
+        $sheet->getColumnDimension('D')->setWidth(20);
+        $sheet->getColumnDimension('E')->setWidth(30);
+        $sheet->getColumnDimension('F')->setWidth(30);
+        
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 
@@ -1141,14 +1132,12 @@ class Admin extends CI_Controller
                 \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
             );
 
-        $sheet->setTitle('Rekap Mingguan');
+        $sheet->setTitle('REKAP HARIAN');
 
         header(
             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
-        header(
-            'Content-Disposition: attachment; filename="Rekap Mingguan.xlsx"'
-        );
+        header('Content-Disposition: attachment; filename="REKAP HARIAN.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);

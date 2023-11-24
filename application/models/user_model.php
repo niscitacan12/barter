@@ -107,7 +107,7 @@ class User_model extends CI_Model
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
     }
-    
+
     public function get_absensi_count_by_date($date)
     {
         // Gantilah 'nama_tabel_absensi' dengan nama tabel absensi di database Anda
@@ -159,6 +159,23 @@ class User_model extends CI_Model
 
         $this->db->where('id_absensi', $id_absensi);
         $this->db->update('absensi', $data);
+    }
+
+    public function get_id_organisasi($id_user)
+    {
+        $this->db->select('id_organisasi');
+        $this->db->where('id_user', $id_user);
+        $result = $this->db->get('user')->row();
+
+        return $result ? $result->id_organisasi : null;
+    }
+    public function id_organisasi()
+    {
+        // Gantilah dengan logika aplikasi yang sesuai
+        // Contoh: Mendapatkan ID organisasi dari session atau tabel lain
+        $id_organisasi = $this->session->userdata('id_organisasi');
+
+        return $id_organisasi;
     }
 }
 ?>

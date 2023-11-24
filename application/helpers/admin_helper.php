@@ -1,4 +1,18 @@
 <?php
+
+function organisasi($id_organisasi)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db
+        ->where('id_organisasi', $id_organisasi)
+        ->get('organisasi');
+    foreach ($result->result() as $c) {
+        $tmt = $c->nama_organisasi;
+        return $tmt;
+    }
+}
+
 function get_organisasi($id_organisasi)
 {
     $ci = &get_instance();
@@ -49,11 +63,10 @@ function jumlah_karyawan_lokasi($id_lokasi)
     return $result->num_rows();
 }
 
-
 // Format tanggal Indonesia
-function convDate($date) 
+function convDate($date)
 {
-    $bulan = array(
+    $bulan = [
         1 => 'Januari',
         2 => 'Februari',
         3 => 'Maret',
@@ -65,8 +78,8 @@ function convDate($date)
         9 => 'September',
         10 => 'Oktober',
         11 => 'November',
-        12 => 'Desember'
-    );
+        12 => 'Desember',
+    ];
 
     $tanggal = date('d', strtotime($date)); // Mengambil tanggal dari timestamp
     $bulan = $bulan[date('n', strtotime($date))]; // Mengambil bulan dalam bentuk string

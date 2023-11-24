@@ -520,8 +520,18 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
-    // Mendapatkan rekap per minggu berdasarkan rentang tanggal
+    // Mendapatkan Export   per minggu berdasarkan rentang tanggal
     public function getRekapPerMinggu($start_date, $end_date) {
+        $this->db->select('absensi.*, user.*');
+        $this->db->from('absensi');
+        $this->db->join('user', 'absensi.id_user = user.id_user', 'left');
+        $this->db->where('tanggal_absen ', $start_date);
+        $this->db->where('tanggal_absen ', $end_date);
+        $query = $this->db->get();
+        return $query->result();
+    }
+     // Mendapatkan rekap per minggu berdasarkan rentang tanggal
+     public function RekapPerMinggu($start_date, $end_date) {
         $this->db->select('absensi.*, user.*');
         $this->db->from('absensi');
         $this->db->join('user', 'absensi.id_user = user.id_user', 'left');
@@ -529,7 +539,7 @@ class Admin_model extends CI_Model
         $this->db->where('tanggal_absen <=', $end_date);
         $query = $this->db->get();
         return $query->result();
-    }
+    }    
 
     // Mendapatkan rekap harian berdasarkan bulan
     public function getRekapHarianByBulan($bulan) {

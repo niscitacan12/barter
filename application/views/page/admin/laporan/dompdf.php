@@ -53,9 +53,9 @@
         ); ?><br>di tempat</p>
         <p>Dengan hormat,<br>yang bertanda tangan dibawah ini:</p>
 
-        <p>Nama : <?php echo nama_user($id_user); ?></p>
+        <p>Nama : <?php echo get_organisasi($id_organisasi); ?></p>
 
-        <p>Jabatan :</p>
+        <p>Jabatan :<?php echo get_nama_jabatan_from_cuti($id_user); ?></p>
 
         <p>Tanggal Pengambilan Cuti : <?php echo date(
             'd F Y',
@@ -90,4 +90,4 @@
     </div>
 </body>
 
-</html>
+</html>z

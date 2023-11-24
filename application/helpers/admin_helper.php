@@ -35,6 +35,29 @@ function nama_admin($id_admin)
     }
 }
 
+function get_nama_jabatan_from_cuti($id_cuti)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+
+    // Menggunakan JOIN untuk mengambil data dari tabel cuti, user, dan jabatan
+    $result = $ci->db->select('jabatan.nama_jabatan as nama_jabatan')
+        ->from('cuti')
+        ->join('user', 'cuti.id_user = user.id_user')
+        ->join('jabatan', 'user.id_jabatan = jabatan.id_jabatan')
+        ->where('cuti.id_cuti', $id_cuti)
+        ->get();
+
+    if ($result->num_rows() > 0) {
+        $row = $result->row();
+        return $row->nama_jabatan;
+    }
+
+    // Jika tidak ada informasi yang ditemukan, kembalikan nilai null atau sesuai kebutuhan
+    return null;
+}
+
+
 function nama_user($id_user)
 {
     $ci = &get_instance();

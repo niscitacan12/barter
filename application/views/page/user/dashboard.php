@@ -20,7 +20,7 @@
     <?php $this->load->view('components/sidebar_user'); ?>
     <div class="p-4 sm:ml-64">
         <div class="p-5 mt-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
                 <a href="<?= base_url('user/cuti') ?>"
                     class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Cuti</h5>
@@ -61,14 +61,88 @@
                     </div>
                 </a>
             </div>
+
+            <div
+                class="w-full mt-5 mb-5 p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <canvas id="myChart"></canvas>
+            </div>
+            
+            <div
+             class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                   <div class="flex justify-between">
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">History absensi</h6>
+                </div>
+                <hr>
+
+                <!-- Tabel -->
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Tanggal
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Keterangan
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Jam Masuk
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Jam Pulang
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Lokasi
+                                </th>
+                            </tr>
+                        </thead>
+                        <!-- Tabel Body -->
+                        <tbody class="text-center">
+                        <?php $no = 0; foreach ($absen as $row): if ($no < 5) : $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->tanggal_absen; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->keterangan_izin; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->jam_masuk; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->jam_pulang; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->lokasi; ?>
+                                </td>
+                            </tr>
+                            <?php else: break; endif; endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="flex justify-end">
+                    <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        href="<?= base_url('user/history_absensi') ?>"
+                        title="Ke Riwayat Absensi">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
-
-
-    <div style="margin-left: 270px; margin-right: 80px; height: 300px;">
-        <canvas id="myChart"></canvas>
     </div>
-
     <script>
     const ctx = document.getElementById('myChart');
 

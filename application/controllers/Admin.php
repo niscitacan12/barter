@@ -1090,7 +1090,6 @@ class Admin extends CI_Controller
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
-        
 
         $data = $this->admin_model->getRekapPerMinggu();
 
@@ -1103,7 +1102,6 @@ class Admin extends CI_Controller
             $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
             $sheet->setCellValue('E' . $numrow, $row->jam_pulang);
             $sheet->setCellValue('F' . $numrow, $row->status);
-           
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -1111,7 +1109,7 @@ class Admin extends CI_Controller
             $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
-          
+
             $no++;
             $numrow++;
         }
@@ -1122,7 +1120,6 @@ class Admin extends CI_Controller
         $sheet->getColumnDimension('D')->setWidth(20);
         $sheet->getColumnDimension('E')->setWidth(30);
         $sheet->getColumnDimension('F')->setWidth(30);
-        
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 
@@ -1299,6 +1296,7 @@ class Admin extends CI_Controller
 
         $data['cuti'] = $this->admin_model->get_cuti_by_id($cutiId);
         $data['id_organisasi'] = $this->admin_model->get_id_organisasi();
+        $nama_jabatan = get_jabatan_by_cuti_id($cuti_id);
         $data['id_user'] = $this->admin_model->get_user_id_admin($id_user);
         $this->mypdf->generate('/page/admin/laporan/dompdf', $data);
     }

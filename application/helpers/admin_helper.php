@@ -35,13 +35,42 @@ function nama_admin($id_admin)
     }
 }
 
+function get_jabatan_by_cuti_id($cuti_id)
+{
+    // Ambil instance CI
+    $ci = &get_instance();
+
+    // Load database
+    $ci->load->database();
+
+    // Query untuk mengambil data jabatan berdasarkan cuti_id
+    $query = $ci->db
+        ->select('jabatan.nama_jabatan')
+        ->from('cuti')
+        ->join('user', 'cuti.id_user = user.id_user')
+        ->join('jabatan', 'user.id_jabatan = jabatan.id_jabatan')
+        ->where('cuti.id_cuti', $cuti_id)
+        ->get();
+
+    // Periksa apakah query berhasil dan hasilnya ada
+    if ($query && $query->num_rows() > 0) {
+        // Ambil nama jabatan dari hasil query
+        $result = $query->row();
+        return $result->nama_jabatan;
+    }
+
+    // Kembalikan nilai default jika tidak ada data yang ditemukan
+    return 'Nama Jabatan Tidak Ditemukan';
+}
+
 function get_nama_jabatan_from_cuti($id_cuti)
 {
     $ci = &get_instance();
     $ci->load->database();
 
     // Menggunakan JOIN untuk mengambil data dari tabel cuti, user, dan jabatan
-    $result = $ci->db->select('jabatan.nama_jabatan as nama_jabatan')
+    $result = $ci->db
+        ->select('jabatan.nama_jabatan as nama_jabatan')
         ->from('cuti')
         ->join('user', 'cuti.id_user = user.id_user')
         ->join('jabatan', 'user.id_jabatan = jabatan.id_jabatan')
@@ -56,7 +85,6 @@ function get_nama_jabatan_from_cuti($id_cuti)
     // Jika tidak ada informasi yang ditemukan, kembalikan nilai null atau sesuai kebutuhan
     return null;
 }
-
 
 function nama_user($id_user)
 {

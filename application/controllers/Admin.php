@@ -469,6 +469,15 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/shift/shift', $data);
     }
 
+    // page detail absen
+    public function detail_absen($id_absensi)
+    {
+        $data['absensi'] = $this->admin_model->getAbsensiDetails($id_absensi);
+        // Menampilkan view update_jabatan dengan data jabatan
+        $this->load->view('page/admin/absen/detail_absensi', $data);
+    }
+    
+
     // 2. Aksi
     // aksi hapus organisasi
     public function hapus_organisasi($id_organisasi)

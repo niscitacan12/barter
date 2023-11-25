@@ -139,4 +139,22 @@ function convDate($date)
     return $tanggal . ' ' . $bulan . ' ' . $tahun; // Mengembalikan tanggal yang diformat
 }
 
+function jumlah_karyawan($id_jabatan)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db->where('id_jabatan', $id_jabatan)->get('user');
+    foreach ($result->result() as $c) {
+        $tmt = $c->username;
+        return $result->num_rows();
+    }
+}
+
+function jumlah_karyawan_lokasi($id_lokasi)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db->where('id_lokasi', $id_lokasi)->get('lokasi');
+    return $result->num_rows();
+}
 ?>

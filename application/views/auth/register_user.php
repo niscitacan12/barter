@@ -13,10 +13,10 @@
 </head>
 
 <body>
-    <div class="min-w-screen min-h-screen bg-indigo-200 flex items-center justify-center px-5 py-5">
+    <div class="min-w-screen min-h-screen bg-indigo-200 flex items-center justify-center px-5 py-5 h-screen">
         <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
             <div class="md:flex w-full">
-                <!-- Welcome Login -->
+                <!-- Welcome Register -->
                 <div class="hidden md:block w-2/5 bg-indigo-500 py-10 px-10">
                     <h1 class="text-gray-950 text-2xl text-center">Welcome To Absensi App</h1>
                     <hr class="border border-black mt-1">
@@ -102,13 +102,43 @@
                 <!-- Login form -->
                 <div class="w-full md:w-3/5 py-10 px-5 md:px-10">
                     <div class="text-center mb-5">
-                        <h1 class="font-bold text-3xl text-gray-900">Login</h1>
+                        <h1 class="font-bold text-3xl text-gray-900">Registrasi User</h1>
                         <!-- <p>Enter your information to register</p> -->
                     </div>
                     <hr>
-                    <form class="mt-7" action="<?php echo base_url('auth/aksi_login')?>" method="post">
-                        <div class="flex -mx-3">
-                            <div class="w-full px-3 mb-5">
+                    <form class="mt-7" action="<?php echo base_url('auth/aksi_register_user')?>" method="post">
+
+                        <!-- Nama depan & belakang -->
+                        <div class="flex -mx-3 mb-5">
+                            <div class="w-full">
+                                <label for="" class="text-xs font-semibold px-1">Nama Depan</label>
+                                <div class="flex">
+                                    <div
+                                        class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                        <i class="fa-solid fa-address-card"></i>
+                                    </div>
+                                    <input type="text" name="nama_depan" autocomplete="off" required
+                                        class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        placeholder="Nama Depan">
+                                </div>
+                            </div>
+                            <div class="w-full">
+                                <label for="" class="text-xs font-semibold px-1">Nama Belakang</label>
+                                <div class="flex">
+                                    <div
+                                        class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                        <i class="fa-solid fa-address-card"></i>
+                                    </div>
+                                    <input type="text" name="nama_belakang" autocomplete="off" required
+                                        class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        placeholder="Nama Belakang">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- email & username -->
+                        <div class="flex -mx-3 mb-5">
+                            <div class="w-full">
                                 <label for="" class="text-xs font-semibold px-1">Email</label>
                                 <div class="flex">
                                     <div
@@ -120,9 +150,38 @@
                                         placeholder="Email">
                                 </div>
                             </div>
+                            <div class="w-full">
+                                <label for="" class="text-xs font-semibold px-1">Username</label>
+                                <div class="flex">
+                                    <div
+                                        class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                                        <i class="fa-solid fa-at"></i>
+                                    </div>
+                                    <input type="text" name="username" autocomplete="off" required
+                                        class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                                        placeholder="Username">
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex -mx-3">
-                            <div class="w-full px-3">
+
+                        <!-- organisasi & password -->
+                        <div class="flex -mx-3 mb-1">
+                            <div class="w-full">
+                                <label for="" class="text-xs font-semibold px-1">Organisasi</label>
+                                <div class="flex">
+                                    <select name="id_organisasi"
+                                        class="bg-gray-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                        <option selected>Pilih Organisasi</option>
+                                        <?php foreach ($organisasi as $row): ?>
+                                        <option value="<?php echo $row->id_organisasi; ?>">
+                                            <?php echo $row->nama_organisasi; ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="w-full">
                                 <label for="" class="text-xs font-semibold px-1">Password</label>
                                 <div class="flex">
                                     <div
@@ -135,7 +194,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex justify-between mt-3">
+                        <div class="flex -mx-3 justify-between mt-3">
+                            <div class="flex">
+                                <div class="text-red-500">*</div>
+                                <div class="text-sm font-medium text-gray-950 dark:text-gray-950">
+                                    Password harus memiliki 8 karakter
+                                </div>
+                            </div>
                             <div class="flex">
                                 <div class="flex items-center h-5">
                                     <input id="showpass" type="checkbox" value=""
@@ -146,20 +211,16 @@
                                     class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show
                                     Password</label>
                             </div>
-                            <div class="text-sm font-medium text-gray-500 dark:text-gray-300 ms-1 mb-5"><a
-                                    href="lupa_password" class="text-blue-700 hover:underline dark:text-blue-500">Lupa
-                                    Password?</a>
-                            </div>
                         </div>
-                        <div class="flex -mx-3 mt-4">
-                            <div class="w-full px-3 mb-10">
+                        <div class="flex -mx-3 mt-7">
+                            <div class="w-full px-3 mb-8">
                                 <button
-                                    class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Login</button>
+                                    class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Register</button>
                             </div>
                         </div>
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                            Sudah Memiliki Akun? <a href="<?= base_url('auth/register') ?>"
-                                class="text-blue-700 hover:underline dark:text-blue-500">Registrasi
+                            Tidak Memiliki Akun? <a href="<?= base_url('')?>"
+                                class="text-blue-700 hover:underline dark:text-blue-500">Login
                                 Sekarang</a>
                         </div>
                     </form>
@@ -171,33 +232,32 @@
 
 <script>
 function showPassword() {
-    var passwordInput = document.getElementById("password");
-    var showPassCheckbox = document.getElementById("showpass");
-    if (showPassCheckbox.checked) {
-        passwordInput.type = "text";
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+        x.type = "text";
     } else {
-        passwordInput.type = "password";
+        x.type = "password";
     }
 }
 </script>
 
-<?php if($this->session->flashdata('register_error')){ ?>
+<?php if ($this->session->flashdata('register_success')) { ?>
 <script>
 Swal.fire({
-    title: 'Register Gagal',
-    text: '<?php echo $this->session->flashdata('register_error'); ?>',
-    icon: 'error',
+    title: 'Registrasi Berhasil',
+    text: '<?php echo $this->session->flashdata('register_success'); ?>',
+    icon: 'success',
     showConfirmButton: false,
     timer: 1500
 });
 </script>
 <?php } ?>
 
-<?php if($this->session->flashdata('error')){ ?>
+<?php if ($this->session->flashdata('login_error')) { ?>
 <script>
 Swal.fire({
-    title: 'Register Gagal',
-    text: '<?php echo $this->session->flashdata('error'); ?>',
+    title: 'Login Error',
+    text: '<?php echo $this->session->flashdata('login_error'); ?>',
     icon: 'error',
     showConfirmButton: false,
     timer: 1500

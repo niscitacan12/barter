@@ -599,5 +599,20 @@ class Admin_model extends CI_Model
 
         return $id_organisasi;
     }
+
+    public function getAbsensiDetails($id_absensi)
+    {
+        // Gantilah 'nama_table' dengan nama tabel yang sesuai di database Anda
+        $this->db->where('id_absensi', $id_absensi);
+        $query = $this->db->get('absensi'); // Gantilah 'nama_table' dengan nama tabel yang sesuai di database Anda
+
+        // Jika query berhasil dan ada hasil
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris hasil sebagai objek
+        } else {
+            return null; // Mengembalikan null jika tidak ada hasil
+        }
+    }
+
 }
 ?>

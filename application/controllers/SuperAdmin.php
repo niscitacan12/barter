@@ -1011,6 +1011,13 @@ class SuperAdmin extends CI_Controller
       $this->super_model->hapus_lokasi($id_lokasi); // Assuming you have a method 'hapus_lokasi' in the model
       redirect('superadmin/lokasi');
   }
-
-
+  public function tampil_admin() {
+    $this->load->model('nama_model_anda'); // Ganti 'nama_model_anda' dengan nama model yang sesuai
+    $data['user'] = $this->nama_model_anda->get_all_admin(); // Mengambil data admin
+    $data['total_admin'] = $this->nama_model_anda->get_admin_count(); // Menghitung jumlah admin
+    
+    // Lainnya seperti pengaturan tampilan flashdata
+    
+    $this->load->view('page/super_admin/dashboard', $data);
+}
 }

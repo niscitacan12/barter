@@ -54,8 +54,19 @@
         <p>Dengan hormat,<br>yang bertanda tangan dibawah ini:</p>
 
         <p>Nama : <?php echo get_organisasi($id_organisasi); ?></p>
+        <?php
+        // Memanggil helper
+        $ci = &get_instance();
+        $ci->load->helper('admin_helper');
 
-        <p>Jabatan :<?php echo get_nama_jabatan_from_cuti($id_user); ?></p>
+        // Mengambil id cuti dari data yang diteruskan ke view
+        $cuti_id = $cuti->id_cuti;
+
+        // Menggunakan helper untuk mendapatkan nama jabatan
+        $nama_jabatan = get_jabatan_by_cuti_id($cuti_id);
+        ?>
+
+        <p>Jabatan: <?php echo $nama_jabatan; ?></p>
 
         <p>Tanggal Pengambilan Cuti : <?php echo date(
             'd F Y',

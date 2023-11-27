@@ -34,10 +34,22 @@
 </head>
 
 <body>
+    <?php
+    // Memanggil helper
+    $ci = &get_instance();
+    $ci->load->helper('admin_helper');
+
+    // Mengambil id cuti dari data yang diteruskan ke view
+    $cuti_id = $cuti->id_cuti;
+    $organisasi_id = $cuti->id_organisasi;
+
+    // Menggunakan helper untuk mendapatkan nama jabatan
+    $nama_jabatan = get_jabatan_by_cuti_id($cuti_id);
+    $nama_organisasi = tampil_organisasi($organisasi_id);
+    $username = get_organisasi($organisasi_id);
+    ?>
     <div class="header">
-        <h1>PERMOHONAN PENGAMBILAN CUTI <br><?php echo organisasi(
-            $id_organisasi
-        ); ?></h1>
+        <h1>PERMOHONAN PENGAMBILAN CUTI <br><?php echo $nama_organisasi; ?></h1>
 
         <hr>
     </div>
@@ -48,23 +60,11 @@
 
     <div class="content">
         <!-- Isi konten surat disini -->
-        <p>Yth. HRD PT. <?php echo organisasi(
-            $id_organisasi
-        ); ?><br>di tempat</p>
+
+        <p>Yth. HRD PT. <?php echo $nama_organisasi; ?><br>di tempat</p>
         <p>Dengan hormat,<br>yang bertanda tangan dibawah ini:</p>
 
-        <p>Nama : <?php echo get_organisasi($id_organisasi); ?></p>
-        <?php
-        // Memanggil helper
-        $ci = &get_instance();
-        $ci->load->helper('admin_helper');
-
-        // Mengambil id cuti dari data yang diteruskan ke view
-        $cuti_id = $cuti->id_cuti;
-
-        // Menggunakan helper untuk mendapatkan nama jabatan
-        $nama_jabatan = get_jabatan_by_cuti_id($cuti_id);
-        ?>
+        <p>Nama : <?php echo $username; ?></p>
 
         <p>Jabatan: <?php echo $nama_jabatan; ?></p>
 
@@ -101,4 +101,4 @@
     </div>
 </body>
 
-</html>z
+</html>

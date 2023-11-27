@@ -1293,7 +1293,7 @@ class Admin extends CI_Controller
         $writer->save('php://output');
     }
 
-    public function permohonan_pdf($cutiId)
+    public function permohonan_pdf($id_cuti)
     {
         $this->load->library('mypdf');
 
@@ -1302,9 +1302,8 @@ class Admin extends CI_Controller
             $this->session->userdata('id_admin')
         );
 
-        $data['cuti'] = $this->admin_model->get_cuti_by_id($cutiId);
+        $data['cuti'] = $this->admin_model->get_cuti_by_id('cuti', $id_cuti);
         $data['id_organisasi'] = $this->admin_model->get_id_organisasi();
-        $nama_jabatan = get_jabatan_by_cuti_id($cuti_id);
         $data['id_user'] = $this->admin_model->get_user_id_admin($id_user);
         $this->mypdf->generate('/page/admin/laporan/dompdf', $data);
     }

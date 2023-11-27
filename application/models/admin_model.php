@@ -510,17 +510,23 @@ class Admin_model extends CI_Model
     }
 
     // Mendapatkan data per hari berdasarkan tanggal
-    public function getPerHari($tanggal)
-    {
-        $this->db->select('absensi.*, user.*');
-        $this->db->from('absensi');
-        $this->db->join('user', 'absensi.id_user = user.id_user', 'left');
-        $this->db->where('tanggal_absen', $tanggal);
+    public function getRekapHarian($tanggal) {
+        // Gantilah 'nama_tabel' dengan nama tabel yang sesuai di database Anda
+        $this->db->select('*');
+        $this->db->from('absensi as a'); // Memberikan alias 'a' pada tabel absensi
+        $this->db->where('a.tanggal_absen', $tanggal);
+
         $query = $this->db->get();
+
+        return $query->result();
+         // Mengembalikan array kosong jika tidak ada data yang ditemukan
+        
+    }
+    public function exportRekapHarian() {
+        // Replace this with your actual database query to retrieve the data
+        $query = $this->db->get('absensi');
         return $query->result();
     }
-
-    // Mendapatkan Export   per minggu berdasarkan rentang tanggal
     // Mendapatkan Export per minggu berdasarkan rentang tanggal
     public function getRekapPerMinggu()
     {
@@ -564,15 +570,12 @@ class Admin_model extends CI_Model
     }
 
     // Mendapatkan data bulanan berdasarkan bulan
-    public function getBulanan($bulan)
-    {
-        $this->db->select('absensi.*, user.*');
-        $this->db->from('absensi');
-        $this->db->join('user', 'absensi.id_user = user.id_user', 'left');
-        $this->db->where("DATE_FORMAT(tanggal_absen, '%m') = ", $bulan);
-        $query = $this->db->get();
-        return $query->result();
+    public function getRekapPerBulan() {
+
+        $query = $this->db->get('absensi');
+        return $query->result();  // Sesuaikan sesuai dengan struktur database Anda
     }
+
 
     public function updateAdminPassword($user_id, $data_password)
     {

@@ -264,7 +264,7 @@ class Admin extends CI_Controller
     public function rekap_harian()
     {
         $tanggal = $this->input->get('tanggal');
-        $data['perhari'] = $this->admin_model->getPerHari($tanggal);
+        $data['perhari'] = $this->admin_model->getRekapHarian($tanggal);
         $this->load->view('page/admin/rekap/rekap_harian', $data);
     }
 
@@ -860,10 +860,9 @@ class Admin extends CI_Controller
     // Untuk mengexport data per bulanan
     public function export_bulanan()
     {
-        $bulan = $this->input->get('bulan');
-        $bulanan = $this->admin_model->getBulanan($bulan);
+        $data['perbulan'] = $this->admin_model->getRekapPerBulan();
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $style_col = [
@@ -920,21 +919,22 @@ class Admin extends CI_Controller
             ],
         ];
 
-        $sheet->setCellValue('A1', 'Rekap Bulanan');
-        $sheet->mergeCells('A1:G1');
-        $sheet
-            ->getStyle('A1')
-            ->getFont()
-            ->setBold(true);
+        $sheet->setCellValue('A1', 'REKAP BULANAN');
+        $sheet->mergeCells('A1:I1'); // Sesuaikan jumlah kolom dengan penambahan lokasi masuk dan lokasi pulang
 
-        $sheet->setCellValue('A3', 'No');
-        $sheet->setCellValue('B3', 'Kegiatan');
-        $sheet->setCellValue('C3', 'Tanggal');
-        $sheet->setCellValue('D3', 'Keterangan');
-        $sheet->setCellValue('E3', 'Jam Masuk');
-        $sheet->setCellValue('F3', 'Jam Pulang');
-        $sheet->setCellValue('G3', 'Lokasi');
-        $sheet->setCellValue('H3', 'Status');
+        $sheet
+        ->getStyle('A1')
+        ->getFont()
+        ->setBold(true);
+
+        $sheet->setCellValue('A3', 'NO');
+        $sheet->setCellValue('B3', 'TANGGAL');
+        $sheet->setCellValue('C3', 'KETERANGAN');
+        $sheet->setCellValue('D3', 'JAM MASUK');
+        $sheet->setCellValue('E3', 'LOKASI MASUK'); // Kolom baru
+        $sheet->setCellValue('F3', 'JAM PULANG');
+        $sheet->setCellValue('G3', 'LOKASI PULANG'); // Kolom baru
+        $sheet->setCellValue('H3', 'STATUS');
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -945,19 +945,17 @@ class Admin extends CI_Controller
         $sheet->getStyle('G3')->applyFromArray($style_col);
         $sheet->getStyle('H3')->applyFromArray($style_col);
 
-        $bulanan = $this->admin_model->getBulanan($bulan);
-
-        $no = 0;
+        $no = 1;
         $numrow = 4;
-        foreach ($bulanan as $data) {
+        foreach ($data['perbulan'] as $row) {
             $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue('B' . $numrow, $data->kegiatan);
-            $sheet->setCellValue('C' . $numrow, $data->tanggal_absen);
-            $sheet->setCellValue('D' . $numrow, $data->keterangan_izin);
-            $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
-            $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
-            $sheet->setCellValue('G' . $numrow, $data->lokasi);
-            $sheet->setCellValue('H' . $numrow, $data->status);
+            $sheet->setCellValue('B' . $numrow, $row->tanggal_absen);
+            $sheet->setCellValue('C' . $numrow, $row->keterangan_izin);
+            $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
+            $sheet->setCellValue('E' . $numrow, $row->lokasi_masuk); // Kolom baru
+            $sheet->setCellValue('F' . $numrow, $row->jam_pulang);
+            $sheet->setCellValue('G' . $numrow, $row->lokasi_pulang); // Kolom baru
+            $sheet->setCellValue('H' . $numrow, $row->status);
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -967,6 +965,7 @@ class Admin extends CI_Controller
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
+
 
             $no++;
             $numrow++;
@@ -978,33 +977,26 @@ class Admin extends CI_Controller
         $sheet->getColumnDimension('D')->setWidth(20);
         $sheet->getColumnDimension('E')->setWidth(30);
         $sheet->getColumnDimension('F')->setWidth(30);
-        $sheet->getColumnDimension('G')->setWidth(30);
-        $sheet->getColumnDimension('H')->setWidth(30);
+        $sheet->getColumnDimension('G')->setWidth(30); 
+        $sheet->getColumnDimension('H')->setWidth(30); 
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 
-        $sheet
-            ->getPageSetup()
-            ->setOrientation(
-                \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
-            );
+        $sheet->getPageSetup()->setOrientation(
+            \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
+        );
 
-        $sheet->setTitle('Rekap Bulanan');
+        $sheet->setTitle('REKAP BULANAN');
 
         header(
             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
-        header(
-            'Content-Disposition: attachment; filename="Rekap Bulanan.xlsx"'
-        );
+        header('Content-Disposition: attachment; filename="REKAP BULANAN.xlsx"');
         header('Cache-Control: max-age=0');
 
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter(
-            $spreadsheet,
-            'Xlsx'
-        );
+        $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
-    }
+}
     // Untuk mengexport data per minggu
     public function export_mingguan()
     {
@@ -1078,7 +1070,7 @@ class Admin extends CI_Controller
             ],
         ];
 
-        $sheet->setCellValue('A1', 'REKAP HARIAN');
+        $sheet->setCellValue('A1', 'REKAP MINGGUAN');
         $sheet->mergeCells('A1:G1');
         $sheet
             ->getStyle('A1')
@@ -1137,12 +1129,12 @@ class Admin extends CI_Controller
                 \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
             );
 
-        $sheet->setTitle('REKAP HARIAN');
+        $sheet->setTitle('REKAP MINGGUAN');
 
         header(
             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
-        header('Content-Disposition: attachment; filename="REKAP HARIAN.xlsx"');
+        header('Content-Disposition: attachment; filename="REKAP MINGGUAN.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
@@ -1151,11 +1143,11 @@ class Admin extends CI_Controller
     // Untuk mengexport data per hari
     public function export_harian()
     {
-        $tanggal = $this->input->get('tanggal');
-
+        $data['perhari'] = $this->admin_model->exportRekapHarian();
+    
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-
+    
         $style_col = [
             'font' => ['bold' => true],
             'alignment' => [
@@ -1183,7 +1175,7 @@ class Admin extends CI_Controller
                 ],
             ],
         ];
-
+    
         $style_row = [
             'font' => ['bold' => true],
             'alignment' => [
@@ -1209,86 +1201,72 @@ class Admin extends CI_Controller
                 ],
             ],
         ];
-
-        $sheet->setCellValue('A1', 'Rekap Harian');
+    
+        $sheet->setCellValue('A1', 'REKAP HARIAN');
         $sheet->mergeCells('A1:G1');
         $sheet
             ->getStyle('A1')
             ->getFont()
             ->setBold(true);
-
-        $sheet->setCellValue('A3', 'No');
-        $sheet->setCellValue('B3', 'Kegiatan');
-        $sheet->setCellValue('C3', 'Tanggal');
-        $sheet->setCellValue('D3', 'Keterangan');
-        $sheet->setCellValue('E3', 'Jam Masuk');
-        $sheet->setCellValue('F3', 'Jam Pulang');
-        $sheet->setCellValue('G3', 'Lokasi');
-        $sheet->setCellValue('H3', 'Status');
-
+    
+        $sheet->setCellValue('A3', 'NO');
+        $sheet->setCellValue('B3', 'TANGGAL');
+        $sheet->setCellValue('C3', 'KETERANGAN');
+        $sheet->setCellValue('D3', 'JAM MASUK');
+        $sheet->setCellValue('E3', 'JAM PULANG');
+        $sheet->setCellValue('F3', 'STATUS');
+    
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
         $sheet->getStyle('C3')->applyFromArray($style_col);
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
-        $sheet->getStyle('G3')->applyFromArray($style_col);
-        $sheet->getStyle('H3')->applyFromArray($style_col);
-
-        $harian = $this->admin_model->getPerHari($tanggal);
-
-        if (!empty($harian)) {
-            $no = 1;
-            $numrow = 4;
-            foreach ($harian as $row) {
-                $sheet->setCellValue('A' . $numrow, $no);
-            }
-            $sheet->setCellValue('B' . $numrow, $row->kegiatan);
-            $sheet->setCellValue('C' . $numrow, $row->tanggal_absen);
-            $sheet->setCellValue('D' . $numrow, $row->keterangan_izin);
-            $sheet->setCellValue('E' . $numrow, $row->jam_masuk);
-            $sheet->setCellValue('F' . $numrow, $row->jam_pulang);
-            $sheet->setCellValue('G' . $numrow, $row->status);
-            $sheet->setCellValue('H' . $numrow, $row->lokasi);
-
+    
+        $no = 1;
+        $numrow = 4;
+        foreach ($data['perhari'] as $row) {
+            $sheet->setCellValue('A' . $numrow, $no);
+            $sheet->setCellValue('B' . $numrow, $row->tanggal_absen);
+            $sheet->setCellValue('C' . $numrow, $row->keterangan_izin);
+            $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
+            $sheet->setCellValue('E' . $numrow, $row->jam_pulang);
+            $sheet->setCellValue('F' . $numrow, $row->status);
+    
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
-            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
-            $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
-
+    
             $no++;
             $numrow++;
         }
-
+    
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(25);
         $sheet->getColumnDimension('C')->setWidth(25);
         $sheet->getColumnDimension('D')->setWidth(20);
         $sheet->getColumnDimension('E')->setWidth(30);
         $sheet->getColumnDimension('F')->setWidth(30);
-        $sheet->getColumnDimension('G')->setWidth(30);
-        $sheet->getColumnDimension('H')->setWidth(30);
-
+    
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
-
+    
         $sheet
             ->getPageSetup()
             ->setOrientation(
                 \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
             );
-
-        $sheet->setTitle('Rekap Harian');
-
+    
+        $sheet->setTitle('REKAP HARIAN');
+    
         header(
             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
-        header('Content-Disposition: attachment; filename="Rekap Harian.xlsx"');
+        header('Content-Disposition: attachment; filename="REKAP HARIAN.xlsx"');
         header('Cache-Control: max-age=0');
-
+    
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
     }

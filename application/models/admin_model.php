@@ -568,6 +568,19 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
+    public function updateAdminPassword($user_id, $data_password)
+    {
+        $update_result = $this->db->update('admin', $data_password, ['id_admin' => $user_id]);
+
+        return $update_result ? true : false;
+    }
+
+    public function updateAdminPhoto($user_id, $data)
+    {
+        $update_result = $this->db->update('admin', $data, ['id_admin' => $user_id]);
+
+        return $update_result ? true : false;
+
     public function get_cuti_by_id($cutiId)
     {
         // Gantilah 'nama_tabel_cuti' dengan nama tabel cuti di database Anda

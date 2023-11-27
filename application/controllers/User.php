@@ -300,7 +300,7 @@ class User extends CI_Controller
         }
     }
 
-    public function aksi_ubah_akun()
+    public function aksi_ubah_detail_akun()
     {
         $image = $this->upload_image_user('image');
 
@@ -340,7 +340,7 @@ class User extends CI_Controller
             }
         }
 
-        // Update the admin data in the database
+        // Update the user data in the database
         $update_result = $this->user_model->update('user', $data, [
             'id_user' => $user_id,
         ]);
@@ -410,4 +410,56 @@ class User extends CI_Controller
         // Mengirim data dalam format JSON
         echo json_encode($realtime_absensi);
     }
+
+    public function aksi_ubah_password()
+    {
+        $user_id = $this->session->userdata('id');
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+    
+        // Check if new password is provided
+        if (!empty($password_baru)) {
+            // Check if the new password matches the confirmation
+            if ($password_baru === $konfirmasi_password) {
+                $data_password = [
+                    'password' => md5($password_baru),
+                ];
+    
+                // Update password di database
+                $this->user_model->updateUserPassword($user_id, $data_password);
+            } else {
+                $this->session->set_flashdata(
+                    'message',
+                    'Password baru dan Konfirmasi password harus sama'
+                );
+                redirect(base_url('user/profile'));
+            }
+        }
+    
+        // Redirect ke halaman profile
+        redirect(base_url('user/profile'));
+    }
+
+    // ubah foto
+    public function aksi_ubah_foto()
+{
+    $image = $this->upload_image_user('image');
+    $user_id = $this->session->userdata('id');
+    $admin = $this->user_model->getUserByID($user_id);
+
+    if ($image[0] == true) {
+        $admin->image = $image[1];
+    }
+
+    $data = [
+        'image' => $image[1],
+    ];
+
+    // Update foto di database
+    $this->user_model->updateUserPhoto($user_id, $data);
+
+    // Redirect ke halaman profile
+    redirect(base_url('user/profile'));
+}
+}
 }

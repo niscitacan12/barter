@@ -809,7 +809,7 @@ class SuperAdmin extends CI_Controller
     }
 
     // aksi ubah akun
-    public function aksi_ubah_akun()
+    public function aksi_ubah_detail_akun()
     {
         $image = $this->upload_image_superadmin('image');
 
@@ -849,7 +849,7 @@ class SuperAdmin extends CI_Controller
             }
         }
 
-        // Update the admin data in the database
+        // Update the superadmin data in the database
         $update_result = $this->super_model->update('superadmin', $data, [
             'id_superadmin' => $user_id,
         ]);
@@ -1011,6 +1011,59 @@ class SuperAdmin extends CI_Controller
       $this->super_model->hapus_lokasi($id_lokasi); // Assuming you have a method 'hapus_lokasi' in the model
       redirect('superadmin/lokasi');
   }
+
+       // ini page buat ubah password nya 
+       public function aksi_ubah_password()
+       {
+           $user_id = $this->session->userdata('id');
+           $password_baru = $this->input->post('password_baru');
+           $konfirmasi_password = $this->input->post('konfirmasi_password');
+       
+           // Check if new password is provided
+           if (!empty($password_baru)) {
+               // Check if the new password matches the confirmation
+               if ($password_baru === $konfirmasi_password) {
+                   $data_password = [
+                       'password' => md5($password_baru),
+                   ];
+       
+                   // Update password di database
+                   $this->super_model->updateSuperAdminPassword($user_id, $data_password);
+               } else {
+                   $this->session->set_flashdata(
+                       'message',
+                       'Password baru dan Konfirmasi password harus sama'
+                   );
+                   redirect(base_url('superadmin/profile'));
+               }
+           }
+       
+           // Redirect ke halaman profile
+           redirect(base_url('superadmin/profile'));
+       }
+   
+       // ubah foto
+       public function aksi_ubah_foto()
+   {
+       $image = $this->upload_image_superadmin('image');
+       $user_id = $this->session->userdata('id');
+       $admin = $this->super_model->getSuperAdminByID($user_id);
+   
+       if ($image[0] == true) {
+           $admin->image = $image[1];
+       }
+   
+       $data = [
+           'image' => $image[1],
+       ];
+   
+       // Update foto di database
+       $this->super_model->updateSuperAdminPhoto($user_id, $data);
+   
+       // Redirect ke halaman profile
+       redirect(base_url('superadmin/profile'));
+   }
+
   public function tampil_admin() {
     $this->load->model('nama_model_anda'); // Ganti 'nama_model_anda' dengan nama model yang sesuai
     $data['user'] = $this->nama_model_anda->get_all_admin(); // Mengambil data admin

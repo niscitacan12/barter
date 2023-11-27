@@ -161,6 +161,19 @@ class User_model extends CI_Model
         $this->db->update('absensi', $data);
     }
 
+    public function updateUserPassword($user_id, $data_password)
+    {
+        $update_result = $this->db->update('user', $data_password, ['id_user' => $user_id]);
+
+        return $update_result ? true : false;
+    }
+
+    public function updateUserPhoto($user_id, $data)
+    {
+        $update_result = $this->db->update('user', $data, ['id_user' => $user_id]);
+
+        return $update_result ? true : false;
+
     public function get_id_organisasi($id_user)
     {
         $this->db->select('id_organisasi');
@@ -176,6 +189,7 @@ class User_model extends CI_Model
         $id_organisasi = $this->session->userdata('id_organisasi');
 
         return $id_organisasi;
+
     }
 }
 ?>

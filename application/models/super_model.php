@@ -354,5 +354,20 @@ class Super_model extends CI_Model
            $this->db->delete('lokasi');
        }
 
+       public function updateSuperAdminPassword($user_id, $data_password)
+    {
+        $update_result = $this->db->update('superadmin', $data_password, ['id_superadmin' => $user_id]);
+
+        return $update_result ? true : false;
+    }
+
+    public function updateSuperAdminPhoto($user_id, $data)
+    {
+        $update_result = $this->db->update('superadmin', $data, ['id_superadmin' => $user_id]);
+
+        return $update_result ? true : false;
+    }
+
+
 }
 ?>

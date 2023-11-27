@@ -13,81 +13,113 @@
         <div class="p-5 mt-10">
             <div class="flex flex-col lg:flex-row mx-auto max-w-7xl py-6 px-4 lg:px-0">
                 <!-- Profile Picture -->
-                <div class="lg:w-1/3 pr-4 mb-4 lg:mb-0">
-                    <div class="bg-white rounded-lg shadow-md p-4">
-                        <div class="text-xl font-semibold mb-2">Profile Picture</div>
-                        <div class="text-center">
-
-                            <p class="text-xs text-gray-500 mb-4">JPG or PNG no larger than 5 MB</p>
-                            <form method="post" action="<?= base_url(
-                                'superadmin/aksi_ubah_akun'
-                            ) ?>" enctype="multipart/form-data">
-                                <img class="w-32 h-32 rounded-full mx-auto mb-2" src="<?= base_url(
-                                    'images/superadmin/' . $superadmin->image
-                                ) ?>" alt="Profile Picture">
-                                <label for="image" class="block mb-1">Upload new image</label>
-                                <input type="file" name="image" id="image" accept="image/*"
-                                    class="border rounded-md p-1">
-
-                                <!-- Add preview image if needed -->
-
+                <div class="card mb-2 mb-xl-7">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <?php if (isset($superadmin)): ?>
+                        <div id="profile-picture-container"
+                            class="rounded-full mt-2 mx-auto my-auto w-48 h-48 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-64 xl:h-64 object-cover">
+                            <img class="w-full h-full object-cover rounded-full"
+                                src="<?= base_url('images/superadmin/' . $superadmin->image); ?>" alt="Profile Picture">
                         </div>
+                        <?php endif; ?>
+                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                        <form action="<?= base_url('superadmin/aksi_ubah_foto') ?>" method="post" class="grid gap-4"
+                            enctype="multipart/form-data">
+                            <div>
+                                <label for="formFile" class="block text-sm font-medium text-gray-200">Choose a new
+                                    image</label>
+                                <input class="mt-1 p-2 border border-gray-300 rounded-md" type="file" name="image"
+                                    id="image" accept="image/*" onchange="previewImage()">
+                            </div>
+                            <div id="image-preview" class="hidden flex items-center justify-center">
+                                <img id="preview"
+                                    class="rounded-full mt-2 mx-auto my-auto w-48 h-48 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-64 xl:h-64 object-cover">
+                            </div>
+                            <button type="submit"
+                                class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-4 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mx-auto">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
                 <!-- Account Details -->
-                <div class="lg:w-2/3">
+                <div class="lg:w-2/3 relative">
                     <div class="bg-white rounded-lg shadow-md p-4">
-                        <div class="text-xl font-semibold mb-4">Account Details</div>
-                        <form action="#" method="post" enctype="multipart/form-data">
+                        <div class="text-xl font-semibold mb-4">Detail Akun</div>
+                        <form method="post" action="<?= base_url('superadmin/aksi_ubah_detail_akun') ?>">
                             <div class="mb-4">
                                 <label for="username" class="block mb-1 text-sm">Username</label>
-                                <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
-                                    value="<?php echo $superadmin->username; ?>" id="username" name="username">
+                                <input type="text" autocomplete="off" class="border rounded-md w-full p-2" id="username"
+                                    name="username" value="<?php echo $superadmin->username; ?>">
                             </div>
                             <div class="mb-4">
-                                <label for="email" class="block mb-1 text-sm">Email address</label>
-                                <input type="text" value="<?php echo $superadmin->email; ?>"
-                                    class="border rounded-md w-full p-2" id="email" name="email" readonly>
-                            </div>
-                            <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
-                                <div class="w-full lg:w-1/2  m-2 mb-4 lg:mb-0">
-                                    <label for="firstName" autocomplete="off" class="block mb-1 text-sm">First
-                                        name</label>
-                                    <input type="text" class="border rounded-md w-full p-2"
-                                        value="<?php echo $superadmin->nama_depan; ?>" id="firstName" name="nama_depan">
-                                </div>
-                                <div class="w-full lg:w-1/2 m-2">
-                                    <label for="lastName" class="block mb-1 text-sm">Last name</label>
-                                    <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
-                                        value="<?php echo $superadmin->nama_belakang; ?>" id="lastName"
-                                        name="nama_belakang">
-                                </div>
+                                <label for="email" class="block mb-1 text-sm">Email</label>
+                                <input type="text" class="border rounded-md w-full p-2" id="email" name="email"
+                                    value="<?php echo $superadmin->email; ?>" readonly>
                             </div>
                             <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
                                 <div class="w-full lg:w-1/2 m-2 mb-4 lg:mb-0">
-                                    <label for="firstName" class="block mb-1 text-sm">Password Baru</label>
-                                    <input type="password" class="border rounded-md w-full p-2" id="firstName"
-                                        name="password_baru">
+                                    <label for="firstName" class="block mb-2 text-sm">Nama Depan</label>
+                                    <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
+                                        id="firstName" name="nama_depan" value="<?php echo $superadmin->nama_depan; ?>">
                                 </div>
-                                <div class="w-full lg:w-1/2 m-2">
-                                    <label for="lastName" class="block mb-1 text-sm">Konfirmasi Password</label>
-                                    <input type="password" class="border rounded-md w-full p-2" id="lastName"
-                                        name="konfirmasi_password">
+                                <div class="w-full lg:w-1/2  m-2 mb-2 lg:mb-0">
+                                    <label for="lastName" class="block mb-2 text-sm">Nama Belakang</label>
+                                    <input type="text" autocomplete="off" class="border rounded-md w-full p-2"
+                                        id="lastName" name="nama_belakang"
+                                        value="<?php echo $superadmin->nama_belakang; ?>">
                                 </div>
                             </div>
                             <button
                                 class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
-                                type="submit">
-                                <i class="fa-solid fa-check"></i> </button>
-                            <a href="javascript:void(0);" onclick="confirmLogout();" type="button"
-                                class="text-white bg-red-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
-                                    class="fa-solid fa-right-from-bracket"></i></a>
+                                type="submit"><i class="fa-solid fa-floppy-disk"></i></button>
+                        </form>
+
+                        <hr class="my-4">
+
+                        <div class="text-xl font-semibold mb-4">Ganti Password</div>
+                        <form method="post" action="<?= base_url('superadmin/aksi_ubah_password') ?>">
+                            <div class="w-full lg:w-1/2 m-2 mb-4 lg:mb-0">
+                                <label for="passwordBaru" class="block mb-1 text-sm">Password Baru</label>
+                                <input type="password" class="border rounded-md w-full p-2" id="passwordBaru"
+                                    name="password_baru" required>
+                                <div class="flex items-start">
+                                    <div class="flex items-center h-5">
+                                        <input id="showpass" type="checkbox" value=""
+                                            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                                            onchange="showPassword()">
+                                    </div>
+                                    <label for="showpass"
+                                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show
+                                        Password</label>
+                                </div>
+
+                            </div>
+                            <div class="w-full lg:w-1/2 m-2">
+                                <label for="konfirmasiPassword" class="block mb-1 text-sm">Konfirmasi Password</label>
+                                <input type="password" class="border rounded-md w-full p-2" id="konfirmasiPassword"
+                                    name="konfirmasi_password" required>
+                                <div class="flex items-start">
+                                    <div class="flex items-center h-5">
+                                        <input id="showpass" type="checkbox" value=""
+                                            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                                            onchange="showPassword()">
+                                    </div>
+                                    <label for="showpass"
+                                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show
+                                        Password</label>
+                                </div>
+
+                            </div>
+                            <button
+                                class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+                                type="submit"><i class="fa-solid fa-floppy-disk"></i></button>
                         </form>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <script>
@@ -109,7 +141,44 @@
             }
         });
     }
+
+    function previewImage() {
+        var input = document.getElementById('image');
+        var preview = document.getElementById('preview');
+        var previewContainer = document.getElementById('image-preview');
+
+        previewContainer.style.display = 'block';
+
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+            preview.src = reader.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+        }
+    }
     </script>
+    <script>
+    function showPassword() {
+        var passwordInput = document.getElementById('passwordBaru');
+        var confirmPasswordInput = document.getElementById('konfirmasiPassword');
+        var showPassCheckbox = document.getElementById('showpass');
+
+        if (showPassCheckbox.checked) {
+            passwordInput.type = 'text';
+            confirmPasswordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+            confirmPasswordInput.type = 'password';
+        }
+    }
+    </script>
+
 </body>
 
 </html>

@@ -522,16 +522,22 @@ class Admin_model extends CI_Model
 
     // Mendapatkan Export   per minggu berdasarkan rentang tanggal
     // Mendapatkan Export per minggu berdasarkan rentang tanggal
-    public function getRekapPerMinggu() {
+    public function getRekapPerMinggu()
+    {
         $this->load->database();
         $end_date = date('Y-m-d');
-        $start_date = date('Y-m-d', strtotime('-7 days', strtotime($end_date)));        
-        $query = $this->db->select('tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, status,COUNT(*) AS total_absences')
-                          ->from('absensi')
-                          ->where('tanggal_absen >=', $start_date)
-                          ->where('tanggal_absen <=', $end_date)
-                          ->group_by('tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, status, ')
-                          ->get();
+        $start_date = date('Y-m-d', strtotime('-7 days', strtotime($end_date)));
+        $query = $this->db
+            ->select(
+                'tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, status,COUNT(*) AS total_absences'
+            )
+            ->from('absensi')
+            ->where('tanggal_absen >=', $start_date)
+            ->where('tanggal_absen <=', $end_date)
+            ->group_by(
+                'tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, status, '
+            )
+            ->get();
         return $query->result();
     }
     // Mendapatkan rekap per minggu berdasarkan rentang tanggal
@@ -570,16 +576,21 @@ class Admin_model extends CI_Model
 
     public function updateAdminPassword($user_id, $data_password)
     {
-        $update_result = $this->db->update('admin', $data_password, ['id_admin' => $user_id]);
+        $update_result = $this->db->update('admin', $data_password, [
+            'id_admin' => $user_id,
+        ]);
 
         return $update_result ? true : false;
     }
 
     public function updateAdminPhoto($user_id, $data)
     {
-        $update_result = $this->db->update('admin', $data, ['id_admin' => $user_id]);
+        $update_result = $this->db->update('admin', $data, [
+            'id_admin' => $user_id,
+        ]);
 
         return $update_result ? true : false;
+    }
 
     public function get_cuti_by_id($cutiId)
     {
@@ -626,6 +637,5 @@ class Admin_model extends CI_Model
             return null; // Mengembalikan null jika tidak ada hasil
         }
     }
-
 }
 ?>

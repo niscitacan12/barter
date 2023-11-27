@@ -29,10 +29,12 @@
 
                         <div class="mt-5 text-center">
                             <!-- Mengubah kelas "text-left" menjadi "text-center" -->
-                            <img class="rounded-full w-96 h-96 mx-auto"
-                                src="https://cdnwpseller.gramedia.net/wp-content/uploads/2021/06/29145808/Bunga-Lavender.jpg"
-                                alt="image description">
+                            <img class="rounded-full w-96 h-96 mx-auto" src="<?= base_url(
+                                    'images/user/' . $user->image
+                                ) ?>" alt="image description">
+
                         </div>
+
 
                         <br>
                         <br>

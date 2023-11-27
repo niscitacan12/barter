@@ -26,8 +26,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="<?= 'superadmin/admin' ?>"
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <a href="<?= base_url('superadmin/admin') ?>" class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Admin</h5>
                     <hr class="mb-4">
                     <div class="flex justify-between">
@@ -39,7 +38,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="<?= 'superadmin/user' ?>"
+                    <a href="<?= 'superadmin/user' ?>"
                     class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">User</h5>
                     <hr class="mb-4">

@@ -1,15 +1,7 @@
 <?php
 
 class Super_model extends CI_Model
-{
-    // Menampilkan jumlah admin
-    public function get_admin_count()
-    {
-        $this->db->where('role', 'admin');
-        $query = $this->db->get('user');
-        return $query->num_rows();
-    }
-
+ {
     // Menampilkan jumlah user
     public function get_user_count()
     {
@@ -18,15 +10,19 @@ class Super_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function get_admin_by_id($id_admin)
-    {
-        // Ambil data admin dari database berdasarkan ID
-        $query = $this->db->get_where('admin', ['id_admin' => $id_admin]);
-
+    // Menampilkan Jumlah Admin
+    public function get_admin_count() {
+        // Lakukan query untuk mengambil jumlah admin dari tabel admin (misalnya)
+        $this->db->select('COUNT(*) as admin_count');
+        $this->db->from('admin'); 
+        $query = $this->db->get();
+        
+        // Cek apakah query berhasil dieksekusi
         if ($query->num_rows() > 0) {
-            return $query->row(); // Mengembalikan satu baris data
+            $row = $query->row();
+            return $row->admin_count; 
         } else {
-            return null; // Return null jika tidak menemukan data
+            return 0;
         }
     }
 

@@ -80,8 +80,12 @@
                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</button>
                 <!-- Login text -->
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Sudah memiliki akun? <a href="index" class="text-blue-700 hover:underline dark:text-blue-500">Login
+                    Sudah memiliki akun? <a href="<?php echo base_url('auth') ?>"
+                        class="text-blue-700 hover:underline dark:text-blue-500">Login
                         sekarang</a>
+                    <br>
+                    Lupa Password? <a href="lupa_password" class="text-blue-700 hover:underline dark:text-blue-500">Lupa
+                        Password</a>
                 </div>
             </form>
         </div>

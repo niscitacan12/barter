@@ -45,6 +45,7 @@ class M_model extends CI_Model
     {
         return $this->db->count_all($table);
     }
+
     public function get_by_id($table, $id_column, $id)
     {
         $data = $this->db->where($id_column, $id)->get($table);
@@ -166,6 +167,67 @@ class M_model extends CI_Model
         $this->db->where('id_user', $post['id_user']);
         $this->db->update('user', ['password' => $post['password']]);
         return true;
+    }
+
+    public function get_admin_id($id_organisasi) {
+        $this->db->select('id_admin');
+        $this->db->from('organisasi');
+        $this->db->where('id_organisasi', $id_organisasi);
+
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->id_admin;
+        } else {
+            return null;
+        }
+    }
+
+    public function get_admin_details($id_organisasi)
+    {
+        $this->db->select('a.id_admin, a.id_jabatan, a.id_shift');
+        $this->db->from('admin a');
+        $this->db->join('organisasi o', 'o.id_admin = a.id_admin');
+        $this->db->where('o.id_organisasi', $id_organisasi);
+
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array(); // Mengembalikan hasil dalam bentuk array asosiatif
+        } else {
+            return null; // Jika tidak ada data yang ditemukan
+        }
+    }
+
+    public function get_jabatan_by_admin($id_admin)
+    {
+        $this->db->select('*');
+        $this->db->from('jabatan');
+        $this->db->where('id_admin', $id_admin);
+
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result(); // Mengembalikan hasil dalam bentuk array objek
+        } else {
+            return null; // Jika tidak ada data yang ditemukan
+        }
+    }
+
+    public function get_shift_by_admin($id_admin)
+    {
+        $this->db->select('*');
+        $this->db->from('shift');
+        $this->db->where('id_admin', $id_admin);
+
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result(); // Mengembalikan hasil dalam bentuk array objek
+        } else {
+            return null; // Jika tidak ada data yang ditemukan
+        }
     }
 }
 ?>

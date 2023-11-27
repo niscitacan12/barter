@@ -31,7 +31,7 @@
                         <button type="submit"
                             class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"><i
                                 class="fa-solid fa-filter"></i></button>
-                        <a href="<?= base_url('Admin/export_rekap_mingguan') ?>"
+                        <a href="<?= base_url('Admin/export_mingguan') ?>"
                             class="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"><i
                                 class="fa-solid fa-file-export"></i></a>
                     </form>
@@ -52,9 +52,6 @@
                                         No
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Kegiatan
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         Tanggal
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -67,7 +64,7 @@
                                         Jam Pulang
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Lokasi
+                                        status
                                     </th>
                                 </tr>
                             </thead>
@@ -83,9 +80,6 @@
                                         <?php echo $no; ?>
                                     </th>
                                     <td class="px-6 py-4">
-                                        <?php echo $row->kegiatan; ?>
-                                    </td>
-                                    <td class="px-6 py-4">
                                         <?php echo $row->tanggal_absen; ?>
                                     </td>
                                     <td class="px-6 py-4">
@@ -98,7 +92,7 @@
                                         <?php echo $row->jam_pulang; ?>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <?php echo $row->lokasi; ?>
+                                        <?php echo $row->status; ?>
                                     </td>
                                 </tr>
                                 <?php

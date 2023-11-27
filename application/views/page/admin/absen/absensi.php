@@ -149,9 +149,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     No
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Kegiatan
-                                </th>
+
                                 <th scope="col" class="px-6 py-3">
                                     Tanggal
                                 </th>
@@ -180,9 +178,7 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
-                                <td class="px-6 py-4">
-                                    <?php echo $row->kegiatan; ?>
-                                </td>
+
                                 <td class="px-6 py-4">
                                     <?php echo $row->tanggal_absen; ?>
                                 </td>

@@ -85,9 +85,7 @@
                                     <th scope="col" class="px-6 py-3">
                                         No
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Kegiatan
-                                    </th>
+                                  
                                     <th scope="col" class="px-6 py-3">
                                         Tanggal
                                     </th>
@@ -101,7 +99,10 @@
                                         Jam Pulang
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Lokasi
+                                        Lokasi Masuk
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Lokasi Pulang
                                     </th>
                                 </tr>
                             </thead>
@@ -116,9 +117,7 @@
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <?php echo $no; ?>
                                     </th>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row->kegiatan; ?>
-                                    </td>
+                                   
                                     <td class="px-6 py-4">
                                         <?php echo $row->tanggal_absen; ?>
                                     </td>
@@ -129,10 +128,13 @@
                                         <?php echo $row->jam_masuk; ?>
                                     </td>
                                     <td class="px-6 py-4">
+                                        <?php echo $row->lokasi_masuk; ?>
+                                    </td>
+                                    <td class="px-6 py-4">
                                         <?php echo $row->jam_pulang; ?>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <?php echo $row->lokasi; ?>
+                                        <?php echo $row->lokasi_pulang; ?>
                                     </td>
                                 </tr>
                                 <?php

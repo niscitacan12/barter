@@ -46,9 +46,6 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Kegiatan
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -61,7 +58,7 @@
                                     Jam Pulang
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Lokasi
+                                status
                                 </th>
                             </tr>
                         </thead>
@@ -77,9 +74,6 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->kegiatan; ?>
-                                </td>
-                                <td class="px-6 py-4">
                                     <?php echo $row->tanggal_absen; ?>
                                 </td>
                                 <td class="px-6 py-4">
@@ -92,7 +86,7 @@
                                     <?php echo $row->jam_pulang; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->lokasi; ?>
+                                    <?php echo $row->status; ?>
                                 </td>
                             </tr>
                             <?php

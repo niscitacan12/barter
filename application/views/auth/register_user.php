@@ -18,7 +18,7 @@
             <div class="md:flex w-full">
                 <!-- Welcome Register -->
                 <div class="hidden md:block w-2/5 bg-indigo-500 py-10 px-10">
-                    <h1 class="text-gray-950 text-2xl text-center">Welcome To Absensi App</h1>
+                    <h1 class="text-gray-950 text-2xl text-center">Selamat Datang DiAbsensi</h1>
                     <hr class="border border-black mt-1">
                     <svg id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641" data-name="Layer 1"
                         xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 744.84799 747.07702">
@@ -219,7 +219,7 @@
                             </div>
                         </div>
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                            Tidak Memiliki Akun? <a href="<?= base_url('')?>"
+                            Sudah Memiliki Akun? <a href="<?= base_url('')?>"
                                 class="text-blue-700 hover:underline dark:text-blue-500">Login
                                 Sekarang</a>
                         </div>

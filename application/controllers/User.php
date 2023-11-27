@@ -416,7 +416,7 @@ class User extends CI_Controller
         $user_id = $this->session->userdata('id');
         $password_baru = $this->input->post('password_baru');
         $konfirmasi_password = $this->input->post('konfirmasi_password');
-    
+
         // Check if new password is provided
         if (!empty($password_baru)) {
             // Check if the new password matches the confirmation
@@ -424,7 +424,7 @@ class User extends CI_Controller
                 $data_password = [
                     'password' => md5($password_baru),
                 ];
-    
+
                 // Update password di database
                 $this->user_model->updateUserPassword($user_id, $data_password);
             } else {
@@ -435,31 +435,30 @@ class User extends CI_Controller
                 redirect(base_url('user/profile'));
             }
         }
-    
+
         // Redirect ke halaman profile
         redirect(base_url('user/profile'));
     }
 
     // ubah foto
     public function aksi_ubah_foto()
-{
-    $image = $this->upload_image_user('image');
-    $user_id = $this->session->userdata('id');
-    $admin = $this->user_model->getUserByID($user_id);
+    {
+        $image = $this->upload_image_user('image');
+        $user_id = $this->session->userdata('id');
+        $admin = $this->user_model->getUserByID($user_id);
 
-    if ($image[0] == true) {
-        $admin->image = $image[1];
+        if ($image[0] == true) {
+            $admin->image = $image[1];
+        }
+
+        $data = [
+            'image' => $image[1],
+        ];
+
+        // Update foto di database
+        $this->user_model->updateUserPhoto($user_id, $data);
+
+        // Redirect ke halaman profile
+        redirect(base_url('user/profile'));
     }
-
-    $data = [
-        'image' => $image[1],
-    ];
-
-    // Update foto di database
-    $this->user_model->updateUserPhoto($user_id, $data);
-
-    // Redirect ke halaman profile
-    redirect(base_url('user/profile'));
-}
-}
 }

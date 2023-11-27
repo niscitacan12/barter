@@ -163,16 +163,21 @@ class User_model extends CI_Model
 
     public function updateUserPassword($user_id, $data_password)
     {
-        $update_result = $this->db->update('user', $data_password, ['id_user' => $user_id]);
+        $update_result = $this->db->update('user', $data_password, [
+            'id_user' => $user_id,
+        ]);
 
         return $update_result ? true : false;
     }
 
     public function updateUserPhoto($user_id, $data)
     {
-        $update_result = $this->db->update('user', $data, ['id_user' => $user_id]);
+        $update_result = $this->db->update('user', $data, [
+            'id_user' => $user_id,
+        ]);
 
         return $update_result ? true : false;
+    }
 
     public function get_id_organisasi($id_user)
     {
@@ -189,7 +194,6 @@ class User_model extends CI_Model
         $id_organisasi = $this->session->userdata('id_organisasi');
 
         return $id_organisasi;
-
     }
 }
 ?>

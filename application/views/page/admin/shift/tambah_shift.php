@@ -23,14 +23,15 @@
 
                 <div class="mt-5 text-left">
                     <!-- Form Input -->
-                    <form action="<?php echo base_url('admin/aksi_tambah_shift') ?>" method="post"
-                        enctype="multipart/form-data">
+                    <form action="<?php echo base_url(
+                        'admin/aksi_tambah_shift'
+                    ); ?>" method="post" enctype="multipart/form-data">
 
                         <div class="grid md:grid-cols-2 md:gap-6">
 
                             <!-- Shift Input -->
                             <div class="relative z-0 w-full mb-6 group">
-                                <input type="text" name="nama_shift" id="nama_shift"
+                                <input type="text" name="name" id="nama_shift"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " autocomplete="off" required />
                                 <label for="nama_shift"
@@ -41,7 +42,7 @@
 
                             <!-- Jam Masuk Input -->
                             <div class="relative z-0 w-full mb-6 group">
-                                <input type="time" name="jam_masuk" id="jam_masuk"
+                                <input type="time" name="time_masuk" id="jam_masuk"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " autocomplete="off" required />
                                 <label for="jam_masuk"
@@ -55,7 +56,7 @@
 
                             <!-- Jam Pulang Input -->
                             <div class="relative z-0 w-full mb-6 group">
-                                <input type="time" name="jam_pulang" id="jam_pulang"
+                                <input type="time" name="time_pulang" id="jam_pulang"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " autocomplete="off" required />
                                 <label for="jam_pulang"

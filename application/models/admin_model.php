@@ -551,5 +551,20 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function updateAdminPassword($user_id, $data_password)
+    {
+        $update_result = $this->db->update('admin', $data_password, ['id_admin' => $user_id]);
+
+        return $update_result ? true : false;
+    }
+
+    public function updateAdminPhoto($user_id, $data)
+    {
+        $update_result = $this->db->update('admin', $data, ['id_admin' => $user_id]);
+
+        return $update_result ? true : false;
+    }
+
 }
 ?>

@@ -160,5 +160,19 @@ class User_model extends CI_Model
         $this->db->where('id_absensi', $id_absensi);
         $this->db->update('absensi', $data);
     }
+
+    public function updateUserPassword($user_id, $data_password)
+    {
+        $update_result = $this->db->update('user', $data_password, ['id_user' => $user_id]);
+
+        return $update_result ? true : false;
+    }
+
+    public function updateUserPhoto($user_id, $data)
+    {
+        $update_result = $this->db->update('user', $data, ['id_user' => $user_id]);
+
+        return $update_result ? true : false;
+    }
 }
 ?>

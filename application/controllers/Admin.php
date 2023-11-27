@@ -476,7 +476,6 @@ class Admin extends CI_Controller
         // Menampilkan view update_jabatan dengan data jabatan
         $this->load->view('page/admin/absen/detail_absensi', $data);
     }
-    
 
     // 2. Aksi
     // aksi hapus organisasi
@@ -605,7 +604,7 @@ class Admin extends CI_Controller
     }
 
     // aksi ubah akun
-    public function aksi_ubah_detail_akun()
+    public function aksi_ubah_akun()
     {
         $image = $this->upload_image_admin('image');
 
@@ -858,59 +857,6 @@ class Admin extends CI_Controller
         // Mengirim data dalam format JSON
         echo json_encode($realtime_absensi);
     }
-
-     // ini page buat ubah password nya 
-     public function aksi_ubah_password()
-     {
-         $user_id = $this->session->userdata('id');
-         $password_baru = $this->input->post('password_baru');
-         $konfirmasi_password = $this->input->post('konfirmasi_password');
-     
-         // Check if new password is provided
-         if (!empty($password_baru)) {
-             // Check if the new password matches the confirmation
-             if ($password_baru === $konfirmasi_password) {
-                 $data_password = [
-                     'password' => md5($password_baru),
-                 ];
-     
-                 // Update password di database
-                 $this->admin_model->updateAdminPassword($user_id, $data_password);
-             } else {
-                 $this->session->set_flashdata(
-                     'message',
-                     'Password baru dan Konfirmasi password harus sama'
-                 );
-                 redirect(base_url('admin/profile'));
-             }
-         }
-     
-         // Redirect ke halaman profile
-         redirect(base_url('admin/profile'));
-     }
- 
-     // ubah foto
-     public function aksi_ubah_foto()
- {
-     $image = $this->upload_image_admin('image');
-     $user_id = $this->session->userdata('id');
-     $admin = $this->admin_model->getAdminByID($user_id);
- 
-     if ($image[0] == true) {
-         $admin->image = $image[1];
-     }
- 
-     $data = [
-         'image' => $image[1],
-     ];
- 
-     // Update foto di database
-     $this->admin_model->updateAdminPhoto($user_id, $data);
- 
-     // Redirect ke halaman profile
-     redirect(base_url('admin/profile'));
- }
- 
     // Untuk mengexport data per bulanan
     public function export_bulanan()
     {

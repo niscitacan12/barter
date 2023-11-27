@@ -10,6 +10,11 @@ class Auth extends CI_Controller
         $this->load->model('m_model');
     }
 
+    public function index()
+    {
+        $this->load->view('auth/login');
+    }
+
     public function register()
     {
         $data['organisasi'] = $this->m_model->get_data('organisasi')->result();
@@ -113,11 +118,6 @@ class Auth extends CI_Controller
         }
     }
 
-    public function index()
-    {
-        $this->load->view('auth/login');
-    }
-
     public function aksi_login()
     {
         // Mengambil data email dan password yang dikirimkan melalui form login.
@@ -148,6 +148,7 @@ class Auth extends CI_Controller
                     'email' => $result['email'],
                     'username' => $result['username'],
                     'role' => $result['role'], // Menyimpan peran pengguna (admin/karyawan).
+                    'image' => $result['image'],
                     'id' => $result['id_' . $table], // Mendapatkan ID pengguna dari tabel yang tepat.
                 ];
                 // Mengatur data sesi pengguna dengan informasi di atas.

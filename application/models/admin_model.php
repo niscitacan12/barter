@@ -592,14 +592,19 @@ class Admin_model extends CI_Model
         return $update_result ? true : false;
     }
 
-    public function get_cuti_by_id($cutiId)
-    {
-        // Gantilah 'nama_tabel_cuti' dengan nama tabel cuti di database Anda
-        $this->db->where('id_cuti', $cutiId);
-        $query = $this->db->get('cuti');
+    // public function get_cuti_by_id($cutiId)
+    // {
+    //     $this->db->where('id_cuti', $cutiId);
+    //     return $this->db->get('cuti');
+    // }
 
-        // Mengembalikan hasil dalam bentuk objek
-        return $query->row();
+    public function get_cuti_by_id($tabel, $id_cuti)
+    {
+        $data = $this->db
+            ->where('id_cuti', $id_cuti)
+            ->get($tabel)
+            ->row();
+        return $data;
     }
 
     public function get_user_id_admin($id_admin)

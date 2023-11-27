@@ -1,5 +1,18 @@
 <?php
 
+function tampil_organisasi($id_organisasi)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db
+        ->where('id_organisasi', $id_organisasi)
+        ->get('organisasi');
+    foreach ($result->result() as $c) {
+        $stmt = $c->nama_organisasi;
+        return $stmt;
+    }
+}
+
 function organisasi($id_organisasi)
 {
     $ci = &get_instance();

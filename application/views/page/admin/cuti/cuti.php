@@ -149,9 +149,9 @@
                                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                                             <i class="fa-solid fa-circle-xmark"></i>
                                         </a>
-                                        <a type="button" href="<?php echo base_url(
-                                            ''
-                                        ); ?>"
+                                        <a id="downloadPdfButton" type="button" href="<?php echo base_url(
+                                            'admin/permohonan_pdf/'
+                                        ) . $row->id_cuti; ?>"
                                             class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-print"></i>
                                         </a>
@@ -168,6 +168,12 @@
         </div>
     </div>
 </body>
+<script>
+document.getElementById('downloadPdfButton').addEventListener('click', function() {
+    // Tidak perlu melakukan apa-apa di sini, karena URL sudah diatur di href tombol
+    // Fungsi downloadPdf dihilangkan, karena URL tombol sudah mengarah ke fungsi yang benar
+});
+</script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 function konfirmasiSetujuCuti(idCuti) {

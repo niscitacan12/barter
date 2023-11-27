@@ -78,19 +78,45 @@
                                 <td class="px-6 py-4">
                                     <?php echo $row->lokasi; ?>
                                 </td>
-                                <td class="px-5 py-3>">
-                                    <?php if ($row->status !== 'true'): ?>
-                                    <a href="<?php echo base_url('user/pulang/'. $row->id_absensi) ?>"
-                                        class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
-                                        <i class="fa-solid fa-house"></i>
-                                    </a>
-                                    <?php else: ?>
-                                    <button type="button"
-                                        class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-                                        disabled><i class="fa-solid fa-house"></i>
-                                    </button>
-                                    <?php endif; ?>
+                                <td class="px-5 py-3">
+                                    <?php
+    if ($row->status !== 'true') {
+        $jam_batas_pulang = '17:00:00';
+        $jam_sekarang = strtotime(date('H:i:s'));
+        // Tautan pulang jika sudah jam 12
+        echo '<a href="' . base_url('user/pulang/' . $row->id_absensi) . '" 
+            class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
+            onclick="return checkJamPulang(\'' . $jam_sekarang . '\', \'' . $jam_batas_pulang . '\')">
+            <i class="fa-solid fa-house"></i>
+        </a>';
+
+        // Menampilkan SweetAlert jika belum jam 12
+        echo "<script>
+            function checkJamPulang(jamSekarang, jamBatasPulang) {
+                var dateSekarang = new Date('1970-01-01T' + jamSekarang);
+                var dateBatasPulang = new Date('1970-01-01T' + jamBatasPulang);
+
+                // Bandingkan waktu menggunakan perbandingan langsung
+                if (dateSekarang < dateBatasPulang) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Anda tidak dapat pulang sebelum jam 12:00!',
+                    });
+                    return false; // Mencegah tautan diteruskan jika belum jam 12
+                }
+                return true; // Lanjutkan ke tautan jika sudah jam 12
+            }
+        </script>";
+    } else {
+        // Button disabled jika status sudah 'true'
+        echo '<button type="button" class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800" disabled>
+            <i class="fa-solid fa-house"></i>
+        </button>';
+    }
+    ?>
                                 </td>
+
                             </tr>
                             <?php
                             endforeach;

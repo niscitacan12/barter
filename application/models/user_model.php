@@ -195,5 +195,35 @@ class User_model extends CI_Model
 
         return $id_organisasi;
     }
+
+    
+  public function get_cuti_data($id_user = NULL) {
+    if ($id_user !== NULL) {
+        $this->db->select('*');
+        $this->db->from('cuti');
+        $this->db->where('id_user', $id_user);
+        return $this->db->get()->result();
+    } else {
+        // Jika $id_user kosong, dapatkan semua data cuti
+        return $this->db->get('cuti')->result();
+    }
+}
+
+public function get_absen_data($id_user = NULL) {
+    if ($id_user !== NULL) {
+        $this->db->select('*');
+        $this->db->from('absensi');
+        $this->db->where('id_user', $id_user);
+        return $this->db->get()->result();
+    } else {
+        // Jika $id_user kosong, dapatkan semua data absensi
+        return $this->db->get('absensi')->result();
+    }
+}
+
+public function get($table, $where)
+{
+    return $this->db->get_where($table, $where)->row();
+}
 }
 ?>

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
+    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -66,10 +67,10 @@
                 class="w-full mt-5 mb-5 p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <canvas id="myChart"></canvas>
             </div>
-            
+
             <div
-             class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                   <div class="flex justify-between">
+                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-between">
                     <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">History absensi</h6>
                 </div>
                 <hr>
@@ -103,7 +104,7 @@
                         </thead>
                         <!-- Tabel Body -->
                         <tbody class="text-center">
-                        <?php $no = 0; foreach ($absen as $row): if ($no < 5) : $no++; ?>
+                            <?php $no = 0; foreach ($absen as $row): if ($no < 5) : $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
@@ -133,14 +134,13 @@
                 <br>
                 <div class="flex justify-end">
                     <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="<?= base_url('user/history_absensi') ?>"
-                        title="Ke Riwayat Absensi">
+                        href="<?= base_url('user/history_absensi') ?>" title="Ke Riwayat Absensi">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
     </div>
     </div>
     <script>

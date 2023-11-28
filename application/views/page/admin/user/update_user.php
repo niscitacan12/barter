@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
+    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
 </head>
 
 <body>
@@ -41,10 +42,10 @@
 
                             <!-- Shift Input -->
                             <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="nama_depan" id="nama_depan" value="<?php echo $user->nama_depan; ?>"
+                                <input type="text" name="nama_depan" id="nama_depan"
+                                    value="<?php echo $user->nama_depan; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " autocomplete="off" required
-                                     />
+                                    placeholder=" " autocomplete="off" required />
                                 <label for="nama_depan"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Nama Depan
@@ -53,10 +54,10 @@
 
                             <!-- Jam Masuk Input -->
                             <div class="relative z-0 w-full mb-6 group">
-                                <input type="text" name="nama_belakang" id="nama_belakang" value="<?php echo $user->nama_belakang; ?>"
+                                <input type="text" name="nama_belakang" id="nama_belakang"
+                                    value="<?php echo $user->nama_belakang; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " autocomplete="off" required
-                                    />
+                                    placeholder=" " autocomplete="off" required />
                                 <label for="nama_belakang"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Nama Belakang
@@ -64,7 +65,7 @@
                             </div>
                         </div>
 
- 
+
 
                         <!-- Button -->
                         <div class="flex justify-between">

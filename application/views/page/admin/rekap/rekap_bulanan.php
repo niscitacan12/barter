@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
+    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
 </head>
 
 <body>
@@ -85,7 +86,7 @@
                                     <th scope="col" class="px-6 py-3">
                                         No
                                     </th>
-                                  
+
                                     <th scope="col" class="px-6 py-3">
                                         Tanggal
                                     </th>
@@ -117,7 +118,7 @@
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <?php echo $no; ?>
                                     </th>
-                                   
+
                                     <td class="px-6 py-4">
                                         <?php echo $row->tanggal_absen; ?>
                                     </td>

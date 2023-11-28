@@ -497,6 +497,206 @@ class SuperAdmin extends CI_Controller
         $this->load->view('page/super_admin/absen/detail_absensi', $data);
     }
 
+    // page detail jabatan
+    public function detail_jabatan($id_jabatan)
+    {
+        $data['jabatan'] = $this->super_model->getJabatanDetails($id_jabatan);
+
+        // Mengirim data pengguna ke view
+        $this->load->view('page/super_admin/jabatan/detail_jabatan', $data);
+    }
+
+    public function detail_shift($id_shift)
+    {
+        // Memanggil method getShiftDetails untuk mendapatkan data shift berdasarkan ID
+        $data['shift'] = $this->super_model->getShiftDetails($id_shift);
+    
+        if ($data['shift']) {
+            // Jika data shift ditemukan, tambahkan informasi lain yang dibutuhkan ke dalam data
+            $data['judul'] = 'Detail Shift - Superadmin';
+            $data['deskripsi'] = 'Ini adalah halaman detail shift untuk superadmin.';
+            $this->load->view('page/super_admin/shift/detail_shift', $data);
+        } else {
+            // Jika data shift tidak ditemukan, lakukan sesuai kebutuhan aplikasi Anda
+            // Misalnya, tampilkan pesan error atau lakukan redirect ke halaman lain
+            // Contoh: $this->load->view('page/error/not_found');
+            // atau: redirect('superadmin/shift_not_found');
+        }
+    }
+
+    public function lokasi()
+    {
+        // Config
+        $config['base_url'] = base_url('superadmin/lokasi');
+        $config['total_rows'] = $this->super_model->count_all('lokasi'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
+        $config['per_page'] = 10;
+
+        // Styling pagination
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_close'] = '</li>';
+
+        // Applying Tailwind Classes
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_close'] = '</li>';
+
+        // Initialize
+        $this->pagination->initialize($config);
+        $data['start'] = $this->uri->segment(3);
+
+        // Data lokasi
+        $data['lokasi'] = $this->super_model->pagination(
+            'lokasi',
+            $config['per_page'],
+            $data['start']
+        );
+        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
+    
+        // Menampilkan view dengan data
+        $this->load->view('page/super_admin/lokasi/lokasi', $data);
+    }    
+
+    // page tambah lokasi
+    public function tambah_lokasi()
+    {
+        $this->load->model('super_model');
+        $data['user'] = $this->super_model->get_all_user(); // Ganti dengan metode yang sesuai di model
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya
+            $lokasi_data = [
+                'nama_lokasi' => $this->input->post('nama_lokasi'),
+                'alamat' => $this->input->post('alamat_kantor'),
+                'id_user' => $this->input->post('custom_id'),
+                // tambahkan kolom lainnya sesuai kebutuhan
+            ];
+
+            // Tidak perlu menggunakan $this->db->set($data);
+            // Setelah mendapatkan data, baru Anda bisa menggunakan metode set untuk operasi insert
+            // Anda perlu mengatur setiap kolom yang ingin diinsert
+            foreach ($lokasi_data as $key => $value) {
+                $this->db->set($key, $value);
+            }
+
+            $this->db->insert('lokasi');
+
+            // Redirect ke halaman admin/lokasi setelah menambahkan data
+            redirect('superadmin/lokasi');
+        } else {
+            // Form belum disubmit, ambil data pengguna dan tampilkan view untuk mengisi form
+            $this->load->view('page/super_admin/lokasi/tambah_lokasi', $data);
+        }
+    }
+
+    // page detail lokasi
+    public function detail_lokasi($lokasi_id)
+    {
+        $data['lokasi'] = $this->super_model->getLokasiData($lokasi_id);
+
+        // Mengirim data lokasi ke view
+        $this->load->view('page/super_admin/lokasi/detail_lokasi', $data);
+    }
+
+    // page update lokasi
+    public function update_lokasi($id_lokasi)
+    {
+        // Load necessary models or helpers here
+        $this->load->model('super_model');
+
+        // Assuming you have a method in your model to get location details by ID
+        $data['lokasi'] = $this->super_model->getLokasiById($id_lokasi);
+
+        // Load the view for updating location details
+        $this->load->view('page/super_admin/lokasi/update_lokasi', $data);
+    }
+
+    public function aksi_edit_lokasi()
+    {
+        // Mendapatkan data dari form
+        $id_lokasi = $this->input->post('id_lokasi');
+        $nama_lokasi = $this->input->post('nama_lokasi');
+        $alamat = $this->input->post('alamat');
+
+        // Buat data yang akan diupdate
+        $data = [
+            'nama_lokasi' => $nama_lokasi,
+            'alamat' => $alamat,
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Lokasi
+        $this->super_model->update_lokasi($id_lokasi, $data);
+        $this->session->set_flashdata(
+            'berhasil_update',
+            'Berhasil mengubah data'
+        );
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect('superadmin/lokasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Lokasi
+    }
+
+    public function hapus_lokasi($id_lokasi)
+    {
+        $this->super_model->hapus_lokasi($id_lokasi); // Assuming you have a method 'hapus_lokasi' in the model
+        redirect('superadmin/lokasi');
+    }
+
+   // ini page buat ubah password nya 
+   public function aksi_ubah_password()
+   {
+           $user_id = $this->session->userdata('id');
+           $password_baru = $this->input->post('password_baru');
+           $konfirmasi_password = $this->input->post('konfirmasi_password');
+       
+           // Check if new password is provided
+           if (!empty($password_baru)) {
+               // Check if the new password matches the confirmation
+               if ($password_baru === $konfirmasi_password) {
+                   $data_password = [
+                       'password' => md5($password_baru),
+                   ];
+       
+                   // Update password di database
+                   $this->super_model->updateSuperAdminPassword($user_id, $data_password);
+               } else {
+                   $this->session->set_flashdata(
+                       'message',
+                       'Password baru dan Konfirmasi password harus sama'
+                   );
+                   redirect(base_url('superadmin/profile'));
+               }
+           }
+       
+           // Redirect ke halaman profile
+           redirect(base_url('superadmin/profile'));
+   }
+
+
 
     // 2. Aksi
     
@@ -505,12 +705,21 @@ class SuperAdmin extends CI_Controller
     {
         $id_superadmin = $this->session->userdata('id');
         // Ambil data yang diperlukan dari form
+        $password = $this->input->post('password');
+        if (strlen($password) < 8) {
+            // Password kurang dari 8 karakter, berikan pesan kesalahan
+            $this->session->set_flashdata('gagal_tambah', 'Password harus memiliki panjang minimal 8 karakter');
+            redirect('superadmin/admin'); // Redirect kembali ke halaman sebelumnya
+            return; // Hentikan eksekusi jika validasi gagal
+        }
+
+        // Ambil data yang diperlukan dari form
         $data = [
             'email' => $this->input->post('email'),
             'username' => $this->input->post('username'),
             'nama_depan' => $this->input->post('nama_depan'),
             'nama_belakang' => $this->input->post('nama_belakang'),
-            'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
+            'password' => md5($password), // Simpan kata sandi yang telah di-MD5
             'image' => 'User.png',
             'id_superadmin' => $id_superadmin,
             'role' => 'admin',
@@ -542,6 +751,7 @@ class SuperAdmin extends CI_Controller
             'kabupaten' => $this->input->post('kabupaten'),
             'provinsi' => $this->input->post('provinsi'),
             'id_admin' => $this->input->post('id_admin'),
+            'status' => 'pusat',
             // sesuaikan dengan kolom lainnya
         ];
 
@@ -560,30 +770,41 @@ class SuperAdmin extends CI_Controller
     public function aksi_tambah_user()
     {
         // Ambil data yang diperlukan dari form
+        $password = $this->input->post('password');
+        if (strlen($password) < 8) {
+            // Password kurang dari 8 karakter, berikan pesan kesalahan
+            $this->session->set_flashdata('gagal_tambah', 'Password harus memiliki panjang minimal 8 karakter');
+            redirect('superadmin/user'); // Redirect kembali ke halaman sebelumnya
+            return; // Hentikan eksekusi jika validasi gagal
+        }
+
+        // Ambil data yang diperlukan dari form
         $data = [
             'email' => $this->input->post('email'),
             'username' => $this->input->post('username'),
             'nama_depan' => $this->input->post('nama_depan'),
             'nama_belakang' => $this->input->post('nama_belakang'),
-            'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
-            'id_admin' => $this->input->post('id_admin'),
+            'password' => md5($password),
+            'id_admin' => '', // Untuk menampung id_admin yang akan diambil
             'id_organisasi' => $this->input->post('id_organisasi'),
             'id_shift' => $this->input->post('id_shift'),
             'id_jabatan' => $this->input->post('id_jabatan'),
             'image' => 'User.png',
             'role' => 'user',
-            // sesuaikan dengan kolom lainnya
         ];
 
-        // Simpan data ke tabel
-        $this->super_model->tambah_data('user', $data); // Panggil method pada model
-        $this->session->set_flashdata(
-            'berhasil_tambah',
-            'Berhasil Menambahkan Data'
-        );
+        // Ambil id_admin berdasarkan id_organisasi yang dipilih
+        $id_admin = $this->super_model->get_id_admin_by_organisasi($data['id_organisasi']); // Ganti dengan model dan method yang sesuai
 
-        // Redirect kembali ke halaman dashboard superadmin
-        redirect('superadmin/user');
+        if ($id_admin) {
+            $data['id_admin'] = $id_admin; // Jika berhasil, set id_admin
+            $this->super_model->tambah_data('user', $data); // Simpan data ke tabel
+            $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
+            redirect('superadmin/user');
+        } else {
+            $this->session->set_flashdata('gagal_tambah', 'Tidak ada admin yang terkait dengan organisasi ini');
+            redirect('superadmin/tambah_user'); // Redirect kembali ke halaman formulir tambah user
+        }
     }
 
     // aksi tambah jabatan
@@ -889,167 +1110,6 @@ class SuperAdmin extends CI_Controller
             return [true, $nama];
         }
     }
-
-    public function your_method_name()
-    {
-        $superadmin_data = $this->super_model->get_superadmin_data();
-
-        // Pass data to the view
-        $this->load->view('superadmin', ['superadmin' => $superadmin_data]);
-    }
-
-    // page detail jabatan
-    public function detail_jabatan($id_jabatan)
-    {
-        $data['jabatan'] = $this->super_model->getJabatanDetails($id_jabatan);
-
-        // Mengirim data pengguna ke view
-        $this->load->view('page/super_admin/jabatan/detail_jabatan', $data);
-    }
-
-    public function detail_shift($id_shift)
-    {
-        // Memanggil method getShiftDetails untuk mendapatkan data shift berdasarkan ID
-        $data['shift'] = $this->super_model->getShiftDetails($id_shift);
-    
-        if ($data['shift']) {
-            // Jika data shift ditemukan, tambahkan informasi lain yang dibutuhkan ke dalam data
-            $data['judul'] = 'Detail Shift - Superadmin';
-            $data['deskripsi'] = 'Ini adalah halaman detail shift untuk superadmin.';
-            $this->load->view('page/super_admin/shift/detail_shift', $data);
-        } else {
-            // Jika data shift tidak ditemukan, lakukan sesuai kebutuhan aplikasi Anda
-            // Misalnya, tampilkan pesan error atau lakukan redirect ke halaman lain
-            // Contoh: $this->load->view('page/error/not_found');
-            // atau: redirect('superadmin/shift_not_found');
-        }
-    }
-
-    public function lokasi()
-    {
-        // Mengambil data lokasi dan pengguna dari model
-        $this->load->model('super_model');
-        $data['lokasi'] = $this->super_model->get_all_lokasi();
-        $data['user'] = $this->super_model->get_all_user();
-    
-        // Menampilkan view dengan data
-        $this->load->view('page/super_admin/lokasi/lokasi', $data);
-    }    
-
-    // page tambah lokasi
-    public function tambah_lokasi()
-    {
-        $this->load->model('super_model');
-        $data['user'] = $this->super_model->get_all_user(); // Ganti dengan metode yang sesuai di model
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya
-            $lokasi_data = [
-                'nama_lokasi' => $this->input->post('nama_lokasi'),
-                'alamat' => $this->input->post('alamat_kantor'),
-                'id_user' => $this->input->post('custom_id'),
-                // tambahkan kolom lainnya sesuai kebutuhan
-            ];
-
-            // Tidak perlu menggunakan $this->db->set($data);
-            // Setelah mendapatkan data, baru Anda bisa menggunakan metode set untuk operasi insert
-            // Anda perlu mengatur setiap kolom yang ingin diinsert
-            foreach ($lokasi_data as $key => $value) {
-                $this->db->set($key, $value);
-            }
-
-            $this->db->insert('lokasi');
-
-            // Redirect ke halaman admin/lokasi setelah menambahkan data
-            redirect('superadmin/lokasi');
-        } else {
-            // Form belum disubmit, ambil data pengguna dan tampilkan view untuk mengisi form
-            $this->load->view('page/super_admin/lokasi/tambah_lokasi', $data);
-        }
-    }
-
-    // page detail lokasi
-    public function detail_lokasi($lokasi_id)
-    {
-        $data['lokasi'] = $this->super_model->getLokasiData($lokasi_id);
-
-        // Mengirim data lokasi ke view
-        $this->load->view('page/super_admin/lokasi/detail_lokasi', $data);
-    }
-
-    // page update lokasi
-    public function update_lokasi($id_lokasi)
-    {
-        // Load necessary models or helpers here
-        $this->load->model('super_model');
-
-        // Assuming you have a method in your model to get location details by ID
-        $data['lokasi'] = $this->super_model->getLokasiById($id_lokasi);
-
-        // Load the view for updating location details
-        $this->load->view('page/super_admin/lokasi/update_lokasi', $data);
-    }
-
-    public function aksi_edit_lokasi()
-    {
-        // Mendapatkan data dari form
-        $id_lokasi = $this->input->post('id_lokasi');
-        $nama_lokasi = $this->input->post('nama_lokasi');
-        $alamat = $this->input->post('alamat');
-
-        // Buat data yang akan diupdate
-        $data = [
-            'nama_lokasi' => $nama_lokasi,
-            'alamat' => $alamat,
-            // Tambahkan field lain jika ada
-        ];
-
-        // Lakukan pembaruan data Lokasi
-        $this->super_model->update_lokasi($id_lokasi, $data);
-        $this->session->set_flashdata(
-            'berhasil_update',
-            'Berhasil mengubah data'
-        );
-
-        // Redirect ke halaman setelah pembaruan data
-        redirect('superadmin/lokasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Lokasi
-    }
-
-    public function hapus_lokasi($id_lokasi)
-    {
-        $this->super_model->hapus_lokasi($id_lokasi); // Assuming you have a method 'hapus_lokasi' in the model
-        redirect('superadmin/lokasi');
-    }
-
-   // ini page buat ubah password nya 
-   public function aksi_ubah_password()
-   {
-           $user_id = $this->session->userdata('id');
-           $password_baru = $this->input->post('password_baru');
-           $konfirmasi_password = $this->input->post('konfirmasi_password');
-       
-           // Check if new password is provided
-           if (!empty($password_baru)) {
-               // Check if the new password matches the confirmation
-               if ($password_baru === $konfirmasi_password) {
-                   $data_password = [
-                       'password' => md5($password_baru),
-                   ];
-       
-                   // Update password di database
-                   $this->super_model->updateSuperAdminPassword($user_id, $data_password);
-               } else {
-                   $this->session->set_flashdata(
-                       'message',
-                       'Password baru dan Konfirmasi password harus sama'
-                   );
-                   redirect(base_url('superadmin/profile'));
-               }
-           }
-       
-           // Redirect ke halaman profile
-           redirect(base_url('superadmin/profile'));
-   }
 
    // ubah foto
    public function aksi_ubah_foto()

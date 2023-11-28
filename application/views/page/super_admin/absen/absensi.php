@@ -88,6 +88,10 @@
                         </tbody>
                     </table>
                 </div>
+                <hr class="my-8">
+                <div class="flex justify-end">
+                    <?= $this->pagination->create_links(); ?>
+                </div>
             </div>
         </div>
     </div>

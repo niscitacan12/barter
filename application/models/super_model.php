@@ -291,6 +291,7 @@ class Super_model extends CI_Model
             return null; // Mengembalikan null jika tidak ada hasil
         }
     }
+    
     public function getShiftDetails($id_shift)
     {
         $this->db->where('id_shift', $id_shift);
@@ -317,6 +318,7 @@ class Super_model extends CI_Model
         $query = $this->db->get('user');
         return $query->result();
     }
+
     public function getLokasiData($id_lokasi)
     {
         // Assuming 'lokasi' is your table name
@@ -346,15 +348,15 @@ class Super_model extends CI_Model
         $this->db->update('lokasi', $data);
     }
 
-       // In your Admin_model.php
-       public function hapus_lokasi($id_lokasi)
-       {
-           // Your deletion logic here
-           $this->db->where('id_lokasi', $id_lokasi);
-           $this->db->delete('lokasi');
-       }
+    // In your Admin_model.php
+    public function hapus_lokasi($id_lokasi)
+    {
+       // Your deletion logic here
+       $this->db->where('id_lokasi', $id_lokasi);
+       $this->db->delete('lokasi');
+    }
 
-       public function updateSuperAdminPassword($user_id, $data_password)
+    public function updateSuperAdminPassword($user_id, $data_password)
     {
         $update_result = $this->db->update('superadmin', $data_password, ['id_superadmin' => $user_id]);
 
@@ -379,6 +381,20 @@ class Super_model extends CI_Model
             return $query->row(); // Mengembalikan satu baris hasil sebagai objek
         } else {
             return null; // Mengembalikan null jika tidak ada hasil
+        }
+    }
+    
+    public function get_id_admin_by_organisasi($id_organisasi) {
+        $this->db->select('id_admin');
+        $this->db->from('organisasi');
+        $this->db->where('id_organisasi', $id_organisasi);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->id_admin;
+        } else {
+            return false; // Return false jika tidak ada hasil
         }
     }
 }

@@ -110,6 +110,18 @@ Swal.fire({
 </script>
 <?php } ?>
 
+<?php if($this->session->flashdata('gagal_tambah')){ ?>
+<script>
+Swal.fire({
+    title: "Gagal!",
+    text: "<?php echo $this->session->flashdata('gagal_tambah'); ?>",
+    icon: "error",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
+
 <?php if ($this->session->flashdata('berhasil_tambah')) { ?>
 <script>
 Swal.fire({

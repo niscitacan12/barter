@@ -153,7 +153,7 @@ class Auth extends CI_Controller
                 ];
                 // Mengatur data sesi pengguna dengan informasi di atas.
                 $this->session->set_userdata($data_sess);
-                $this->session->set_flashdata('login_success', 'Selamat Datang DiApplikasi Absensi.');
+                $this->session->set_flashdata('login_success', 'Selamat Datang Di Absensi.');
 
                 // Mengarahkan pengguna ke halaman berdasarkan peran mereka.
                 redirect(base_url() . $table);

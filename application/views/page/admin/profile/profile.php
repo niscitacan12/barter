@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -20,13 +22,15 @@
                         <?php if (isset($admin)): ?>
                         <div id="profile-picture-container"
                             class="rounded-full mt-2 mx-auto my-auto w-48 h-48 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-64 xl:h-64 object-cover">
-                            <img class="w-full h-full object-cover rounded-full"
-                                src="<?= base_url('images/admin/' . $admin->image); ?>" alt="Profile Picture">
+                            <img class="w-full h-full object-cover rounded-full" src="<?= base_url(
+                                'images/admin/' . $admin->image
+                            ) ?>" alt="Profile Picture">
                         </div>
                         <?php endif; ?>
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                        <form action="<?= base_url('admin/aksi_ubah_foto') ?>" method="post" class="grid gap-4"
-                            enctype="multipart/form-data">
+                        <form action="<?= base_url(
+                            'admin/aksi_ubah_foto'
+                        ) ?>" method="post" class="grid gap-4" enctype="multipart/form-data">
                             <div>
                                 <label for="formFile" class="block text-sm font-medium text-gray-200">Choose a new
                                     image</label>
@@ -49,7 +53,9 @@
                 <div class="lg:w-2/3 relative">
                     <div class="bg-white rounded-lg shadow-md p-4">
                         <div class="text-xl font-semibold mb-4">Detail Akun</div>
-                        <form method="post" action="<?= base_url('admin/aksi_ubah_detail_akun') ?>">
+                        <form method="post" action="<?= base_url(
+                            'admin/aksi_ubah_detail_akun'
+                        ) ?>">
                             <div class="mb-4">
                                 <label for="username" class="block mb-1 text-sm">Username</label>
                                 <input type="text" autocomplete="off" class="border rounded-md w-full p-2" id="username"
@@ -80,7 +86,9 @@
                         <hr class="my-4">
 
                         <div class="text-xl font-semibold mb-4">Ganti Password</div>
-                        <form method="post" action="<?= base_url('admin/aksi_ubah_password') ?>">
+                        <form method="post" action="<?= base_url(
+                            'admin/aksi_ubah_password'
+                        ) ?>">
                             <div class="w-full lg:w-1/2 m-2 mb-4 lg:mb-0">
                                 <label for="passwordBaru" class="block mb-1 text-sm">Password Baru</label>
                                 <input type="password" class="border rounded-md w-full p-2" id="passwordBaru"

@@ -8,7 +8,7 @@ class User extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->helper('my_helper');
+        $this->load->helper('user_helper');
         $this->load->model('user_model');
         $this->load->library('upload');
         if (
@@ -346,7 +346,6 @@ class User extends CI_Controller
         redirect(base_url('user/profile'));
     }
 
-
     // 3. Lain-lain
     public function upload_image_user($value)
     {
@@ -425,58 +424,59 @@ class User extends CI_Controller
         redirect(base_url('user/profile'));
     }
 
-    
-   public function aksi_pulang()
-   {
-   $id_absensi = $this->session->userdata('id');
-   $id_user = $this->session->userdata('id');
-   $email = $this->session->userdata('email');
-   date_default_timezone_set('Asia/Jakarta');
-   $tanggal = date('Y-m-d');
-   $jam = date('H:i:s');
-       // Memastikan bahwa hanya ID yang sesuai yang dapat melakukan aksi pulang
-       $data = [
-           'jam_pulang' => $jam,
-           // 'status' => 'true', // Hapus baris ini jika 'status' tidak perlu diubah
-       ];
-       $this->user_model->update('absensi', $data, ['id_user' => $id_user]);
-   
-       // Dapatkan informasi user dari sesi
-       $id_absensi = $this->session->userdata('id');
-       $id_user = $this->session->userdata('id');
-       $email = $this->session->userdata('email');
-   
-       // Menambahkan informasi jam pulang ke pesan
-       $options = [
-           'cluster' => 'ap1',
-           'useTLS' => true
-       ];
-       $pusher = new Pusher(
-           '33407527b00e1d0ff775',
-           '9fb7fb6f4c554ecba9fb',
-           '1712968',
-           $options
-       );
-       $message['message'] = $email . ' melakukan absen pulang pada jam ' . date('H:i:s');
-       $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
-   
-       // Redirect ke halaman history_absensi dengan pesan sukses atau informasi lainnya
-       redirect(base_url('user/history_absensi'));
-   }
-   
- public function history_cuti() {
+    public function aksi_pulang()
+    {
+        $id_absensi = $this->session->userdata('id');
+        $id_user = $this->session->userdata('id');
+        $email = $this->session->userdata('email');
+        date_default_timezone_set('Asia/Jakarta');
+        $tanggal = date('Y-m-d');
+        $jam = date('H:i:s');
+        // Memastikan bahwa hanya ID yang sesuai yang dapat melakukan aksi pulang
+        $data = [
+            'jam_pulang' => $jam,
+            // 'status' => 'true', // Hapus baris ini jika 'status' tidak perlu diubah
+        ];
+        $this->user_model->update('absensi', $data, ['id_user' => $id_user]);
+
+        // Dapatkan informasi user dari sesi
+        $id_absensi = $this->session->userdata('id');
+        $id_user = $this->session->userdata('id');
+        $email = $this->session->userdata('email');
+
+        // Menambahkan informasi jam pulang ke pesan
+        $options = [
+            'cluster' => 'ap1',
+            'useTLS' => true,
+        ];
+        $pusher = new Pusher(
+            '33407527b00e1d0ff775',
+            '9fb7fb6f4c554ecba9fb',
+            '1712968',
+            $options
+        );
+        $message['message'] =
+            $email . ' melakukan absen pulang pada jam ' . date('H:i:s');
+        $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
+
+        // Redirect ke halaman history_absensi dengan pesan sukses atau informasi lainnya
+        redirect(base_url('user/history_absensi'));
+    }
+
+    public function history_cuti()
+    {
         $id_user = $this->session->userdata('id');
         $data['cuti'] = $this->user_model->get_cuti_data($id_user);
-    
+
         // Load the view
         $this->load->view('page/user/history_cuti', $data);
     }
 
-
-  public function history_absensi() {
+    public function history_absensi()
+    {
         $id_user = $this->session->userdata('id');
         $data['absensi'] = $this->user_model->get_absen_data($id_user);
-    
+
         // Load the view
         $this->load->view('page/user/history_absensi', $data);
     }

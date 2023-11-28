@@ -242,23 +242,23 @@ function showPassword() {
 }
 </script>
 
-<?php if ($this->session->flashdata('register_success')) { ?>
+<?php if($this->session->flashdata('register_error')){ ?>
 <script>
 Swal.fire({
-    title: 'Registrasi Berhasil',
-    text: '<?php echo $this->session->flashdata('register_success'); ?>',
-    icon: 'success',
+    title: 'Register Gagal',
+    text: '<?php echo $this->session->flashdata('register_error'); ?>',
+    icon: 'error',
     showConfirmButton: false,
     timer: 1500
 });
 </script>
 <?php } ?>
 
-<?php if ($this->session->flashdata('login_error')) { ?>
+<?php if($this->session->flashdata('error')){ ?>
 <script>
 Swal.fire({
-    title: 'Login Error',
-    text: '<?php echo $this->session->flashdata('login_error'); ?>',
+    title: 'Register Gagal',
+    text: '<?php echo $this->session->flashdata('error'); ?>',
     icon: 'error',
     showConfirmButton: false,
     timer: 1500

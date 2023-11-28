@@ -564,14 +564,25 @@ class Admin extends CI_Controller
     // Aksi tambah user
     public function aksi_tambah_user()
     {
+        $id_admin = $this->session->userdata('id');
+
+        // Ambil data yang diperlukan dari form
+        $password = $this->input->post('password');
+        if (strlen($password) < 8) {
+            // Password kurang dari 8 karakter, berikan pesan kesalahan
+            $this->session->set_flashdata('gagal_tambah', 'Password harus memiliki panjang minimal 8 karakter');
+            redirect('admin/user'); // Redirect kembali ke halaman sebelumnya
+            return; // Hentikan eksekusi jika validasi gagal
+        }
+
         // Ambil data yang diperlukan dari form
         $data = [
             'email' => $this->input->post('email'),
             'username' => $this->input->post('username'),
             'nama_depan' => $this->input->post('nama_depan'),
             'nama_belakang' => $this->input->post('nama_belakang'),
-            'password' => md5($this->input->post('password')), // Simpan kata sandi yang telah di-MD5
-            'id_admin' => $this->input->post('id_admin'),
+            'password' => md5($password), // Simpan kata sandi yang telah di-MD5
+            'id_admin' => $id_admin,
             'id_organisasi' => $this->input->post('id_organisasi'),
             'id_shift' => $this->input->post('id_shift'),
             'id_jabatan' => $this->input->post('id_jabatan'),

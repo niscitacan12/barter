@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
-    npm/sweetalert2@11"></script>
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 </head>
@@ -51,8 +53,9 @@ $image = $_SESSION['image'];
                             class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                             aria-expanded="false" data-dropdown-toggle="dropdown-user">
                             <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full" src="<?= base_url('images/superadmin/' . $image); ?>"
-                                alt="user photo"></a>
+                            <img class="w-8 h-8 rounded-full" src="<?= base_url(
+                                'images/superadmin/' . $image
+                            ) ?>" alt="user photo"></a>
                         </button>
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
                             id="dropdown-user">
@@ -66,7 +69,9 @@ $image = $_SESSION['image'];
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a href="<?php echo base_url('superadmin/profile') ; ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+                                    <a href="<?php echo base_url(
+                                        'superadmin/profile'
+                                    ); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
                                         dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Profile</a>
                                 </li>
@@ -165,7 +170,9 @@ $image = $_SESSION['image'];
 
 
                         <li>
-                            <a href="<?php echo base_url('superadmin/lokasi'); ?>"
+                            <a href="<?php echo base_url(
+                                'superadmin/lokasi'
+                            ); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-map-location-dot fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>

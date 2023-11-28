@@ -498,6 +498,16 @@ class Admin extends CI_Controller
         $kabupaten = $this->input->post('kabupaten');
         $provinsi = $this->input->post('provinsi');
 
+        // Ambil data organisasi dari model berdasarkan ID
+        $organisasi = $this->admin_model->get_organisasi_by_id($id_organisasi);
+
+        // Tambahkan ini untuk upload logo
+        $image = $this->upload_image_logo('image');
+        if ($image[0] == true) {
+            // Set properti image pada objek $organisasi
+            $organisasi->image = $image[1];
+        }
+
         // Buat data yang akan diupdate
         $data = [
             'nama_organisasi' => $nama_organisasi,
@@ -507,6 +517,7 @@ class Admin extends CI_Controller
             'alamat' => $alamat,
             'kabupaten' => $kabupaten,
             'provinsi' => $provinsi,
+            'image' => $image[1],
             // Tambahkan field lain jika ada
         ];
 
@@ -601,6 +612,27 @@ class Admin extends CI_Controller
 
         // Redirect kembali ke halaman dashboard superadmin
         redirect('admin/jabatan');
+    }
+
+    public function aksi_ubah_foto()
+    {
+        $image = $this->upload_image_admin('image');
+        $user_id = $this->session->userdata('id');
+        $admin = $this->admin_model->getAdminByID($user_id);
+
+        if ($image[0] == true) {
+            $admin->image = $image[1];
+        }
+
+        $data = [
+            'image' => $image[1],
+        ];
+
+        // Update foto di database
+        $this->admin_model->updateAdminPhoto($user_id, $data);
+
+        // Redirect ke halaman profile
+        redirect(base_url('admin/profile'));
     }
 
     // aksi ubah akun
@@ -849,6 +881,23 @@ class Admin extends CI_Controller
         }
     }
 
+    public function upload_image_logo($value)
+    {
+        $kode = round(microtime(true) * 1000);
+        $config['upload_path'] = './images/logo/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            $fn = $this->upload->data();
+            $nama = $fn['file_name'];
+            return [true, $nama];
+        }
+    }
+
     public function get_realtime_absensi()
     {
         // Panggil metode di dalam model untuk mendapatkan data absensi real-time
@@ -923,9 +972,9 @@ class Admin extends CI_Controller
         $sheet->mergeCells('A1:I1'); // Sesuaikan jumlah kolom dengan penambahan lokasi masuk dan lokasi pulang
 
         $sheet
-        ->getStyle('A1')
-        ->getFont()
-        ->setBold(true);
+            ->getStyle('A1')
+            ->getFont()
+            ->setBold(true);
 
         $sheet->setCellValue('A3', 'NO');
         $sheet->setCellValue('B3', 'TANGGAL');
@@ -966,7 +1015,6 @@ class Admin extends CI_Controller
             $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
 
-
             $no++;
             $numrow++;
         }
@@ -977,26 +1025,30 @@ class Admin extends CI_Controller
         $sheet->getColumnDimension('D')->setWidth(20);
         $sheet->getColumnDimension('E')->setWidth(30);
         $sheet->getColumnDimension('F')->setWidth(30);
-        $sheet->getColumnDimension('G')->setWidth(30); 
-        $sheet->getColumnDimension('H')->setWidth(30); 
+        $sheet->getColumnDimension('G')->setWidth(30);
+        $sheet->getColumnDimension('H')->setWidth(30);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 
-        $sheet->getPageSetup()->setOrientation(
-            \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
-        );
+        $sheet
+            ->getPageSetup()
+            ->setOrientation(
+                \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
+            );
 
         $sheet->setTitle('REKAP BULANAN');
 
         header(
             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
-        header('Content-Disposition: attachment; filename="REKAP BULANAN.xlsx"');
+        header(
+            'Content-Disposition: attachment; filename="REKAP BULANAN.xlsx"'
+        );
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
-}
+    }
     // Untuk mengexport data per minggu
     public function export_mingguan()
     {
@@ -1134,7 +1186,9 @@ class Admin extends CI_Controller
         header(
             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
-        header('Content-Disposition: attachment; filename="REKAP MINGGUAN.xlsx"');
+        header(
+            'Content-Disposition: attachment; filename="REKAP MINGGUAN.xlsx"'
+        );
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
@@ -1144,10 +1198,10 @@ class Admin extends CI_Controller
     public function export_harian()
     {
         $data['perhari'] = $this->admin_model->exportRekapHarian();
-    
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-    
+
         $style_col = [
             'font' => ['bold' => true],
             'alignment' => [
@@ -1175,7 +1229,7 @@ class Admin extends CI_Controller
                 ],
             ],
         ];
-    
+
         $style_row = [
             'font' => ['bold' => true],
             'alignment' => [
@@ -1201,28 +1255,28 @@ class Admin extends CI_Controller
                 ],
             ],
         ];
-    
+
         $sheet->setCellValue('A1', 'REKAP HARIAN');
         $sheet->mergeCells('A1:G1');
         $sheet
             ->getStyle('A1')
             ->getFont()
             ->setBold(true);
-    
+
         $sheet->setCellValue('A3', 'NO');
         $sheet->setCellValue('B3', 'TANGGAL');
         $sheet->setCellValue('C3', 'KETERANGAN');
         $sheet->setCellValue('D3', 'JAM MASUK');
         $sheet->setCellValue('E3', 'JAM PULANG');
         $sheet->setCellValue('F3', 'STATUS');
-    
+
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
         $sheet->getStyle('C3')->applyFromArray($style_col);
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
-    
+
         $no = 1;
         $numrow = 4;
         foreach ($data['perhari'] as $row) {
@@ -1232,41 +1286,41 @@ class Admin extends CI_Controller
             $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
             $sheet->setCellValue('E' . $numrow, $row->jam_pulang);
             $sheet->setCellValue('F' . $numrow, $row->status);
-    
+
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
-    
+
             $no++;
             $numrow++;
         }
-    
+
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(25);
         $sheet->getColumnDimension('C')->setWidth(25);
         $sheet->getColumnDimension('D')->setWidth(20);
         $sheet->getColumnDimension('E')->setWidth(30);
         $sheet->getColumnDimension('F')->setWidth(30);
-    
+
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
-    
+
         $sheet
             ->getPageSetup()
             ->setOrientation(
                 \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
             );
-    
+
         $sheet->setTitle('REKAP HARIAN');
-    
+
         header(
             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
         header('Content-Disposition: attachment; filename="REKAP HARIAN.xlsx"');
         header('Cache-Control: max-age=0');
-    
+
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
     }

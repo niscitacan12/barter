@@ -141,6 +141,18 @@ class Admin_model extends CI_Model
         return $query->row_array();
     }
 
+    public function get_organisasi_by_id($id_organisasi)
+    {
+        $this->db->where('id_organisasi', $id_organisasi);
+        $query = $this->db->get('organisasi'); // Ganti 'nama_tabel_organisasi' dengan nama tabel organisasi Anda
+
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            return null; // Return null jika organisasi tidak ditemukan
+        }
+    }
+
     public function update_organisasi($id_organisasi, $data)
     {
         // Lakukan pembaruan data Admin
@@ -510,7 +522,8 @@ class Admin_model extends CI_Model
     }
 
     // Mendapatkan data per hari berdasarkan tanggal
-    public function getRekapHarian($tanggal) {
+    public function getRekapHarian($tanggal)
+    {
         // Gantilah 'nama_tabel' dengan nama tabel yang sesuai di database Anda
         $this->db->select('*');
         $this->db->from('absensi as a'); // Memberikan alias 'a' pada tabel absensi
@@ -519,10 +532,10 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
 
         return $query->result();
-         // Mengembalikan array kosong jika tidak ada data yang ditemukan
-        
+        // Mengembalikan array kosong jika tidak ada data yang ditemukan
     }
-    public function exportRekapHarian() {
+    public function exportRekapHarian()
+    {
         // Replace this with your actual database query to retrieve the data
         $query = $this->db->get('absensi');
         return $query->result();
@@ -570,12 +583,11 @@ class Admin_model extends CI_Model
     }
 
     // Mendapatkan data bulanan berdasarkan bulan
-    public function getRekapPerBulan() {
-
+    public function getRekapPerBulan()
+    {
         $query = $this->db->get('absensi');
-        return $query->result();  // Sesuaikan sesuai dengan struktur database Anda
+        return $query->result(); // Sesuaikan sesuai dengan struktur database Anda
     }
-
 
     public function updateAdminPassword($user_id, $data_password)
     {

@@ -131,7 +131,7 @@
                                 href="javascript:history.go(-1)"> <i class="fa-solid fa-arrow-left"></i></a>
                             <button type="submit"
                                 class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"><i
-                                    class="fa-solid fa-check"></i></button>
+                                    class="fa-solid fa-floppy-disk"></i></button>
                         </div>
                     </form>
 

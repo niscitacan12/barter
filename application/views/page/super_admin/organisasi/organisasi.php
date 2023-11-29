@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -58,8 +60,7 @@
 
                         <!-- Tabel Body -->
                         <tbody class="text-center">
-                            <?php
-                            foreach ($organisasi as $row): ?>
+                            <?php foreach ($organisasi as $row): ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
@@ -81,8 +82,9 @@
                                 <td class="px-6 py-4">
                                     <div class="flex justify-content-between">
                                         <a type="button" href="<?= base_url(
-                                            'superadmin/detail_organisasi?id=' . 
-                                                $row->id_organisasi) ?>"
+                                            'superadmin/detail_organisasi/' .
+                                                $row->id_organisasi
+                                        ) ?>"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
@@ -103,22 +105,20 @@
                                     </div>
                                 </td>
                             </tr>
-                            <?php
-                            endforeach;
-                            ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
                 <hr class="my-8">
                 <div class="flex justify-end">
-                    <?= $this->pagination->create_links(); ?>
+                    <?= $this->pagination->create_links() ?>
                 </div>
             </div>
         </div>
     </div>
 </body>
 
-<?php if($this->session->flashdata('berhasil_update')){ ?>
+<?php if ($this->session->flashdata('berhasil_update')) { ?>
 <script>
 Swal.fire({
     title: "Berhasil",
@@ -130,7 +130,7 @@ Swal.fire({
 </script>
 <?php } ?>
 
-<?php if($this->session->flashdata('berhasil_tambah')){ ?>
+<?php if ($this->session->flashdata('berhasil_tambah')) { ?>
 <script>
 Swal.fire({
     title: "Berhasil",

@@ -207,6 +207,18 @@ class Admin_model extends CI_Model
         }
     }
 
+    public function getOrganisasiDetails($organisasi_id)
+    {
+        $this->db->where('id_organisasi', $organisasi_id); // Sesuaikan kolom yang merepresentasikan ID pengguna
+        $query = $this->db->get('organisasi'); // Sesuaikan 'users' dengan nama tabel pengguna
+
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris data user
+        } else {
+            return false; // Mengembalikan false jika tidak ada data ditemukan
+        }
+    }
+
     public function getUserId($id_user)
     {
         $this->db->select('*');
@@ -215,6 +227,18 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
 
         return $query->row();
+    }
+
+    public function get_organisasi_by_admin_id($id_admin)
+    {
+        $this->db->where('id_admin', $id_admin); // Sesuaikan dengan kolom yang merepresentasikan ID admin
+        $query = $this->db->get('organisasi'); // Sesuaikan 'organisasi' dengan nama tabel organisasi
+
+        if ($query->num_rows() > 0) {
+            return $query->result(); // Mengembalikan hasil query sebagai array objek
+        } else {
+            return false; // Mengembalikan false jika tidak ada data ditemukan
+        }
     }
 
     public function GetDataAbsensi(
@@ -656,13 +680,6 @@ class Admin_model extends CI_Model
         } else {
             return null; // Mengembalikan null jika tidak ada hasil
         }
-    }
-
-    public function get_organisasi_by_admin_id($id_admin)
-    {
-        $this->db->where('id_admin', $id_admin);
-        $query = $this->db->get('organisasi');
-        return $query->row(); // Mengembalikan satu baris hasil query
     }
 }
 ?>

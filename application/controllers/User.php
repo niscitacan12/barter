@@ -440,24 +440,35 @@ class User extends CI_Controller
 
     public function aksi_pulang()
     {
-        $id_absensi = $this->session->userdata('id');
-        $id_user = $this->session->userdata('id');
         $email = $this->session->userdata('email');
         date_default_timezone_set('Asia/Jakarta');
         $tanggal = date('Y-m-d');
         $jam = date('H:i:s');
+    
+        // Konversi data URL ke gambar dan simpan di server
+        $image_data = $this->input->post('foto_pulang');
+        $img = str_replace('data:image/png;base64,', '', $image_data);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+    
+        $filename = './uploads/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
+        file_put_contents($filename, $data);
+    
         // Memastikan bahwa hanya ID yang sesuai yang dapat melakukan aksi pulang
-        $data = [
+        $data_absensi = [
             'jam_pulang' => $jam,
-            // 'status' => 'true', // Hapus baris ini jika 'status' tidak perlu diubah
+            'foto_pulang' => $filename, // Menyimpan nama file gambar ke database
+            'lokasi_pulang' => $this->input->post('lokasi_pulang'),
+            'status' => 'true',
         ];
-        $this->user_model->update('absensi', $data, ['id_user' => $id_user]);
-
+    
+        $id_absensi = $this->input->post('id_absensi');
+        $this->user_model->update('absensi', $data_absensi, array('id_absensi' => $id_absensi));
+    
         // Dapatkan informasi user dari sesi
-        $id_absensi = $this->session->userdata('id');
         $id_user = $this->session->userdata('id');
         $email = $this->session->userdata('email');
-
+    
         // Menambahkan informasi jam pulang ke pesan
         $options = [
             'cluster' => 'ap1',
@@ -469,13 +480,12 @@ class User extends CI_Controller
             '1712968',
             $options
         );
-        $message['message'] =
-            $email . ' melakukan absen pulang pada jam ' . date('H:i:s');
+        $message['message'] = $email . ' melakukan absen pulang pada jam ' . date('H:i:s');
         $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
-
+    
         // Redirect ke halaman history_absensi dengan pesan sukses atau informasi lainnya
         redirect(base_url('user/history_absensi'));
-    }
+    }    
 
     public function history_cuti()
     {

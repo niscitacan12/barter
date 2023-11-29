@@ -36,104 +36,154 @@
                                 readonly>
                                 <!-- Lokasi akan ditampilkan di sini -->
                             </span>
+                            <input type="hidden" name="lokasi_masuk" id="lokasi_masuk" />
                         </div>
                     </div>
-                    <!-- Camera Icon -->
-                    <div class="mb-4 text-left">
+
+
+                    <div class="mb-4 text-center">
                         <label for="webcam" class="block text-sm font-semibold mb-2">Foto:</label>
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-center mb-3">
                             <div id="photoContainer" class="border border-gray-300 rounded-md"></div>
-                            <button id="takeSnapshot" class="bg-indigo-500 text-white px-4 py-2 rounded-md mr-4">
-                                <i class="fas fa-camera"></i>
-                            </button>
+                            <video id="video" width="400" height="300" autoplay></video>
+                            <canvas id="canvas" style="display:none;"></canvas>
+                            <input type="hidden" name="image_data" id="image-data" />
                         </div>
+                        <button type="button" id="capture-btn" class="bg-green-500 text-white px-4 py-2 rounded-md">
+                            <i class="fas fa-camera"></i>
+                        </button>
                     </div>
 
-                    <!-- Input tersembunyi untuk foto_masuk dan lokasi -->
-                    <input type="hidden" id="foto_masuk" name="foto_masuk">
-                    <input type="hidden" id="lokasi" name="lokasi">
+                    <div class="flex justify-between mt-5">
+                        <a class="text-white bg-red-500 px-4 py-2 rounded-md" href="javascript:history.go(-1)"><i
+                                class="fa-solid fa-arrow-left"></i></a>
 
-                    <!-- Tombol submit untuk mengirimkan formulir -->
-                    <button type="submit" id="absen" class="bg-green-500 text-white px-4 py-2 rounded-md">
-                        <i class="fa-regular fa-calendar-plus"></i>
-                    </button>
+                        <button type="submit" id="absen" class="bg-indigo-500 text-white px-4 py-2 rounded-md">
+                            <i class="fas fa-home"></i>
+                        </button>
+                    </div>
                 </form>
 
                 <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    getAndDisplayLocation();
-                });
-
-                function getAndDisplayLocation() {
+                // Fungsi untuk mendapatkan lokasi pengguna
+                function getGeoLocation() {
                     if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                            var latitude = position.coords.latitude;
-                            var longitude = position.coords.longitude;
-                            var geoData = document.getElementById('geoData');
-                            geoData.innerText = 'Bujur: ' + longitude + ', Lintang: ' + latitude;
-
-                            // Set the value of hidden input for form submission
-                            document.getElementById('lokasi').value = 'Bujur: ' + longitude +
-                                ', Lintang: ' + latitude;
-
-                            // Tampilkan lokasi
-                            alert('Lokasi berhasil ditampilkan.');
-                        }, function(error) {
-                            var geoData = document.getElementById('geoData');
-                            geoData.innerText = 'Error: ' + error.message;
-                            alert('Gagal mendapatkan lokasi: ' + error.message);
-                        });
+                        navigator.geolocation.getCurrentPosition(showPosition, showError);
                     } else {
-                        var geoData = document.getElementById('geoData');
-                        geoData.innerText = 'Geolocation is not supported by this browser.';
-                        alert('Geolocation is not supported by this browser.');
+                        document.getElementById("geoData").innerHTML = "Geolocation is not supported by this browser.";
                     }
                 }
 
-                document.getElementById('takeSnapshot').addEventListener('click', function() {
-                    var video = document.createElement('video');
-                    var canvas = document.createElement('canvas');
-                    var photoContainer = document.getElementById('photoContainer');
-                    var context = canvas.getContext('2d');
+                // Fungsi untuk menampilkan lokasi
+                function getGeoLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(showPosition, showError);
+                    } else {
+                        document.getElementById("geoData").innerHTML = "Geolocation is not supported by this browser.";
+                    }
+                }
+
+                function showPosition(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    var accuracy = position.coords.accuracy;
+
+                    // Menampilkan lokasi dalam elemen dengan id "geoData"
+                    var geoDataElement = document.getElementById("geoData");
+                    geoDataElement.innerHTML = "Latitude: " + latitude + ", Longitude: " + longitude +
+                        ", Accuracy: " + accuracy + " meters";
+
+                    // Mengupdate nilai input tersembunyi dengan data lokasi
+                    var lokasiMasukInput = document.getElementById("lokasi_masuk");
+                    lokasiMasukInput.value = "Latitude: " + latitude + ", Longitude: " + longitude;
+                }
+
+                // Fungsi untuk menangani kesalahan geolocation
+                function showError(error) {
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            document.getElementById("geoData").innerHTML = "User denied the request for Geolocation.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            document.getElementById("geoData").innerHTML = "Location information is unavailable.";
+                            break;
+                        case error.TIMEOUT:
+                            document.getElementById("geoData").innerHTML =
+                                "The request to get user location timed out.";
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            document.getElementById("geoData").innerHTML = "An unknown error occurred.";
+                            break;
+                    }
+                }
+
+                // Panggil fungsi getGeoLocation saat halaman dimuat
+                window.onload = function() {
+                    getGeoLocation();
+                };
+                // document.addEventListener('DOMContentLoaded', function() {
+                //     getAndDisplayLocation();
+                // });
+
+                // function getAndDisplayLocation() {
+                //     if (navigator.geolocation) {
+                //         navigator.geolocation.getCurrentPosition(function(position) {
+                //             var latitude = position.coords.latitude;
+                //             var longitude = position.coords.longitude;
+                //             var geoData = document.getElementById('geoData');
+                //             geoData.innerText = 'Bujur: ' + longitude + ', Lintang: ' + latitude;
+
+                //             // Set the value of hidden input for form submission
+                //             document.getElementById('lokasi').value = 'Bujur: ' + longitude +
+                //                 ', Lintang: ' + latitude;
+
+                //             // Tampilkan lokasi
+                //             alert('Lokasi berhasil ditampilkan.');
+                //         }, function(error) {
+                //             var geoData = document.getElementById('geoData');
+                //             geoData.innerText = 'Error: ' + error.message;
+                //             alert('Gagal mendapatkan lokasi: ' + error.message);
+                //         });
+                //     } else {
+                //         var geoData = document.getElementById('geoData');
+                //         geoData.innerText = 'Geolocation is not supported by this browser.';
+                //         alert('Geolocation is not supported by this browser.');
+                //     }
+                // }
+
+                // Script akses kamera
+                document.addEventListener('DOMContentLoaded', function() {
+                    const video = document.getElementById('video');
+                    const canvas = document.getElementById('canvas');
+                    const captureBtn = document.getElementById('capture-btn');
+                    const photoContainer = document.getElementById('photoContainer');
+                    const imageDataInput = document.getElementById('image-data');
 
                     navigator.mediaDevices.getUserMedia({
                             video: true
                         })
-                        .then(function(stream) {
+                        .then(stream => {
                             video.srcObject = stream;
-                            video.play();
                         })
-                        .catch(function(err) {
-                            console.error('Error accessing webcam:', err);
-                            alert('Error accessing webcam: ' + err.message);
-                        });
+                        .catch(err => console.error('Error accessing camera:', err));
 
-                    // Ambil snapshot dari video
-                    video.addEventListener('loadeddata', function() {
+                    captureBtn.addEventListener('click', function() {
+                        const context = canvas.getContext('2d');
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
                         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                        var img = document.createElement('img');
-                        img.src = canvas.toDataURL('image/png');
-
-                        // Set the value of hidden input for form submission
-                        document.getElementById('foto_masuk').value = img.src;
-
-                        // Tampilkan foto
+                        const imageData = canvas.toDataURL('image/png');
+                        const imgElement = document.createElement('img');
+                        imgElement.src = imageData;
                         photoContainer.innerHTML = '';
-                        photoContainer.appendChild(img);
+                        photoContainer.appendChild(imgElement);
 
-                        alert('Foto berhasil ditampilkan.');
+                        imageDataInput.value = imageData;
+
+                        // Sembunyikan elemen video setelah gambar diambil
+                        video.style.display = 'none';
                     });
-                });
-
-                document.getElementById('absenForm').addEventListener('submit', function(event) {
-                    // Periksa apakah kegiatan tidak kosong sebelum mengirimkan formulir
-                    if (document.getElementById('foto_masuk').value.trim() === '') {
-                        alert('Anda harus mengambil foto terlebih dahulu.');
-                        event.preventDefault(); // Mencegah pengiriman formulir jika foto tidak diambil
-                    }
                 });
                 </script>
             </div>

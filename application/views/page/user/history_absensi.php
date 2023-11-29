@@ -35,16 +35,13 @@
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Keterangan
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Jam Masuk
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Jam Pulang
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Lokasi
+                                    Keterangan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Aksi
@@ -67,16 +64,13 @@
                                     <?php echo $row->tanggal_absen; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->keterangan_izin; ?>
-                                </td>
-                                <td class="px-6 py-4">
                                     <?php echo $row->jam_masuk; ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->jam_pulang; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->lokasi; ?>
+                                    <?php echo $row->keterangan_izin; ?>
                                 </td>
                                 <?php
                             date_default_timezone_set('Asia/Jakarta');
@@ -85,7 +79,7 @@
                                 <td class="px-5 py-3">
                                     <?php
                                 if ($row->status !== 'true') {
-                                $jam_batas_pulang = '14:00:00';
+                                $jam_batas_pulang = '07:00:00';
 
                                // Tautan pulang jika sudah jam 12
                                  echo '<a href="' . base_url('user/pulang/' . $row->id_absensi) . '" 

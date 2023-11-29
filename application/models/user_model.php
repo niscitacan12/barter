@@ -57,6 +57,13 @@ class User_model extends CI_Model
         return $query->result(); // This assumes you want to get multiple rows as a result
     }
 
+    public function getAbsensiById($id_absensi) {
+        $this->db->where('id_absensi', $id_absensi);
+        $query = $this->db->get('absensi');
+
+        return $query->result(); // Assuming you want to get a single result
+    }
+
     public function get_all_user()
     {
         // Replace 'user' with your actual table name
@@ -224,6 +231,21 @@ public function get_absen_data($id_user = NULL) {
 public function get($table, $where)
 {
     return $this->db->get_where($table, $where)->row();
+}
+
+public function get_user_by_email($email)
+{
+    
+ 
+// Adjust the table name and column names based on your database structure
+    $query = $this->db->get_where('user', ['email' => $email]);
+
+    
+
+// Return the user data as an array
+    
+    
+return $query->row_array();
 }
 }
 ?>

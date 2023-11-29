@@ -157,7 +157,7 @@ class User extends CI_Controller
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
 
-        $foto_masuk = './uploads/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
+        $foto_masuk = './images/foto_masuk/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
         file_put_contents($foto_masuk, $data);
 
         // Rest of your code
@@ -451,13 +451,13 @@ class User extends CI_Controller
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
     
-        $filename = './uploads/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
-        file_put_contents($filename, $data);
+        $foto_pulang = './images/foto_pulang/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
+        file_put_contents($foto_pulang, $data);
     
         // Memastikan bahwa hanya ID yang sesuai yang dapat melakukan aksi pulang
         $data_absensi = [
             'jam_pulang' => $jam,
-            'foto_pulang' => $filename, // Menyimpan nama file gambar ke database
+            'foto_pulang' => $foto_pulang, // Menyimpan nama file gambar ke database
             'lokasi_pulang' => $this->input->post('lokasi_pulang'),
             'status' => 'true',
         ];

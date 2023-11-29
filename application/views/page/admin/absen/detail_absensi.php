@@ -69,22 +69,29 @@
                                 </label>
                             </div>
                             <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
-                                <img src="<?php echo $absensi->foto_masuk; ?>" alt="Foto Masuk"
+                                <?php if (!empty($absensi->foto_masuk)): ?>
+                                <img src="<?= base_url($absensi->foto_masuk); ?>" name="foto_masuk" alt="Foto Masuk"
                                     class="block py-2.5 px-0 w-80 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     id="foto_masuk" required />
+                                <?php else: ?>
+                                <span class="text-gray-500 dark:text-gray-400">Foto Masuk tidak tersedia</span>
+                                <?php endif; ?>
                                 <label for="foto_masuk"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Foto
                                     Masuk
                                 </label>
                             </div>
-
                             <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
-                                <img src="<?php echo $absensi->foto_pulang; ?>" alt="Foto Pulang"
+                                <?php if (!empty($absensi->foto_pulang)): ?>
+                                <img src="<?= base_url($absensi->foto_pulang); ?>" name="foto_pulang" alt="Foto pulang"
                                     class="block py-2.5 px-0 w-80 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     id="foto_pulang" required />
+                                <?php else: ?>
+                                <span class="text-gray-500 dark:text-gray-400">Foto pulang tidak tersedia</span>
+                                <?php endif; ?>
                                 <label for="foto_pulang"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Foto
-                                    Pulang
+                                    pulang
                                 </label>
                             </div>
                         </div>

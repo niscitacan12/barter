@@ -281,14 +281,14 @@ class User extends CI_Controller
                 'Berhasil mengajukan cuti.'
             );
 
-            redirect(base_url('user/cuti')); // Mengasumsikan 'user/history_cuti' adalah halaman untuk melihat riwayat cuti
+            redirect(base_url('user/history_cuti')); // Mengasumsikan 'user/history_cuti' adalah halaman untuk melihat riwayat cuti
         } else {
             // Tampilkan pesan kesalahan jika ada data yang kosong
             $this->session->set_flashdata(
                 'gagal_cuti',
                 'Gagal mengajukan cuti. Semua field harus diisi.'
             );
-            redirect(base_url('user/cuti'));
+            redirect(base_url('user/history_cuti'));
         }
     }
 

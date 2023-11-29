@@ -12,43 +12,52 @@
     <?php $this->load->view('components/sidebar_user'); ?>
     <div class="p-5 sm:ml-64">
         <div class="p-5 mt-10">
-            <div class="flex flex-col lg:flex-row mx-auto max-w-7xl py-6 px-4 lg:px-0">
+            <div class="flex flex-col lg:flex-row mx-auto max-w-7xl py-6 px-4 lg:px-0 justify-between">
                 <!-- Profile Picture -->
-                <div class="card mb-2 mb-xl-7">
-                    <div class="card-header">Profile Picture</div>
+                <div class="card mb-4 lg:mr-4 p-8 md:w-1/2 lg:w-1/3 xl:w-1/4 border border-gray-300 rounded-md">
+                    <div class="card-header text-2xl font-semibold">Profile Picture</div>
                     <div class="card-body text-center">
                         <?php if (isset($user)): ?>
                         <div id="profile-picture-container"
                             class="rounded-full mt-2 mx-auto my-auto w-48 h-48 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-64 xl:h-64 object-cover">
-                            <img class="w-full h-full object-cover rounded-full"
-                                src="<?= base_url('images/user/' . $user->image); ?>" alt="Profile Picture">
+                            <img class="h-full object-cover rounded-full"
+                                src="<?= base_url('images/user/' . $user->image) ?>" alt="Profile Picture">
                         </div>
                         <?php endif; ?>
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <form action="<?= base_url('user/aksi_ubah_foto') ?>" method="post" class="grid gap-4"
                             enctype="multipart/form-data">
                             <div>
-                                <label for="formFile" class="block text-sm font-medium text-gray-200">Choose a new
-                                    image</label>
-                                <input class="mt-1 p-2 border border-gray-300 rounded-md" type="file" name="image"
-                                    id="image" accept="image/*" onchange="previewImage()">
+                                <div class="text-xl font-semibold mb-4">Previews</div>
                             </div>
                             <div id="image-preview" class="hidden flex items-center justify-center">
                                 <img id="preview"
                                     class="rounded-full mt-2 mx-auto my-auto w-48 h-48 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-64 xl:h-64 object-cover">
                             </div>
-                            <button type="submit"
-                                class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-4 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mx-auto">
-                                <i class="fa-solid fa-floppy-disk"></i>
-                            </button>
+                            <div class="flex items-center mb-2">
+                                <div class="mx-auto bg-green-500 p-2 rounded-md">
+                                    <label for="image" class="mt-1 p-2 text-white rounded-md"
+                                        style="cursor: pointer; font-size: 13px;">
+                                        <i class="fas fa-pen-to-square" style="font-size: 13px;"></i>
+                                    </label>
+                                    <input type="file" name="image" id="image" accept="image/*"
+                                        onchange="previewImage()" style="display: none;">
+                                </div>
+
+
+                                <button type="submit"
+                                    class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 mx-auto">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
 
                 <!-- Account Details -->
-                <div class="lg:w-2/3 relative">
-                    <div class="bg-white rounded-lg shadow-md p-4">
-                        <div class="text-xl font-semibold mb-4">Detail Akun</div>
+                <div class="lg:w-11/12 relative border border-gray-300 rounded-md mb-8">
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <div class="text-3xl font-semibold mb-8">Detail Akun</div>
                         <form method="post" action="<?= base_url('user/aksi_ubah_detail_akun') ?>">
                             <div class="mb-4">
                                 <label for="username" class="block mb-1 text-sm">Username</label>

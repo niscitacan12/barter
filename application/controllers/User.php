@@ -87,7 +87,7 @@ class User extends CI_Controller
             'greeting' => $greeting,
             'date' => $date,
         ];
-
+        $data['absensi'] = $this->user_model->getAbsensiById($id_absensi);
         $this->load->view('page/user/pulang', $data);
     }
 
@@ -149,16 +149,28 @@ class User extends CI_Controller
         $tanggal = date('Y-m-d');
         $jam = date('H:i:s');
 
+        // Menangani upload foto dari kamera
+        $image_data = $this->input->post('image_data');
+
+        // Konversi data URL ke gambar dan simpan di server
+        $img = str_replace('data:image/png;base64,', '', $image_data);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+
+        $foto_masuk = './uploads/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
+        file_put_contents($foto_masuk, $data);
+
         // Rest of your code
         $data = [
             'id_user' => $id_user,
             'tanggal_absen' => $tanggal,
             'keterangan_izin' => '-',
             'jam_masuk' => $jam,
-            'foto_masuk' => $this->input->post('foto_masuk'),
+            'foto_masuk' => $foto_masuk, // Gunakan foto_masuk yang sudah diupload
+            'lokasi_masuk' => $this->input->post('lokasi_masuk'),
             'jam_pulang' => '00:00:00',
             'foto_pulang' => '-',
-            'lokasi' => $this->input->post('lokasi'),
+            'lokasi_pulang' => '-',
             'status' => 'false',
         ];
 
@@ -194,6 +206,7 @@ class User extends CI_Controller
         }
     }
 
+
     // Aksi Izin
     public function aksi_izin()
     {
@@ -213,7 +226,8 @@ class User extends CI_Controller
                 'foto_masuk' => '-',
                 'jam_pulang' => '00:00:00',
                 'foto_pulang' => '-',
-                'lokasi' => '-',
+                'lokasi_masuk' => '-',
+                'lokasi_pulang' => '-',
                 'status' => 'true',
             ];
 
@@ -253,7 +267,7 @@ class User extends CI_Controller
         $awal_cuti = $this->input->post('awal_cuti');
         $akhir_cuti = $this->input->post('akhir_cuti');
         $masuk_kerja = $this->input->post('masuk_kerja');
-        $keperluan_cuti = $this->input->post('keperluan_cuti');
+        $keperluan_cuti = $this->input->post('keperluan_cuti');    
         $id_organisasi = $this->user_model->get_id_organisasi($id_user);
         $this->session->set_userdata('id_organisasi', $id_organisasi);
 

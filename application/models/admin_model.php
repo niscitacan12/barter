@@ -657,5 +657,12 @@ class Admin_model extends CI_Model
             return null; // Mengembalikan null jika tidak ada hasil
         }
     }
+
+    public function get_organisasi_by_admin_id($id_admin)
+    {
+        $this->db->where('id_admin', $id_admin);
+        $query = $this->db->get('organisasi');
+        return $query->row(); // Mengembalikan satu baris hasil query
+    }
 }
 ?>

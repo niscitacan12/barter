@@ -1,7 +1,7 @@
 <?php
 
 class Super_model extends CI_Model
- {
+{
     // Menampilkan jumlah user
     public function get_user_count()
     {
@@ -11,16 +11,17 @@ class Super_model extends CI_Model
     }
 
     // Menampilkan Jumlah Admin
-    public function get_admin_count() {
+    public function get_admin_count()
+    {
         // Lakukan query untuk mengambil jumlah admin dari tabel admin (misalnya)
         $this->db->select('COUNT(*) as admin_count');
-        $this->db->from('admin'); 
+        $this->db->from('admin');
         $query = $this->db->get();
-        
+
         // Cek apakah query berhasil dieksekusi
         if ($query->num_rows() > 0) {
             $row = $query->row();
-            return $row->admin_count; 
+            return $row->admin_count;
         } else {
             return 0;
         }
@@ -187,6 +188,18 @@ class Super_model extends CI_Model
         }
     }
 
+    public function getOrganisasiDetails($organisasi_id)
+    {
+        $this->db->where('id_organisasi', $organisasi_id); // Sesuaikan kolom yang merepresentasikan ID pengguna
+        $query = $this->db->get('organisasi'); // Sesuaikan 'users' dengan nama tabel pengguna
+
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris data user
+        } else {
+            return false; // Mengembalikan false jika tidak ada data ditemukan
+        }
+    }
+
     public function getUserData($id)
     {
         // Sesuaikan dengan struktur tabel di database Anda
@@ -248,17 +261,19 @@ class Super_model extends CI_Model
         }
     }
 
-    public function pagination($table_name, $limit, $offset) {
+    public function pagination($table_name, $limit, $offset)
+    {
         $this->db->limit($limit, $offset);
         $query = $this->db->get($table_name);
 
         if ($query->num_rows() > 0) {
             return $query->result();
         }
-        return array();
+        return [];
     }
 
-    public function count_all($table_name){
+    public function count_all($table_name)
+    {
         return $this->db->get($table_name)->num_rows();
     }
 
@@ -291,7 +306,7 @@ class Super_model extends CI_Model
             return null; // Mengembalikan null jika tidak ada hasil
         }
     }
-    
+
     public function getShiftDetails($id_shift)
     {
         $this->db->where('id_shift', $id_shift);
@@ -313,7 +328,8 @@ class Super_model extends CI_Model
         return $query->result_array();
     }
 
-    public function get_all_user() {
+    public function get_all_user()
+    {
         // Sesuaikan nama tabel dan field sesuai dengan struktur database Anda
         $query = $this->db->get('user');
         return $query->result();
@@ -351,21 +367,25 @@ class Super_model extends CI_Model
     // In your Admin_model.php
     public function hapus_lokasi($id_lokasi)
     {
-       // Your deletion logic here
-       $this->db->where('id_lokasi', $id_lokasi);
-       $this->db->delete('lokasi');
+        // Your deletion logic here
+        $this->db->where('id_lokasi', $id_lokasi);
+        $this->db->delete('lokasi');
     }
 
     public function updateSuperAdminPassword($user_id, $data_password)
     {
-        $update_result = $this->db->update('superadmin', $data_password, ['id_superadmin' => $user_id]);
+        $update_result = $this->db->update('superadmin', $data_password, [
+            'id_superadmin' => $user_id,
+        ]);
 
         return $update_result ? true : false;
     }
 
     public function updateSuperAdminPhoto($user_id, $data)
     {
-        $update_result = $this->db->update('superadmin', $data, ['id_superadmin' => $user_id]);
+        $update_result = $this->db->update('superadmin', $data, [
+            'id_superadmin' => $user_id,
+        ]);
 
         return $update_result ? true : false;
     }
@@ -383,8 +403,9 @@ class Super_model extends CI_Model
             return null; // Mengembalikan null jika tidak ada hasil
         }
     }
-    
-    public function get_id_admin_by_organisasi($id_organisasi) {
+
+    public function get_id_admin_by_organisasi($id_organisasi)
+    {
         $this->db->select('id_admin');
         $this->db->from('organisasi');
         $this->db->where('id_organisasi', $id_organisasi);

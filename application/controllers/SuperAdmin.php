@@ -93,7 +93,10 @@ class SuperAdmin extends CI_Controller
     public function tambah_organisasi()
     {
         $data['admin'] = $this->super_model->get_data('admin')->result();
-        $this->load->view('page/super_admin/organisasi/tambah_organisasi', $data);
+        $this->load->view(
+            'page/super_admin/organisasi/tambah_organisasi',
+            $data
+        );
     }
 
     // Page Update Organisasi
@@ -102,18 +105,24 @@ class SuperAdmin extends CI_Controller
         $data['organisasi'] = $this->super_model->getOrganisasiById(
             $id_organisasi
         );
-        $this->load->view('page/super_admin/organisasi/update_organisasi', $data);
+        $this->load->view(
+            'page/super_admin/organisasi/update_organisasi',
+            $data
+        );
     }
 
     // Page Detail Organisasi
-    public function detail_organisasi()
+    public function detail_organisasi($organisasi_id)
     {
         // Mendefinisikan data yang akan digunakan dalam tampilan
-        $data = [
-            'judul' => 'Detail Organisasi',
-            'deskripsi' => 'Ini adalah halaman detail organisasi.',
-        ];
-        $this->load->view('page/super_admin/organisasi/detail_organisasi', $data);
+        $user_id = $this->session->userdata('id');
+        $data['organisasi'] = $this->super_model->getOrganisasiDetails(
+            $organisasi_id
+        );
+        $this->load->view(
+            'page/super_admin/organisasi/detail_organisasi',
+            $data
+        );
     }
 
     // Page Admin
@@ -197,7 +206,7 @@ class SuperAdmin extends CI_Controller
         $data['admin'] = $this->super_model->getAdminDetails($admin_id);
         $this->load->view('page/super_admin/admin/detail_admin', $data);
     }
-    
+
     // Page User
     public function user()
     {
@@ -277,11 +286,11 @@ class SuperAdmin extends CI_Controller
     public function detail_user($user_id)
     {
         $data['user'] = $this->super_model->getUserDetails($user_id);
-   
+
         // Mengirim data pengguna ke view
         $this->load->view('page/super_admin/user/detail_user', $data);
     }
-   
+
     // Page Absensi
     public function absensi()
     {
@@ -398,7 +407,7 @@ class SuperAdmin extends CI_Controller
         $data['admin'] = $this->super_model->get_data('admin')->result();
         $this->load->view('page/super_admin/jabatan/tambah_jabatan', $data);
     }
-    
+
     // Page Update Jabatan
     public function update_jabatan($id_jabatan)
     {
@@ -481,7 +490,9 @@ class SuperAdmin extends CI_Controller
     {
         if ($this->session->userdata('id')) {
             $user_id = $this->session->userdata('id');
-            $data['superadmin'] = $this->super_model->getSuperAdminByID($user_id);
+            $data['superadmin'] = $this->super_model->getSuperAdminByID(
+                $user_id
+            );
 
             $this->load->view('page/super_admin/profile/profile', $data);
         } else {
@@ -510,11 +521,12 @@ class SuperAdmin extends CI_Controller
     {
         // Memanggil method getShiftDetails untuk mendapatkan data shift berdasarkan ID
         $data['shift'] = $this->super_model->getShiftDetails($id_shift);
-    
+
         if ($data['shift']) {
             // Jika data shift ditemukan, tambahkan informasi lain yang dibutuhkan ke dalam data
             $data['judul'] = 'Detail Shift - Superadmin';
-            $data['deskripsi'] = 'Ini adalah halaman detail shift untuk superadmin.';
+            $data['deskripsi'] =
+                'Ini adalah halaman detail shift untuk superadmin.';
             $this->load->view('page/super_admin/shift/detail_shift', $data);
         } else {
             // Jika data shift tidak ditemukan, lakukan sesuai kebutuhan aplikasi Anda
@@ -575,11 +587,13 @@ class SuperAdmin extends CI_Controller
             $config['per_page'],
             $data['start']
         );
-        $data['organisasi'] = $this->super_model->get_data('organisasi')->result();
-    
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->result();
+
         // Menampilkan view dengan data
         $this->load->view('page/super_admin/lokasi/lokasi', $data);
-    }    
+    }
 
     // page tambah lokasi
     public function tambah_lokasi()
@@ -666,40 +680,41 @@ class SuperAdmin extends CI_Controller
         redirect('superadmin/lokasi');
     }
 
-   // ini page buat ubah password nya 
-   public function aksi_ubah_password()
-   {
-           $user_id = $this->session->userdata('id');
-           $password_baru = $this->input->post('password_baru');
-           $konfirmasi_password = $this->input->post('konfirmasi_password');
-       
-           // Check if new password is provided
-           if (!empty($password_baru)) {
-               // Check if the new password matches the confirmation
-               if ($password_baru === $konfirmasi_password) {
-                   $data_password = [
-                       'password' => md5($password_baru),
-                   ];
-       
-                   // Update password di database
-                   $this->super_model->updateSuperAdminPassword($user_id, $data_password);
-               } else {
-                   $this->session->set_flashdata(
-                       'message',
-                       'Password baru dan Konfirmasi password harus sama'
-                   );
-                   redirect(base_url('superadmin/profile'));
-               }
-           }
-       
-           // Redirect ke halaman profile
-           redirect(base_url('superadmin/profile'));
-   }
+    // ini page buat ubah password nya
+    public function aksi_ubah_password()
+    {
+        $user_id = $this->session->userdata('id');
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
 
+        // Check if new password is provided
+        if (!empty($password_baru)) {
+            // Check if the new password matches the confirmation
+            if ($password_baru === $konfirmasi_password) {
+                $data_password = [
+                    'password' => md5($password_baru),
+                ];
 
+                // Update password di database
+                $this->super_model->updateSuperAdminPassword(
+                    $user_id,
+                    $data_password
+                );
+            } else {
+                $this->session->set_flashdata(
+                    'message',
+                    'Password baru dan Konfirmasi password harus sama'
+                );
+                redirect(base_url('superadmin/profile'));
+            }
+        }
+
+        // Redirect ke halaman profile
+        redirect(base_url('superadmin/profile'));
+    }
 
     // 2. Aksi
-    
+
     // aksi tambah admin
     public function aksi_tambah_admin()
     {
@@ -708,7 +723,10 @@ class SuperAdmin extends CI_Controller
         $password = $this->input->post('password');
         if (strlen($password) < 8) {
             // Password kurang dari 8 karakter, berikan pesan kesalahan
-            $this->session->set_flashdata('gagal_tambah', 'Password harus memiliki panjang minimal 8 karakter');
+            $this->session->set_flashdata(
+                'gagal_tambah',
+                'Password harus memiliki panjang minimal 8 karakter'
+            );
             redirect('superadmin/admin'); // Redirect kembali ke halaman sebelumnya
             return; // Hentikan eksekusi jika validasi gagal
         }
@@ -773,7 +791,10 @@ class SuperAdmin extends CI_Controller
         $password = $this->input->post('password');
         if (strlen($password) < 8) {
             // Password kurang dari 8 karakter, berikan pesan kesalahan
-            $this->session->set_flashdata('gagal_tambah', 'Password harus memiliki panjang minimal 8 karakter');
+            $this->session->set_flashdata(
+                'gagal_tambah',
+                'Password harus memiliki panjang minimal 8 karakter'
+            );
             redirect('superadmin/user'); // Redirect kembali ke halaman sebelumnya
             return; // Hentikan eksekusi jika validasi gagal
         }
@@ -794,15 +815,23 @@ class SuperAdmin extends CI_Controller
         ];
 
         // Ambil id_admin berdasarkan id_organisasi yang dipilih
-        $id_admin = $this->super_model->get_id_admin_by_organisasi($data['id_organisasi']); // Ganti dengan model dan method yang sesuai
+        $id_admin = $this->super_model->get_id_admin_by_organisasi(
+            $data['id_organisasi']
+        ); // Ganti dengan model dan method yang sesuai
 
         if ($id_admin) {
             $data['id_admin'] = $id_admin; // Jika berhasil, set id_admin
             $this->super_model->tambah_data('user', $data); // Simpan data ke tabel
-            $this->session->set_flashdata('berhasil_tambah', 'Berhasil Menambahkan Data');
+            $this->session->set_flashdata(
+                'berhasil_tambah',
+                'Berhasil Menambahkan Data'
+            );
             redirect('superadmin/user');
         } else {
-            $this->session->set_flashdata('gagal_tambah', 'Tidak ada admin yang terkait dengan organisasi ini');
+            $this->session->set_flashdata(
+                'gagal_tambah',
+                'Tidak ada admin yang terkait dengan organisasi ini'
+            );
             redirect('superadmin/tambah_user'); // Redirect kembali ke halaman formulir tambah user
         }
     }
@@ -1092,7 +1121,6 @@ class SuperAdmin extends CI_Controller
         redirect(base_url('superadmin/profile'));
     }
 
-
     // 3. Lain-lain
     public function upload_image_superadmin($value)
     {
@@ -1111,35 +1139,36 @@ class SuperAdmin extends CI_Controller
         }
     }
 
-   // ubah foto
-   public function aksi_ubah_foto()
-   {
-       $image = $this->upload_image_superadmin('image');
-       $user_id = $this->session->userdata('id');
-       $admin = $this->super_model->getSuperAdminByID($user_id);
-   
-       if ($image[0] == true) {
-           $admin->image = $image[1];
-       }
-   
-       $data = [
-           'image' => $image[1],
-       ];
-   
-       // Update foto di database
-       $this->super_model->updateSuperAdminPhoto($user_id, $data);
-   
-       // Redirect ke halaman profile
-       redirect(base_url('superadmin/profile'));
-   }
+    // ubah foto
+    public function aksi_ubah_foto()
+    {
+        $image = $this->upload_image_superadmin('image');
+        $user_id = $this->session->userdata('id');
+        $admin = $this->super_model->getSuperAdminByID($user_id);
 
-    public function tampil_admin() {
+        if ($image[0] == true) {
+            $admin->image = $image[1];
+        }
+
+        $data = [
+            'image' => $image[1],
+        ];
+
+        // Update foto di database
+        $this->super_model->updateSuperAdminPhoto($user_id, $data);
+
+        // Redirect ke halaman profile
+        redirect(base_url('superadmin/profile'));
+    }
+
+    public function tampil_admin()
+    {
         $this->load->model('nama_model_anda'); // Ganti 'nama_model_anda' dengan nama model yang sesuai
         $data['user'] = $this->nama_model_anda->get_all_admin(); // Mengambil data admin
         $data['total_admin'] = $this->nama_model_anda->get_admin_count(); // Menghitung jumlah admin
-        
+
         // Lainnya seperti pengaturan tampilan flashdata
-        
+
         $this->load->view('page/super_admin/dashboard', $data);
     }
 }

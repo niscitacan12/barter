@@ -298,32 +298,13 @@ class Admin extends CI_Controller
     }
 
     // Page Detail Organisasi
-    public function detail_organisasi()
+    public function detail_organisasi($organisasi_id)
     {
-        // Load your data here, assuming you have a method in Super_model to get the data
-        $id_organisasi = $this->input->get('id');
+        $data['organisasi'] = $this->admin_model->getOrganisasiDetails(
+            $organisasi_id
+        );
 
-        if ($id_organisasi !== null) {
-            // Panggil model untuk mendapatkan data organisasi berdasarkan ID
-            $this->load->model('admin_model');
-            $data['organisasi'] = $this->admin_model->getOrganisasiData(
-                $id_organisasi
-            );
-
-            if ($data['organisasi']) {
-                // Load your view passing the data
-                $this->load->view(
-                    'page/admin/organisasi/detail_organisasi',
-                    $data
-                );
-            } else {
-                // Handle the case when data is not found
-                echo 'Data organisasi tidak ditemukan.';
-            }
-        } else {
-            // Handle the case when ID is not valid or not found
-            echo 'ID tidak valid atau tidak ditemukan.';
-        }
+        $this->load->view('page/admin/organisasi/detail_organisasi', $data);
     }
 
     // Page Detail User
@@ -383,53 +364,53 @@ class Admin extends CI_Controller
         $config['base_url'] = base_url('superadmin/lokasi');
         $config['total_rows'] = $this->admin_model->count_all('lokasi'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
         $config['per_page'] = 10;
- 
-         // Styling pagination
-         $config['full_tag_open'] =
-             '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
-         $config['full_tag_close'] = '</ul></nav>';
- 
-         $config['first_link'] = 'First';
-         $config['first_tag_open'] =
-             '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-         $config['first_tag_close'] = '</li>';
- 
-         $config['last_link'] = 'Last';
-         $config['last_tag_open'] =
-             '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-         $config['last_tag_close'] = '</li>';
- 
-         $config['next_link'] = '&raquo;';
-         $config['next_tag_open'] =
-             '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-         $config['next_tag_close'] = '</li>';
- 
-         $config['prev_link'] = '&laquo;';
-         $config['prev_tag_open'] =
-             '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-         $config['prev_tag_close'] = '</li>';
- 
-         $config['cur_tag_open'] =
-             '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
-         $config['cur_tag_close'] = '</li>';
- 
-         // Applying Tailwind Classes
-         $config['num_tag_open'] =
-             '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-         $config['num_tag_close'] = '</li>';
- 
-         // Initialize
-         $this->pagination->initialize($config);
-         $data['start'] = $this->uri->segment(3);
- 
-         $id_admin = $this->session->userdata('id');
-         // Data lokasi
-         $data['lokasi'] = $this->admin_model->pagination_by_id_admin(
-             'lokasi',
-             $config['per_page'],
-             $data['start'],
-             $id_admin
-         );
+
+        // Styling pagination
+        $config['full_tag_open'] =
+            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
+        $config['full_tag_close'] = '</ul></nav>';
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '&raquo;';
+        $config['next_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '&laquo;';
+        $config['prev_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] =
+            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
+        $config['cur_tag_close'] = '</li>';
+
+        // Applying Tailwind Classes
+        $config['num_tag_open'] =
+            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
+        $config['num_tag_close'] = '</li>';
+
+        // Initialize
+        $this->pagination->initialize($config);
+        $data['start'] = $this->uri->segment(3);
+
+        $id_admin = $this->session->userdata('id');
+        // Data lokasi
+        $data['lokasi'] = $this->admin_model->pagination_by_id_admin(
+            'lokasi',
+            $config['per_page'],
+            $data['start'],
+            $id_admin
+        );
         // Menampilkan view dengan data
         $this->load->view('page/admin/lokasi/lokasi', $data);
     }
@@ -587,7 +568,9 @@ class Admin extends CI_Controller
         $status = 'pusat'; // Default status
 
         // Cek apakah ada data dengan id_admin yang diambil dari session
-        $data_existing = $this->admin_model->get_organisasi_by_admin_id($id_admin);
+        $data_existing = $this->admin_model->get_organisasi_by_admin_id(
+            $id_admin
+        );
 
         if ($data_existing) {
             // Jika ada data dengan id_admin yang diambil dari session
@@ -628,7 +611,10 @@ class Admin extends CI_Controller
         $password = $this->input->post('password');
         if (strlen($password) < 8) {
             // Password kurang dari 8 karakter, berikan pesan kesalahan
-            $this->session->set_flashdata('gagal_tambah', 'Password harus memiliki panjang minimal 8 karakter');
+            $this->session->set_flashdata(
+                'gagal_tambah',
+                'Password harus memiliki panjang minimal 8 karakter'
+            );
             redirect('admin/user'); // Redirect kembali ke halaman sebelumnya
             return; // Hentikan eksekusi jika validasi gagal
         }

@@ -28,6 +28,7 @@ class User extends CI_Controller
         // Hitung total absen dan izin
         $data['total'] = $data['absensi'] + $data['absensi_count'];
         $data['absen'] = $this->user_model->get_absensi_data();
+        $data['cuti'] = $this->user_model->get_cuti_data();
         $this->load->view('page/user/dashboard', $data);
     }
 
@@ -509,4 +510,5 @@ class User extends CI_Controller
         $data['absensi'] = $this->user_model->getAbsensiDetail($id_absensi);
         $this->load->view('page/user/detail_history', $data);
     }
+
 }

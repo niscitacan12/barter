@@ -239,13 +239,13 @@ public function get_user_by_email($email)
  
 // Adjust the table name and column names based on your database structure
     $query = $this->db->get_where('user', ['email' => $email]);
-
-    
-
-// Return the user data as an array
-    
-    
 return $query->row_array();
+}
+
+public function getAbsensiDetail($id_absensi) {
+    $this->db->where('id_absensi', $id_absensi);
+    $query = $this->db->get('absensi');
+    return $query->row(); 
 }
 }
 ?>

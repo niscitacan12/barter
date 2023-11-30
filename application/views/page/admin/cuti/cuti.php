@@ -5,14 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
 </head>
 
 <body>
     <?php $this->load->view('components/sidebar_admin'); ?>
     <div class="p-4 sm:ml-64">
-        <div class="p-5 mt-10">
-
+        <div class="p-5 mt-10 overflow-x-auto">
             <!-- Card -->
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -23,17 +21,17 @@
 
                 <hr>
 
-                <div class="flex justify-between mt-5 mb-5">
-
-                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-blue-800"
-                        type="button">Filter <i class="fa-solid fa-chevron-down ml-2" aria-hidden="true"></i>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-5 sm:mb-5">
+                     <!-- Tombol Filter -->
+                     <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-blue-800 sm:mb-0 mb-3">
+                        Filter <i class="fa-solid fa-chevron-down ml-2" aria-hidden="true"></i>
                     </button>
 
                     <!-- Filter -->
                     <div id="dropdown"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                             aria-labelledby="dropdownDefaultButton">
                             <li>
                                 <a href="#"
@@ -51,8 +49,9 @@
                     </div>
 
                     <!-- Search -->
-                    <form action="<?= base_url('admin/cuti') ?>" method="get">
-                        <div class="relative">
+                    <form action="<?= base_url('admin/cuti') ?>" method="get"
+                                 class="relative sm:ml-3 mb-3 sm:mb-0">
+                            <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>

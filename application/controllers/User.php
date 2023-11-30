@@ -504,4 +504,9 @@ class User extends CI_Controller
         // Load the view
         $this->load->view('page/user/history_absensi', $data);
     }
+    
+    public function detail_history($id_absensi) {
+        $data['absensi'] = $this->user_model->getAbsensiDetail($id_absensi);
+        $this->load->view('page/user/detail_history', $data);
+    }
 }

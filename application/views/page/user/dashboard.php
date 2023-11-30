@@ -89,16 +89,11 @@
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Keterangan
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Jam Masuk
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Jam Pulang
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Lokasi
                                 </th>
                             </tr>
                         </thead>
@@ -115,16 +110,10 @@
                                     <?php echo $row->tanggal_absen; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->keterangan_izin; ?>
-                                </td>
-                                <td class="px-6 py-4">
                                     <?php echo $row->jam_masuk; ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->jam_pulang; ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php echo $row->lokasi; ?>
                                 </td>
                             </tr>
                             <?php else: break; endif; endforeach; ?>
@@ -134,7 +123,63 @@
                 <br>
                 <div class="flex justify-end">
                     <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="<?= base_url('user/history_absensi') ?>" title="Ke Riwayat Absensi">
+                        href="<?= base_url('user/permohonan cuti') ?>" title="Ke Riwayat Absensi">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div
+                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-between">
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Permohonan cuti</h6>
+                </div>
+                <hr>
+
+             <!-- Tabel -->
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">No</th>
+                                    <th scope="col" class="px-6 py-3">awal cuti</th>
+                                    <th scope="col" class="px-6 py-3">akhir cuti</th>  
+                                    <th scope="col" class="px-6 py-3">keperluan cuti</th>
+                                </tr>
+                            </thead>
+                            <!-- Tabel Body -->
+                            <tbody class="text-center">
+                            <?php if (!empty($cuti)): ?>
+                                <?php $no = 0; foreach ($cuti as $row): $no++; ?>
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <?php echo $no; ?>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            <?php echo convDate($row->awal_cuti); ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <?php echo convDate($row->akhir_cuti); ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <?php echo ($row->keperluan_cuti); ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="4" class="text-center">Tidak ada data cuti</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+
+                        </table>
+                    </div>
+                    <br>
+                <div class="flex justify-end">
+                    <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        href="<?= base_url('user/history_cuti') ?>" title="Ke Riwayat Absensi">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>

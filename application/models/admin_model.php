@@ -681,5 +681,10 @@ class Admin_model extends CI_Model
             return null; // Mengembalikan null jika tidak ada hasil
         }
     }
+
+    public function get_all_organisasii()
+    {
+       return $this->db->get('organisasi')->result();
+    }
 }
 ?>

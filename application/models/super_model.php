@@ -418,5 +418,12 @@ class Super_model extends CI_Model
             return false; // Return false jika tidak ada hasil
         }
     }
+
+    public function get_all_organisasi()
+    {
+       return $this->db->get('organisasi')->result();
+    }
+
+
 }
 ?>

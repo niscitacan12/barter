@@ -599,34 +599,43 @@ class SuperAdmin extends CI_Controller
     public function tambah_lokasi()
     {
         $this->load->model('super_model');
-        $data['user'] = $this->super_model->get_all_user(); // Ganti dengan metode yang sesuai di model
-
+    
+        // Get organizational data
+        $data['organisasi'] = $this->super_model->get_all_organisasi();
+    
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya
             $lokasi_data = [
                 'nama_lokasi' => $this->input->post('nama_lokasi'),
                 'alamat' => $this->input->post('alamat_kantor'),
-                'id_user' => $this->input->post('custom_id'),
+                'id_organisasi' => $this->input->post('id_organisasi'), // Fix the input field name
                 // tambahkan kolom lainnya sesuai kebutuhan
             ];
-
-            // Tidak perlu menggunakan $this->db->set($data);
-            // Setelah mendapatkan data, baru Anda bisa menggunakan metode set untuk operasi insert
-            // Anda perlu mengatur setiap kolom yang ingin diinsert
-            foreach ($lokasi_data as $key => $value) {
-                $this->db->set($key, $value);
+    
+            // Check if 'id_organisasi' is set and not null
+            if ($lokasi_data['id_organisasi']) {
+                // Tidak perlu menggunakan $this->db->set($data);
+                // Setelah mendapatkan data, baru Anda bisa menggunakan metode set untuk operasi insert
+                // Anda perlu mengatur setiap kolom yang ingin diinsert
+                foreach ($lokasi_data as $key => $value) {
+                    $this->db->set($key, $value);
+                }
+    
+                $this->db->insert('lokasi');
+    
+                // Redirect ke halaman admin/lokasi setelah menambahkan data
+                redirect('superadmin/lokasi');
+            } else {
+                // Handle the case where 'id_organisasi' is not set or null
+                // You might want to show an error message or redirect to the form page with an error
+                echo "Error: ID Organisasi cannot be null.";
             }
-
-            $this->db->insert('lokasi');
-
-            // Redirect ke halaman admin/lokasi setelah menambahkan data
-            redirect('superadmin/lokasi');
         } else {
-            // Form belum disubmit, ambil data pengguna dan tampilkan view untuk mengisi form
+            // Form belum disubmit, ambil data organisasi dan tampilkan view untuk mengisi form
             $this->load->view('page/super_admin/lokasi/tambah_lokasi', $data);
         }
     }
-
+    
     // page detail lokasi
     public function detail_lokasi($lokasi_id)
     {

@@ -381,6 +381,15 @@ class Super_model extends CI_Model
         return $update_result ? true : false;
     }
 
+    public function get_token_data()
+    {
+        // Assuming you have a table named 'absensi'
+        $query = $this->db->get('tokens');
+
+        // Assuming 'absensi' is the name of the table
+        return $query->result(); // This assumes you want to get multiple rows as a result
+    }
+
     public function updateSuperAdminPhoto($user_id, $data)
     {
         $update_result = $this->db->update('superadmin', $data, [
@@ -421,9 +430,7 @@ class Super_model extends CI_Model
 
     public function get_all_organisasi()
     {
-       return $this->db->get('organisasi')->result();
+        return $this->db->get('organisasi')->result();
     }
-
-
 }
 ?>

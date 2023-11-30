@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -54,10 +56,78 @@
                 </a>
             </div>
         </div>
+        <br>
+        <br>
+        <div
+            class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex justify-between">
+                <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Token</h6>
+            </div>
+            <hr>
+
+            <!-- Tabel -->
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
+                    <thead
+                        class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                No
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Token
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Dibuat
+                            </th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <!-- Tabel Body -->
+                    <tbody class="text-center">
+                        <?php
+                        $no = 0;
+                        foreach ($tokens as $row):
+                            if ($no < 5):
+                                $no++; ?>
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <?php echo $no; ?>
+                            </th>
+                            <td class="px-6 py-4">
+                                <?php echo $row->token; ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo $row->created; ?>
+                            </td>
+                        </tr>
+                        <?php
+                            else:
+                                break;
+                            endif;
+                        endforeach;
+                        ?>
+                    </tbody>
+
+                </table>
+            </div>
+            <br>
+            <div class="flex justify-end">
+                <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                    href="<?php echo base_url(
+                        'superadmin/token'
+                    ); ?>" title="Ke Riwayat Absensi">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </body>
 
-<?php if($this->session->flashdata('login_success')){ ?>
+<?php if ($this->session->flashdata('login_success')) { ?>
 <script>
 Swal.fire({
     title: 'Berhasil Login',

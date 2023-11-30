@@ -446,7 +446,7 @@ class User extends CI_Controller
         $jam = date('H:i:s');
     
         // Konversi data URL ke gambar dan simpan di server
-        $image_data = $this->input->post('foto_pulang');
+        $image_data = $this->input->post('image_data');
         $img = str_replace('data:image/png;base64,', '', $image_data);
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);

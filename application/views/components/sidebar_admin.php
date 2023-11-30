@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -54,8 +56,9 @@ $image = $_SESSION['image'];
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
                                 <!--  -->
-                                <img class="w-8 h-8 rounded-full" src="<?= base_url('images/admin/' . $image); ?>"
-                                    alt="user photo"></a>
+                                <img class="w-8 h-8 rounded-full" src="<?= base_url(
+                                    'images/admin/' . $image
+                                ) ?>" alt="user photo"></a>
 
                             </button>
                         </div>
@@ -71,7 +74,9 @@ $image = $_SESSION['image'];
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a href="<?php echo base_url('admin/profile') ; ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+                                    <a href="<?php echo base_url(
+                                        'admin/profile'
+                                    ); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
                                         dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Profile</a>
                                 </li>

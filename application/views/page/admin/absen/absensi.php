@@ -22,15 +22,13 @@
                 </div>
 
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <div class="flex justify-between items-center p-4">
+                    <div class="flex items-center p-4">
 
-                        <!-- Form Bulan -->
-                        <form id="form-bulan" action="<?php echo base_url(
-                            'history_absensi/aksi_form_bulan'
-                        ); ?>" method="get" class="flex flex-col items-center gap-4 mx-10">
+                        <form id="form-filter" action="<?php echo base_url('Admin/aksi_filter'); ?>" class="flex gap-4 mx-10">
+                            <!-- Form Bulan -->
                             <div class="relative flex items-center">
                                 <label for="bulan" class="mx-10 mb-2 text-gray-900 dark:text-white sm:mr-4"></label>
-                                <select id="bulan-select" name="bulan"
+                                <select id="select" name="bulan"
                                     class="w-40 sm:w-64 sm:w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mx-3">
                                     <option value="" disabled selected>Pilih Bulan</option>
                                     <option value="01">Januari</option>
@@ -47,29 +45,21 @@
                                     <option value="12">Desember</option>
                                 </select>
                             </div>
-                        </form>
 
-                        <!-- Form Tanggal -->
-                        <form id="form-tanggal" action="<?php echo base_url(
-                            'history_absensi/aksi_form_tanggal'
-                        ); ?>" method="get" class="flex flex-col items-center gap-4">
+                            <!-- Form Tanggal -->
                             <div class="relative flex items-center mx-3">
                                 <input type="text" id="tanggal" name="tanggal"
                                     class="w-40 sm:w-64 sm:w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mx-3"
-                                    placeholder="Pilih Tanggal" min="<?= date(
-                                        'Y-m-d'
-                                    ) ?>" max="<?= date('Y-m-d') ?>">
+                                    placeholder="Pilih Tanggal" 
+                                    min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d') ?>"
+                                    autocomplete="off">
                                 <label for="tanggal"
                                     class="mx-2 mb-2 absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-900 dark:text-white mx-3 "></label>
                             </div>
-                        </form>
 
-                        <!-- Form Tahun -->
-                        <form id="form-tahun" action="<?php echo base_url(
-                            'history_absensi/aksi_form_tahun'
-                        ); ?>" method="get" class="flex flex-col items-center gap-4">
+                            <!-- Form Tahun -->
                             <div class="relative flex items-center">
-                                <input type="number" id="tahun" name="tahun"
+                                <input type="number" id="form_tahun" name="tahun"
                                     class="w-40 sm:w-64 sm:w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-3 "
                                     placeholder="Pilih Tahun" pattern="[0-9]{4}">
                                 <label for="tahun"
@@ -80,11 +70,11 @@
 
                         <!-- Tombol untuk Semua Form -->
                         <button type="button" id="submit-button"
-                            class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block ml-auto">
+                            class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block ml-2">
                             <i class="fa-solid fa-filter"></i>
                         </button>
-                        <a href="<?= base_url('') ?>"
-                            class="exp bg-indigo-500 hover-bg-indigo text-white font-bold py-2 px-4 rounded inline-block ml-2">
+                        <a href="<?= base_url('Admin/export_absensi') ?>"
+                            class="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-2">
                             <i class="fa-solid fa-file-export"></i>
                         </a>
 
@@ -92,31 +82,6 @@
                 </div>
 
                 <br>
-
-                <!-- Untuk Menampilkan Bulan Yang Dipilih -->
-                <div class="text-left">
-                    <h1 class="font-bold text-gray-900">
-                        <span id="absensi-text">Absensi :</span>
-                        <?php
-                        $selectedMonth = $this->input->get('bulan');
-                        $bulan_array = [
-                            '01' => 'Januari',
-                            '02' => 'Februari',
-                            '03' => 'Maret',
-                            '04' => 'April',
-                            '05' => 'Mei',
-                            '06' => 'Juni',
-                            '07' => 'Juli',
-                            '08' => 'Agustus',
-                            '09' => 'September',
-                            '10' => 'Oktober',
-                            '11' => 'November',
-                            '12' => 'Desember',
-                        ];
-                        echo $bulan_array[$selectedMonth] ?? '';
-                        ?>
-                    </h1>
-                </div>
 
                 <!-- Form Search -->
                 <form action="<?= base_url(
@@ -127,7 +92,7 @@
                     <div class="relative flex items-center flex-1">
                         <input type="text" id="simple-search"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ml-auto"
-                            placeholder="Search..." required>
+                            placeholder="Search..." required autocomplete="off">
                     </div>
                     <button type="submit"
                         class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -142,7 +107,7 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table id="absensi-table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <!-- Tabel Head -->
                         <thead
                             class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -208,53 +173,44 @@
             </div>
         </div>
     </div>
-    <!-- Untuk JS Form Bulan, Tanggal, Tahun-->
-    <script>
-    document.getElementById("submit-button").addEventListener("click", function() {
-        // Determine which form is active and submit it.
-        if (document.getElementById("form-bulan").contains(document.activeElement)) {
-            document.getElementById("form-bulan").submit();
-        } else if (document.getElementById("form-tanggal").contains(document.activeElement)) {
-            document.getElementById("form-tanggal").submit();
-        } else if (document.getElementById("form-tahun").contains(document.activeElement)) {
-            document.getElementById("form-tahun").submit();
-        }
-    });
-    </script>
-    <!-- JS Array Bulan -->
-    <script>
-    $(document).ready(function() {
-        $('#bulan-select').change(function() {
-            var selectedMonth = $(this).val();
-            var bulan_array = {
-                '01': 'Januari',
-                '02': 'Februari',
-                '03': 'Maret',
-                '04': 'April',
-                '05': 'Mei',
-                '06': 'Juni',
-                '07': 'Juli',
-                '08': 'Agustus',
-                '09': 'September',
-                '10': 'Oktober',
-                '11': 'November',
-                '12': 'Desember'
-            };
-            var selectedMonthName = bulan_array[selectedMonth];
-            $('#absensi-text').text('Absensi: ' + selectedMonthName);
+   <!-- Untuk JS Form Bulan, Tanggal, Tahun-->
+   <script>
+        $(document).ready(function () {
+            $("#submit-button").click(function () {
+
+                // Ambil nilai dari formulir
+                var bulan = $("#select").val();
+                var tanggal = $("#tanggal").val();
+                var tahun = $("#form_tahun").val();
+
+                // Kirim permintaan AJAX ke server
+                $.ajax({
+                    url: "<?php echo base_url('Admin/aksi_filter'); ?>",
+                    type: "post",
+                    data: { bulan: bulan, tanggal: tanggal, tahun: tahun },
+                    success: function (response) {
+                        // Perbarui tabel dengan data yang telah difilter
+                        $("#absensi-table tbody").replaceWith($(response).find('tbody'));
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            });
         });
-    });
     </script>
     <!-- JS Untuk Tahun -->
     <script>
-    // Ambil elemen input tahun
-    var tahunInput = document.getElementById('tahun');
+        document.addEventListener("DOMContentLoaded", function () {
+            // Ambil elemen input tahun
+            var tahunInput = document.getElementById('form_tahun');
 
-    // Dapatkan tahun saat ini
-    var tahunSaatIni = new Date().getFullYear();
+            // Dapatkan tahun saat ini
+            var tahunSaatIni = new Date().getFullYear();
 
-    // Isi input tahun dengan tahun saat ini
-    tahunInput.value = tahunSaatIni;
+            // Isi input tahun dengan tahun saat ini
+            tahunInput.value = tahunSaatIni;
+        });
     </script>
 </body>
 

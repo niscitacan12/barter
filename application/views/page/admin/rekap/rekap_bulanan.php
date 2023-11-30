@@ -64,12 +64,16 @@
                                 <?php if(isset($_GET['bulan']) && $_GET['bulan'] == '12') echo 'selected'; ?>>
                                 Desember</option>
                         </select>
-                        <button type="submit"
-                            class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"><i
-                                class="fa-solid fa-filter"></i></button>
-                        <a href="<?= base_url('admin/export_bulanan') ?>"
-                            class="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"><i
-                                class="fa-solid fa-file-export"></i></a>
+                        <div class="flex sm:flex-row gap-4 mx-auto items-center">
+                            <button type="submit"
+                                class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block">
+                                <i class="fa-solid fa-filter"></i>
+                            </button>
+                            <a href="<?= base_url('Admin/export_bulanan') ?>"
+                                class="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto">
+                                <i class="fa-solid fa-file-export"></i>
+                            </a>
+                        </div>
                     </form>
                     <?php if (empty($perbulan)): ?>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">

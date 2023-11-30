@@ -48,6 +48,15 @@ class User_model extends CI_Model
         }
     }
 
+    public function get_cuti_data()
+    {
+        // Assuming you have a table named 'absensi'
+        $query = $this->db->get('cuti');
+
+        // Assuming 'absensi' is the name of the table
+        return $query->result(); // This assumes you want to get multiple rows as a result
+    }
+
     public function get_absensi_data()
     {
         // Assuming you have a table named 'absensi'
@@ -204,17 +213,17 @@ class User_model extends CI_Model
     }
 
     
-  public function get_cuti_data($id_user = NULL) {
-    if ($id_user !== NULL) {
-        $this->db->select('*');
-        $this->db->from('cuti');
-        $this->db->where('id_user', $id_user);
-        return $this->db->get()->result();
-    } else {
-        // Jika $id_user kosong, dapatkan semua data cuti
-        return $this->db->get('cuti')->result();
-    }
-}
+//   public function get_cuti_data($id_user = NULL) {
+//     if ($id_user !== NULL) {
+//         $this->db->select('*');
+//         $this->db->from('cuti');
+//         $this->db->where('id_user', $id_user);
+//         return $this->db->get()->result();
+//     } else {
+//         // Jika $id_user kosong, dapatkan semua data cuti
+//         return $this->db->get('cuti')->result();
+//     }
+// }
 
 public function get_absen_data($id_user = NULL) {
     if ($id_user !== NULL) {

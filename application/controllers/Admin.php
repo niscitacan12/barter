@@ -357,11 +357,10 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/user/update_user', $data);
     }
 
-    // Page lokasi
     public function lokasi()
     {
         // Config
-        $config['base_url'] = base_url('superadmin/lokasi');
+        $config['base_url'] = base_url('admin/lokasi');
         $config['total_rows'] = $this->admin_model->count_all('lokasi'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
         $config['per_page'] = 10;
 
@@ -403,24 +402,27 @@ class Admin extends CI_Controller
         $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
-        $id_admin = $this->session->userdata('id');
         // Data lokasi
-        $data['lokasi'] = $this->admin_model->pagination_by_id_admin(
+        $data['lokasi'] = $this->admin_model->pagination(
             'lokasi',
             $config['per_page'],
-            $data['start'],
-            $id_admin
+            $data['start']
         );
+        $data['organisasi'] = $this->admin_model
+            ->get_data('organisasi')
+            ->result();
+
         // Menampilkan view dengan data
         $this->load->view('page/admin/lokasi/lokasi', $data);
     }
 
+    // page tambah lokasi
     public function tambah_lokasi()
     {
         $this->load->model('admin_model');
     
         // Get organizational data
-        $data['organisasi'] = $this->admin_model->get_all_organisasii();
+        $data['organisasi'] = $this->admin_model->get_all_organisasi();
     
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya

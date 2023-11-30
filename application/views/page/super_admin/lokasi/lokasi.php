@@ -48,26 +48,26 @@
                         <!-- Tabel Body -->
                         <?php foreach ($lokasi as $data): ?>
                         <tr>
-                            <td class="px-6 py-4"><?php echo isset($data['id_lokasi']) ? $data['id_lokasi'] : ''; ?>
+                            <td class="px-6 py-4"><?php echo isset($data->id_lokasi) ? $data->id_lokasi : ''; ?>
                             </td>
-                            <td class="px-6 py-4"><?php echo isset($data['nama_lokasi']) ? $data['nama_lokasi'] : ''; ?>
+                            <td class="px-6 py-4"><?php echo isset($data->nama_lokasi) ? $data->nama_lokasi : ''; ?>
                             </td>
-                            <td class="px-6 py-4"><?php echo isset($data['alamat']) ? $data['alamat'] : ''; ?></td>
+                            <td class="px-6 py-4"><?php echo isset($data->alamat) ? $data->alamat : ''; ?></td>
                             <td class="px-6 py-4" style="padding-right: 20px;">
                                 <!-- Sesuaikan padding kanan sesuai kebutuhan -->
                                 <div class="flex items-center space-x-2">
                                     <a type="button"
-                                        href="<?= base_url('superadmin/detail_lokasi/' . $data['id_lokasi']) ?>"
+                                        href="<?= base_url('superadmin/detail_lokasi/' . $data->id_lokasi) ?>"
                                         class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-circle-info"></i>
                                     </a>
                                     <a type="button"
-                                        href="<?php echo base_url('superadmin/update_lokasi/' . $data['id_lokasi']); ?>"
+                                        href="<?php echo base_url('superadmin/update_lokasi/' . $data->id_lokasi); ?>"
                                         class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <a type="button"
-                                        href="<?php echo base_url('superadmin/hapus_lokasi/' . $data['id_lokasi']); ?>"
+                                        href="<?php echo base_url('superadmin/hapus_lokasi/' . $data->id_lokasi); ?>"
                                         class="text-white bg-red-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>

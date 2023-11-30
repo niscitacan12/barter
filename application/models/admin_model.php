@@ -686,5 +686,101 @@ class Admin_model extends CI_Model
     {
        return $this->db->get('organisasi')->result();
     }
+
+    // Filter Button
+    public function filterAbsensi($bulan, $tanggal, $tahun) 
+    {
+        $this->db->select('*');
+        $this->db->from('absensi');
+
+        // Filter berdasarkan tanggal_absen
+        if (!empty($bulan)) {
+            $this->db->where("MONTH(tanggal_absen)", $bulan);
+        }
+        if (!empty($tanggal)) {
+            $this->db->where("DAY(tanggal_absen)", $tanggal);
+        }
+        if (!empty($tahun)) {
+            $this->db->where("YEAR(tanggal_absen)", $tahun);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    // Export absensi
+    public function get_absensi_data($filter = [])
+    {
+        $this->db->select('tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, lokasi');
+        $this->db->from('absensi');
+    
+        // Menambahkan filter jika ada
+        if (!empty($filter['bulan']) && !empty($filter['tahun'])) {
+            $this->db->where("MONTH(tanggal_absen) =", $filter['bulan']);
+            $this->db->where("YEAR(tanggal_absen) =", $filter['tahun']);
+        }
+    
+        $query = $this->db->get();
+    
+        return $query->result();
+        // Mengembalikan array kosong jika tidak ada data yang ditemukan
+    }
+
+    public function get_absen_data()
+   {
+       return $this->db->get('absensi')->result_array();
+   }
+
+   public function get_cuti_data() 
+   { 
+       return $this->db->get('cuti')->result();
+   }
+
+   public function get_jabatan_data() 
+   {
+       $query = $this->db->get('jabatan');
+
+       if ($query->num_rows() > 0) {
+           return $query->result();
+       } else {
+           return array();
+       }
+   }
+
+   public function get_lokasi_data() 
+   {
+       // Fetch lokasi data from your database table
+       $query = $this->db->get('lokasi');
+
+       if ($query->num_rows() > 0) {
+           return $query->result_array();
+       } else {
+           return array();
+       }
+   }
+
+   public function get_organisasi_data() 
+   {
+       // Fetch organisasi data from your database table
+       $query = $this->db->get('organisasi');
+
+       if ($query->num_rows() > 0) {
+           return $query->result();
+       } else {
+           return array();
+       }
+   }
+
+   public function get_user_data() {
+       // Fetch user data from your database table
+       $query = $this->db->get('user');
+
+       if ($query->num_rows() > 0) {
+           return $query->result_array();
+       } else {
+           return array();
+       }
+   }
 }
 ?>

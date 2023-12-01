@@ -55,9 +55,6 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nama
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Cuti Dari
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -66,9 +63,6 @@
                                 <th scope="col" class="px-6 py-3">
                                     Masuk Kerja
                                 </th>
-                                <!-- <th scope="col" class="px-6 py-3">
-                                    Jumlah Cuti
-                                </th> -->
                                 <th scope="col" class="px-6 py-3">
                                     Keperluan
                                 </th>
@@ -88,9 +82,6 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo nama_user($row->id_user); ?>
-                                </td>
-                                <td class="px-6 py-4">
                                     <?php echo convDate($row->awal_cuti); ?>
                                 </td>
                                 <td class="px-6 py-4">
@@ -99,8 +90,6 @@
                                 <td class="px-6 py-4">
                                     <?php echo convDate($row->masuk_kerja); ?>
                                 </td>
-                                <!-- <td class="px-6 py-4">
-                                </td> -->
                                 <td class="px-6 py-4">
                                     <?php echo $row->keperluan_cuti; ?>
                                 </td>
@@ -116,30 +105,29 @@
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-function setujuCuti(cutiId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '<?= base_url('user/setujuCuti/') ?>' + cutiId, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-            location.reload();
-        }
-    };
-    xhr.send();
-}
 
-function tidakSetujuCuti(cutiId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '<?= base_url('user/tidakSetujuCuti/') ?>' + cutiId, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-            location.reload();
-        }
-    };
-    xhr.send();
-}
+<?php if ($this->session->flashdata('berhasil_cuti')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_cuti'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
 </script>
+<?php } ?>
+
+<?php if ($this->session->flashdata('gagal_cuti')) { ?>
+<script>
+Swal.fire({
+    title: "Gagal",
+    text: "<?php echo $this->session->flashdata('gagal_cuti'); ?>",
+    icon: "error",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
 </html>

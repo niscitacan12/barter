@@ -14,12 +14,12 @@
 </head>
 
 <body>
-    <div class="min-w-screen min-h-screen bg-indigo-200 flex items-center justify-center px-5 py-5 h-screen">
+    <div class="min-w-screen bg-indigo-200 flex items-center justify-center px-5 py-5">
         <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
             <div class="md:flex w-full">
                 <!-- Welcome Register -->
                 <div class="hidden md:block w-2/5 bg-indigo-500 py-10 px-10">
-                    <h1 class="text-gray-950 text-2xl text-center">Selamat Datang DiAbsensi</h1>
+                    <h1 class="text-gray-950 text-2xl text-center mt-0">Selamat Datang DiAbsensi</h1>
                     <hr class="border border-black mt-1">
                     <svg id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641" data-name="Layer 1"
                         xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 744.84799 747.07702">

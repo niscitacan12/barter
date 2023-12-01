@@ -194,6 +194,7 @@ class User_model extends CI_Model
 
         return $result ? $result->id_organisasi : null;
     }
+    
     public function id_organisasi()
     {
         // Gantilah dengan logika aplikasi yang sesuai
@@ -203,36 +204,74 @@ class User_model extends CI_Model
         return $id_organisasi;
     }
 
-    
-//   public function get_cuti_data($id_user = NULL) {
-//     if ($id_user !== NULL) {
-//         $this->db->select('*');
-//         $this->db->from('cuti');
-//         $this->db->where('id_user', $id_user);
-//         return $this->db->get()->result();
-//     } else {
-//         // Jika $id_user kosong, dapatkan semua data cuti
-//         return $this->db->get('cuti')->result();
-//     }
-// }
-
-public function get_absen_data($id_user = NULL) {
-    if ($id_user !== NULL) {
-        $this->db->select('*');
-        $this->db->from('absensi');
-        $this->db->where('id_user', $id_user);
-        return $this->db->get()->result();
-    } else {
-        // Jika $id_user kosong, dapatkan semua data absensi
-        return $this->db->get('absensi')->result();
+    public function get_absen_data($id_user = NULL) {
+        if ($id_user !== NULL) {
+            $this->db->select('*');
+            $this->db->from('absensi');
+            $this->db->where('id_user', $id_user);
+            return $this->db->get()->result();
+        } else {
+            // Jika $id_user kosong, dapatkan semua data absensi
+            return $this->db->get('absensi')->result();
+        }
     }
-}
 
-public function get($table, $where)
-{
-    return $this->db->get_where($table, $where)->row();
-}
+    public function get($table, $where)
+    {
+        return $this->db->get_where($table, $where)->row();
+    }
 
+    public function get_user_by_email($email)
+    {
+        $query = $this->db->get_where('user', ['email' => $email]);
+        return $query->row_array();
+    }
+
+    public function getAbsensiDetail($id_absensi) {
+        $this->db->where('id_absensi', $id_absensi);
+        $query = $this->db->get('absensi');
+        return $query->row(); 
+    }
+
+
+    public function cek_absen($id_user, $tanggal) {
+        $this->db->where('id_user', $id_user);
+        $this->db->where('tanggal_absen', $tanggal);
+        $query = $this->db->get('absensi');
+
+        return $query->num_rows() > 0 ? true : false;
+    }
+
+    public function cek_izin($id_user, $tanggal) {
+        $this->db->where('id_user', $id_user);
+        $this->db->where('tanggal_absen', $tanggal);
+        $query = $this->db->get_where('absensi', ['status' => 'true']); // Ganti dengan status izin jika ada
+
+        return $query->num_rows() > 0 ? true : false;
+    }
+
+    public function hitung_cuti_setahun_ini($id_user)
+    {
+        $tahun_ini = date('Y');
+
+        $this->db->where('id_user', $id_user);
+        $this->db->where('YEAR(awal_cuti)', $tahun_ini);
+        $this->db->from('cuti');
+        return $this->db->count_all_results();
+    }
+
+    public function get_shift_data_by_id($id_shift)
+    {
+        // Gantilah 'nama_tabel_shift' dengan nama tabel yang sesuai di database Anda
+        $this->db->where('id_shift', $id_shift);
+        $query = $this->db->get('nama_tabel_shift');
+
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Mengembalikan satu baris data shift
+        } else {
+            return false; // Mengembalikan false jika tidak ditemukan data
+        }
+    }
 public function getAbsensiDetail($id_absensi) {
     $this->db->where('id_absensi', $id_absensi);
     $query = $this->db->get('absensi');

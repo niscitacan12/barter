@@ -59,7 +59,7 @@
                                 class="fa-solid fa-arrow-left"></i></a>
 
                         <button type="submit" id="absen" class="bg-indigo-500 text-white px-4 py-2 rounded-md">
-                            <i class="fas fa-home"></i>
+                            <i class="fa-solid fa-address-card"></i>
                         </button>
                     </div>
                 </form>
@@ -121,35 +121,6 @@
                 window.onload = function() {
                     getGeoLocation();
                 };
-                // document.addEventListener('DOMContentLoaded', function() {
-                //     getAndDisplayLocation();
-                // });
-
-                // function getAndDisplayLocation() {
-                //     if (navigator.geolocation) {
-                //         navigator.geolocation.getCurrentPosition(function(position) {
-                //             var latitude = position.coords.latitude;
-                //             var longitude = position.coords.longitude;
-                //             var geoData = document.getElementById('geoData');
-                //             geoData.innerText = 'Bujur: ' + longitude + ', Lintang: ' + latitude;
-
-                //             // Set the value of hidden input for form submission
-                //             document.getElementById('lokasi').value = 'Bujur: ' + longitude +
-                //                 ', Lintang: ' + latitude;
-
-                //             // Tampilkan lokasi
-                //             alert('Lokasi berhasil ditampilkan.');
-                //         }, function(error) {
-                //             var geoData = document.getElementById('geoData');
-                //             geoData.innerText = 'Error: ' + error.message;
-                //             alert('Gagal mendapatkan lokasi: ' + error.message);
-                //         });
-                //     } else {
-                //         var geoData = document.getElementById('geoData');
-                //         geoData.innerText = 'Geolocation is not supported by this browser.';
-                //         alert('Geolocation is not supported by this browser.');
-                //     }
-                // }
 
                 // Script akses kamera
                 document.addEventListener('DOMContentLoaded', function() {

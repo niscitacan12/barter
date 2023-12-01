@@ -56,7 +56,7 @@
                                 class="fa-solid fa-arrow-left"></i></a>
 
                         <button type="submit" id="absen" class="bg-indigo-500 text-white px-4 py-2 rounded-md">
-                            <i class="fas fa-home"></i>
+                            <i class="fa-solid fa-address-card"></i>
                         </button>
                     </div>
                 </form>

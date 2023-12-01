@@ -622,15 +622,6 @@ class Admin_model extends CI_Model
         return $update_result ? true : false;
     }
 
-    public function updateAdminPhoto($user_id, $data)
-    {
-        $update_result = $this->db->update('admin', $data, [
-            'id_admin' => $user_id,
-        ]);
-
-        return $update_result ? true : false;
-    }
-
     // public function get_cuti_by_id($cutiId)
     // {
     //     $this->db->where('id_cuti', $cutiId);
@@ -686,5 +677,166 @@ class Admin_model extends CI_Model
     {
        return $this->db->get('organisasi')->result();
     }
+
+    // Filter Button
+    public function filterAbsensi($bulan, $tanggal, $tahun) 
+    {
+        $this->db->select('*');
+        $this->db->from('absensi');
+
+        // Filter berdasarkan tanggal_absen
+        if (!empty($bulan)) {
+            $this->db->where("MONTH(tanggal_absen)", $bulan);
+        }
+        if (!empty($tanggal)) {
+            $this->db->where("DAY(tanggal_absen)", $tanggal);
+        }
+        if (!empty($tahun)) {
+            $this->db->where("YEAR(tanggal_absen)", $tahun);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    // Export absensi
+    public function get_absensi_data($filter = [])
+    {
+        $this->db->select('tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, lokasi');
+        $this->db->from('absensi');
+    
+        // Menambahkan filter jika ada
+        if (!empty($filter['bulan']) && !empty($filter['tahun'])) {
+            $this->db->where("MONTH(tanggal_absen) =", $filter['bulan']);
+            $this->db->where("YEAR(tanggal_absen) =", $filter['tahun']);
+        }
+    
+        $query = $this->db->get();
+    
+        return $query->result();
+        // Mengembalikan array kosong jika tidak ada data yang ditemukan
+    }
+
+    public function get_absen_data()
+   {
+       return $this->db->get('absensi')->result_array();
+   }
+
+   public function get_cuti_data() 
+   { 
+       return $this->db->get('cuti')->result();
+   }
+
+   public function get_jabatan_data() 
+   {
+       $query = $this->db->get('jabatan');
+
+       if ($query->num_rows() > 0) {
+           return $query->result();
+       } else {
+           return array();
+       }
+   }
+
+   public function get_lokasi_data() 
+   {
+       // Fetch lokasi data from your database table
+       $query = $this->db->get('lokasi');
+
+       if ($query->num_rows() > 0) {
+           return $query->result_array();
+       } else {
+           return array();
+       }
+   }
+
+    public function get_organisasi_data() 
+    {
+        // Fetch organisasi data from your database table
+        $query = $this->db->get('organisasi');
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return array();
+        }
+    }
+
+    public function get_user_data() {
+        // Fetch user data from your database table
+        $query = $this->db->get('user');
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return array();
+        }
+    }
+
+    public function count_users_by_organisasi($id_organisasi) {
+        // Menghitung jumlah pengguna berdasarkan id_organisasi
+        $this->db->where('id_organisasi', $id_organisasi);
+        $query = $this->db->get('user'); // Ganti 'users' dengan nama tabel pengguna di database Anda
+
+        return $query->num_rows(); // Mengembalikan jumlah baris yang cocok dengan kondisi
+    }
+       if ($query->num_rows() > 0) {
+           return $query->result_array();
+       } else {
+           return array();
+       }
+   }
+   
+   public function updateAdminPhoto($user_id, $data)
+   {
+       $update_result = $this->db->update('admin', $data, [
+           'id_admin' => $user_id,
+       ]);
+
+       return $update_result ? true : false;
+   }
+
+   public function update_password($id_admin, $new_password)
+   {
+       $this->db->set('password', $new_password);
+       $this->db->where('id_admin', $id_admin);
+       $this->db->update('admin'); // Replace 'your_user_table' with the actual table name
+
+       return $this->db->affected_rows() > 0;
+   }
+
+   public function update_data($table, $data, $where) {
+      $this->db->update($table, $data, $where);
+      return $this->db->affected_rows();
+  }
+
+   // Memperbarui gambar pengguna
+   public function update_image($user_id, $new_image) {
+      $data = array(
+          'image' => $new_image
+      );
+
+      $this->db->where('id_admin', $user_id);
+      $this->db->update('admin', $data);
+
+      return $this->db->affected_rows();
+  }
+
+   // untuk uubah password
+   public function getPasswordById($id_admin)
+   {
+       $this->db->select('password');
+       $this->db->from('admin'); // Replace 'your_user_table' with the actual table name
+       $this->db->where('id_admin', $id_admin);
+       $query = $this->db->get();
+
+       if ($query->num_rows() > 0) {
+           $row = $query->row();
+           return $row->password;
+       } else {
+           return false;
+       }
+   }
 }
 ?>

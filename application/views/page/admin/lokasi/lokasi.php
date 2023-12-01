@@ -28,7 +28,8 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -50,38 +51,36 @@
                         <!-- Tabel Body -->
                         <?php foreach ($lokasi as $data): ?>
                         <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            class="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-6 py-4"><?php echo isset($data->id_lokasi) ? $data->id_lokasi : ''; ?></td>
                             <td class="px-6 py-4"><?php echo isset($data->nama_lokasi) ? $data->nama_lokasi : ''; ?>
                             </td>
                             <td class="px-6 py-4"><?php echo isset($data->alamat) ? $data->alamat : ''; ?></td>
                             <td class="px-6 py-4">
                                 <?php
-                                    if (property_exists($data, 'id_lokasi')) {
-                                    // Access the property using arrow notation
-                                    $employee_count = jumlah_karyawan_lokasi($data->id_lokasi);
-                                     echo $employee_count;
-                                } else {
-                              // Handle the case where 'id_lokasi' property does not exist
-                                  echo 'Property id_lokasi does not exist in $data.';
-                               }
-                              ?>
+                                // Tampilkan jumlah karyawan berdasarkan id_organisasi
+                                $jumlah_karyawan = $this->admin_model->count_users_by_organisasi($data->id_organisasi);
+                                echo $jumlah_karyawan;
+                                ?>
                             </td>
-                            <td class="px-6 py-4" style="padding-right: 20px;">
+                            <td class="px-6 py-4">
                                 <!-- Sesuaikan padding kanan sesuai kebutuhan -->
-                                <div class="flex items-center space-x-2">
+                                <div class="flex justify-content-between">
                                     <a type="button" href="<?= base_url('admin/detail_lokasi/' . $data->id_lokasi) ?>"
-                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-circle-info"></i>
                                     </a>
                                     <a type="button"
                                         href="<?php echo base_url('admin/update_lokasi/' . $data->id_lokasi); ?>"
-                                        class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                        class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
+                                    <a type="button" onclick="hapusLokasi(<?php echo $data->id_lokasi; ?>)"
+                                        class="text-white bg-red-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+
                                     <a type="button"
                                         href="<?php echo base_url('admin/hapus_lokasi/' . $data->id_lokasi); ?>"
-                                        class="text-white bg-red-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                        class="text-white bg-red-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </div>
@@ -95,7 +94,24 @@
         </div>
     </div>
 </body>
-
+<script>
+function hapusLokasi(idLokasi) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Data lokasi beserta karyawan yang terkait akan dihapus!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "<?php echo base_url('admin/hapus_lokasi/'); ?>" + idLokasi;
+        }
+    });
+}
+</script>
 <?php if($this->session->flashdata('berhasil_update')){ ?>
 <script>
 Swal.fire({

@@ -22,35 +22,10 @@
 
                 <hr>
 
-                <div class="flex justify-between mt-5 mb-5">
-
-                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-blue-800"
-                        type="button">Filter <i class="fa-solid fa-chevron-down ml-2" aria-hidden="true"></i>
-                    </button>
-
-                    <!-- Filter -->
-                    <div id="dropdown"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby="dropdownDefaultButton">
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">5</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">10</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">20</a>
-                            </li>
-                        </ul>
-                    </div>
-
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mt-5 sm:mb-5">
                     <!-- Search -->
-                    <form action="<?= base_url('user/history_cuti') ?>" method="get">
+                    <form action="<?= base_url('user/history_cuti') ?>" method="get"
+                        class="relative mb-3 sm:mb-0 sm:ml-auto">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -80,9 +55,6 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Nama
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Cuti Dari
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -91,9 +63,6 @@
                                 <th scope="col" class="px-6 py-3">
                                     Masuk Kerja
                                 </th>
-                                <!-- <th scope="col" class="px-6 py-3">
-                                    Jumlah Cuti
-                                </th> -->
                                 <th scope="col" class="px-6 py-3">
                                     Keperluan
                                 </th>
@@ -113,9 +82,6 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo nama_user($row->id_user); ?>
-                                </td>
-                                <td class="px-6 py-4">
                                     <?php echo convDate($row->awal_cuti); ?>
                                 </td>
                                 <td class="px-6 py-4">
@@ -124,8 +90,6 @@
                                 <td class="px-6 py-4">
                                     <?php echo convDate($row->masuk_kerja); ?>
                                 </td>
-                                <!-- <td class="px-6 py-4">
-                                </td> -->
                                 <td class="px-6 py-4">
                                     <?php echo $row->keperluan_cuti; ?>
                                 </td>
@@ -141,30 +105,29 @@
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-function setujuCuti(cutiId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '<?= base_url('user/setujuCuti/') ?>' + cutiId, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-            location.reload();
-        }
-    };
-    xhr.send();
-}
 
-function tidakSetujuCuti(cutiId) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '<?= base_url('user/tidakSetujuCuti/') ?>' + cutiId, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-            location.reload();
-        }
-    };
-    xhr.send();
-}
+<?php if ($this->session->flashdata('berhasil_cuti')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_cuti'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
 </script>
+<?php } ?>
+
+<?php if ($this->session->flashdata('gagal_cuti')) { ?>
+<script>
+Swal.fire({
+    title: "Gagal",
+    text: "<?php echo $this->session->flashdata('gagal_cuti'); ?>",
+    icon: "error",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
 </html>

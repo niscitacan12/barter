@@ -67,16 +67,17 @@
                                     <?php echo $row->username; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <!-- button detail admin -->
-                                    <a type="button" href="<?php echo base_url(
+                                    <div class="flex justify-content-between">
+                                        <!-- button detail admin -->
+                                        <a type="button" href="<?php echo base_url(
                                         'superadmin/detail_admin/' .
                                             $row->id_admin
                                     ); ?>"
-                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                    </a>
-                                    <!-- button edit admin -->
-                                    <a type="button" href="<?php echo base_url(
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                        <!-- button edit admin -->
+                                        <a type="button" href="<?php echo base_url(
                                         'superadmin/update_admin/' .
                                             $row->id_admin
                                     ); ?>"
@@ -84,10 +85,7 @@
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <!-- button hapus admin -->
-                                    <a type="button" href="<?php echo base_url(
-                                        'superadmin/hapus_admin/' .
-                                            $row->id_admin
-                                    ); ?>"
+                                    <a type="button" onclick="hapusAdmin(<?php echo $row->id_admin; ?>)"
                                         class="text-white bg-red-600 500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
@@ -107,6 +105,25 @@
         </div>
     </div>
 </body>
+
+<script>
+function hapusAdmin(idAdmin) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Data admin akan dihapus!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "<?php echo base_url('superadmin/hapus_admin/'); ?>" + idAdmin;
+        }
+    });
+}
+</script>
 
 <?php if($this->session->flashdata('gagal_tambah')){ ?>
 <script>

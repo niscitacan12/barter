@@ -38,7 +38,7 @@
                                 Username</label>
                         </div>
 
-                        <div class="grid md:grid-cols-2 md:gap-6">
+                        <div class="grid md:grid-cols-2 md:gap-6 mb-6">
 
                             <!-- Shift Input -->
                             <div class="relative z-0 w-full mb-6 group">
@@ -62,6 +62,36 @@
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Nama Belakang
                                 </label>
+                            </div>
+                            <div class="relative z-0 w-full mb-6 group">
+                                <label for="id_jabatan"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
+                                <select name="id_jabatan"
+                                    class="bg-gray-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                    <option selected value="<?php echo $user->id_jabatan ?>">
+                                        <?php echo nama_jabatan($user->id_jabatan) ?>
+                                    </option>
+                                    <?php foreach ($jabatan as $row): ?>
+                                    <option value="<?php echo $row->id_jabatan; ?>">
+                                        <?php echo $row->nama_jabatan; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="relative z-0 w-full mb-6 group">
+                                <label for="id_jabatan"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
+                                <select name="id_shift"
+                                    class="bg-gray-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                    <option selected value="<?php echo $user->id_shift ?>">
+                                        <?php echo nama_shift($user->id_shift) ?>
+                                    </option>
+                                    <?php foreach ($shift as $row): ?>
+                                    <option value="<?php echo $row->id_shift; ?>">
+                                        <?php echo $row->nama_shift; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
 

@@ -626,3 +626,5 @@ class User extends CI_Controller
         $data['absensi'] = $this->user_model->getAbsensiDetail($id_absensi);
         $this->load->view('page/user/detail_absensi', $data);
     }
+
+}

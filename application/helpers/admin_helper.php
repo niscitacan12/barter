@@ -56,6 +56,19 @@ function nama_organisasi($id_organisasi)
     }
 }
 
+function get_alamat($id_organisasi)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db
+        ->where('id_organisasi', $id_organisasi)
+        ->get('organisasi');
+    foreach ($result->result() as $c) {
+        $tmt = $c->alamat;
+        return $tmt;
+    }
+}
+
 function get_organisasi($id_organisasi)
 {
     $ci = &get_instance();
@@ -76,6 +89,31 @@ function nama_admin($id_admin)
         $tmt = $c->username;
         return $tmt;
     }
+}
+
+function tampilkan_tanggal_indonesia($tanggal)
+{
+    $date = new DateTime($tanggal);
+    $monthNames = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    ];
+
+    $day = $date->format('d');
+    $month = $date->format('n') - 1; // Format bulan dimulai dari 1, sedangkan array dimulai dari 0
+    $year = $date->format('Y');
+
+    return $day . ' ' . $monthNames[$month] . ' ' . $year;
 }
 
 function get_jabatan_by_cuti_id($cuti_id)

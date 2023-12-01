@@ -272,12 +272,7 @@ class User_model extends CI_Model
             return false; // Mengembalikan false jika tidak ditemukan data
         }
     }
-public function getAbsensiDetail($id_absensi) {
-    $this->db->where('id_absensi', $id_absensi);
-    $query = $this->db->get('absensi');
-    return $query->row(); 
-}
-
+    
 public function updateUserPhoto($user_id, $data)
 {
     $update_result = $this->db->update('user', $data, [
@@ -343,13 +338,6 @@ public function get_current_image($user_id) {
     }
 
     return null;
-}
-
-public function get_user_by_email($email)
-{
-    $query = $this->db->get_where('user', ['email' => $email]);
-
-    return $query->row_array();
 }
 
 public function getJabatanByIdAdmin($id_admin)

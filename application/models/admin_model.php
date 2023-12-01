@@ -781,12 +781,6 @@ class Admin_model extends CI_Model
 
         return $query->num_rows(); // Mengembalikan jumlah baris yang cocok dengan kondisi
     }
-       if ($query->num_rows() > 0) {
-           return $query->result_array();
-       } else {
-           return array();
-       }
-   }
    
    public function updateAdminPhoto($user_id, $data)
    {

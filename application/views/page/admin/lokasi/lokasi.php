@@ -79,8 +79,7 @@
                                         class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <a type="button"
-                                        href="<?php echo base_url('admin/hapus_lokasi/' . $data->id_lokasi); ?>"
+                                    <a type="button" onclick="hapusLokasi(<?php echo $data->id_lokasi; ?>)"
                                         class="text-white bg-red-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
@@ -95,7 +94,24 @@
         </div>
     </div>
 </body>
-
+<script>
+function hapusLokasi(idLokasi) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Data lokasi beserta karyawan yang terkait akan dihapus!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "<?php echo base_url('admin/hapus_lokasi/'); ?>" + idLokasi;
+        }
+    });
+}
+</script>
 <?php if($this->session->flashdata('berhasil_update')){ ?>
 <script>
 Swal.fire({

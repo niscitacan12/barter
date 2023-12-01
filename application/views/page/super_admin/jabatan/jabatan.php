@@ -64,12 +64,10 @@
                                         <?php echo $no; ?>
                                     </th>
                                     <td class="px-6 py-4">
-                                        <?php echo $row['nama_jabatan']; ?>
+                                        <?php echo $row->nama_jabatan; ?>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <?php echo jumlah_karyawan(
-                                            $row['id_jabatan']
-                                        ); ?>
+                                        <?php echo jumlah_karyawan [$row->id_jabatan]; ?>
                                     </td>
                                     <td class="px-6 py-4">
 

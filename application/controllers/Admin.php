@@ -359,7 +359,26 @@ class Admin extends CI_Controller
     // Page Update User
     public function update_user($id_user)
     {
+        // Dapatkan data terkait pengguna dari sesi
+        $id_admin = $this->session->userdata('id');
+        $id_jabatan = $this->session->userdata('id_jabatan');
+        $id_shift = $this->session->userdata('id_shift');
+        $id_organisasi = $this->session->userdata('id_organisasi');
+    
+        // Dapatkan data pengguna berdasarkan ID
         $data['user'] = $this->admin_model->getUserId($id_user);
+    
+        // // Tetapkan data terkait pengguna ke array $data
+        // $data['id_jabatan'] = $id_jabatan;
+        // $data['id_shift'] = $id_shift;
+        // $data['id_organisasi'] = $id_organisasi;
+    
+        // Dapatkan data shift, jabatan, dan organisasi
+        $data['shift'] = $this->admin_model->get_shift_by_id_admin($id_admin);
+        $data['jabatan'] = $this->admin_model->get_jabatan_by_id_admin($id_admin);
+        $data['organisasi'] = $this->admin_model->get_data('organisasi')->result();
+    
+        // Muat tampilan dengan data
         $this->load->view('page/admin/user/update_user', $data);
     }
 
@@ -547,7 +566,7 @@ class Admin extends CI_Controller
         $organisasi = $this->admin_model->get_organisasi_by_id($id_organisasi);
 
         // Tambahkan ini untuk upload logo
-        $image = $this->upload_image_logo('image');
+        $image = $this->upload_image_logo('image', $organisasi->image);
         if ($image[0] == true) {
             // Set properti image pada objek $organisasi
             $organisasi->image = $image[1];
@@ -566,7 +585,7 @@ class Admin extends CI_Controller
             // Tambahkan field lain jika ada
         ];
 
-        // Lakukan pembaruan data Admin
+        // Lakukan pembaruan data Organisasi
         $this->admin_model->update_organisasi($id_organisasi, $data);
         $this->session->set_flashdata(
             'berhasil_update',
@@ -574,7 +593,7 @@ class Admin extends CI_Controller
         );
 
         // Redirect ke halaman setelah pembaruan data
-        redirect('admin/organisasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+        redirect('admin/organisasi'); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Organisasi
     }
 
     // aksi tambah organisasi
@@ -690,21 +709,54 @@ class Admin extends CI_Controller
         $image = $this->upload_image_admin('image');
         $user_id = $this->session->userdata('id');
         $admin = $this->admin_model->getAdminByID($user_id);
-
+    
         if ($image[0] == true) {
             $admin->image = $image[1];
         }
-
+    
         $data = [
             'image' => $image[1],
         ];
-
+    
         // Update foto di database
-        $this->admin_model->updateAdminPhoto($user_id, $data);
-
+        $update_result = $this->admin_model->updateAdminPhoto($user_id, $data);
+    
+        // Set flash data untuk memberi tahu user tentang hasil pembaruan foto
+        if ($update_result) {
+            $this->session->set_flashdata('berhasil_ubah_foto', 'Berhasil mengubah foto');
+        } else {
+            $this->session->set_flashdata('gagal_update', 'Gagal mengubah foto');
+        }
+    
         // Redirect ke halaman profile
         redirect(base_url('admin/profile'));
     }
+
+     // aksi ubah akun
+     public function edit_profile()
+     {
+         $email = $this->input->post('email');
+         $username = $this->input->post('username');
+         $nama_depan = $this->input->post('nama_depan');
+         $nama_belakang = $this->input->post('nama_belakang');
+ 
+         $data = array(
+             'email' => $email,
+             'username' => $username,
+             'nama_depan' => $nama_depan,
+             'nama_belakang' => $nama_belakang,
+         );
+ 
+         $update_result = $this->admin_model->update_data('admin', $data, array('id_admin' => $this->session->userdata('id')));
+ 
+         if ($update_result) {
+             $this->session->set_flashdata('berhasil_ubah_foto', 'Data berhasil diperbarui');
+         } else {
+             $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
+         }
+ 
+         redirect(base_url('admin/profile'));
+     }
 
     // aksi ubah akun
     public function aksi_ubah_akun()
@@ -934,38 +986,127 @@ class Admin extends CI_Controller
     }
 
     // 3. Lain-lain
+    // Pembaruan password
+    public function update_password()
+    {
+        $password_lama = $this->input->post('password_lama');
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+
+        $stored_password = $this->admin_model->getPasswordById($this->session->userdata('id'));
+
+        if (md5($password_lama) != $stored_password) {
+            $this->session->set_flashdata('kesalahan_password_lama', 'Password lama yang dimasukkan salah');
+        } else {
+            if ($password_baru === $konfirmasi_password) {
+                $update_result = $this->admin_model->update_password($this->session->userdata('id'), md5($password_baru));
+                if ($update_result) {
+                    $this->session->set_flashdata('ubah_password', 'Berhasil mengubah password');
+                } else {
+                    $this->session->set_flashdata('gagal_update', 'Gagal memperbarui password');
+                }
+            } else {
+                $this->session->set_flashdata('kesalahan_password', 'Password baru dan Konfirmasi password tidak sama');
+            }
+        }
+        redirect(base_url('admin/profile'));
+    }
+
     // upload image
     public function upload_image_admin($value)
     {
+        // Mendapatkan ID pengguna dari sesi
+        $user_id = $this->session->userdata('id');
+
+        // Mendapatkan nama file foto saat ini
+        $admin = $this->admin_model->getAdminByID($user_id);
+        $current_image = $admin->image;
+
+        // Generate kode unik untuk nama file baru
         $kode = round(microtime(true) * 1000);
+
+        // Konfigurasi upload
         $config['upload_path'] = './images/admin/';
         $config['allowed_types'] = 'jpg|png|jpeg';
         $config['max_size'] = 30000;
         $config['file_name'] = $kode;
         $this->upload->initialize($config);
+
+        // Lakukan proses upload
         if (!$this->upload->do_upload($value)) {
             return [false, ''];
         } else {
+            // Jika upload berhasil, dapatkan informasi file baru
             $fn = $this->upload->data();
-            $nama = $fn['file_name'];
-            return [true, $nama];
+            $new_image = $fn['file_name'];
+
+            // Hapus foto sebelumnya jika ada
+            if (!empty($current_image)) {
+                $image_path = './images/admin/' . $current_image;
+                if (file_exists($image_path)) {
+                    unlink($image_path);
+                }
+            }
+
+            // Kembalikan hasil upload baru
+            return [true, $new_image];
         }
     }
+    
+    // public function upload_image_admin($value)
+    // {
+    //     $kode = round(microtime(true) * 1000);
+    //     $config['upload_path'] = './images/admin/';
+    //     $config['allowed_types'] = 'jpg|png|jpeg';
+    //     $config['max_size'] = 30000;
+    //     $config['file_name'] = $kode;
+    //     $this->upload->initialize($config);
+    //     if (!$this->upload->do_upload($value)) {
+    //         return [false, ''];
+    //     } else {
+    //         $fn = $this->upload->data();
+    //         $nama = $fn['file_name'];
+    //         return [true, $nama];
+    //     }
+    // }
 
-    public function upload_image_logo($value)
+    // Fungsi untuk menghapus file lama saat upload logo baru
+    private function upload_image_logo($value, $old_image)
     {
         $kode = round(microtime(true) * 1000);
+
+        // Konfigurasi upload
         $config['upload_path'] = './images/logo/';
         $config['allowed_types'] = 'jpg|png|jpeg';
         $config['max_size'] = 30000;
         $config['file_name'] = $kode;
         $this->upload->initialize($config);
+
         if (!$this->upload->do_upload($value)) {
             return [false, ''];
         } else {
+            // Jika upload berhasil, dapatkan informasi file baru
             $fn = $this->upload->data();
-            $nama = $fn['file_name'];
-            return [true, $nama];
+            $new_image = $fn['file_name'];
+
+            // Hapus file lama
+            $this->deleteOldImage($old_image);
+
+            return [true, $new_image];
+        }
+    }
+
+    // Fungsi untuk menghapus file lama
+    private function deleteOldImage($old_image)
+    {
+        // Pastikan file lama tidak kosong sebelum menghapus
+        if (!empty($old_image)) {
+            $image_path = './images/logo/' . $old_image;
+
+            // Hapus file lama jika ada
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
         }
     }
 

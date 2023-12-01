@@ -486,20 +486,20 @@ class SuperAdmin extends CI_Controller
         $this->load->view('page/super_admin/shift/update_shift', $data);
     }
 
-    // Page Profile
-    public function profile()
-    {
-        if ($this->session->userdata('id')) {
-            $user_id = $this->session->userdata('id');
-            $data['superadmin'] = $this->super_model->getSuperAdminByID(
-                $user_id
-            );
+// Page Profile
+public function profile()
+{
+    if ($this->session->userdata('id')) {
+        $user_id = $this->session->userdata('id');
+        $data['superadmin'] = $this->super_model->getSuperAdminByID(
+            $user_id
+        );
 
-            $this->load->view('page/super_admin/profile/profile', $data);
-        } else {
-            redirect('auth');
-        }
+        $this->load->view('page/super_admin/profile/profile', $data);
+    } else {
+        redirect('auth');
     }
+}
 
     // page detail absen
     public function detail_absen($id_absensi)
@@ -1131,25 +1131,18 @@ class SuperAdmin extends CI_Controller
         redirect(base_url('superadmin/profile'));
     }
 
-    // 3. Lain-lain
-    public function upload_image_superadmin($value)
+     // 3. Lain-lain
+    public function get_realtime_absensi()
     {
-        $kode = round(microtime(true) * 1000);
-        $config['upload_path'] = './images/superadmin/';
-        $config['allowed_types'] = 'jpg|png|jpeg';
-        $config['max_size'] = 30000;
-        $config['file_name'] = $kode;
-        $this->upload->initialize($config);
-        if (!$this->upload->do_upload($value)) {
-            return [false, ''];
-        } else {
-            $fn = $this->upload->data();
-            $nama = $fn['file_name'];
-            return [true, $nama];
-        }
+        // Panggil metode di dalam model untuk mendapatkan data absensi real-time
+        $realtime_absensi = $this->super_model->get_realtime_absensi();
+
+        // Mengirim data dalam format JSON
+        echo json_encode($realtime_absensi);
     }
 
-    // ubah foto
+    // 3. Lain-lain
+    // untuk ubah foto
     public function aksi_ubah_foto()
     {
         $image = $this->upload_image_superadmin('image');
@@ -1167,8 +1160,107 @@ class SuperAdmin extends CI_Controller
         // Update foto di database
         $this->super_model->updateSuperAdminPhoto($user_id, $data);
 
+          // Set flash data untuk memberi tahu user tentang hasil pembaruan foto
+          if ($update_result) {
+            $this->session->set_flashdata('gagal_update', 'Gagal mengubah foto');
+        } else {
+            $this->session->set_flashdata('berhasil_ubah_foto', 'Berhasil mengubah foto');
+        }
+
         // Redirect ke halaman profile
         redirect(base_url('superadmin/profile'));
+    }
+    
+    public function update_password()
+    {
+        $password_lama = $this->input->post('password_lama');
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+
+        $stored_password = $this->super_model->getPasswordById($this->session->userdata('id'));
+
+        if (md5($password_lama) != $stored_password) {
+            $this->session->set_flashdata('kesalahan_password_lama', 'Password lama yang dimasukkan salah');
+        } else {
+            if ($password_baru === $konfirmasi_password) {
+                $update_result = $this->super_model->update_password($this->session->userdata('id'), md5($password_baru));
+                if ($update_result) {
+                    $this->session->set_flashdata('ubah_password', 'Berhasil mengubah password');
+                } else {
+                    $this->session->set_flashdata('gagal_update', 'Gagal memperbarui password');
+                }
+            } else {
+                $this->session->set_flashdata('kesalahan_password', 'Password baru dan Konfirmasi password tidak sama');
+            }
+        }
+        redirect(base_url('superadmin/profile'));
+    }
+
+    // Pembaruan profil admin
+    public function edit_profile()
+    {
+        $email = $this->input->post('email');
+        $username = $this->input->post('username');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+
+        $data = array(
+            'email' => $email,
+            'username' => $username,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+        );
+
+        $update_result = $this->super_model->update_data('superadmin', $data, array('id_superadmin' => $this->session->userdata('id')));
+
+        if ($update_result) {
+           $this->session->set_flashdata('berhasil_ubah_foto', 'Data berhasil diperbarui');
+       } else {
+           $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
+       }
+
+        redirect(base_url('superadmin/profile'));
+    }
+
+
+    public function upload_image_superadmin($value)
+    {
+        // Mendapatkan ID pengguna dari sesi
+        $user_id = $this->session->userdata('id');
+
+        // Mendapatkan nama file foto saat ini
+        $superadmin = $this->super_model->getSuperAdminByID($user_id);
+        $current_image = $superadmin->image;
+
+        // Generate kode unik untuk nama file baru
+        $kode = round(microtime(true) * 1000);
+
+        // Konfigurasi upload
+        $config['upload_path'] = './images/superadmin/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+
+        // Lakukan proses upload
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            // Jika upload berhasil, dapatkan informasi file baru
+            $fn = $this->upload->data();
+            $new_image = $fn['file_name'];
+
+            // Hapus foto sebelumnya jika ada
+            if (!empty($current_image)) {
+                $image_path = './images/superadmin/' . $current_image;
+                if (file_exists($image_path)) {
+                    unlink($image_path);
+                }
+            }
+
+            // Kembalikan hasil upload baru
+            return [true, $new_image];
+        }
     }
 
     public function tampil_admin()

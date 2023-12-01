@@ -96,12 +96,46 @@ class User extends CI_Controller
     {
         if ($this->session->userdata('id')) {
             $user_id = $this->session->userdata('id');
+            $id_admin = $this->session->userdata('id_admin');
+            $data = [
+                'id_jabatan' => $this->session->userdata('id_jabatan'),
+                'id_shift' => $this->session->userdata('id_shift'),
+                'id_organisasi' => $this->session->userdata('id_organisasi'),
+            ];
+            $data['shift'] = $this->user_model->getShiftByIdAdmin($id_admin);
+            $data['jabatan'] = $this->user_model->getJabatanByIdAdmin($id_admin);
+            $data['organisasi'] = $this->user_model->get_data('organisasi')->result();
             $data['user'] = $this->user_model->getUserByID($user_id);
-
             $this->load->view('page/user/profile', $data);
         } else {
             redirect('auth');
         }
+    }
+
+    // Pembaruan profil admin
+    public function edit_profile()
+    {
+        $email = $this->input->post('email');
+        $username = $this->input->post('username');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+     
+        $data = array(
+            'email' => $email,
+            'username' => $username,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+        );
+     
+        $update_result = $this->user_model->update_data('user', $data, array('id_user' => $this->session->userdata('id')));
+     
+        if ($update_result) {
+           $this->session->set_flashdata('berhasil_ubah_foto', 'Data berhasil diperbarui');
+       } else {
+           $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
+       }
+     
+        redirect(base_url('user/profile'));
     }
 
     public function cuti()
@@ -362,23 +396,6 @@ class User extends CI_Controller
     }
 
     // 3. Lain-lain
-    public function upload_image_user($value)
-    {
-        $kode = round(microtime(true) * 1000);
-        $config['upload_path'] = './images/user/';
-        $config['allowed_types'] = 'jpg|png|jpeg';
-        $config['max_size'] = 30000;
-        $config['file_name'] = $kode;
-        $this->upload->initialize($config);
-        if (!$this->upload->do_upload($value)) {
-            return [false, ''];
-        } else {
-            $fn = $this->upload->data();
-            $nama = $fn['file_name'];
-            return [true, $nama];
-        }
-    }
-
     public function get_realtime_absensi()
     {
         // Panggil metode di dalam model untuk mendapatkan data absensi real-time
@@ -386,6 +403,99 @@ class User extends CI_Controller
 
         // Mengirim data dalam format JSON
         echo json_encode($realtime_absensi);
+    }
+
+    // Pembaruan password
+    public function update_password()
+    {
+        $password_lama = $this->input->post('password_lama');
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+
+        $stored_password = $this->user_model->getPasswordById($this->session->userdata('id'));
+
+        if (md5($password_lama) != $stored_password) {
+            $this->session->set_flashdata('kesalahan_password_lama', 'Password lama yang dimasukkan salah');
+        } else {
+            if ($password_baru === $konfirmasi_password) {
+                $update_result = $this->user_model->update_password($this->session->userdata('id'), md5($password_baru));
+                if ($update_result) {
+                    $this->session->set_flashdata('ubah_password', 'Berhasil mengubah password');
+                } else {
+                    $this->session->set_flashdata('gagal_update', 'Gagal memperbarui password');
+                }
+            } else {
+                $this->session->set_flashdata('kesalahan_password', 'Password baru dan Konfirmasi password tidak sama');
+            }
+        }
+        redirect(base_url('user/profile'));
+    }
+
+    public function upload_image_user($value)
+    {
+        // Mendapatkan ID pengguna dari sesi atau sumber lainnya
+        $user_id = $this->session->userdata('id'); // Gantilah sesuai dengan sumber ID pengguna
+
+        // Mendapatkan nama file foto saat ini
+        $user = $this->user_model->getUserByID($user_id); // Gantilah dengan nama model dan metode yang sesuai
+        $current_image = $user->image; // Pastikan memiliki properti image pada model
+
+        // Generate kode unik untuk nama file baru
+        $kode = round(microtime(true) * 1000);
+
+        // Konfigurasi upload
+        $config['upload_path'] = './images/user/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+
+        // Lakukan proses upload
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            // Jika upload berhasil, dapatkan informasi file baru
+            $fn = $this->upload->data();
+            $new_image = $fn['file_name'];
+
+            // Hapus foto sebelumnya jika ada
+            if (!empty($current_image)) {
+                $image_path = './images/user/' . $current_image;
+                if (file_exists($image_path)) {
+                    unlink($image_path);
+                }
+            }
+
+            // Kembalikan hasil upload baru
+            return [true, $new_image];
+        }
+    }
+
+    public function aksi_ubah_foto()
+    {
+        $image = $this->upload_image_user('image');
+        $user_id = $this->session->userdata('id');
+        $admin = $this->user_model->getUserByID($user_id);
+
+        if ($image[0] == true) {
+            $admin->image = $image[1];
+        }
+
+        $data = [
+            'image' => $image[1],
+        ];
+
+        // Update foto di database
+        $this->user_model->updateUserPhoto($user_id, $data);
+
+        if ($update_result) {
+            $this->session->set_flashdata('gagal_update', 'Gagal mengubah foto');
+        } else {
+            $this->session->set_flashdata('berhasil_ubah_foto', 'Berhasil mengubah foto');
+        }
+
+        // Redirect ke halaman profile
+        redirect(base_url('user/profile'));
     }
 
     public function aksi_ubah_password()
@@ -412,28 +522,6 @@ class User extends CI_Controller
                 redirect(base_url('user/profile'));
             }
         }
-
-        // Redirect ke halaman profile
-        redirect(base_url('user/profile'));
-    }
-
-    // ubah foto
-    public function aksi_ubah_foto()
-    {
-        $image = $this->upload_image_user('image');
-        $user_id = $this->session->userdata('id');
-        $admin = $this->user_model->getUserByID($user_id);
-
-        if ($image[0] == true) {
-            $admin->image = $image[1];
-        }
-
-        $data = [
-            'image' => $image[1],
-        ];
-
-        // Update foto di database
-        $this->user_model->updateUserPhoto($user_id, $data);
 
         // Redirect ke halaman profile
         redirect(base_url('user/profile'));

@@ -760,27 +760,35 @@ class Admin_model extends CI_Model
        }
    }
 
-   public function get_organisasi_data() 
-   {
-       // Fetch organisasi data from your database table
-       $query = $this->db->get('organisasi');
+    public function get_organisasi_data() 
+    {
+        // Fetch organisasi data from your database table
+        $query = $this->db->get('organisasi');
 
-       if ($query->num_rows() > 0) {
-           return $query->result();
-       } else {
-           return array();
-       }
-   }
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return array();
+        }
+    }
 
-   public function get_user_data() {
-       // Fetch user data from your database table
-       $query = $this->db->get('user');
+    public function get_user_data() {
+        // Fetch user data from your database table
+        $query = $this->db->get('user');
 
-       if ($query->num_rows() > 0) {
-           return $query->result_array();
-       } else {
-           return array();
-       }
-   }
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return array();
+        }
+    }
+
+    public function count_users_by_organisasi($id_organisasi) {
+        // Menghitung jumlah pengguna berdasarkan id_organisasi
+        $this->db->where('id_organisasi', $id_organisasi);
+        $query = $this->db->get('user'); // Ganti 'users' dengan nama tabel pengguna di database Anda
+
+        return $query->num_rows(); // Mengembalikan jumlah baris yang cocok dengan kondisi
+    }
 }
 ?>

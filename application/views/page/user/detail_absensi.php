@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <?php $this->load->view('components/sidebar_super_admin'); ?>
+    <?php $this->load->view('components/sidebar_user'); ?>
     <div class="p-4 sm:ml-64">
         <div class="p-5 mt-10">
 
@@ -18,14 +18,14 @@
             <div
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex justify-between">
-                    <h6 class="mb-5 text-xl font-bold text-gray-900 dark:text-white">Detail Absensi Karyawan</h6>
+                    <h6 class="mb-5 text-xl font-bold text-gray-900 dark:text-white">Detail Absensi</h6>
                 </div>
                 <hr>
 
                 <div class="mt-5 text-left">
                     <!-- Form Input -->
 
-                    <form action="<?php echo base_url(''); ?>" method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id_absensi" value="<?php echo $absensi->id_absensi; ?>">
                         <div class="relative z-0 w-full mb-6 group">
                             <input type="text" name="tanggal" id="tanggal"
@@ -91,7 +91,6 @@
                                     Masuk
                                 </label>
                             </div>
-
                             <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
                                 <?php if (!empty($absensi->foto_pulang)): ?>
                                 <img src="<?= base_url($absensi->foto_pulang); ?>" name="foto_pulang" alt="Foto pulang"

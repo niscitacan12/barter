@@ -150,112 +150,126 @@ class User extends CI_Controller
         $tanggal = date('Y-m-d');
         $jam = date('H:i:s');
 
-        // Menangani upload foto dari kamera
-        $image_data = $this->input->post('image_data');
+        // Check jika user sudah melakukan absen atau izin pada hari ini
+        $already_absent = $this->user_model->cek_absen($id_user, $tanggal);
+        $already_requested = $this->user_model->cek_izin($id_user, $tanggal);
 
-        // Konversi data URL ke gambar dan simpan di server
-        $img = str_replace('data:image/png;base64,', '', $image_data);
-        $img = str_replace(' ', '+', $img);
-        $data = base64_decode($img);
-
-        $foto_masuk = './images/foto_masuk/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
-        file_put_contents($foto_masuk, $data);
-
-        // Rest of your code
-        $data = [
-            'id_user' => $id_user,
-            'tanggal_absen' => $tanggal,
-            'keterangan_izin' => '-',
-            'jam_masuk' => $jam,
-            'foto_masuk' => $foto_masuk, // Gunakan foto_masuk yang sudah diupload
-            'lokasi_masuk' => $this->input->post('lokasi_masuk'),
-            'jam_pulang' => '00:00:00',
-            'foto_pulang' => '-',
-            'lokasi_pulang' => '-',
-            'status' => 'false',
-        ];
-
-        // Menyisipkan data absen ke dalam database
-        $inserted = $this->user_model->tambah_data('absensi', $data);
-
-        if ($inserted) {
-            // Jika berhasil disisipkan, tambahkan notifikasi berhasil
-            $this->session->set_flashdata('berhasil_absen', 'Berhasil Absen.');
-
-            $options = [
-                'cluster' => 'ap1',
-                'useTLS' => true,
-            ];
-            $pusher = new Pusher(
-                '33407527b00e1d0ff775',
-                '9fb7fb6f4c554ecba9fb',
-                '1712968',
-                $options
-            );
-            $message['message'] = $email . ' melakukan absen masuk';
-            $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
-
+        if ($already_absent) {
+            $this->session->set_flashdata('gagal_absen', 'Anda sudah melakukan absen hari ini.');
+            redirect(base_url('user/history_absensi'));
+        } elseif ($already_requested) {
+            $this->session->set_flashdata('gagal_absen', 'Anda sudah mengajukan izin hari ini.');
             redirect(base_url('user/history_absensi'));
         } else {
-            // Jika gagal disisipkan, tambahkan notifikasi gagal
-            $this->session->set_flashdata(
-                'gagal_absen',
-                'Gagal Absen. Silakan coba lagi.'
-            );
+            // Lakukan proses absen
+            $lokasi_masuk = $this->input->post('lokasi_masuk');
+            $image_data = $this->input->post('image_data');
 
-            redirect(base_url('user/absen'));
+            // Konversi data URL ke gambar dan simpan di server
+            $img = str_replace('data:image/png;base64,', '', $image_data);
+            $img = str_replace(' ', '+', $img);
+            $data = base64_decode($img);
+
+            $foto_masuk = './images/foto_masuk/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
+            file_put_contents($foto_masuk, $data);
+
+            // Data untuk disimpan ke dalam database
+            $data = [
+                'id_user' => $id_user,
+                'tanggal_absen' => $tanggal,
+                'keterangan_izin' => '-',
+                'jam_masuk' => $jam,
+                'foto_masuk' => $foto_masuk,
+                'lokasi_masuk' => $lokasi_masuk,
+                'jam_pulang' => '00:00:00',
+                'foto_pulang' => '-',
+                'lokasi_pulang' => '-',
+                'status' => 'false',
+            ];
+
+            // Menyisipkan data absen ke dalam database
+            $inserted = $this->user_model->tambah_data('absensi', $data);
+            
+            if ($inserted) {
+                $this->session->set_flashdata('berhasil_absen', 'Berhasil Absen.');
+
+                $options = [
+                    'cluster' => 'ap1',
+                    'useTLS' => true,
+                ];
+                $pusher = new Pusher(
+                    '33407527b00e1d0ff775',
+                    '9fb7fb6f4c554ecba9fb',
+                    '1712968',
+                    $options
+                );
+                $message['message'] = $email . ' absen.';
+                $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
+                
+                redirect(base_url('user/history_absensi'));
+            } else {
+                $this->session->set_flashdata('gagal_absen', 'Gagal Absen. Silakan coba lagi.');
+                redirect(base_url('user/absen'));
+            }
         }
     }
 
-
-    // Aksi Izin
     public function aksi_izin()
     {
         $id_user = $this->session->userdata('id');
         $email = $this->session->userdata('email');
         $tanggal = date('Y-m-d');
 
-        $keterangan_izin = $this->input->post('keterangan_izin');
+        // Check jika user sudah melakukan absen atau izin pada hari ini
+        $already_absent = $this->user_model->cek_absen($id_user, $tanggal);
+        $already_requested = $this->user_model->cek_izin($id_user, $tanggal);
 
-        // Periksa apakah 'keterangan_izin' tidak kosong
-        if (!empty($keterangan_izin)) {
-            $data = [
-                'id_user' => $id_user,
-                'tanggal_absen' => $tanggal,
-                'keterangan_izin' => $this->input->post('keterangan_izin'),
-                'jam_masuk' => '00:00:00',
-                'foto_masuk' => '-',
-                'jam_pulang' => '00:00:00',
-                'foto_pulang' => '-',
-                'lokasi_masuk' => '-',
-                'lokasi_pulang' => '-',
-                'status' => 'true',
-            ];
-
-            $this->user_model->tambah_data('absensi', $data);
-            $this->session->set_flashdata('berhasil_izin', 'Berhasil Izin.');
-
-            $options = [
-                'cluster' => 'ap1',
-                'useTLS' => true,
-            ];
-            $pusher = new Pusher(
-                '33407527b00e1d0ff775',
-                '9fb7fb6f4c554ecba9fb',
-                '1712968',
-                $options
-            );
-            $message['message'] = $email . ' mengajukan izin baru.';
-            $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
-
+        if ($already_requested) {
+            $this->session->set_flashdata('gagal_izin', 'Anda sudah mengajukan izin hari ini.');
+            redirect(base_url('user/history_absensi'));
+        } elseif ($already_absent) {
+            $this->session->set_flashdata('gagal_izin', 'Anda sudah melakukan absen hari ini.');
             redirect(base_url('user/history_absensi'));
         } else {
-            // Tampilkan pesan kesalahan jika 'keterangan_izin' kosong
-            $this->session->set_flashdata(
-                'gagal_izin',
-                'Gagal Izin. Keterangan Izin tidak boleh kosong.'
-            );
-            redirect(base_url('page/user/izin'));
+            // Lakukan proses pengajuan izin
+            $keterangan_izin = $this->input->post('keterangan_izin');
+
+            if (!empty($keterangan_izin)) {
+                $data = [
+                    'id_user' => $id_user,
+                    'tanggal_absen' => $tanggal,
+                    'keterangan_izin' => $keterangan_izin,
+                    'jam_masuk' => '00:00:00',
+                    'foto_masuk' => '-',
+                    'jam_pulang' => '00:00:00',
+                    'foto_pulang' => '-',
+                    'lokasi_masuk' => '-',
+                    'lokasi_pulang' => '-',
+                    'status' => 'true',
+                ];
+
+                // Menyisipkan data izin ke dalam database
+                $this->user_model->tambah_data('absensi', $data);
+                $this->session->set_flashdata('berhasil_izin', 'Berhasil Izin.');
+
+                $options = [
+                    'cluster' => 'ap1',
+                    'useTLS' => true,
+                ];
+                $pusher = new Pusher(
+                    '33407527b00e1d0ff775',
+                    '9fb7fb6f4c554ecba9fb',
+                    '1712968',
+                    $options
+                );
+                $message['message'] = $email . ' mengajukan izin baru.';
+                $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
+                
+                redirect(base_url('user/history_absensi'));
+            } else {
+                $this->session->set_flashdata('gagal_izin', 'Gagal Izin. Keterangan Izin tidak boleh kosong.');
+                redirect(base_url('user/izin'));
+            }
         }
     }
 
@@ -280,23 +294,36 @@ class User extends CI_Controller
             !empty($keperluan_cuti) &&
             !empty($id_organisasi)
         ) {
-            $data = [
-                'id_user' => $id_user,
-                'awal_cuti' => $awal_cuti,
-                'akhir_cuti' => $akhir_cuti,
-                'masuk_kerja' => $masuk_kerja,
-                'keperluan_cuti' => $keperluan_cuti,
-                'id_organisasi' => $id_organisasi,
-            ];
+            // Hitung jumlah cuti yang telah diajukan pada tahun ini
+            $jumlah_cuti_setahun_ini = $this->user_model->hitung_cuti_setahun_ini($id_user);
 
-            // Panggil model untuk menyimpan data cuti
-            $this->user_model->tambah_data('cuti', $data);
-            $this->session->set_flashdata(
-                'berhasil_cuti',
-                'Berhasil mengajukan cuti.'
-            );
+            // Jika jumlah cuti pada tahun ini masih kurang dari 2
+            if ($jumlah_cuti_setahun_ini < 2) {
+                $data = [
+                    'id_user' => $id_user,
+                    'awal_cuti' => $awal_cuti,
+                    'akhir_cuti' => $akhir_cuti,
+                    'masuk_kerja' => $masuk_kerja,
+                    'keperluan_cuti' => $keperluan_cuti,
+                    'id_organisasi' => $id_organisasi,
+                ];
 
-            redirect(base_url('user/history_cuti')); // Mengasumsikan 'user/history_cuti' adalah halaman untuk melihat riwayat cuti
+                // Panggil model untuk menyimpan data cuti
+                $this->user_model->tambah_data('cuti', $data);
+                $this->session->set_flashdata(
+                    'berhasil_cuti',
+                    'Berhasil mengajukan cuti.'
+                );
+
+                redirect(base_url('user/history_cuti')); // Mengasumsikan 'user/history_cuti' adalah halaman untuk melihat riwayat cuti
+            } else {
+                // Tampilkan pesan kesalahan jika telah melebihi batas cuti dalam setahun
+                $this->session->set_flashdata(
+                    'gagal_cuti',
+                    'Gagal mengajukan cuti. Anda telah mencapai batas cuti untuk tahun ini.'
+                );
+                redirect(base_url('user/history_cuti'));
+            }
         } else {
             // Tampilkan pesan kesalahan jika ada data yang kosong
             $this->session->set_flashdata(
@@ -465,6 +492,7 @@ class User extends CI_Controller
     
         $id_absensi = $this->input->post('id_absensi');
         $this->user_model->update('absensi', $data_absensi, array('id_absensi' => $id_absensi));
+        $this->session->set_flashdata('berhasil_pulang', 'Berhasil melakukan absen pulang.');
     
         // Dapatkan informasi user dari sesi
         $id_user = $this->session->userdata('id');
@@ -486,7 +514,7 @@ class User extends CI_Controller
     
         // Redirect ke halaman history_absensi dengan pesan sukses atau informasi lainnya
         redirect(base_url('user/history_absensi'));
-    }    
+    }
 
     public function history_cuti()
     {
@@ -506,9 +534,8 @@ class User extends CI_Controller
         $this->load->view('page/user/history_absensi', $data);
     }
     
-    public function detail_history($id_absensi) {
+    public function detail_absensi($id_absensi) {
         $data['absensi'] = $this->user_model->getAbsensiDetail($id_absensi);
-        $this->load->view('page/user/detail_history', $data);
+        $this->load->view('page/user/detail_absensi', $data);
     }
-
 }

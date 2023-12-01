@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
+    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<<body>
+<body>
     <?php $this->load->view('components/sidebar_user'); ?>
     <div class="p-4 sm:ml-64">
         <div class="p-5 mt-10">
@@ -61,7 +62,7 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->tanggal_absen; ?>
+                                    <?php echo convDate($row->tanggal_absen); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->jam_masuk; ?>
@@ -73,53 +74,23 @@
                                     <?php echo $row->keterangan_izin; ?>
                                 </td>
                                 <td class="px-5 py-3">
-                                    <a type="button" href="<?= base_url('user/detail_history/' . $row->id_absensi) ?>"
+                                    <a type="button" href="<?= base_url('user/detail_absensi/' .  $row->id_absensi) ?>"
                                         class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-circle-info"></i>
                                     </a>
-                                    <?php
-                                    date_default_timezone_set('Asia/Jakarta');
-                                    $jam_sekarang = date('H:i:s'); // Get the current server time in the 'Asia/Jakarta' timezone
-
-                                    if ($row->status !== 'true') {
-                                        $jam_batas_pulang = '16:00:00';
-
-                                        // Tautan pulang jika sudah jam 12
-                                        echo '<a href="' . base_url('user/pulang/' . $row->id_absensi) . '" 
-                                            class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
-                                            onclick="return checkJamPulang(\'' . $jam_sekarang . '\', \'' . $jam_batas_pulang . '\')">
-                                            <i class="fa-solid fa-house"></i>
-                                        </a>';
-
-                                        // Menampilkan SweetAlert jika belum jam 12
-                                        echo "<script>
-                                            function checkJamPulang(jamSekarang, jamBatasPulang) {
-                                                var dateSekarang = new Date('1970-01-01T' + jamSekarang);
-                                                var dateBatasPulang = new Date('1970-01-01T' + jamBatasPulang);
-
-                                                // Bandingkan waktu menggunakan perbandingan langsung
-                                                if (dateSekarang < dateBatasPulang) {
-                                                    Swal.fire({
-                                                        icon: 'error',
-                                                        title: 'Oops...',
-                                                        text: 'Anda tidak dapat pulang sebelum jam 15:00!',
-                                                    });
-                                                    return false; // Mencegah tautan diteruskan jika belum jam 12
-                                                }
-                                                return true; // Lanjutkan ke tautan jika sudah jam 12
-                                            }
-                                        </script>";
-                                    } else {
-                                        // Button disabled jika status sudah 'true'
-                                        echo '<button type="button" class="text-white bg-gray-500 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800" disabled>
-                                            <i class="fa-solid fa-house"></i>
-                                        </button>';
-                                    }
-                                    ?>
+                                    <?php if ($row->status != 'true'): ?>
+                                    <a type="button" href="<?= base_url('user/pulang/' .  $row->id_absensi) ?>"
+                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                        <i class="fa-solid fa-home"></i>
+                                    </a>
+                                    <?php else: ?>
+                                    <button
+                                        class="text-white bg-gray-500 opacity-50 cursor-not-allowed focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+                                        disabled>
+                                        <i class="fa-solid fa-home"></i>
+                                    </button>
+                                    <?php endif; ?>
                                 </td>
-
-                                </td>
-
                             </tr>
                             <?php
                             endforeach;
@@ -131,122 +102,104 @@
         </div>
     </div>
 
-    </body>
-    <script>
-    function confirmPulang() {
-        Swal.fire({
-            text: 'Apakah Anda yakin ingin pulang sekarang?',
-            showCancelButton: true,
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Batal',
-            icon: 'warning'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirect ke aksi pulang jika dikonfirmasi
-                window.location.href = "<?php echo base_url('user/aksi_pulang/' . $row->id_absensi); ?>";
-            }
-        });
-        // Prevent default action of the link
-        return false;
-    }
-    </script>
+</body>
 
-    <?php if ($this->session->flashdata('berhasil_absen')) { ?>
-    <script>
-    Swal.fire({
-        title: "Berhasil",
-        text: "<?php echo $this->session->flashdata('berhasil_absen'); ?>",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    </script>
-    <?php } ?>
+<?php if ($this->session->flashdata('berhasil_absen')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_absen'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
 
-    <?php if ($this->session->flashdata('berhasil_izin')) { ?>
-    <script>
-    Swal.fire({
-        title: "Berhasil",
-        text: "<?php echo $this->session->flashdata('berhasil_izin'); ?>",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    </script>
-    <?php } ?>
+<?php if ($this->session->flashdata('berhasil_izin')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_izin'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
 
-    <?php if ($this->session->flashdata('berhasil_cuti')) { ?>
-    <script>
-    Swal.fire({
-        title: "Berhasil",
-        text: "<?php echo $this->session->flashdata('berhasil_cuti'); ?>",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    </script>
-    <?php } ?>
+<?php if ($this->session->flashdata('berhasil_cuti')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_cuti'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
-    <?php if ($this->session->flashdata('berhasil_pulang')) { ?>
-    <script>
-    Swal.fire({
-        title: "Berhasil",
-        text: "<?php echo $this->session->flashdata('berhasil_pulang'); ?>",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    </script>
-    <?php } ?>
+<?php if ($this->session->flashdata('berhasil_pulang')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_pulang'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
-    <?php if ($this->session->flashdata('gagal_absen')) { ?>
-    <script>
-    Swal.fire({
-        title: "Gagal",
-        text: "<?php echo $this->session->flashdata('gagal_absen'); ?>",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    </script>
-    <?php } ?>
+<?php if ($this->session->flashdata('gagal_absen')) { ?>
+<script>
+Swal.fire({
+    title: "Gagal",
+    text: "<?php echo $this->session->flashdata('gagal_absen'); ?>",
+    icon: "error",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
-    <?php if ($this->session->flashdata('gagal_izin')) { ?>
-    <script>
-    Swal.fire({
-        title: "Gagal",
-        text: "<?php echo $this->session->flashdata('gagal_izin'); ?>",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    </script>
-    <?php } ?>
+<?php if ($this->session->flashdata('gagal_izin')) { ?>
+<script>
+Swal.fire({
+    title: "Gagal",
+    text: "<?php echo $this->session->flashdata('gagal_izin'); ?>",
+    icon: "error",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
-    <?php if ($this->session->flashdata('gagal_pulang')) { ?>
-    <script>
-    Swal.fire({
-        title: "Gagal",
-        text: "<?php echo $this->session->flashdata('gagal_pulang'); ?>",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    </script>
-    <?php } ?>
+<?php if ($this->session->flashdata('gagal_pulang')) { ?>
+<script>
+Swal.fire({
+    title: "Gagal",
+    text: "<?php echo $this->session->flashdata('gagal_pulang'); ?>",
+    icon: "error",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
-    <?php if ($this->session->flashdata('gagal_cuti')) { ?>
-    <script>
-    Swal.fire({
-        title: "Gagal",
-        text: "<?php echo $this->session->flashdata('gagal_cuti'); ?>",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    </script>
-    <?php } ?>
+<?php if ($this->session->flashdata('berhasil_pulang')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_pulang'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
 
 </html>

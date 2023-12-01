@@ -24,9 +24,6 @@
 
                 <hr>
 
-
-
-
                 <div class="mt-5 text-left">
                     <!-- Form Input -->
                     <form action="<?php echo base_url(

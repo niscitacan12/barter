@@ -390,15 +390,6 @@ class Super_model extends CI_Model
         return $query->result(); // This assumes you want to get multiple rows as a result
     }
 
-    public function updateSuperAdminPhoto($user_id, $data)
-    {
-        $update_result = $this->db->update('superadmin', $data, [
-            'id_superadmin' => $user_id,
-        ]);
-
-        return $update_result ? true : false;
-    }
-
     public function getAbsensiDetails($id_absensi)
     {
         // Gantilah 'nama_table' dengan nama tabel yang sesuai di database Anda
@@ -431,6 +422,71 @@ class Super_model extends CI_Model
     public function get_all_organisasi()
     {
         return $this->db->get('organisasi')->result();
+    }
+
+    public function updateSuperAdminPhoto($user_id, $data)
+    {
+        $update_result = $this->db->update('superadmin', $data, [
+            'id_superadmin' => $user_id,
+        ]);
+
+        return $update_result ? true : false;
+    }
+
+     // untuk uubah password
+     public function getPasswordById($id_superadmin)
+     {
+         $this->db->select('password');
+         $this->db->from('superadmin'); // Replace 'your_user_table' with the actual table name
+         $this->db->where('id_superadmin', $id_superadmin);
+         $query = $this->db->get();
+ 
+         if ($query->num_rows() > 0) {
+             $row = $query->row();
+             return $row->password;
+         } else {
+             return false;
+         }
+     }
+ 
+     public function update_password($id_superadmin, $new_password)
+     {
+         $this->db->set('password', $new_password);
+         $this->db->where('id_superadmin', $id_superadmin);
+         $this->db->update('superadmin'); // Replace 'your_user_table' with the actual table name
+ 
+         return $this->db->affected_rows() > 0;
+     }
+
+     public function update_data($table, $data, $where) {
+        $this->db->update($table, $data, $where);
+        return $this->db->affected_rows();
+    }
+
+    public function get_current_image($user_id) {
+        $this->db->select('image');
+        $this->db->from('superadmin');
+        $this->db->where('id_superadmin', $user_id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->image;
+        }
+
+        return null;
+    }
+
+     // Memperbarui gambar pengguna
+     public function update_image($user_id, $new_image) {
+        $data = array(
+            'image' => $new_image
+        );
+
+        $this->db->where('id_superadmin', $user_id);
+        $this->db->update('superadmin', $data);
+
+        return $this->db->affected_rows();
     }
 }
 ?>

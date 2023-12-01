@@ -133,10 +133,10 @@
                                         <?php echo $row->jam_masuk; ?>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <?php echo $row->lokasi_masuk; ?>
+                                        <?php echo $row->jam_pulang; ?>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <?php echo $row->jam_pulang; ?>
+                                        <?php echo $row->lokasi_masuk; ?>
                                     </td>
                                     <td class="px-6 py-4">
                                         <?php echo $row->lokasi_pulang; ?>

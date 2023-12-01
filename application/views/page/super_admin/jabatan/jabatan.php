@@ -67,6 +67,9 @@
                                         <?php echo $row->nama_jabatan; ?>
                                     </td>
                                     <td class="px-6 py-4">
+                                        <?php echo jumlah_karyawan [$row->id_jabatan]; ?>
+                                    </td>
+                                    <td class="px-6 py-4">
 
                                         <a type="button" href="<?= base_url(
                                             'superadmin/detail_jabatan/' .

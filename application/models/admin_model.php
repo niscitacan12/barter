@@ -622,15 +622,6 @@ class Admin_model extends CI_Model
         return $update_result ? true : false;
     }
 
-    public function updateAdminPhoto($user_id, $data)
-    {
-        $update_result = $this->db->update('admin', $data, [
-            'id_admin' => $user_id,
-        ]);
-
-        return $update_result ? true : false;
-    }
-
     // public function get_cuti_by_id($cutiId)
     // {
     //     $this->db->where('id_cuti', $cutiId);
@@ -790,5 +781,62 @@ class Admin_model extends CI_Model
 
         return $query->num_rows(); // Mengembalikan jumlah baris yang cocok dengan kondisi
     }
+       if ($query->num_rows() > 0) {
+           return $query->result_array();
+       } else {
+           return array();
+       }
+   }
+   
+   public function updateAdminPhoto($user_id, $data)
+   {
+       $update_result = $this->db->update('admin', $data, [
+           'id_admin' => $user_id,
+       ]);
+
+       return $update_result ? true : false;
+   }
+
+   public function update_password($id_admin, $new_password)
+   {
+       $this->db->set('password', $new_password);
+       $this->db->where('id_admin', $id_admin);
+       $this->db->update('admin'); // Replace 'your_user_table' with the actual table name
+
+       return $this->db->affected_rows() > 0;
+   }
+
+   public function update_data($table, $data, $where) {
+      $this->db->update($table, $data, $where);
+      return $this->db->affected_rows();
+  }
+
+   // Memperbarui gambar pengguna
+   public function update_image($user_id, $new_image) {
+      $data = array(
+          'image' => $new_image
+      );
+
+      $this->db->where('id_admin', $user_id);
+      $this->db->update('admin', $data);
+
+      return $this->db->affected_rows();
+  }
+
+   // untuk uubah password
+   public function getPasswordById($id_admin)
+   {
+       $this->db->select('password');
+       $this->db->from('admin'); // Replace 'your_user_table' with the actual table name
+       $this->db->where('id_admin', $id_admin);
+       $query = $this->db->get();
+
+       if ($query->num_rows() > 0) {
+           $row = $query->row();
+           return $row->password;
+       } else {
+           return false;
+       }
+   }
 }
 ?>

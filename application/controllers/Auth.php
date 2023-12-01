@@ -150,6 +150,10 @@ class Auth extends CI_Controller
                     'role' => $result['role'], // Menyimpan peran pengguna (admin/karyawan).
                     'image' => $result['image'],
                     'id' => $result['id_' . $table], // Mendapatkan ID pengguna dari tabel yang tepat.
+                    'id_organisasi' => $result['id_organisasi'],
+                    'id_shift' => $result['id_shift'],
+                    'id_jabatan' => $result['id_jabatan'],
+                    'id_admin' => $result['id_admin'],
                 ];
                 // Mengatur data sesi pengguna dengan informasi di atas.
                 $this->session->set_userdata($data_sess);

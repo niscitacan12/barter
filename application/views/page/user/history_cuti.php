@@ -22,30 +22,10 @@
 
                 <hr>
 
-                <div class="flex justify-end mt-5 mb-5">
-
-                    <!-- Filter -->
-                    <div id="dropdown"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby="dropdownDefaultButton">
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">5</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">10</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">20</a>
-                            </li>
-                        </ul>
-                    </div>
-
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mt-5 sm:mb-5">
                     <!-- Search -->
-                    <form action="<?= base_url('user/history_cuti') ?>" method="get">
+                    <form action="<?= base_url('user/history_cuti') ?>" method="get"
+                        class="relative mb-3 sm:mb-0 sm:ml-auto">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <i class="fa-solid fa-magnifying-glass"></i>

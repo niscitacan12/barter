@@ -81,18 +81,14 @@
                                         'superadmin/update_admin/' .
                                             $row->id_admin
                                     ); ?>"
-                                            class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
-                                        <!-- button hapus admin -->
-                                        <a type="button" href="<?php echo base_url(
-                                        'superadmin/hapus_admin/' .
-                                            $row->id_admin
-                                    ); ?>"
-                                            class="text-white bg-red-600 500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
-                                    </div>
+                                        class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <!-- button hapus admin -->
+                                    <a type="button" onclick="hapusAdmin(<?php echo $row->id_admin; ?>)"
+                                        class="text-white bg-red-600 500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                             <?php
@@ -109,6 +105,25 @@
         </div>
     </div>
 </body>
+
+<script>
+function hapusAdmin(idAdmin) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Data admin akan dihapus!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "<?php echo base_url('superadmin/hapus_admin/'); ?>" + idAdmin;
+        }
+    });
+}
+</script>
 
 <?php if($this->session->flashdata('gagal_tambah')){ ?>
 <script>

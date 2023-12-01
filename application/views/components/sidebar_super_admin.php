@@ -106,16 +106,6 @@ $image = $_SESSION['image'];
                     </a>
                 </li>
 
-                <!-- Menu Token  -->
-                <li>
-                    <a href="<?php echo base_url('superadmin/token'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i
-                            class="fas fa-solid fa-key fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="ml-3">Token</span>
-                    </a>
-                </li>
-
                 <!-- Dropdown Data Admin -->
                 <li>
                     <button type="button"
@@ -232,6 +222,16 @@ $image = $_SESSION['image'];
                         </li>
                         </a>
                     </ul>
+                </li>
+
+                <!-- Menu Token  -->
+                <li>
+                    <a href="<?php echo base_url('superadmin/token'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i
+                            class="fas fa-solid fa-key fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="ml-3">Token</span>
+                    </a>
                 </li>
 
                 <!-- Menu Absensi -->

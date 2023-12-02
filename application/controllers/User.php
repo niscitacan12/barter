@@ -62,6 +62,12 @@ class User extends CI_Controller
         $this->load->view('page/user/absen', $data);
     }
 
+    
+public function cuti()
+{
+    $this->load->view('page/user/cuti');
+}
+
     public function pulang($id_absensi)
     {
         setlocale(LC_TIME, 'id_ID');
@@ -138,10 +144,9 @@ class User extends CI_Controller
         redirect(base_url('user/profile'));
     }
 
-    public function cuti()
-    {
-        $this->load->view('page/user/cuti');
-    }
+    
+
+  
 
     public function izin()
     {

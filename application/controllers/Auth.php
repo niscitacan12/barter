@@ -18,6 +18,12 @@ class Auth extends CI_Controller
     public function register()
     {
         $data['organisasi'] = $this->m_model->get_data('organisasi')->result();
+        $this->load->view('auth/register', $data);
+    }
+
+    public function register_user()
+    {
+        $data['organisasi'] = $this->m_model->get_data('organisasi')->result();
         $this->load->view('auth/register_user', $data);
     }
 
@@ -76,7 +82,7 @@ class Auth extends CI_Controller
         $password = $this->input->post('password', true);
         $id_organisasi = $this->input->post('id_organisasi', true);
         // $id_admin = $this->m_model->get_admin_id($id_organisasi);
-        
+
         // Validasi input
         if (empty($username) || empty($nama_depan) || empty($password)) {
             // Tampilkan pesan error jika ada input yang kosong
@@ -157,7 +163,10 @@ class Auth extends CI_Controller
                 ];
                 // Mengatur data sesi pengguna dengan informasi di atas.
                 $this->session->set_userdata($data_sess);
-                $this->session->set_flashdata('login_success', 'Selamat Datang Di Absensi.');
+                $this->session->set_flashdata(
+                    'login_success',
+                    'Selamat Datang Di Absensi.'
+                );
 
                 // Mengarahkan pengguna ke halaman berdasarkan peran mereka.
                 redirect(base_url() . $table);

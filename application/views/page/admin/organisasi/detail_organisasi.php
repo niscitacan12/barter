@@ -33,8 +33,8 @@
                         <div class="mt-5 text-center">
                             <!-- Mengubah kelas "text-left" menjadi "text-center" -->
                             <img class="rounded-full w-96 h-96 mx-auto" src="<?= base_url(
-                                    'images/logo/' . $organisasi->image
-                                ) ?>" alt="image description">
+                                'images/logo/' . $organisasi->image
+                            ) ?>" alt="image description">
 
                         </div>
 
@@ -44,7 +44,7 @@
                                 <input type="text" name="nama" id="nama"
                                     value="<?php echo $organisasi->nama_organisasi; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " autocomplete="off" required />
+                                    placeholder=" " autocomplete="off" required readonly />
                                 <label for="nama"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama
                                 </label>
@@ -53,7 +53,7 @@
                                 <input type="email" name="email" id="email"
                                     value="<?php echo $organisasi->email_organisasi; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " autocomplete="off" required readonly />
+                                    placeholder=" " autocomplete="off" required readonly readonly />
                                 <label for="email"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
                                 </label>
@@ -64,7 +64,7 @@
                                     <input type="tel" name="nomor_telepon" id="nomor_telepon"
                                         value="<?php echo $organisasi->nomor_telepon; ?>"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder=" " autocomplete="off" required />
+                                        placeholder=" " autocomplete="off" required readonly />
                                     <label for="nomor_telepon"
                                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No.Telepon
                                     </label>
@@ -73,7 +73,7 @@
                                     <input type="text" name="alamat" id="alamat"
                                         value="<?php echo $organisasi->alamat; ?>"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder=" " autocomplete="off" required />
+                                        placeholder=" " autocomplete="off" required readonly />
                                     <label for="alamat"
                                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat
                                     </label>
@@ -85,7 +85,7 @@
                                     <input type="text" name="kecamatan" id="kecamatan"
                                         value="<?php echo $organisasi->kecamatan; ?>"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder=" " autocomplete="off" required />
+                                        placeholder=" " autocomplete="off" required readonly />
                                     <label for="kecamatan"
                                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kecamatan
                                     </label>
@@ -94,7 +94,7 @@
                                     <input type="text" name="kabupaten" id="kabupaten"
                                         value="<?php echo $organisasi->kabupaten; ?>"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder=" " autocomplete="off" required />
+                                        placeholder=" " autocomplete="off" required readonly />
                                     <label for="kabupaten"
                                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kabupaten
                                     </label>
@@ -105,7 +105,7 @@
                                 <input type="text" name="provinsi" id="provinsi"
                                     value="<?php echo $organisasi->provinsi; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                    placeholder=" " autocomplete="off" required />
+                                    placeholder=" " autocomplete="off" required readonly />
                                 <label for="provinsi"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Provinsi
                                 </label>

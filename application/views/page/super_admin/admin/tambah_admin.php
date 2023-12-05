@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -83,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="flex">
-                                <div class="flex items-center h-5">
+                                <div class="items-center h-5">
                                     <input id="showpass" type="checkbox" value=""
                                         class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                                         onchange="showPassword()">

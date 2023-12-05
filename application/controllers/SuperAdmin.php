@@ -8,7 +8,7 @@ class SuperAdmin extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->helper('my_helper');
+        $this->load->helper('super_helper');
         $this->load->model('super_model');
         $this->load->library('upload');
         $this->load->library('session');
@@ -486,20 +486,20 @@ class SuperAdmin extends CI_Controller
         $this->load->view('page/super_admin/shift/update_shift', $data);
     }
 
-// Page Profile
-public function profile()
-{
-    if ($this->session->userdata('id')) {
-        $user_id = $this->session->userdata('id');
-        $data['superadmin'] = $this->super_model->getSuperAdminByID(
-            $user_id
-        );
+    // Page Profile
+    public function profile()
+    {
+        if ($this->session->userdata('id')) {
+            $user_id = $this->session->userdata('id');
+            $data['superadmin'] = $this->super_model->getSuperAdminByID(
+                $user_id
+            );
 
-        $this->load->view('page/super_admin/profile/profile', $data);
-    } else {
-        redirect('auth');
+            $this->load->view('page/super_admin/profile/profile', $data);
+        } else {
+            redirect('auth');
+        }
     }
-}
 
     // page detail absen
     public function detail_absen($id_absensi)
@@ -1131,7 +1131,7 @@ public function profile()
         redirect(base_url('superadmin/profile'));
     }
 
-     // 3. Lain-lain
+    // 3. Lain-lain
     public function get_realtime_absensi()
     {
         // Panggil metode di dalam model untuk mendapatkan data absensi real-time
@@ -1160,37 +1160,60 @@ public function profile()
         // Update foto di database
         $this->super_model->updateSuperAdminPhoto($user_id, $data);
 
-          // Set flash data untuk memberi tahu user tentang hasil pembaruan foto
-          if ($update_result) {
-            $this->session->set_flashdata('gagal_update', 'Gagal mengubah foto');
+        // Set flash data untuk memberi tahu user tentang hasil pembaruan foto
+        if ($update_result) {
+            $this->session->set_flashdata(
+                'gagal_update',
+                'Gagal mengubah foto'
+            );
         } else {
-            $this->session->set_flashdata('berhasil_ubah_foto', 'Berhasil mengubah foto');
+            $this->session->set_flashdata(
+                'berhasil_ubah_foto',
+                'Berhasil mengubah foto'
+            );
         }
 
         // Redirect ke halaman profile
         redirect(base_url('superadmin/profile'));
     }
-    
+
     public function update_password()
     {
         $password_lama = $this->input->post('password_lama');
         $password_baru = $this->input->post('password_baru');
         $konfirmasi_password = $this->input->post('konfirmasi_password');
 
-        $stored_password = $this->super_model->getPasswordById($this->session->userdata('id'));
+        $stored_password = $this->super_model->getPasswordById(
+            $this->session->userdata('id')
+        );
 
         if (md5($password_lama) != $stored_password) {
-            $this->session->set_flashdata('kesalahan_password_lama', 'Password lama yang dimasukkan salah');
+            $this->session->set_flashdata(
+                'kesalahan_password_lama',
+                'Password lama yang dimasukkan salah'
+            );
         } else {
             if ($password_baru === $konfirmasi_password) {
-                $update_result = $this->super_model->update_password($this->session->userdata('id'), md5($password_baru));
+                $update_result = $this->super_model->update_password(
+                    $this->session->userdata('id'),
+                    md5($password_baru)
+                );
                 if ($update_result) {
-                    $this->session->set_flashdata('ubah_password', 'Berhasil mengubah password');
+                    $this->session->set_flashdata(
+                        'ubah_password',
+                        'Berhasil mengubah password'
+                    );
                 } else {
-                    $this->session->set_flashdata('gagal_update', 'Gagal memperbarui password');
+                    $this->session->set_flashdata(
+                        'gagal_update',
+                        'Gagal memperbarui password'
+                    );
                 }
             } else {
-                $this->session->set_flashdata('kesalahan_password', 'Password baru dan Konfirmasi password tidak sama');
+                $this->session->set_flashdata(
+                    'kesalahan_password',
+                    'Password baru dan Konfirmasi password tidak sama'
+                );
             }
         }
         redirect(base_url('superadmin/profile'));
@@ -1204,24 +1227,31 @@ public function profile()
         $nama_depan = $this->input->post('nama_depan');
         $nama_belakang = $this->input->post('nama_belakang');
 
-        $data = array(
+        $data = [
             'email' => $email,
             'username' => $username,
             'nama_depan' => $nama_depan,
             'nama_belakang' => $nama_belakang,
-        );
+        ];
 
-        $update_result = $this->super_model->update_data('superadmin', $data, array('id_superadmin' => $this->session->userdata('id')));
+        $update_result = $this->super_model->update_data('superadmin', $data, [
+            'id_superadmin' => $this->session->userdata('id'),
+        ]);
 
         if ($update_result) {
-           $this->session->set_flashdata('berhasil_ubah_foto', 'Data berhasil diperbarui');
-       } else {
-           $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
-       }
+            $this->session->set_flashdata(
+                'berhasil_ubah_foto',
+                'Data berhasil diperbarui'
+            );
+        } else {
+            $this->session->set_flashdata(
+                'gagal_update',
+                'Gagal memperbarui data'
+            );
+        }
 
         redirect(base_url('superadmin/profile'));
     }
-
 
     public function upload_image_superadmin($value)
     {

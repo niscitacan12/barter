@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -107,7 +109,9 @@
                         <!-- <p>Enter your information to register</p> -->
                     </div>
                     <hr>
-                    <form class="mt-7" action="<?php echo base_url('auth/aksi_login')?>" method="post">
+                    <form class="mt-7" action="<?php echo base_url(
+                        'auth/aksi_login'
+                    ); ?>" method="post">
                         <div class="flex -mx-3">
                             <div class="w-full px-3 mb-5">
                                 <label for="" class="text-xs font-semibold px-1">Email</label>
@@ -159,7 +163,9 @@
                             </div>
                         </div>
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                            Tidak Memiliki Akun? <a href="<?= base_url('auth/register') ?>"
+                            Tidak Memiliki Akun? <a href="<?= base_url(
+                                'auth/register_user'
+                            ) ?>"
                                 class="text-blue-700 hover:underline dark:text-blue-500">Registrasi
                                 Sekarang</a>
                         </div>

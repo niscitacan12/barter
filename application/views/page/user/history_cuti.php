@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -24,8 +26,9 @@
 
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between mt-5 sm:mb-5">
                     <!-- Search -->
-                    <form action="<?= base_url('user/history_cuti') ?>" method="get"
-                        class="relative mb-3 sm:mb-0 sm:ml-auto">
+                    <form action="<?= base_url(
+                        'user/history_cuti'
+                    ) ?>" method="get" class="relative mb-3 sm:mb-0 sm:ml-auto">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -66,6 +69,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     Keperluan
                                 </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Status
+                                </th>
                             </tr>
                         </thead>
 
@@ -92,6 +98,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->keperluan_cuti; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->status; ?>
                                 </td>
                             </tr>
                             <?php

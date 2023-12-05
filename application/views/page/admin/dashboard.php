@@ -275,7 +275,8 @@
                 </div>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -289,14 +290,13 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            <?php foreach ($lokasi as $data): ?>
+                            <?php
+                            $no = 0;
+                            foreach ($lokasi as $data):
+                                $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4"><?php echo isset(
-                                    $data['id_lokasi']
-                                )
-                                    ? $data['id_lokasi']
-                                    : ''; ?>
+                                <td class="px-6 py-4"> <?php echo $no; ?>
                                 </td>
                                 <td class="px-6 py-4"><?php echo isset(
                                     $data['nama_lokasi']
@@ -310,7 +310,9 @@
                                     ? $data['alamat']
                                     : ''; ?></td>
                             </tr>
-                            <?php endforeach; ?>
+                            <?php
+                            endforeach;
+                            ?>
                         </tbody>
                     </table>
                 </div>

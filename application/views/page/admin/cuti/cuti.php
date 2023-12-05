@@ -23,7 +23,9 @@
 
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between mt-5 sm:mb-5">
                     <!-- Search -->
-                    <form action="<?= base_url('admin/cuti') ?>" method="get" class="relative mb-3 sm:mb-0 sm:ml-auto">
+                    <form action="<?= base_url(
+                        'admin/cuti'
+                    ) ?>" method="get" class="relative mb-3 sm:mb-0 sm:ml-auto">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -148,6 +150,8 @@ document.getElementById('downloadPdfButton').addEventListener('click', function(
 });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 function konfirmasiSetujuCuti(idCuti) {
     Swal.fire({
@@ -181,35 +185,43 @@ function BatalkanCuti(idCuti) {
 }
 
 function setujuCuti(cutiId) {
-    // Menggunakan AJAX untuk mengirim aksi ke server
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '<?= base_url('admin/setujuCuti/') ?>' + cutiId, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+    // Menggunakan AJAX jQuery
+    $.ajax({
+        url: '<?= base_url('admin/setujuCuti/') ?>' + cutiId,
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
             // Di sini, Anda dapat menangani respons dari server jika diperlukan
-            console.log(xhr.responseText);
+            console.log(response);
 
             // Contoh: Refresh halaman setelah tombol diklik
             location.reload();
+        },
+        error: function(error) {
+            // Handle error
+            console.log(error);
         }
-    };
-    xhr.send();
+    });
 }
 
 function tidakSetujuCuti(cutiId) {
-    // Menggunakan AJAX untuk mengirim aksi ke server
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '<?= base_url('admin/tidakSetujuCuti/') ?>' + cutiId, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+    // Menggunakan AJAX jQuery
+    $.ajax({
+        url: '<?= base_url('admin/tidakSetujuCuti/') ?>' + cutiId,
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
             // Di sini, Anda dapat menangani respons dari server jika diperlukan
-            console.log(xhr.responseText);
+            console.log(response);
 
             // Contoh: Refresh halaman setelah tombol diklik
             location.reload();
+        },
+        error: function(error) {
+            // Handle error
+            console.log(error);
         }
-    };
-    xhr.send();
+    });
 }
 </script>
 

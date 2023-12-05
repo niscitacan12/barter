@@ -987,9 +987,10 @@ class Admin extends CI_Controller
     }
 
     // Untuk Aksi Setuju & Tidak Cuti
-    public function setujuCuti($cutiId)
+    public function setujuCuti($idCuti)
     {
-        $this->admin_model->updateStatusCuti($cutiId, 'Disetujui');
+        $this->load->model('admin_model'); // Pastikan model di-load
+        $this->admin_model->updateStatusCuti($idCuti, 'Disetujui');
 
         // Anda dapat memberikan respons JSON jika diperlukan.
         echo json_encode(['status' => 'Disetujui']);

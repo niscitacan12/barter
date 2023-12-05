@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -19,8 +21,27 @@
 
 <body>
     <?php $this->load->view('components/sidebar_user'); ?>
-    <div class="p-4 sm:ml-64">
-        <div class="p-5 mt-10">
+    <div class="p-2 sm:ml-64">
+        <!-- Card Selamat Datang -->
+        <div class="mt-10 w-full">
+            <div
+                class="p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <?php
+                $hari = date('l');
+                $tanggal = date('d');
+                $bulan = date('F');
+                $tahun = date('Y');
+                ?>
+                <h2 class="text-2xl font-semibold mb-4">Selamat Datang
+                    <span><?php echo $this->session->userdata(
+                        'username'
+                    ); ?></span>
+                </h2>
+                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo $hari; ?>
+                    <?php echo $tanggal; ?> <?php echo $bulan; ?> <?php echo $tahun; ?></p>
+            </div>
+        </div>
+        <div class="p-2 mt-5">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
                 <a href="<?= base_url('') ?>"
                     class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -99,7 +120,11 @@
                         </thead>
                         <!-- Tabel Body -->
                         <tbody class="text-center">
-                            <?php $no = 0; foreach ($absen as $row): if ($no < 5) : $no++; ?>
+                            <?php
+                            $no = 0;
+                            foreach ($absen as $row):
+                                if ($no < 5):
+                                    $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
@@ -116,14 +141,21 @@
                                     <?php echo $row->jam_pulang; ?>
                                 </td>
                             </tr>
-                            <?php else: break; endif; endforeach; ?>
+                            <?php
+                                else:
+                                    break;
+                                endif;
+                            endforeach;
+                            ?>
                         </tbody>
                     </table>
                 </div>
                 <br>
                 <div class="flex justify-end">
                     <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="<?= base_url('user/history_absensi') ?>" title="Ke Riwayat Absensi">
+                        href="<?= base_url(
+                            'user/history_absensi'
+                        ) ?>" title="Ke Riwayat Absensi">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
@@ -137,49 +169,59 @@
                 </div>
                 <hr>
 
-             <!-- Tabel -->
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">No</th>
-                                    <th scope="col" class="px-6 py-3">awal cuti</th>
-                                    <th scope="col" class="px-6 py-3">akhir cuti</th>  
-                                    <th scope="col" class="px-6 py-3">keperluan cuti</th>
-                                </tr>
-                            </thead>
-                            <!-- Tabel Body -->
-                            <tbody class="text-center">
+                <!-- Tabel -->
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">No</th>
+                                <th scope="col" class="px-6 py-3">awal cuti</th>
+                                <th scope="col" class="px-6 py-3">akhir cuti</th>
+                                <th scope="col" class="px-6 py-3">keperluan cuti</th>
+                            </tr>
+                        </thead>
+                        <!-- Tabel Body -->
+                        <tbody class="text-center">
                             <?php if (!empty($cuti)): ?>
-                                <?php $no = 0; foreach ($cuti as $row): $no++; ?>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <?php echo $no; ?>
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            <?php echo convDate($row->awal_cuti); ?>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <?php echo convDate($row->akhir_cuti); ?>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <?php echo ($row->keperluan_cuti); ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                            <?php
+                            $no = 0;
+                            foreach ($cuti as $row):
+                                $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo convDate($row->awal_cuti); ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo convDate($row->akhir_cuti); ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->keperluan_cuti; ?>
+                                </td>
+                            </tr>
+                            <?php
+                            endforeach;
+                            ?>
                             <?php else: ?>
-                                <tr>
-                                    <td colspan="4" class="text-center">Tidak ada data cuti</td>
-                                </tr>
+                            <tr>
+                                <td colspan="4" class="text-center">Tidak ada data cuti</td>
+                            </tr>
                             <?php endif; ?>
                         </tbody>
 
-                        </table>
-                    </div>
-                    <br>
+                    </table>
+                </div>
+                <br>
                 <div class="flex justify-end">
                     <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        href="<?= base_url('user/history_cuti') ?>" title="Ke Riwayat Absensi">
+                        href="<?= base_url(
+                            'user/history_cuti'
+                        ) ?>" title="Ke Riwayat Absensi">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>

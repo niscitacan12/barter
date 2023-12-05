@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -24,7 +26,9 @@
                             <?php echo $date; ?>
                             <br>
                             <?php echo $greeting; ?>,
-                            <span><?php echo $this->session->userdata('username'); ?></span>
+                            <span><?php echo $this->session->userdata(
+                                'username'
+                            ); ?></span>
                         </p>
                         <hr class="mb-7">
                         <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">

@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -19,8 +21,27 @@
 
 <body>
     <?php $this->load->view('components/sidebar_admin'); ?>
-    <div class="p-4 sm:ml-64">
-        <div class="p-5 mt-10">
+    <div class="p-2 sm:ml-64">
+        <!-- Card Selamat Datang -->
+        <div class="mt-10 w-full">
+            <div
+                class="p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <?php
+                $hari = date('l');
+                $tanggal = date('d');
+                $bulan = date('F');
+                $tahun = date('Y');
+                ?>
+                <h2 class="text-2xl font-semibold mb-4">Selamat Datang
+                    <span><?php echo $this->session->userdata(
+                        'username'
+                    ); ?></span>
+                </h2>
+                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo $hari; ?>
+                    <?php echo $tanggal; ?> <?php echo $bulan; ?> <?php echo $tahun; ?></p>
+            </div>
+        </div>
+        <div class="p-2 mt-5">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <a href="<?= base_url('admin/user') ?>"
                     class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -65,11 +86,11 @@
                     </div>
                 </a>
             </div>
-       
 
-            <div 
-                class="w-full mt-5 mb-5 p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"> 
-                <canvas id="myChart"></canvas> 
+
+            <div
+                class="w-full mt-5 mb-5 p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <canvas id="myChart"></canvas>
             </div>
 
             <!-- Tabel Absensi -->
@@ -80,7 +101,8 @@
                 </div>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                     <table id="absensi-table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -100,33 +122,37 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            <?php 
+                            <?php
                             $no = 0;
-                              foreach ($absensi['data'] as $row): 
-                                 $no++ ?>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <?php echo $no; ?>
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row['tanggal_absen']; ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row['keterangan_izin']; ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row['jam_masuk']; ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row['jam_pulang']; ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
+                            foreach ($absensi['data'] as $row):
+                                $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo $row['tanggal_absen']; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row['keterangan_izin']; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row['jam_masuk']; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row['jam_pulang']; ?>
+                                </td>
+                            </tr>
+                            <?php
+                            endforeach;
+                            ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-            
+
             <br>
 
             <!-- Table Cuti -->
@@ -157,227 +183,246 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="text-center"> 
-                            <?php if (!empty($cuti)): ?> 
-                                <?php $no = 0; foreach ($cuti as $row): $no++; ?> 
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"> 
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"> 
-                                            <?php echo $no; ?> 
-                                        </th> 
-                                        <td class="px-6 py-4"> 
-                                            <?php echo convDate($row->awal_cuti); ?> 
-                                        </td> 
-                                        <td class="px-6 py-4"> 
-                                            <?php echo convDate($row->akhir_cuti); ?> 
-                                        </td> 
-                                        <td class="px-6 py-4"> 
-                                            <?php echo convDate($row->masuk_kerja); ?> 
-                                        </td> 
-                                        <td class="px-6 py-4"> 
-                                            <?php echo ($row->keperluan_cuti); ?> 
-                                        </td> 
-                                    </tr> 
-                                <?php endforeach; ?> 
-                            <?php else: ?> 
-                                <tr> 
-                                    <td colspan="4" class="text-center">Tidak ada data cuti</td> 
-                                </tr> 
-                            <?php endif; ?> 
+                        <tbody class="text-center">
+                            <?php if (!empty($cuti)): ?>
+                            <?php
+                            $no = 0;
+                            foreach ($cuti as $row):
+                                $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo convDate($row->awal_cuti); ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo convDate($row->akhir_cuti); ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo convDate($row->masuk_kerja); ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->keperluan_cuti; ?>
+                                </td>
+                            </tr>
+                            <?php
+                            endforeach;
+                            ?>
+                            <?php else: ?>
+                            <tr>
+                                <td colspan="4" class="text-center">Tidak ada data cuti</td>
+                            </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-                <br>
+            <br>
 
-                <!-- Tabel Jabatan -->
-                <div
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex justify-between">
-                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Data Jabatan</h6>
-                    </div>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        No
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Nama Jabatan
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <?php
-                                $no = 0;
-                                foreach ($jabatan as $row):
-                                    $no++; ?>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50
+            <!-- Tabel Jabatan -->
+            <div
+                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-between">
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Data Jabatan</h6>
+                </div>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Nama Jabatan
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <?php
+                            $no = 0;
+                            foreach ($jabatan as $row):
+                                $no++; ?>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50
                                     dark:hover:bg-gray-600">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <?php echo $no; ?>
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row->nama_jabatan; ?>
-                                    </td>
-                                </tr>
-                                <?php
-                                endforeach;
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->nama_jabatan; ?>
+                                </td>
+                            </tr>
+                            <?php
+                            endforeach;
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                        <br>
+            <br>
 
-                <!-- Tabel Lokasi -->
-                <div
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex justify-between">
-                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Data Lokasi</h6>
-                    </div>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        No
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Nama Lokasi
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Alamat
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center"> 
-                                <?php foreach ($lokasi as $data): ?>
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-6 py-4"><?php echo isset($data['id_lokasi']) ? $data['id_lokasi'] : ''; ?>
-                                    </td>
-                                    <td class="px-6 py-4"><?php echo isset($data['nama_lokasi']) ? $data['nama_lokasi'] : ''; ?>
-                                    </td>
-                                    <td class="px-6 py-4"><?php echo isset($data['alamat']) ? $data['alamat'] : ''; ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
+            <!-- Tabel Lokasi -->
+            <div
+                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-between">
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Data Lokasi</h6>
                 </div>
-
-                            <br>
-
-                <!-- Tabel Organisasi -->
-                <div
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex justify-between">
-                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Data Organisasi</h6>
-                    </div>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        No
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Alamat
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Telepon
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Email
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <?php
-                                $no = 0;
-                                foreach ($organisasi as $row):
-                                    $no++; ?>
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <?php echo $no; ?>
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row->alamat; ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row->nomor_telepon; ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row->email_organisasi; ?>
-                                    </td>
-                                </tr>
-                                <?php
-                                endforeach;
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Nama Lokasi
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Alamat
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <?php foreach ($lokasi as $data): ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td class="px-6 py-4"><?php echo isset(
+                                    $data['id_lokasi']
+                                )
+                                    ? $data['id_lokasi']
+                                    : ''; ?>
+                                </td>
+                                <td class="px-6 py-4"><?php echo isset(
+                                    $data['nama_lokasi']
+                                )
+                                    ? $data['nama_lokasi']
+                                    : ''; ?>
+                                </td>
+                                <td class="px-6 py-4"><?php echo isset(
+                                    $data['alamat']
+                                )
+                                    ? $data['alamat']
+                                    : ''; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                                <br>
-                                
-                <!-- Tabel User -->
-                <div
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex justify-between">
-                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Data User</h6>
-                    </div>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        No
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Username
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Email
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <?php
-                                $no = 0;
-                                foreach ($user as $row):
-                                    $no++; ?>
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <?php echo $no; ?>
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row['username']; ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?php echo $row['email']; ?>
-                                    </td>
-                                </tr>
-                                <?php
-                                endforeach;
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
+            <br>
+
+            <!-- Tabel Organisasi -->
+            <div
+                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-between">
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Data Organisasi</h6>
+                </div>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Alamat
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Telepon
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Email
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <?php
+                            $no = 0;
+                            foreach ($organisasi as $row):
+                                $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->alamat; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->nomor_telepon; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->email_organisasi; ?>
+                                </td>
+                            </tr>
+                            <?php
+                            endforeach;
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+
+            <!-- Tabel User -->
+            <div
+                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-between">
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Data User</h6>
+                </div>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Username
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Email
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <?php
+                            $no = 0;
+                            foreach ($user as $row):
+                                $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo $row['username']; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row['email']; ?>
+                                </td>
+                            </tr>
+                            <?php
+                            endforeach;
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script>

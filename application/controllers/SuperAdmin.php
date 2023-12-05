@@ -8,7 +8,7 @@ class SuperAdmin extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->helper('super_helper');
+        $this->load->helper('my_helper');
         $this->load->model('super_model');
         $this->load->library('upload');
         $this->load->library('session');

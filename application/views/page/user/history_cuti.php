@@ -72,6 +72,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     Status
                                 </th>
+
                             </tr>
                         </thead>
 
@@ -116,6 +117,26 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <?php if ($this->session->flashdata('berhasil_cuti')) { ?>
+<script>
+function hapusJabatan(idJabatan) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Data jabatan beserta karyawan yang terkait akan dihapus!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "<?php echo base_url(
+                'admin/hapus_jabatan/'
+            ); ?>" + idJabatan;
+        }
+    });
+}
+</script>
 <script>
 Swal.fire({
     title: "Berhasil",

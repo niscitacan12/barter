@@ -65,20 +65,16 @@
                                     </td>
                                     <td class="px-6 py-4">
 
-                                        <a type="button" href="<?php echo base_url(
-                                            'superadmin/detail_jabatan/' .
-                                                $row->id_jabatan
-                                        ); ?>"
+                                        <a href="<?= base_url('superadmin/detail_jabatan/' . $row->id_jabatan) ?>"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
-                                        <a type="button" href="<?php echo base_url(
-                                            'superadmin/update_jabatan/' .
-                                                $row->id_jabatan
-                                        ); ?>"
+
+                                        <a href="<?= base_url('superadmin/update_jabatan/' . $row->id_jabatan) ?>"
                                             class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
+
                                         <a type="button" onclick="hapusJabatan(<?php echo $row->id_jabatan; ?>)"
                                             class="text-white bg-red-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-trash"></i>
@@ -107,9 +103,7 @@ function hapusJabatan(idJabatan) {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "<?php echo base_url(
-                'admin/hapus_jabatan/'
-            ); ?>" + idJabatan;
+            window.location.href = "<?php echo base_url('admin/hapus_jabatan/'); ?>" + idJabatan;
         }
     });
 }

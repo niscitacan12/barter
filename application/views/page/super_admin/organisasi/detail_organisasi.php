@@ -5,34 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url(
-        './src/assets/image/absensi.png'
-    ); ?>" type="image/gif">e>
+    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+        overflow-y: hidden;
+        /* Disable vertical scrollbar */
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        /* Reduced margin to move the container up */
+        padding: auto;
+        min-height: 100vh;
+        /* Set the minimum height of the container to 100% of the viewport height */
+        overflow-y: auto;
+        /* Enable vertical scrollbar for the container */
+    }
+
+    img.max-width-100 {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .max-height-96 {
+        max-height: 96px;
+    }
+    </style>
 </head>
 
 <body>
     <?php $this->load->view('components/sidebar_super_admin'); ?>
-    <div class="p-4 sm:ml-64">
-        <div class="p-5 mt-10">
+    <div class="container">
+        <div class="p-4 sm:ml-64">
+            <div class="p-5 mt-2">
 
-            <!-- Card -->
-            <div
-                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                <div class="flex justify-between">
-                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Detail Organisasi</h6>
-                </div>
-                <hr>
-                <div class=" text-left">
-                    <!-- Form Input -->
-                    <form action="<?php echo base_url(
-                        ''
-                    ); ?>" method="post" enctype="multipart/form-data">
-                        <div class="mt-5 text-center">
-                            <img class="mb-5 rounded-full w-96 h-96 mx-auto" src="<?= base_url(
-                                'images/logo/' . $organisasi->image
-                            ) ?>" alt="image description">
-                        </div>
-                        <!-- Nama & Email Input -->
+                <!-- Card -->
+                <div
+                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+
+                    <!-- Header -->
+                    <div class="flex justify-between">
+                        <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white"> Detail organisasi</h6>
+                    </div>
+
+                    <hr>
+
+                    <div class="mt-7 text-left">
+
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="relative z-0 w-full mb-6 group">
                                 <input type="text" name="nama" id="nama"
@@ -104,17 +127,27 @@
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Provinsi
                                 </label>
                             </div>
+                            <!-- email & username Input -->
+                            <div class="relative z-0 w-full mb-6 group">
+                                <img class="rounded-full mx-auto max-width-100 max-height-96"
+                                    src="<?= base_url('images/organisasi/' . $organisasi->image) ?>"
+                                    alt="image description">
+                                <label for="provinsi"
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Foto
+                                </label>
+                            </div>
                         </div>
-                        <!-- Button -->
-                        <div class="flex justify-between">
-                            <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                                href="javascript:history.go(-1)"> <i class="fa-solid fa-arrow-left"></i>
-                            </a>
-                        </div>
-                    </form>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="flex justify-between">
+                        <a class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                            href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 

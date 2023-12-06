@@ -383,11 +383,11 @@ class Super_model extends CI_Model
 
     public function get_token_data()
     {
-        // Assuming you have a table named 'absensi'
-        $query = $this->db->get('tokens');
-
-        // Assuming 'absensi' is the name of the table
-        return $query->result(); // This assumes you want to get multiple rows as a result
+        $this->db->select('tokens.*, user.username');
+        $this->db->from('tokens');
+        $this->db->join('user', 'user.id_user = tokens.user_id', 'left');
+        $query = $this->db->get();
+        return $query->result();
     }
 
     public function getAbsensiDetails($id_absensi)

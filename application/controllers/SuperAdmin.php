@@ -1306,6 +1306,7 @@ class SuperAdmin extends CI_Controller
 
     public function token()
     {
+        $this->load->model('super_model');
         $data['tokens'] = $this->super_model->get_token_data();
 
         // Lainnya seperti pengaturan tampilan flashdata

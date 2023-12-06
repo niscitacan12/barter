@@ -21,8 +21,8 @@
             <div class="md:flex w-full">
                 <!-- Welcome Login -->
                 <div class="hidden md:block w-2/5 bg-indigo-500 py-10 px-10">
-                    <h1 class="text-gray-950 text-2xl text-center mt-0">Selamat Datang DiAbsensi</h1>
-                    <hr class="border border-black mt-1">
+                    <h1 class="text-slate-50 text-xl text-center mt-0"><b>Selamat Datang DiAbsensi App</b></h1>
+                    <hr class="border border-slate mt-1">
                     <svg id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641" data-name="Layer 1"
                         xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 744.84799 747.07702">
                         <path id="fa3b9e12-7275-481e-bee9-64fd9595a50d" data-name="Path 1"
@@ -108,7 +108,7 @@
                         <h1 class="font-bold text-3xl text-gray-900">Login</h1>
                         <!-- <p>Enter your information to register</p> -->
                     </div>
-                    <hr>
+                    <hr class="border border-black">
                     <form class="mt-7" action="<?php echo base_url(
                         'auth/aksi_login'
                     ); ?>" method="post">
@@ -148,7 +148,7 @@
                                         onchange="showPassword()">
                                 </div>
                                 <label for="showpass"
-                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show
+                                    class="ml-2 text-sm font-medium text-gray-950 dark:text-gray-950">Show
                                     Password</label>
                             </div>
                             <div class="text-sm font-medium text-gray-500 dark:text-gray-300 ms-1 mb-5"><a
@@ -162,11 +162,10 @@
                                     class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Login</button>
                             </div>
                         </div>
-                        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                        <div class="text-sm font-medium text-gray-950 dark:text-gray-950">
                             Tidak Memiliki Akun? <a href="<?= base_url(
                                 'auth/register_user'
-                            ) ?>"
-                                class="text-blue-700 hover:underline dark:text-blue-500">Registrasi
+                            ) ?>" class="text-blue-700 hover:underline dark:text-blue-500">Registrasi
                                 Sekarang</a>
                         </div>
                     </form>

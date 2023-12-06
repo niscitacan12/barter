@@ -13,14 +13,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
 </head>
 
-<body>
-    <div class="min-w-screen bg-indigo-200 flex items-center justify-center px-5 py-5">
+<body class="h-screen">
+    <div class="min-h-screen min-w-screen w-screen bg-indigo-200 flex items-center justify-center px-5 py-5">
         <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
             <div class="md:flex w-full">
                 <!-- Welcome Register -->
                 <div class="hidden md:block w-2/5 bg-indigo-500 py-10 px-10">
-                    <h1 class="text-gray-950 text-2xl text-center mt-0">Selamat Datang DiAbsensi</h1>
-                    <hr class="border border-black mt-1">
+                    <h1 class="text-slate-50 text-xl text-center mt-0"><b>Selamat Datang DiAbsensi App</b></h1>
+                    <hr class="border border-slate mt-1">
                     <svg id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641" data-name="Layer 1"
                         xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 744.84799 747.07702">
                         <path id="fa3b9e12-7275-481e-bee9-64fd9595a50d" data-name="Path 1"
@@ -106,11 +106,10 @@
                         <h1 class="font-bold text-3xl text-gray-900">Registrasi User</h1>
                         <!-- <p>Enter your information to register</p> -->
                     </div>
-                    <hr>
+                    <hr class="border border-black">
                     <form class="mt-7" action="<?php echo base_url('auth/aksi_register_user')?>" method="post">
-
-                        <!-- Nama depan & belakang -->
-                        <div class="flex -mx-3 mb-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <!-- Nama depan & belakang -->
                             <div class="w-full">
                                 <label for="" class="text-xs font-semibold px-1">Nama Depan</label>
                                 <div class="flex">
@@ -135,10 +134,8 @@
                                         placeholder="Nama Belakang">
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- email & username -->
-                        <div class="flex -mx-3 mb-5">
+                            <!-- email & username -->
                             <div class="w-full">
                                 <label for="" class="text-xs font-semibold px-1">Email</label>
                                 <div class="flex">
@@ -163,15 +160,13 @@
                                         placeholder="Username">
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- organisasi & password -->
-                        <div class="flex -mx-3 mb-1">
+                            <!-- organisasi & password -->
                             <div class="w-full">
                                 <label for="" class="text-xs font-semibold px-1">Organisasi</label>
                                 <div class="flex">
                                     <select name="id_organisasi"
-                                        class="bg-gray-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                        class="w-full px-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500">
                                         <option selected>Pilih Organisasi</option>
                                         <?php foreach ($organisasi as $row): ?>
                                         <option value="<?php echo $row->id_organisasi; ?>">
@@ -179,7 +174,6 @@
                                         </option>
                                         <?php endforeach; ?>
                                     </select>
-
                                 </div>
                             </div>
                             <div class="w-full">
@@ -195,22 +189,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex -mx-3 justify-between mt-3">
-                            <div class="flex">
-                                <div class="text-red-500">*</div>
-                                <div class="text-sm font-medium text-gray-950 dark:text-gray-950">
-                                    Password harus memiliki 8 karakter
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 justify-between mt-5">
+                            <div class="w-full">
+                                <div class="flex">
+                                    <div class="text-red-500">*</div>
+                                    <div class="text-sm font-medium text-gray-950 dark:text-gray-950">
+                                        Password harus memiliki 8 karakter
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex">
-                                <div class="flex items-center h-5">
+                            <div class="w-full">
+                                <div class="flex items-end sm:items-center">
                                     <input id="showpass" type="checkbox" value=""
                                         class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                                         onchange="showPassword()">
+                                    <label for="showpass"
+                                        class="ml-2 text-sm font-medium text-gray-950 dark:text-gray-950">Show
+                                        Password</label>
                                 </div>
-                                <label for="showpass"
-                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Show
-                                    Password</label>
                             </div>
                         </div>
                         <div class="flex -mx-3 mt-7">
@@ -219,7 +215,7 @@
                                     class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Register</button>
                             </div>
                         </div>
-                        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                        <div class="text-sm font-medium text-gray-950 dark:text-gray-950">
                             Sudah Memiliki Akun? <a href="<?= base_url('')?>"
                                 class="text-blue-700 hover:underline dark:text-blue-500">Login
                                 Sekarang</a>

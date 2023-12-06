@@ -21,42 +21,41 @@
                 <hr class="mb-7">
 
                 <!-- Formulir untuk permintaan izin -->
-                <form action="<?php echo base_url('user/aksi_cuti') ?>" method="post">
-                    <!-- Field formulir untuk cuti dari -->
-                    <div>
-                        <label for="awal_cuti" class="block text-gray-700 font-bold mb-1 text-left">Cuti Dari:</label>
+                <form action="<?php echo base_url('user/aksi_cuti') ?>" method="post" class="text-left">
+
+                    <div class="relative z-0 w-full mb-6 group">
                         <input type="date" name="awal_cuti" id="awal_cuti"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " autocomplete="off" required />
+                        <label for="awal_cuti"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Awal
+                            cuti</label>
                     </div>
-                    <br>
 
-                    <!-- Field formulir untuk cuti sampai -->
-                    <div>
-                        <label for="akhir_cuti" class="block text-gray-700 font-bold mb-1 text-left">Cuti
-                            Sampai:</label>
+                    <div class="relative z-0 w-full mb-6 group">
                         <input type="date" name="akhir_cuti" id="akhir_cuti"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " autocomplete="off" required />
+                        <label for="akhir_cuti"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Akhir
+                            cuti</label>
                     </div>
-                    <br>
 
-                    <!-- Field formulir untuk waktu masuk kerja -->
-                    <div>
-                        <label for="masuk_kerja" class="block text-gray-700 font-bold mb-1 text-left">Masuk
-                            Kerja:</label>
-                        <input type="date" name="masuk_kerja" id="masuk_kerja"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required>
+                    <div class="relative z-0 w-full mb-6 group">
+                        <input type="date" name="akhir_cuti" id="akhir_cuti"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " autocomplete="off" required />
+                        <label for="akhir_cuti"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Masuk
+                            Kerja</label>
                     </div>
-                    <br>
-                    <!-- Field formulir untuk keperluan cuti -->
-                    <div>
-                        <label for="keperluan_cuti" class="block text-gray-700 font-bold mb-1 text-left">Keperluan
-                            Cuti:</label>
+
+                    <div class="relative z-0 w-full mb-6 group">
                         <input type="text" name="keperluan_cuti" id="keperluan_cuti"
-                            class="w-full border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-500"
-                            required autocomplete="off">
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" " autocomplete="off" required />
+                        <label for="keperluan_cuti"
+                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">keperluan_cuti</label>
                     </div>
                     <br>
 

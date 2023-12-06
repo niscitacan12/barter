@@ -78,7 +78,7 @@
                                     <?php echo nama_admin($row->id_admin); ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-content-between">
+                                    <div class="flex justify-center">
                                         <a type="button" href="<?php echo base_url(
                                             'superadmin/detail_shift/' .
                                             $row->id_shift

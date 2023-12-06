@@ -828,12 +828,16 @@ class Admin extends CI_Controller
         $username = $this->input->post('username');
         $nama_depan = $this->input->post('nama_depan');
         $nama_belakang = $this->input->post('nama_belakang');
+        $id_shift = $this->input->post('id_shift');
+        $id_jabatan = $this->input->post('id_jabatan');
 
         // Buat data yang akan diupdate
         $data = [
             'username' => $username,
             'nama_depan' => $nama_depan,
             'nama_belakang' => $nama_belakang,
+            'id_shift' => $id_shift,
+            'id_jabatan' => $id_jabatan,
             // Tambahkan field lain jika ada
         ];
 

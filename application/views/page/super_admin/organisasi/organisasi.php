@@ -80,7 +80,7 @@
                                     <?php echo $row->email_organisasi; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-content-between">
+                                    <div class="flex justify-center">
                                         <a type="button" href="<?= base_url(
                                             'superadmin/detail_organisasi/' .
                                                 $row->id_organisasi

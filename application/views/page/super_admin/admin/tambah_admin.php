@@ -77,7 +77,7 @@
                             </div>
 
                         </div>
-                        <div class="flex justify-between mb-6">
+                        <div class="mb-6">
                             <div class="flex">
                                 <div class="text-red-500">*</div>
                                 <div class="text-sm font-medium text-gray-950 dark:text-gray-950">

@@ -344,6 +344,7 @@ public function cuti()
                     'akhir_cuti' => $akhir_cuti,
                     'masuk_kerja' => $masuk_kerja,
                     'keperluan_cuti' => $keperluan_cuti,
+                    'status' => 'belum disetujui',
                     'id_organisasi' => $id_organisasi,
                 ];
 

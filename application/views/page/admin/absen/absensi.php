@@ -57,8 +57,8 @@
                                     placeholder="Pilih Tanggal" min="<?= date(
                                         'Y-m-d'
                                     ) ?>" max="<?= date(
-    'Y-m-d'
-) ?>" autocomplete="off">
+                                        'Y-m-d'
+                                    ) ?>" autocomplete="off">
                                 <label for="tanggal"
                                     class="mx-2 mb-2 absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-900 dark:text-white mx-3 "></label>
                             </div>
@@ -156,7 +156,7 @@
                                     <?php echo nama_user($row->id_user); ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->tanggal_absen; ?>
+                                    <?php echo convDate($row->tanggal_absen); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->keterangan_izin; ?>

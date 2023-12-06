@@ -82,27 +82,29 @@
                                     <?php echo $row->keterangan_izin; ?>
                                 </td>
                                 <td class="px-5 py-3">
-                                    <a type="button" href="<?= base_url(
+                                    <div class="flex justify-center">
+                                        <a type="button" href="<?= base_url(
                                         'user/detail_absensi/' .
                                             $row->id_absensi
                                     ) ?>"
-                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                    </a>
-                                    <?php if ($row->status != 'true'): ?>
-                                    <a type="button" href="<?= base_url(
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                        <?php if ($row->status != 'true'): ?>
+                                        <a type="button" href="<?= base_url(
                                         'user/pulang/' . $row->id_absensi
                                     ) ?>"
-                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-home"></i>
-                                    </a>
-                                    <?php else: ?>
-                                    <button
-                                        class="text-white bg-gray-500 opacity-50 cursor-not-allowed focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
-                                        disabled>
-                                        <i class="fa-solid fa-home"></i>
-                                    </button>
-                                    <?php endif; ?>
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-home"></i>
+                                        </a>
+                                        <?php else: ?>
+                                        <button
+                                            class="text-white bg-gray-500 opacity-50 cursor-not-allowed focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+                                            disabled>
+                                            <i class="fa-solid fa-home"></i>
+                                        </button>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
                             </tr>
                             <?php

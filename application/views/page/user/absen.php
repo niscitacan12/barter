@@ -53,32 +53,28 @@
                             <canvas id="canvas" style="display:none;"></canvas>
                             <input type="hidden" name="image_data" id="image-data" />
                         </div>
-                        <button type="button" id="capture-btn" class="bg-green-500 text-white px-4 py-2 rounded-md">
+                        <!-- <button type="button" id="capture-btn" class="bg-green-500 text-white px-4 py-2 rounded-md">
                             <i class="fas fa-camera"></i>
-                        </button>
+                        </button> -->
                     </div>
 
                     <div class="flex justify-between mt-5">
                         <a class="text-white bg-red-500 px-4 py-2 rounded-md" href="javascript:history.go(-1)"><i
                                 class="fa-solid fa-arrow-left"></i></a>
-
-                        <button type="submit" id="absen" class="bg-indigo-500 text-white px-4 py-2 rounded-md">
+                        <button type="button" id="capture-btn" class="bg-indigo-500 text-white px-4 py-2 rounded-md">
                             <i class="fa-solid fa-address-card"></i>
                         </button>
+                        <!-- <button type="submit" id="absen" class="bg-indigo-500 text-white px-4 py-2 rounded-md">
+                            <i class="fa-solid fa-address-card"></i>
+                        </button> -->
                     </div>
                 </form>
 
                 <script>
-                // Fungsi untuk mendapatkan lokasi pengguna
-                function getGeoLocation() {
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(showPosition, showError);
-                    } else {
-                        document.getElementById("geoData").innerHTML = "Geolocation is not supported by this browser.";
-                    }
-                }
+                // Deklarasikan variabel global untuk menyimpan data gambar
+                let capturedImageData = '';
 
-                // Fungsi untuk menampilkan lokasi
+                // Fungsi untuk mendapatkan lokasi pengguna
                 function getGeoLocation() {
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -126,13 +122,118 @@
                     getGeoLocation();
                 };
 
-                // Script akses kamera
-                document.addEventListener('DOMContentLoaded', function() {
+                // // Script akses kamera
+                // document.addEventListener('DOMContentLoaded', function() {
+                //     const video = document.getElementById('video');
+                //     const canvas = document.getElementById('canvas');
+                //     const captureBtn = document.getElementById('capture-btn');
+                //     const photoContainer = document.getElementById('photoContainer');
+                //     const imageDataInput = document.getElementById('image-data');
+
+                //     navigator.mediaDevices.getUserMedia({
+                //             video: true
+                //         })
+                //         .then(stream => {
+                //             video.srcObject = stream;
+                //         })
+                //         .catch(err => console.error('Error accessing camera:', err));
+
+                //     captureBtn.addEventListener('click', function() {
+                //         const context = canvas.getContext('2d');
+                //         canvas.width = video.videoWidth;
+                //         canvas.height = video.videoHeight;
+                //         context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                //         const imageData = canvas.toDataURL('image/png');
+                //         const imgElement = document.createElement('img');
+                //         imgElement.src = imageData;
+                //         photoContainer.innerHTML = '';
+                //         photoContainer.appendChild(imgElement);
+
+                //         imageDataInput.value = imageData;
+
+                //         // Sembunyikan elemen video setelah gambar diambil
+                //         video.style.display = 'none';
+                //     });
+                // });
+                // // Script akses kamera
+                // document.addEventListener('DOMContentLoaded', function() {
+                //     const video = document.getElementById('video');
+                //     const canvas = document.getElementById('canvas');
+                //     const captureBtn = document.getElementById('capture-btn');
+                //     const photoContainer = document.getElementById('photoContainer');
+
+                //     navigator.mediaDevices.getUserMedia({
+                //             video: true
+                //         })
+                //         .then(stream => {
+                //             video.srcObject = stream;
+                //         })
+                //         .catch(err => console.error('Error accessing camera:', err));
+
+                //     captureBtn.addEventListener('click', function() {
+                //         const context = canvas.getContext('2d');
+                //         canvas.width = video.videoWidth;
+                //         canvas.height = video.videoHeight;
+                //         context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                //         const imageData = canvas.toDataURL('image/png');
+                //         const imgElement = document.createElement('img');
+                //         imgElement.src = imageData;
+                //         photoContainer.innerHTML = '';
+                //         photoContainer.appendChild(imgElement);
+
+                //         // Simpan data gambar yang diambil ke dalam variabel global
+                //         capturedImageData = imageData;
+
+                //         // Sembunyikan elemen video setelah gambar diambil
+                //         video.style.display = 'none';
+                //     });
+
+                //     const absenButton = document.getElementById('absen');
+                //     absenButton.addEventListener('click', function() {
+                //         // Setel nilai input tersembunyi dengan data gambar yang diambil
+                //         const imageDataInput = document.getElementById('image-data');
+                //         imageDataInput.value = capturedImageData;
+
+                //         // Submit form saat tombol "Absen" ditekan
+                //         document.getElementById('absenForm').submit();
+                //     });
+                // });
+                // Fungsi untuk mengambil foto dan mengirim formulir
+                function captureAndSubmit() {
                     const video = document.getElementById('video');
                     const canvas = document.getElementById('canvas');
-                    const captureBtn = document.getElementById('capture-btn');
                     const photoContainer = document.getElementById('photoContainer');
+
+                    const context = canvas.getContext('2d');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    const imageData = canvas.toDataURL('image/png');
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imageData;
+                    photoContainer.innerHTML = '';
+                    photoContainer.appendChild(imgElement);
+
+                    // Simpan data gambar yang diambil ke dalam variabel global
+                    capturedImageData = imageData;
+
+                    // Sembunyikan elemen video setelah gambar diambil
+                    video.style.display = 'none';
+
+                    // Setel nilai input tersembunyi dengan data gambar yang diambil
                     const imageDataInput = document.getElementById('image-data');
+                    imageDataInput.value = capturedImageData;
+
+                    // Submit form
+                    document.getElementById('absenForm').submit();
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const video = document.getElementById('video');
+                    const captureBtn = document.getElementById('capture-btn');
 
                     navigator.mediaDevices.getUserMedia({
                             video: true
@@ -142,23 +243,7 @@
                         })
                         .catch(err => console.error('Error accessing camera:', err));
 
-                    captureBtn.addEventListener('click', function() {
-                        const context = canvas.getContext('2d');
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                        const imageData = canvas.toDataURL('image/png');
-                        const imgElement = document.createElement('img');
-                        imgElement.src = imageData;
-                        photoContainer.innerHTML = '';
-                        photoContainer.appendChild(imgElement);
-
-                        imageDataInput.value = imageData;
-
-                        // Sembunyikan elemen video setelah gambar diambil
-                        video.style.display = 'none';
-                    });
+                    captureBtn.addEventListener('click', captureAndSubmit);
                 });
                 </script>
             </div>

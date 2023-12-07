@@ -34,7 +34,7 @@
                         <?php foreach ($organisasi as $row): ?>
                         <div class="mt-5 text-center">
                             <!-- Mengubah kelas "text-left" menjadi "text-center" -->
-                            <img class="mb-5 rounded-full w-96 h-96 mx-auto" src="<?= base_url(
+                            <img class="mb-5 rounded-full w-48 h-48 mx-auto" src="<?= base_url(
                                 'images/logo/' . $row->image
                             ) ?>" alt="image description">
 

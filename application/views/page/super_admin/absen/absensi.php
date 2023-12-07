@@ -24,7 +24,7 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 text-center">
 
                         <!-- Tabel Head -->
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -66,7 +66,7 @@
                                     <?php echo nama_user($row->id_user); ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->tanggal_absen; ?>
+                                    <?php echo convDate($row->tanggal_absen); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->jam_masuk; ?>
@@ -75,11 +75,13 @@
                                     <?php echo $row->jam_pulang; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a type="button"
-                                        href="<?= base_url('superadmin/detail_absen/' .  $row->id_absensi) ?>"
-                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                    </a>
+                                    <div class="flex justify-center">
+                                        <a type="button"
+                                            href="<?= base_url('superadmin/detail_absen/' .  $row->id_absensi) ?>"
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             <?php

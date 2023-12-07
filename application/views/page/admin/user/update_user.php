@@ -67,7 +67,7 @@
                                 <label for="id_jabatan"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
                                 <select name="id_jabatan"
-                                    class="bg-gray-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                                     <option selected value="<?php echo $user->id_jabatan ?>">
                                         <?php echo nama_jabatan($user->id_jabatan) ?>
                                     </option>
@@ -80,9 +80,9 @@
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
                                 <label for="id_jabatan"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Shift</label>
                                 <select name="id_shift"
-                                    class="bg-gray-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                                     <option selected value="<?php echo $user->id_shift ?>">
                                         <?php echo nama_shift($user->id_shift) ?>
                                     </option>

@@ -25,7 +25,7 @@
         <!-- Card Selamat Datang -->
         <div class="mt-10 w-full">
             <div
-                class="p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                class="p-4 text-center bg-gray-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <?php
                 $hari = date('l');
                 $tanggal = date('d');
@@ -44,7 +44,7 @@
         <div class="p-2 mt-5">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <a href="<?= base_url('admin/user') ?>"
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    class="w-full p-4 text-center bg-blue-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">User</h5>
                     <hr class="mb-4">
                     <div class="flex justify-between">
@@ -58,7 +58,7 @@
                     </div>
                 </a>
                 <a href="<?= 'admin/absensi' ?>"
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    class="w-full p-4 text-center bg-green-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Absensi</h5>
                     <hr class="mb-4">
                     <div class="flex justify-between">
@@ -72,7 +72,7 @@
                     </div>
                 </a>
                 <a href="<?= 'admin/cuti' ?>"
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    class="w-full p-4 text-center bg-purple-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Cuti</h5>
                     <hr class="mb-4">
                     <div class="flex justify-between">
@@ -133,7 +133,7 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo $row['tanggal_absen']; ?>
+                                    <?php echo convDate($row['tanggal_absen']); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row['keterangan_izin']; ?>
@@ -275,7 +275,8 @@
                 </div>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -289,14 +290,13 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            <?php foreach ($lokasi as $data): ?>
+                            <?php
+                            $no = 0;
+                            foreach ($lokasi as $data):
+                                $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="px-6 py-4"><?php echo isset(
-                                    $data['id_lokasi']
-                                )
-                                    ? $data['id_lokasi']
-                                    : ''; ?>
+                                <td class="px-6 py-4"> <?php echo $no; ?>
                                 </td>
                                 <td class="px-6 py-4"><?php echo isset(
                                     $data['nama_lokasi']
@@ -310,7 +310,9 @@
                                     ? $data['alamat']
                                     : ''; ?></td>
                             </tr>
-                            <?php endforeach; ?>
+                            <?php
+                            endforeach;
+                            ?>
                         </tbody>
                     </table>
                 </div>

@@ -273,95 +273,142 @@ class User_model extends CI_Model
         }
     }
     
-public function updateUserPhoto($user_id, $data)
-{
-    $update_result = $this->db->update('user', $data, [
-        'id_user' => $user_id,
-    ]);
+    public function updateUserPhoto($user_id, $data)
+    {
+        $update_result = $this->db->update('user', $data, [
+            'id_user' => $user_id,
+        ]);
 
-    return $update_result ? true : false;
-}
-
-// untuk uubah password
-public function getPasswordById($id_user)
-{
-    $this->db->select('password');
-    $this->db->from('user'); // Replace 'your_user_table' with the actual table name
-    $this->db->where('id_user', $id_user);
-    $query = $this->db->get();
-
-    if ($query->num_rows() > 0) {
-        $row = $query->row();
-        return $row->password;
-    } else {
-        return false;
-    }
-}
-
-public function update_password($id_user, $new_password)
-{
-    $this->db->set('password', $new_password);
-    $this->db->where('id_user', $id_user);
-    $this->db->update('user'); // Replace 'your_user_table' with the actual table name
-
-    return $this->db->affected_rows() > 0;
-}
-
-// Memperbarui data dalam tabel berdasarkan kondisi tertentu
-public function update_data($table, $data, $where) {
-    $this->db->update($table, $data, $where);
-    return $this->db->affected_rows();
-}
-
- // Memperbarui gambar pengguna
- public function update_image($user_id, $new_image) {
-    $data = array(
-        'image' => $new_image
-    );
-
-    $this->db->where('id_user', $user_id);
-    $this->db->update('user', $data);
-
-    return $this->db->affected_rows();
-}
-
-// Mendapatkan gambar saat ini berdasarkan ID pengguna
-public function get_current_image($user_id) {
-    $this->db->select('image');
-    $this->db->from('user');
-    $this->db->where('id_user', $user_id);
-    $query = $this->db->get();
-
-    if ($query->num_rows() > 0) {
-        $row = $query->row();
-        return $row->image;
+        return $update_result ? true : false;
     }
 
-    return null;
-}
+    // untuk uubah password
+    public function getPasswordById($id_user)
+    {
+        $this->db->select('password');
+        $this->db->from('user'); // Replace 'your_user_table' with the actual table name
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get();
 
-public function getJabatanByIdAdmin($id_admin)
-{
-    // Sesuaikan dengan struktur tabel dan nama kolom pada database
-    $this->db->select('*');
-    $this->db->from('jabatan');
-    $this->db->where('id_admin', $id_admin);
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->password;
+        } else {
+            return false;
+        }
+    }
 
-    $query = $this->db->get();
+    public function update_password($id_user, $new_password)
+    {
+        $this->db->set('password', $new_password);
+        $this->db->where('id_user', $id_user);
+        $this->db->update('user'); // Replace 'your_user_table' with the actual table name
 
-    return $query->result();
-}
+        return $this->db->affected_rows() > 0;
+    }
 
-public function getShiftByIdAdmin($id_admin)
-{
-    // Sesuaikan dengan struktur tabel dan nama kolom pada database
-    $this->db->select('*');
-    $this->db->from('shift');
-    $this->db->where('id_admin', $id_admin);
+    // Memperbarui data dalam tabel berdasarkan kondisi tertentu
+    public function update_data($table, $data, $where) {
+        $this->db->update($table, $data, $where);
+        return $this->db->affected_rows();
+    }
 
-    $query = $this->db->get();
+    // Memperbarui gambar pengguna
+    public function update_image($user_id, $new_image) {
+        $data = array(
+            'image' => $new_image
+        );
 
-    return $query->result();
-}
+        $this->db->where('id_user', $user_id);
+        $this->db->update('user', $data);
+
+        return $this->db->affected_rows();
+    }
+
+    // Mendapatkan gambar saat ini berdasarkan ID pengguna
+    public function get_current_image($user_id) {
+        $this->db->select('image');
+        $this->db->from('user');
+        $this->db->where('id_user', $user_id);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->image;
+        }
+
+        return null;
+    }
+
+    public function getJabatanByIdAdmin($id_admin)
+    {
+        // Sesuaikan dengan struktur tabel dan nama kolom pada database
+        $this->db->select('*');
+        $this->db->from('jabatan');
+        $this->db->where('id_admin', $id_admin);
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    public function getShiftByIdAdmin($id_admin)
+    {
+        // Sesuaikan dengan struktur tabel dan nama kolom pada database
+        $this->db->select('*');
+        $this->db->from('shift');
+        $this->db->where('id_admin', $id_admin);
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    public function getAbsensiBelumSelesai($tanggal)
+    {
+        $this->db->where('tanggal_absen', $tanggal);
+        $this->db->where('status', false); // Filter absensi yang belum selesai
+        $query = $this->db->get('absensi');
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+        return null;
+    }
+
+    public function updateStatusAbsenPulang($tanggal, $data) {
+        $this->db->update('absensi', $data);
+        return $this->db->affected_rows(); // Mengembalikan jumlah baris yang terpengaruh oleh query
+    }
+
+    public function getAbsensiByDate($tanggal)
+    {
+        $this->db->where('tanggal_absen', $tanggal);
+        return $this->db->get('absensi')->result();
+    }
+
+    public function get_absensi_data_by_user($id_user)
+    {
+        $this->db->where('id_user', $id_user);
+        $this->db->from('absensi'); // Ganti 'nama_tabel_absensi' dengan nama tabel Anda
+        $query = $this->db->get();
+        
+        return $query->result();
+    }
+
+    public function get_absensi_by_id($id_absensi) {
+        // Ganti 'nama_tabel_absensi' dengan nama tabel absensi yang sesuai dalam database Anda
+        $this->db->where('id_absensi', $id_absensi);
+        $query = $this->db->get('absensi');
+
+        // Mengembalikan satu baris data absensi atau null jika tidak ditemukan
+        return $query->row();
+    }
+
+    public function update_izin($table, $data, $id_absensi) {
+        $this->db->where('id_absensi', $id_absensi);
+        return $this->db->update($table, $data);
+    }
+    
 }
 ?>

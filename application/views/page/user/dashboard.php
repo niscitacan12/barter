@@ -25,7 +25,7 @@
         <!-- Card Selamat Datang -->
         <div class="mt-10 w-full">
             <div
-                class="p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                class="p-4 text-center bg-gray-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <?php
                 $hari = date('l');
                 $tanggal = date('d');
@@ -44,7 +44,7 @@
         <div class="p-2 mt-5">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
                 <a href="<?= base_url('') ?>"
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    class="w-full p-4 text-center bg-blue-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Total</h5>
                     <hr class="mb-4">
                     <div class="flex justify-between">
@@ -57,7 +57,7 @@
                     </div>
                 </a>
                 <a href="<?= base_url('user/izin') ?>"
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    class="w-full p-4 text-center bg-green-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Izin</h5>
                     <hr class="mb-4">
                     <div class="flex justify-between">
@@ -70,7 +70,7 @@
                     </div>
                 </a>
                 <a href="<?= base_url('user/cuti') ?>"
-                    class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    class="w-full p-4 text-center bg-purple-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Cuti</h5>
                     <hr class="mb-4">
                     <div class="flex justify-between">

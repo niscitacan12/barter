@@ -28,11 +28,10 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead
-                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -50,11 +49,14 @@
                                     Jumlah karyawan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     aksi
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody>
                             <?php
                             $no = 0;
                             foreach ($shift as $row):
@@ -86,12 +88,15 @@
                                         }
                                     }
                                 }
-
+                                
                                 echo $employee_count;
                                 ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-content-between">
+                                    <?php echo nama_admin($row->id_admin); ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex justify-center">
                                         <a type="button"
                                             href="<?= base_url('admin/detail_shift?id=' .  $row->id_shift) ?>"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">

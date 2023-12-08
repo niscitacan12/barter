@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -24,7 +26,9 @@
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                     <div class="flex items-center p-4">
 
-                        <form id="form-filter" action="<?php echo base_url('Admin/aksi_filter'); ?>" class="flex gap-4 mx-10">
+                        <form id="form-filter" action="<?php echo base_url(
+                            'Admin/aksi_filter'
+                        ); ?>" class="flex gap-4 mx-10">
                             <!-- Form Bulan -->
                             <div class="relative flex items-center">
                                 <label for="bulan" class="mx-10 mb-2 text-gray-900 dark:text-white sm:mr-4"></label>
@@ -50,9 +54,11 @@
                             <div class="relative flex items-center mx-3">
                                 <input type="text" id="tanggal" name="tanggal"
                                     class="w-40 sm:w-64 sm:w-40 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mx-3"
-                                    placeholder="Pilih Tanggal" 
-                                    min="<?= date('Y-m-d') ?>" max="<?= date('Y-m-d') ?>"
-                                    autocomplete="off">
+                                    placeholder="Pilih Tanggal" min="<?= date(
+                                        'Y-m-d'
+                                    ) ?>" max="<?= date(
+                                        'Y-m-d'
+                                    ) ?>" autocomplete="off">
                                 <label for="tanggal"
                                     class="mx-2 mb-2 absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-900 dark:text-white mx-3 "></label>
                             </div>
@@ -115,7 +121,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     No
                                 </th>
-
+                                <th scope="col" class="px-6 py-3">
+                                    Username
+                                </th>
                                 <th scope="col" class="px-6 py-3">
                                     Tanggal
                                 </th>
@@ -144,9 +152,11 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
-
                                 <td class="px-6 py-4">
-                                    <?php echo $row->tanggal_absen; ?>
+                                    <?php echo nama_user($row->id_user); ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo convDate($row->tanggal_absen); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->keterangan_izin; ?>
@@ -158,7 +168,9 @@
                                     <?php echo $row->jam_pulang; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a type="button" href="<?= base_url('admin/detail_absen/' .  $row->id_absensi) ?>"
+                                    <a type="button" href="<?= base_url(
+                                        'admin/detail_absen/' . $row->id_absensi
+                                    ) ?>"
                                         class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                         <i class="fa-solid fa-circle-info"></i>
                                     </a>
@@ -173,44 +185,48 @@
             </div>
         </div>
     </div>
-   <!-- Untuk JS Form Bulan, Tanggal, Tahun-->
-   <script>
-        $(document).ready(function () {
-            $("#submit-button").click(function () {
+    <!-- Untuk JS Form Bulan, Tanggal, Tahun-->
+    <script>
+    $(document).ready(function() {
+        $("#submit-button").click(function() {
 
-                // Ambil nilai dari formulir
-                var bulan = $("#select").val();
-                var tanggal = $("#tanggal").val();
-                var tahun = $("#form_tahun").val();
+            // Ambil nilai dari formulir
+            var bulan = $("#select").val();
+            var tanggal = $("#tanggal").val();
+            var tahun = $("#form_tahun").val();
 
-                // Kirim permintaan AJAX ke server
-                $.ajax({
-                    url: "<?php echo base_url('Admin/aksi_filter'); ?>",
-                    type: "post",
-                    data: { bulan: bulan, tanggal: tanggal, tahun: tahun },
-                    success: function (response) {
-                        // Perbarui tabel dengan data yang telah difilter
-                        $("#absensi-table tbody").replaceWith($(response).find('tbody'));
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus, errorThrown);
-                    }
-                });
+            // Kirim permintaan AJAX ke server
+            $.ajax({
+                url: "<?php echo base_url('Admin/aksi_filter'); ?>",
+                type: "post",
+                data: {
+                    bulan: bulan,
+                    tanggal: tanggal,
+                    tahun: tahun
+                },
+                success: function(response) {
+                    // Perbarui tabel dengan data yang telah difilter
+                    $("#absensi-table tbody").replaceWith($(response).find('tbody'));
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
             });
         });
+    });
     </script>
     <!-- JS Untuk Tahun -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Ambil elemen input tahun
-            var tahunInput = document.getElementById('form_tahun');
+    document.addEventListener("DOMContentLoaded", function() {
+        // Ambil elemen input tahun
+        var tahunInput = document.getElementById('form_tahun');
 
-            // Dapatkan tahun saat ini
-            var tahunSaatIni = new Date().getFullYear();
+        // Dapatkan tahun saat ini
+        var tahunSaatIni = new Date().getFullYear();
 
-            // Isi input tahun dengan tahun saat ini
-            tahunInput.value = tahunSaatIni;
-        });
+        // Isi input tahun dengan tahun saat ini
+        tahunInput.value = tahunSaatIni;
+    });
     </script>
 </body>
 

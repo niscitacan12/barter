@@ -21,27 +21,27 @@ class Admin extends CI_Controller
     }
 
     // 1. Page
-    // Page Dashboard
-    public function index()
-    {
-        $data['cuti_count'] = $this->admin_model->get_cuti_count();
-        $data['cuti'] = $this->admin_model->get_cuti_data();
-        $id_admin = $this->session->userdata('id');
-        $data['user_count'] = $this->admin_model->get_user_count();
-        $data['absensi']['count'] = $this->admin_model->get_absensi_count();
-        $data['absensi']['data'] = $this->admin_model->get_absen_data();
-        $data['lokasi'] = $this->admin_model->get_lokasi_data();
-        $data['organisasi'] = $this->admin_model->get_organisasi_data();
-        $data['user'] = $this->admin_model->get_user_data();
-
-        // Modifikasi baris di bawah untuk mendapatkan data absen berdasarkan tanggal
-        $data[
-            'absensi_by_date'
-        ] = $this->admin_model->get_absensi_count_by_date('2023-11-21'); // Ganti '2023-11-21' dengan tanggal yang diinginkan
-
-        $data['jabatan'] = $this->admin_model->get_jabatan_data();
-        $this->load->view('page/admin/dashboard', $data);
-    }
+     // Page Dashboard
+     public function index()
+     {
+         $data['cuti_count'] = $this->admin_model->get_cuti_count();
+         $data['cuti'] = $this->admin_model->get_cuti_data();
+         $id_admin = $this->session->userdata('id');
+         $data['user_count'] = $this->admin_model->get_user_count();
+         $data['absensi']['count'] = $this->admin_model->get_absensi_count();
+         $data['absensi']['data'] = $this->admin_model->get_absen_data();
+         $data['lokasi'] = $this->admin_model->get_lokasi_data();
+         $data['organisasi'] = $this->admin_model->get_organisasi_data();
+         $data['user'] = $this->admin_model->get_user_data();
+ 
+         // Modifikasi baris di bawah untuk mendapatkan data absen berdasarkan tanggal
+         $data[
+             'absensi_by_date'
+         ] = $this->admin_model->get_absensi_count_by_date('2023-11-21'); // Ganti '2023-11-21' dengan tanggal yang diinginkan
+ 
+         $data['jabatan'] = $this->admin_model->get_jabatan_data();
+         $this->load->view('page/admin/dashboard', $data);
+     }
 
     // Page Organisasi
     public function organisasi()
@@ -364,24 +364,20 @@ class Admin extends CI_Controller
         $id_jabatan = $this->session->userdata('id_jabatan');
         $id_shift = $this->session->userdata('id_shift');
         $id_organisasi = $this->session->userdata('id_organisasi');
-
+    
         // Dapatkan data pengguna berdasarkan ID
         $data['user'] = $this->admin_model->getUserId($id_user);
-
+    
         // // Tetapkan data terkait pengguna ke array $data
         // $data['id_jabatan'] = $id_jabatan;
         // $data['id_shift'] = $id_shift;
         // $data['id_organisasi'] = $id_organisasi;
-
+    
         // Dapatkan data shift, jabatan, dan organisasi
         $data['shift'] = $this->admin_model->get_shift_by_id_admin($id_admin);
-        $data['jabatan'] = $this->admin_model->get_jabatan_by_id_admin(
-            $id_admin
-        );
-        $data['organisasi'] = $this->admin_model
-            ->get_data('organisasi')
-            ->result();
-
+        $data['jabatan'] = $this->admin_model->get_jabatan_by_id_admin($id_admin);
+        $data['organisasi'] = $this->admin_model->get_data('organisasi')->result();
+    
         // Muat tampilan dengan data
         $this->load->view('page/admin/user/update_user', $data);
     }
@@ -713,31 +709,25 @@ class Admin extends CI_Controller
         $image = $this->upload_image_admin('image');
         $user_id = $this->session->userdata('id');
         $admin = $this->admin_model->getAdminByID($user_id);
-
+    
         if ($image[0] == true) {
             $admin->image = $image[1];
         }
-
+    
         $data = [
             'image' => $image[1],
         ];
-
+    
         // Update foto di database
         $update_result = $this->admin_model->updateAdminPhoto($user_id, $data);
-
+    
         // Set flash data untuk memberi tahu user tentang hasil pembaruan foto
         if ($update_result) {
-            $this->session->set_flashdata(
-                'berhasil_ubah_foto',
-                'Berhasil mengubah foto'
-            );
+            $this->session->set_flashdata('berhasil_ubah_foto', 'Berhasil mengubah foto');
         } else {
-            $this->session->set_flashdata(
-                'gagal_update',
-                'Gagal mengubah foto'
-            );
+            $this->session->set_flashdata('gagal_update', 'Gagal mengubah foto');
         }
-
+    
         // Redirect ke halaman profile
         redirect(base_url('admin/profile'));
     }
@@ -750,27 +740,19 @@ class Admin extends CI_Controller
         $nama_depan = $this->input->post('nama_depan');
         $nama_belakang = $this->input->post('nama_belakang');
 
-        $data = [
+        $data = array(
             'email' => $email,
             'username' => $username,
             'nama_depan' => $nama_depan,
             'nama_belakang' => $nama_belakang,
-        ];
+        );
 
-        $update_result = $this->admin_model->update_data('admin', $data, [
-            'id_admin' => $this->session->userdata('id'),
-        ]);
+        $update_result = $this->admin_model->update_data('admin', $data, array('id_admin' => $this->session->userdata('id')));
 
         if ($update_result) {
-            $this->session->set_flashdata(
-                'berhasil_ubah_foto',
-                'Data berhasil diperbarui'
-            );
+            $this->session->set_flashdata('berhasil_ubah_foto', 'Data berhasil diperbarui');
         } else {
-            $this->session->set_flashdata(
-                'gagal_update',
-                'Gagal memperbarui data'
-            );
+            $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
         }
 
         redirect(base_url('admin/profile'));
@@ -846,12 +828,16 @@ class Admin extends CI_Controller
         $username = $this->input->post('username');
         $nama_depan = $this->input->post('nama_depan');
         $nama_belakang = $this->input->post('nama_belakang');
+        $id_shift = $this->input->post('id_shift');
+        $id_jabatan = $this->input->post('id_jabatan');
 
         // Buat data yang akan diupdate
         $data = [
             'username' => $username,
             'nama_depan' => $nama_depan,
             'nama_belakang' => $nama_belakang,
+            'id_shift' => $id_shift,
+            'id_jabatan' => $id_jabatan,
             // Tambahkan field lain jika ada
         ];
 
@@ -953,6 +939,9 @@ class Admin extends CI_Controller
     {
         $this->admin_model->hapus_lokasi($id_lokasi); // Assuming you have a method 'hapus_lokasi' in the model
         redirect('admin/lokasi');
+        $this->session->set_flashdata(
+            'hapus_lokasi',
+        );
     }
 
     // aksi ubah jabatan
@@ -1011,37 +1000,20 @@ class Admin extends CI_Controller
         $password_baru = $this->input->post('password_baru');
         $konfirmasi_password = $this->input->post('konfirmasi_password');
 
-        $stored_password = $this->admin_model->getPasswordById(
-            $this->session->userdata('id')
-        );
+        $stored_password = $this->admin_model->getPasswordById($this->session->userdata('id'));
 
         if (md5($password_lama) != $stored_password) {
-            $this->session->set_flashdata(
-                'kesalahan_password_lama',
-                'Password lama yang dimasukkan salah'
-            );
+            $this->session->set_flashdata('kesalahan_password_lama', 'Password lama yang dimasukkan salah');
         } else {
             if ($password_baru === $konfirmasi_password) {
-                $update_result = $this->admin_model->update_password(
-                    $this->session->userdata('id'),
-                    md5($password_baru)
-                );
+                $update_result = $this->admin_model->update_password($this->session->userdata('id'), md5($password_baru));
                 if ($update_result) {
-                    $this->session->set_flashdata(
-                        'ubah_password',
-                        'Berhasil mengubah password'
-                    );
+                    $this->session->set_flashdata('ubah_password', 'Berhasil mengubah password');
                 } else {
-                    $this->session->set_flashdata(
-                        'gagal_update',
-                        'Gagal memperbarui password'
-                    );
+                    $this->session->set_flashdata('gagal_update', 'Gagal memperbarui password');
                 }
             } else {
-                $this->session->set_flashdata(
-                    'kesalahan_password',
-                    'Password baru dan Konfirmasi password tidak sama'
-                );
+                $this->session->set_flashdata('kesalahan_password', 'Password baru dan Konfirmasi password tidak sama');
             }
         }
         redirect(base_url('admin/profile'));
@@ -1087,7 +1059,7 @@ class Admin extends CI_Controller
             return [true, $new_image];
         }
     }
-
+    
     // public function upload_image_admin($value)
     // {
     //     $kode = round(microtime(true) * 1000);
@@ -1587,109 +1559,76 @@ class Admin extends CI_Controller
         $this->mypdf->generate('/page/admin/laporan/dompdf', $data);
     }
 
-    // Untuk Aksi Filter
-    public function aksi_filter()
-    {
-        $this->load->model('admin_model');
-
-        // Ambil nilai filter dari formulir
-        $bulan = $this->input->post('bulan');
-        $tanggal = $this->input->post('tanggal');
-        $tahun = $this->input->post('tahun');
-
-        // Panggil model untuk mendapatkan data absensi
-        $dataAbsensi = $this->admin_model->filterAbsensi(
-            $bulan,
-            $tanggal,
-            $tahun
-        );
-
-        // Kirim data yang sudah disaring ke view
-        $data['absensi'] = $dataAbsensi;
-
-        // Load view yang menampilkan hasil filter
-        $this->load->view('page/admin/absen/absensi', $data);
-    }
-
-    // Export History Absensi
-    public function export_absensi()
-    {
-        // Mengambil nilai filter dari query string URL
-        $tanggal = $this->input->get('tanggal');
-        $bulan = $this->input->get('bulan');
-        $tahun = $this->input->get('tahun');
-
-        // Filter data berdasarkan nilai yang ada
-        $filter = [];
-        if ($tanggal) {
-            $filter['tanggal'] = $tanggal;
-        }
-        if ($bulan) {
-            $filter['bulan'] = $bulan;
-        }
-        if ($tahun) {
-            $filter['tahun'] = $tahun;
-        }
-        $absensiData = $this->admin_model->get_absensi_data($filter);
-
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $style_col = [
-            'font' => ['bold' => true],
-            'alignment' => [
-                'horizontal' =>
-                    \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                'vertical' =>
-                    \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-            ],
-            'borders' => [
-                'top' => [
-                    'borderStyle' =>
-                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-                'right' => [
-                    'borderStyle' =>
-                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-                'bottom' => [
-                    'borderStyle' =>
-                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-                'left' => [
-                    'borderStyle' =>
-                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-            ],
-        ];
-
-        $style_row = [
-            'font' => ['bold' => true],
-            'alignment' => [
-                'vertical' =>
-                    \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-            ],
-            'borders' => [
-                'top' => [
-                    'borderStyle' =>
-                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-                'right' => [
-                    'borderStyle' =>
-                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-                'bottom' => [
-                    'borderStyle' =>
-                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-                'left' => [
-                    'borderStyle' =>
-                        \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                ],
-            ],
-        ];
-
-        $sheet->setCellValue('A1', 'HISTORY ABSENSI');
+     // Untuk Aksi Filter
+     public function aksi_filter() 
+     {
+         $this->load->model('admin_model');
+ 
+         // Ambil nilai filter dari formulir
+         $bulan = $this->input->post('bulan');
+         $tanggal = $this->input->post('tanggal');
+         $tahun = $this->input->post('tahun');
+         
+         // Panggil model untuk mendapatkan data absensi
+         $dataAbsensi = $this->admin_model->filterAbsensi($bulan, $tanggal, $tahun);
+ 
+         // Kirim data yang sudah disaring ke view
+         $data['absensi'] = $dataAbsensi;
+ 
+         // Load view yang menampilkan hasil filter
+         $this->load->view('page/admin/absen/absensi', $data);
+     }
+ 
+     // Export History Absensi
+     public function export_absensi()
+     {
+         // Mengambil nilai filter dari query string URL
+         $tanggal = $this->input->get('tanggal');
+         $bulan = $this->input->get('bulan');
+         $tahun = $this->input->get('tahun');
+ 
+         // Filter data berdasarkan nilai yang ada
+         $filter = [];
+         if ($tanggal) {
+             $filter['tanggal'] = $tanggal;
+         }
+         if ($bulan) {
+             $filter['bulan'] = $bulan;
+         }
+         if ($tahun) {
+             $filter['tahun'] = $tahun;
+         }
+         $absensiData = $this->admin_model->get_absensi_data($filter);
+     
+         $spreadsheet = new Spreadsheet();
+         $sheet = $spreadsheet->getActiveSheet();
+     
+         $style_col = [
+             'font' => ['bold' => true],
+             'alignment' => [
+                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+             ],
+             'borders' => [
+                 'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                 'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                 'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                 'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+             ],
+         ];
+     
+         $style_row = [
+             'font' => ['bold' => true],
+             'alignment' => ['vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER],
+             'borders' => [
+                 'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                 'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                 'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+                 'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],
+             ],
+         ];
+     
+         $sheet->setCellValue('A1', 'HISTORY ABSENSI');
         $sheet->mergeCells('A1:G1');
         $sheet
             ->getStyle('A1')
@@ -1699,9 +1638,10 @@ class Admin extends CI_Controller
         $sheet->setCellValue('A3', 'NO');
         $sheet->setCellValue('B3', 'TANGGAL');
         $sheet->setCellValue('C3', 'KETERANGAN');
-        $sheet->setCellValue('D3', 'JAM MASUK');
-        $sheet->setCellValue('E3', 'JAM PULANG');
-        $sheet->setCellValue('F3', 'LOKASI');
+        $sheet->setCellValue('D3', 'LOKASI MASUK');
+        $sheet->setCellValue('F3', 'JAM MASUK');
+        $sheet->setCellValue('E3', 'LOKASI PULANG');
+        $sheet->setCellValue('G3', 'JAM PULANG');         
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -1709,6 +1649,7 @@ class Admin extends CI_Controller
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
 
         $no = 1;
         $numrow = 4;
@@ -1716,49 +1657,49 @@ class Admin extends CI_Controller
             $sheet->setCellValue('A' . $numrow, $no);
             $sheet->setCellValue('B' . $numrow, $row->tanggal_absen);
             $sheet->setCellValue('C' . $numrow, $row->keterangan_izin);
-            $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
-            $sheet->setCellValue('E' . $numrow, $row->jam_pulang);
-            $sheet->setCellValue('F' . $numrow, $row->lokasi);
+            $sheet->setCellValue('D' . $numrow, $row->lokasi_masuk);
+            $sheet->setCellValue('E' . $numrow, $row->lokasi_pulang);
+            $sheet->setCellValue('F' . $numrow, $row->jam_masuk);
+            $sheet->setCellValue('G' . $numrow, $row->jam_pulang);
 
+          
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
 
             $no++;
             $numrow++;
         }
 
         $sheet->getColumnDimension('A')->setWidth(5);
-        $sheet->getColumnDimension('B')->setWidth(25);
-        $sheet->getColumnDimension('C')->setWidth(25);
-        $sheet->getColumnDimension('D')->setWidth(25);
-        $sheet->getColumnDimension('E')->setWidth(25);
-        $sheet->getColumnDimension('F')->setWidth(40);
-
-        $sheet->getDefaultRowDimension()->setRowHeight(-1);
-
-        $sheet
-            ->getPageSetup()
-            ->setOrientation(
-                \PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE
-            );
-
-        $sheet->setTitle('HISTORY ABSENSI');
-
-        header(
-            'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        );
-        header(
-            'Content-Disposition: attachment; filename="HISTORY_ABSENSI.xlsx"'
-        );
-        header('Cache-Control: max-age=0');
-
-        ob_clean();
-        $writer = new Xlsx($spreadsheet);
-        $writer->save('php://output');
-    }
+         $sheet->getColumnDimension('B')->setWidth(25);
+         $sheet->getColumnDimension('C')->setWidth(25);
+         $sheet->getColumnDimension('D')->setWidth(40);
+         $sheet->getColumnDimension('E')->setWidth(40);
+         $sheet->getColumnDimension('F')->setWidth(25);
+         $sheet->getColumnDimension('G')->setWidth(25);         
+     
+         $sheet->getDefaultRowDimension()
+               ->setRowHeight(-1);
+     
+         $sheet->getPageSetup()
+               ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+     
+         $sheet->setTitle('HISTORY ABSENSI');
+     
+         header(
+             'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+         );
+         header('Content-Disposition: attachment; filename="HISTORY_ABSENSI.xlsx"');
+         header('Cache-Control: max-age=0');
+     
+         ob_clean();
+         $writer = new Xlsx($spreadsheet);
+         $writer->save('php://output');
+     }
 }
 ?>

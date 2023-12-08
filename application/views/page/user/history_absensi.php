@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -31,6 +33,9 @@
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Username
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Tanggal
@@ -62,6 +67,9 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
+                                    <?php echo nama_user($row->id_user); ?>
+                                </td>
+                                <td class="px-6 py-4">
                                     <?php echo convDate($row->tanggal_absen); ?>
                                 </td>
                                 <td class="px-6 py-4">
@@ -74,22 +82,39 @@
                                     <?php echo $row->keterangan_izin; ?>
                                 </td>
                                 <td class="px-5 py-3">
-                                    <a type="button" href="<?= base_url('user/detail_absensi/' .  $row->id_absensi) ?>"
-                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                    </a>
-                                    <?php if ($row->status != 'true'): ?>
-                                    <a type="button" href="<?= base_url('user/pulang/' .  $row->id_absensi) ?>"
-                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-home"></i>
-                                    </a>
-                                    <?php else: ?>
-                                    <button
-                                        class="text-white bg-gray-500 opacity-50 cursor-not-allowed focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
-                                        disabled>
-                                        <i class="fa-solid fa-home"></i>
-                                    </button>
-                                    <?php endif; ?>
+                                    <div class="flex justify-center">
+                                        <?php if ($row->keterangan_izin == '-') : ?>
+                                        <a type="button" href="<?= base_url(
+                                        'user/detail_absensi/' .
+                                            $row->id_absensi
+                                        ) ?>"
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                        <a type="button" href="<?= base_url(
+                                        'user/izin_absen/' .
+                                            $row->id_absensi
+                                        ) ?>"
+                                            class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                                            <i class="fa-solid fa-user-plus"></i>
+                                        </a>
+                                        <?php else: ?>
+                                        <a type="button" href="<?= base_url(
+                                        'user/detail_absensi/' .
+                                            $row->id_absensi
+                                        ) ?>"
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                        <a type="button" href="<?= base_url(
+                                        'user/aksi_batal_izin/' .
+                                            $row->id_absensi
+                                        ) ?>"
+                                            class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                                            <i class="fa-solid fa-user-plus"></i>
+                                        </a>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
                             </tr>
                             <?php

@@ -30,11 +30,10 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead
-                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -52,7 +51,7 @@
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody class="text-center">
+                        <tbody>
                             <?php foreach ($user as $row): ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -66,25 +65,27 @@
                                 <td class="px-6 py-4">
                                     <?php echo $row->email; ?>
                                 </td>
-                                <td class="text-center px-6 py-4">
-                                    <a type="button" href="<?php echo base_url(
+                                <td class="px-6 py-4">
+                                    <div class="flex justify-center">
+                                        <a type="button" href="<?php echo base_url(
                                         'superadmin/detail_user/' .
                                             $row->id_user
                                     ); ?>"
-                                        class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                    </a>
-                                    <a type="button" href="<?php echo base_url(
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                        <a type="button" href="<?php echo base_url(
                                         'superadmin/update_user/' .
                                             $row->id_user
                                     ); ?>"
-                                        class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-                                    <a type="button" onclick="hapusUser(<?php echo $row->id_user; ?>)"
-                                        class="text-white bg-red-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
+                                            class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a type="button" onclick="hapusUser(<?php echo $row->id_user; ?>)"
+                                            class="text-white bg-red-600 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             <?php

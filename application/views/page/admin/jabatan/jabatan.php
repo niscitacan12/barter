@@ -26,10 +26,9 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
                         <!-- Tabel Head -->
-                        <thead
-                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -41,18 +40,19 @@
                                     Jumlah Karyawan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Aksi
                                 </th>
                             </tr>
                         </thead>
                         <th>
-                            <!-- Tabel Body -->
-
                             <?php
                             $no = 0;
                             foreach ($jabatan as $row):
                                 $no++; ?>
-                            <tbody class="text-center">
+                            <tbody>
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50
                                     dark:hover:bg-gray-600">
                                     <th scope="row"
@@ -66,7 +66,10 @@
                                         <?php echo jumlah_karyawan($row['id_jabatan']); ?>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="flex justify-content-between">
+                                        <?php echo nama_admin($row['id_admin']); ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex justify-center">
                                             <a type="button" href="<?= base_url(
                                             'admin/detail_jabatan/' . $row['id_jabatan']
                                         ); ?>"

@@ -37,7 +37,7 @@
                 <a href="<?= 'superadmin/organisasi' ?>"
                     class="w-full p-4 text-center bg-blue-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Organisasi</h5>
-                    <hr class="mb-4">
+                    <hr class="mb-4 border-black">
                     <div class="flex justify-between">
                         <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
                             <?= $organisasi ?> Organisasi
@@ -120,7 +120,9 @@
                                 <?php echo $no; ?>
                             </th>
                             <td class="px-6 py-4">
-                                <?php echo isset($row->username) ? $row->username : 'N/A'; ?>
+                                <?php echo isset($row->username)
+                                    ? $row->username
+                                    : 'N/A'; ?>
                             </td>
                             <td class="px-6 py-4">
                                 <?php echo $row->token; ?>

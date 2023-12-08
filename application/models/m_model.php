@@ -169,7 +169,8 @@ class M_model extends CI_Model
         return true;
     }
 
-    public function get_admin_id($id_organisasi) {
+    public function get_admin_id($id_organisasi)
+    {
         $this->db->select('id_admin');
         $this->db->from('organisasi');
         $this->db->where('id_organisasi', $id_organisasi);
@@ -228,6 +229,27 @@ class M_model extends CI_Model
         } else {
             return null; // Jika tidak ada data yang ditemukan
         }
+    }
+
+    public function get_user_by_email($email)
+    {
+        $query = $this->db->get_where('user', ['email' => $email]);
+        return $query->row_array();
+    }
+
+    public function set_reset_token($user_id, $token)
+    {
+        $this->db->where('id_user', $user_id);
+        $this->db->update('user', [
+            'reset_token' => $token,
+            'token_expiration' => date('Y-m-d H:i:s', strtotime('+1 hour')),
+        ]);
+    }
+
+    public function get_user_by_reset_token($token)
+    {
+        $query = $this->db->get_where('user', ['reset_token' => $token]);
+        return $query->row_array();
     }
 }
 ?>

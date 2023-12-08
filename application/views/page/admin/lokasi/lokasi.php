@@ -47,6 +47,9 @@
                                     Jumlah Karyawan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Aksi
                                 </th>
                             </tr>
@@ -78,6 +81,13 @@
                                 );
                                 echo $jumlah_karyawan;
                                 ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo nama_organisasi(isset(
+                                $data->id_organisasi
+                            )
+                                ? $data->id_organisasi
+                                : ''); ?>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex justify-center">

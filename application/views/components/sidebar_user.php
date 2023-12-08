@@ -16,6 +16,25 @@ $id_user = $_SESSION['id']; // Misalkan informasi session disimpan dalam $_SESSI
 $email = $_SESSION['email'];
 $username = $_SESSION['username'];
 $image = $_SESSION['image'];
+
+// $currentDate = date('Y-m-d');
+// $absensiHariIni = $this->user_model->getAbsensiByDate($currentDate); // Mendapatkan data absensi hari ini
+
+// if (empty($absensiHariIni) || !$absensiHariIni[0]->status) {
+//     // Tidak ada data absensi atau status belum absen masuk
+//     $pulangLink = '#'; // Atur link ke '#' jika tidak bisa melakukan absen pulang
+//     $pulangOnClick = "Swal.fire({
+//         title: 'Maaf!',
+//         text: 'Anda belum melakukan absen masuk hari ini.',
+//         icon: 'error',
+//         showConfirmButton: false, // Menghilangkan tombol OK
+//         timer: 2000 // Timer dalam milidetik (misalnya, 3000 untuk 3 detik)
+//     });";
+// } else {
+//     // Ada data absensi hari ini dan status absen masuk sudah dilakukan
+//     $pulangLink = base_url('user/pulang');
+//     $pulangOnClick = ''; // Tidak ada SweetAlert
+// }
 ?>
 
 <body>
@@ -56,7 +75,7 @@ $image = $_SESSION['image'];
                                     alt="user photo"></a>
                             </button>
                         </div>
-                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                        <div class="z-50 hidden my-4 text-base list-none bg-indigo-50 divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
@@ -87,9 +106,9 @@ $image = $_SESSION['image'];
 
     <!-- Sidebar -->
     <aside id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-indigo-50 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidebar">
-        <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <div class="h-full px-3 pb-4 overflow-y-auto bg-indigo-50 dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
 
                 <!-- Menu Dashboard -->
@@ -102,14 +121,40 @@ $image = $_SESSION['image'];
                     </a>
                 </li>
 
-                <!-- Menu Absen -->
+                <!-- Dropdown Absen -->
                 <li>
-                    <a href="<?php echo base_url('user/absen'); ?>"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <button type="button"
+                        class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        aria-controls="dropdown-masterdata" data-collapse-toggle="dropdown-masterdata">
                         <i
-                            class="fa-solid fa-address-card fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Absen</span>
-                    </a>
+                            class="fa-solid fa-address-card fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 text-left whitespace-nowrap">Absensi</span>
+                        <i
+                            class="fa-solid fa-chevron-down fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                    </button>
+
+                    <ul id="dropdown-masterdata" class="hidden py-2 space-y-2">
+
+                        <!-- Menu Masuk -->
+                        <li>
+                            <a href="<?php echo base_url('user/absen'); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-right-to-bracket fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Masuk</span>
+                            </a>
+                        </li>
+
+                        <!-- Menu Pulang -->
+                        <li>
+                            <a href="<?php echo base_url('user/pulang'); ?>"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <i
+                                    class="fa-solid fa-right-from-bracket fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Pulang</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <!-- Menu Izin -->

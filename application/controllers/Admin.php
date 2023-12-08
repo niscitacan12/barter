@@ -732,31 +732,31 @@ class Admin extends CI_Controller
         redirect(base_url('admin/profile'));
     }
 
-     // aksi ubah akun
-     public function edit_profile()
-     {
-         $email = $this->input->post('email');
-         $username = $this->input->post('username');
-         $nama_depan = $this->input->post('nama_depan');
-         $nama_belakang = $this->input->post('nama_belakang');
- 
-         $data = array(
-             'email' => $email,
-             'username' => $username,
-             'nama_depan' => $nama_depan,
-             'nama_belakang' => $nama_belakang,
-         );
- 
-         $update_result = $this->admin_model->update_data('admin', $data, array('id_admin' => $this->session->userdata('id')));
- 
-         if ($update_result) {
-             $this->session->set_flashdata('berhasil_ubah_foto', 'Data berhasil diperbarui');
-         } else {
-             $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
-         }
- 
-         redirect(base_url('admin/profile'));
-     }
+    // aksi ubah akun
+    public function edit_profile()
+    {
+        $email = $this->input->post('email');
+        $username = $this->input->post('username');
+        $nama_depan = $this->input->post('nama_depan');
+        $nama_belakang = $this->input->post('nama_belakang');
+
+        $data = array(
+            'email' => $email,
+            'username' => $username,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+        );
+
+        $update_result = $this->admin_model->update_data('admin', $data, array('id_admin' => $this->session->userdata('id')));
+
+        if ($update_result) {
+            $this->session->set_flashdata('berhasil_ubah_foto', 'Data berhasil diperbarui');
+        } else {
+            $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
+        }
+
+        redirect(base_url('admin/profile'));
+    }
 
     // aksi ubah akun
     public function aksi_ubah_akun()

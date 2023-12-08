@@ -221,6 +221,41 @@ class User extends CI_Controller
         $this->load->view('page/user/izin', $data);
     }
 
+    public function izin_absen($id_absensi)
+    {
+        $absensi = $this->user_model->get_absensi_by_id($id_absensi); // Ganti dengan metode yang sesuai di model Anda
+        
+        setlocale(LC_TIME, 'id_ID');
+        date_default_timezone_set('Asia/Jakarta');
+        $username = $this->session->userdata('username');
+        $currentDateTime = date('d F Y H:i:s');
+        $currentHour = date('H', strtotime($currentDateTime));
+        $date = date('l, d F Y', strtotime($currentDateTime));
+        $time = date('H:i', strtotime($currentDateTime));
+        $greeting = '';
+
+        if ($currentHour >= 1 && $currentHour < 10) {
+            $greeting = 'Selamat Pagi';
+        } elseif ($currentHour >= 10 && $currentHour < 15) {
+            $greeting = 'Selamat Siang';
+        } elseif ($currentHour >= 15 && $currentHour < 19) {
+            $greeting = 'Selamat Sore';
+        } else {
+            $greeting = 'Selamat Malam';
+        }
+
+        // Melewatkan variabel ke view menggunakan array
+        $data = [
+            'username' => $username,
+            'greeting' => $greeting,
+            'date' => $date,
+            'time' => $time,
+            'absensi' => $absensi,
+        ];
+
+        $this->load->view('page/user/izin_absen', $data);
+    }
+
     // Aksi Absen
     public function aksi_absen()
     {
@@ -385,7 +420,7 @@ class User extends CI_Controller
                     'akhir_cuti' => $akhir_cuti,
                     'masuk_kerja' => $masuk_kerja,
                     'keperluan_cuti' => $keperluan_cuti,
-                    'status' => 'belum disetujui',
+                    'status' => 'Diajukan',
                     'id_organisasi' => $id_organisasi,
                 ];
 
@@ -624,4 +659,106 @@ class User extends CI_Controller
         $this->load->view('page/user/detail_absensi', $data);
     }
 
+    public function aksi_batal_cuti($id_cuti) {
+        $id_cuti = $this->input->post('id_cuti');
+        // Buat data yang akan diupdate
+        $data = [
+            'status' => 'Dibatalkan',
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $eksekusi = $this->user_model->update(
+            'cuti',
+            $data, 
+            $id_cuti
+        );
+        $this->session->set_flashdata(
+            'berhasil_batal',
+            'Berhasil Membatalkan cuti'
+        );
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect(base_url('user/history_cuti')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+    }
+
+    public function aksi_ajukan_cuti($id_cuti) {
+        $id_cuti = $this->input->post('id_cuti');
+        // Buat data yang akan diupdate
+        $data = [
+            'status' => 'Diajukan',
+            // Tambahkan field lain jika ada
+        ];
+
+        // Lakukan pembaruan data Admin
+        $eksekusi = $this->user_model->update(
+            'cuti',
+            $data, 
+            $id_cuti
+        );
+        $this->session->set_flashdata(
+            'berhasil_ajukan',
+            'Berhasil Mengajukan cuti kembali'
+        );
+
+        // Redirect ke halaman setelah pembaruan data
+        redirect(base_url('user/history_cuti')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
+    }
+
+    public function aksi_izin_tengah_hari() {
+        $id_absensi = $this->input->post('id_absensi');
+        $keterangan_izin = $this->input->post('keterangan_izin');
+
+        // Pastikan nilai id_absensi dan keterangan_izin tidak kosong
+        if (!empty($id_absensi) && !empty($keterangan_izin)) {
+            // Buat data yang akan diupdate
+            $data = [
+                'keterangan_izin' => $keterangan_izin,
+                'status' => 1, // Update status absensi menjadi true
+                // Tambahkan field lain jika ada
+            ];
+    
+            // Lakukan pembaruan data Absensi
+            $eksekusi = $this->user_model->update_izin('absensi', $data, $id_absensi);
+    
+            if ($eksekusi) {
+                $this->session->set_flashdata('berhasil_ajukan', 'Berhasil Mengajukan cuti kembali');
+            } else {
+                $this->session->set_flashdata('gagal_ajukan', 'Gagal Mengajukan cuti');
+            }
+        } else {
+            $this->session->set_flashdata('gagal_ajukan', 'ID Absensi atau Keterangan Izin tidak valid');
+        }
+    
+        // Redirect ke halaman setelah pembaruan data
+        redirect(base_url('user/history_absensi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Absensi
+    }
+
+    public function aksi_batal_izin() {
+        $id_absensi = $this->input->post('id_absensi');
+
+        // Pastikan nilai id_absensi dan keterangan_izin tidak kosong
+        if (!empty($id_absensi) && !empty($keterangan_izin)) {
+            // Buat data yang akan diupdate
+            $data = [
+                'keterangan_izin' => '-',
+                'status' => 0, // Update status absensi menjadi true
+                // Tambahkan field lain jika ada
+            ];
+    
+            // Lakukan pembaruan data Absensi
+            $eksekusi = $this->user_model->update_izin('absensi', $data, $id_absensi);
+    
+            if ($eksekusi) {
+                $this->session->set_flashdata('berhasil_ajukan', 'Berhasil Mengajukan cuti kembali');
+            } else {
+                $this->session->set_flashdata('gagal_ajukan', 'Gagal Mengajukan cuti');
+            }
+        } else {
+            $this->session->set_flashdata('gagal_ajukan', 'ID Absensi atau Keterangan Izin tidak valid');
+        }
+    
+        // Redirect ke halaman setelah pembaruan data
+        redirect(base_url('user/history_absensi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Absensi
+    }
 }

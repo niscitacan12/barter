@@ -377,28 +377,6 @@ class User_model extends CI_Model
     }
 
     public function updateStatusAbsenPulang($tanggal, $data) {
-        // // $this->db->where('username', $username);
-        // $this->db->where('tanggal_absen', $tanggal);
-        // $this->db->where('status', 0); // Atur kondisi sesuai dengan struktur tabel Anda
-        // date_default_timezone_set('Asia/Jakarta');
-        // $jam = date('H:i:s');
-        // $image_data = $this->input->post('image_data');
-
-        // $img = str_replace('data:image/png;base64,', '', $image_data);
-        // $img = str_replace(' ', '+', $img);
-        // $data = base64_decode($img);
-
-        // $foto_pulang = './images/foto_pulang/' . uniqid() . '.png'; // Ganti dengan ekstensi yang sesuai
-        // file_put_contents($foto_pulang, $data);
-        // // $lokasi_masuk = $this->input->post('lokasi_masuk');
-
-        // // Menyimpan jam pulang
-        // $data = array(
-        //     'status' => 1, // Update status absensi menjadi true (absen pulang)
-        //     'jam_pulang' => $jam, // Menyimpan jam saat pulang
-        //     'foto_pulang' => $foto_pulang, // Menyimpan nama file gambar ke database
-        //     'lokasi_pulang' => $this->input->post('lokasi_pulang'),
-        // );
         $this->db->update('absensi', $data);
         return $this->db->affected_rows(); // Mengembalikan jumlah baris yang terpengaruh oleh query
     }
@@ -417,5 +395,20 @@ class User_model extends CI_Model
         
         return $query->result();
     }
+
+    public function get_absensi_by_id($id_absensi) {
+        // Ganti 'nama_tabel_absensi' dengan nama tabel absensi yang sesuai dalam database Anda
+        $this->db->where('id_absensi', $id_absensi);
+        $query = $this->db->get('absensi');
+
+        // Mengembalikan satu baris data absensi atau null jika tidak ditemukan
+        return $query->row();
+    }
+
+    public function update_izin($table, $data, $id_absensi) {
+        $this->db->where('id_absensi', $id_absensi);
+        return $this->db->update($table, $data);
+    }
+    
 }
 ?>

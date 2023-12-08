@@ -83,6 +83,7 @@
                                 </td>
                                 <td class="px-5 py-3">
                                     <div class="flex justify-center">
+                                        <?php if ($row->keterangan_izin == '-') : ?>
                                         <a type="button" href="<?= base_url(
                                         'user/detail_absensi/' .
                                             $row->id_absensi
@@ -90,6 +91,29 @@
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
+                                        <a type="button" href="<?= base_url(
+                                        'user/izin_absen/' .
+                                            $row->id_absensi
+                                        ) ?>"
+                                            class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                                            <i class="fa-solid fa-user-plus"></i>
+                                        </a>
+                                        <?php else: ?>
+                                        <a type="button" href="<?= base_url(
+                                        'user/detail_absensi/' .
+                                            $row->id_absensi
+                                        ) ?>"
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                        <a type="button" href="<?= base_url(
+                                        'user/aksi_batal_izin/' .
+                                            $row->id_absensi
+                                        ) ?>"
+                                            class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                                            <i class="fa-solid fa-user-plus"></i>
+                                        </a>
+                                        <?php endif; ?>
                                     </div>
                                 </td>
                             </tr>

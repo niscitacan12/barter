@@ -48,11 +48,10 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead
-                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -85,13 +84,14 @@
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody class="text-center">
+                        <tbody>
                             <?php
                             $no = 0;
                             foreach ($cuti as $row):
-                                $no++; ?>
+                                $no++;
+                            ?>
                             <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                class="border-b bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
@@ -108,8 +108,6 @@
                                 <td class="px-6 py-4">
                                     <?php echo convDate($row->masuk_kerja); ?>
                                 </td>
-                                <!-- <td class="px-6 py-4">
-                                </td> -->
                                 <td class="px-6 py-4">
                                     <?php echo $row->keperluan_cuti; ?>
                                 </td>
@@ -118,6 +116,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex justify-content-between">
+                                        <?php if ($row->status !== 'Dibatalkan'): ?>
                                         <a href="javascript:void(0);"
                                             onclick="konfirmasiSetujuCuti(<?= $row->id_cuti ?>)"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
@@ -127,12 +126,29 @@
                                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                                             <i class="fa-solid fa-circle-xmark"></i>
                                         </a>
-                                        <a id="downloadPdfButton" type="button" href="<?php echo base_url(
-                                            'admin/permohonan_pdf/'
-                                        ) . $row->id_cuti; ?>"
+                                        <a id="downloadPdfButton" type="button"
+                                            href="<?php echo base_url('admin/permohonan_pdf/') . $row->id_cuti; ?>"
                                             class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-print"></i>
                                         </a>
+                                        <?php else: ?>
+                                        <!-- Tombol nonaktif jika statusnya 'Dibatalkan' -->
+                                        <button
+                                            class="text-white bg-indigo-300 focus:outline-none font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2"
+                                            disabled>
+                                            <i class="fa-solid fa-circle-check"></i>
+                                        </button>
+                                        <button
+                                            class="text-white bg-red-300 focus:outline-none font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2"
+                                            disabled>
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </button>
+                                        <button id="downloadPdfButton" type="button"
+                                            class="text-white bg-yellow-200 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                                            disabled>
+                                            <i class="fa-solid fa-print"></i>
+                                            </a>
+                                            <?php endif; ?>
                                     </div>
                                 </td>
                             </tr>

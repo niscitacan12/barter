@@ -48,11 +48,10 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead
-                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -72,12 +71,14 @@
                                 <th scope="col" class="px-6 py-3">
                                     Status
                                 </th>
-
+                                <th scope="col" class="px-6 py-3">
+                                    Aksi
+                                </th>
                             </tr>
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody class="text-center">
+                        <tbody>
                             <?php
                             $no = 0;
                             foreach ($cuti as $row):
@@ -103,6 +104,31 @@
                                 <td class="px-6 py-4">
                                     <?php echo $row->status; ?>
                                 </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex justify-between">
+                                        <?php if ($row->status !== 'Disetujui'): ?>
+                                        <a type="button" onclick="batal_cuti(<?php echo $row->id_cuti; ?>)"
+                                            class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </a>
+                                        <a type="button" onclick="ajukan_cuti(<?php echo $row->id_cuti; ?>)"
+                                            class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                        </a>
+                                        <?php else: ?>
+                                        <button
+                                            class="text-white bg-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 focus:outline-none"
+                                            disabled>
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                        </button>
+                                        <button
+                                            class="text-white bg-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 focus:outline-none"
+                                            disabled>
+                                            <i class="fa-solid fa-circle-check"></i>
+                                        </button>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
                             </tr>
                             <?php
                             endforeach;
@@ -116,27 +142,67 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<?php if ($this->session->flashdata('berhasil_cuti')) { ?>
 <script>
-function hapusJabatan(idJabatan) {
+function batal_cuti(id_cuti) {
     Swal.fire({
         title: 'Apakah Anda yakin?',
-        text: 'Data jabatan beserta karyawan yang terkait akan dihapus!',
+        text: 'Batalkan cuti!',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, hapus!',
+        confirmButtonText: 'Ya!',
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "<?php echo base_url(
-                'admin/hapus_jabatan/'
-            ); ?>" + idJabatan;
+            window.location.href = "<?php echo base_url('user/aksi_batal_cuti/'); ?>" + id_cuti;
+        }
+    });
+}
+
+function ajukan_cuti(id_cuti) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Mengajukan cuti kembali?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "<?php echo base_url('user/aksi_ajukan_cuti/'); ?>" + id_cuti;
         }
     });
 }
 </script>
+
+<?php if ($this->session->flashdata('berhasil_ajukan')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_ajukan'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
+
+<?php if ($this->session->flashdata('berhasil_batal')) { ?>
+<script>
+Swal.fire({
+    title: "Berhasil",
+    text: "<?php echo $this->session->flashdata('berhasil_batal'); ?>",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 1500
+});
+</script>
+<?php } ?>
+
+<?php if ($this->session->flashdata('berhasil_cuti')) { ?>
 <script>
 Swal.fire({
     title: "Berhasil",

@@ -133,7 +133,7 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo $row['tanggal_absen']; ?>
+                                    <?php echo convDate($row['tanggal_absen']); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row['keterangan_izin']; ?>

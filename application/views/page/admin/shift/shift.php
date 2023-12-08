@@ -49,6 +49,9 @@
                                     Jumlah karyawan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     aksi
                                 </th>
                             </tr>
@@ -85,9 +88,12 @@
                                         }
                                     }
                                 }
-
+                                
                                 echo $employee_count;
                                 ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo nama_admin($row->id_admin); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex justify-center">

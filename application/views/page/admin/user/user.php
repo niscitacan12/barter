@@ -42,6 +42,9 @@
                                     Email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Aksi
                                 </th>
                             </tr>
@@ -63,6 +66,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row['email']; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo nama_admin($row['id_admin']); ?>
                                 </td>
                                 <td class="px-6 py-4 ">
                                     <div class=" flex justify-center">

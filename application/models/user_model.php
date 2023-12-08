@@ -363,5 +363,52 @@ class User_model extends CI_Model
 
         return $query->result();
     }
+
+    public function getAbsensiBelumSelesai($tanggal)
+    {
+        $this->db->where('tanggal_absen', $tanggal);
+        $this->db->where('status', false); // Filter absensi yang belum selesai
+        $query = $this->db->get('absensi');
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+        return null;
+    }
+
+    public function updateStatusAbsenPulang($tanggal, $data) {
+        $this->db->update('absensi', $data);
+        return $this->db->affected_rows(); // Mengembalikan jumlah baris yang terpengaruh oleh query
+    }
+
+    public function getAbsensiByDate($tanggal)
+    {
+        $this->db->where('tanggal_absen', $tanggal);
+        return $this->db->get('absensi')->result();
+    }
+
+    public function get_absensi_data_by_user($id_user)
+    {
+        $this->db->where('id_user', $id_user);
+        $this->db->from('absensi'); // Ganti 'nama_tabel_absensi' dengan nama tabel Anda
+        $query = $this->db->get();
+        
+        return $query->result();
+    }
+
+    public function get_absensi_by_id($id_absensi) {
+        // Ganti 'nama_tabel_absensi' dengan nama tabel absensi yang sesuai dalam database Anda
+        $this->db->where('id_absensi', $id_absensi);
+        $query = $this->db->get('absensi');
+
+        // Mengembalikan satu baris data absensi atau null jika tidak ditemukan
+        return $query->row();
+    }
+
+    public function update_izin($table, $data, $id_absensi) {
+        $this->db->where('id_absensi', $id_absensi);
+        return $this->db->update($table, $data);
+    }
+    
 }
 ?>

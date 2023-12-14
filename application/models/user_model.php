@@ -410,5 +410,12 @@ class User_model extends CI_Model
         return $this->db->update($table, $data);
     }
     
+    public function hapus_cuti($id_cuti)
+    {
+        // Misalnya, menggunakan query database untuk menghapus data cuti berdasarkan ID
+        // Gantilah bagian ini sesuai dengan struktur tabel dan kebutuhan aplikasi Anda
+        $this->db->where('id_cuti', $id_cuti);
+        $this->db->delete('cuti'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
+    }
 }
 ?>

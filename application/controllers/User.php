@@ -660,23 +660,13 @@ class User extends CI_Controller
     }
 
     public function aksi_batal_cuti($id_cuti) {
-        $id_cuti = $this->input->post('id_cuti');
-        // Buat data yang akan diupdate
-        $data = [
-            'status' => 'Dibatalkan',
-            // Tambahkan field lain jika ada
-        ];
+        $deleted_rows = $this->user_model->hapus_cuti($id_cuti);
 
-        // Lakukan pembaruan data Admin
-        $eksekusi = $this->user_model->update(
-            'cuti',
-            $data, 
-            $id_cuti
-        );
-        $this->session->set_flashdata(
-            'berhasil_batal',
-            'Berhasil Membatalkan cuti'
-        );
+        if ($deleted_rows > 0) {
+            $this->session->set_flashdata('gagal_batal', 'Gagal membatalkan cuti');
+        } else {
+            $this->session->set_flashdata('berhasil_batal', 'Berhasil membatalkan cuti');
+        }    
 
         // Redirect ke halaman setelah pembaruan data
         redirect(base_url('user/history_cuti')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
@@ -715,34 +705,6 @@ class User extends CI_Controller
             $data = [
                 'keterangan_izin' => $keterangan_izin,
                 'status' => 1, // Update status absensi menjadi true
-                // Tambahkan field lain jika ada
-            ];
-    
-            // Lakukan pembaruan data Absensi
-            $eksekusi = $this->user_model->update_izin('absensi', $data, $id_absensi);
-    
-            if ($eksekusi) {
-                $this->session->set_flashdata('berhasil_ajukan', 'Berhasil Mengajukan cuti kembali');
-            } else {
-                $this->session->set_flashdata('gagal_ajukan', 'Gagal Mengajukan cuti');
-            }
-        } else {
-            $this->session->set_flashdata('gagal_ajukan', 'ID Absensi atau Keterangan Izin tidak valid');
-        }
-    
-        // Redirect ke halaman setelah pembaruan data
-        redirect(base_url('user/history_absensi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Absensi
-    }
-
-    public function aksi_batal_izin() {
-        $id_absensi = $this->input->post('id_absensi');
-
-        // Pastikan nilai id_absensi dan keterangan_izin tidak kosong
-        if (!empty($id_absensi) && !empty($keterangan_izin)) {
-            // Buat data yang akan diupdate
-            $data = [
-                'keterangan_izin' => '-',
-                'status' => 0, // Update status absensi menjadi true
                 // Tambahkan field lain jika ada
             ];
     

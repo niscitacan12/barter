@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -71,8 +73,9 @@ $image = $_SESSION['image'];
                                 class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-8 h-8 rounded-full" src="<?= base_url('images/user/' . $image); ?>"
-                                    alt="user photo"></a>
+                                <img class="w-8 h-8 rounded-full" src="<?= base_url(
+                                    'images/user/' . $image
+                                ) ?>" alt="user photo"></a>
                             </button>
                         </div>
                         <div class="z-50 hidden my-4 text-base list-none bg-indigo-50 divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
@@ -87,7 +90,9 @@ $image = $_SESSION['image'];
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a href="<?php echo base_url('user/profile') ; ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+                                    <a href="<?php echo base_url(
+                                        'user/profile'
+                                    ); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
                                         dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Profile</a>
                                 </li>
@@ -122,7 +127,7 @@ $image = $_SESSION['image'];
                 </li>
 
                 <!-- Dropdown Absen -->
-                <li>
+                <!-- <li>
                     <button type="button"
                         class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                         aria-controls="dropdown-masterdata" data-collapse-toggle="dropdown-masterdata">
@@ -133,20 +138,20 @@ $image = $_SESSION['image'];
                             class="fa-solid fa-chevron-down fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                     </button>
 
-                    <ul id="dropdown-masterdata" class="hidden py-2 space-y-2">
+                    <ul id="dropdown-masterdata" class="hidden py-2 space-y-2"> -->
 
-                        <!-- Menu Masuk -->
-                        <li>
+                <!-- Menu Masuk -->
+                <!-- <li>
                             <a href="<?php echo base_url('user/absen'); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
                                     class="fa-solid fa-right-to-bracket fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
                                 <span class="flex-1 ml-3 whitespace-nowrap">Masuk</span>
                             </a>
-                        </li>
+                        </li> -->
 
-                        <!-- Menu Pulang -->
-                        <li>
+                <!-- Menu Pulang -->
+                <!-- <li>
                             <a href="<?php echo base_url('user/pulang'); ?>"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <i
@@ -155,7 +160,7 @@ $image = $_SESSION['image'];
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <!-- Menu Izin -->
                 <li>

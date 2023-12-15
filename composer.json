@@ -14,7 +14,8 @@
 		"php": ">=5.3.7",
 		"phpoffice/phpspreadsheet": "*",
 		"pusher/pusher-php-server": "*",
-		"dompdf/dompdf": "*"
+		"dompdf/dompdf": "*",
+		"phpmailer/phpmailer": "*"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

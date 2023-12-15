@@ -37,16 +37,46 @@
                         'username'
                     ); ?></span>
                 </h2>
-                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo $hari; ?>
+                <p class="text-gray-900">Selamat datang di aplikasi Absensi, <?php echo $hari; ?>
                     <?php echo $tanggal; ?> <?php echo $bulan; ?> <?php echo $tahun; ?></p>
             </div>
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+            <a href="<?= base_url('user/absen') ?>"
+                class="w-full p-4 text-center bg-indigo-500 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Absen</h5>
+                <hr class="mb-4 border-gray-900">
+                <div class="flex justify-between">
+                    <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
+
+                    </p>
+                    <div>
+                        <i class="fa-solid fa-right-to-bracket fa-fw fa-lg me-3 fa-2xl"></i>
+                    </div>
+                </div>
+            </a>
+            <a href="<?= base_url('user/pulang') ?>"
+                class="w-full p-4 text-center bg-indigo-500 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Pulang</h5>
+                <hr class="mb-4 border-gray-900">
+                <div class="flex justify-between">
+                    <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
+
+                    </p>
+                    <div>
+                        <i class="fa-solid fa-right-from-bracket fa-fw fa-lg me-3 fa-2xl"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
         <div class="p-2 mt-5">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
                 <a href="<?= base_url('') ?>"
                     class="w-full p-4 text-center bg-blue-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Total</h5>
-                    <hr class="mb-4">
+                    <hr class="mb-4 border-gray-900">
                     <div class="flex justify-between">
                         <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
                             <?= $total ?> Total
@@ -59,7 +89,7 @@
                 <a href="<?= base_url('user/izin') ?>"
                     class="w-full p-4 text-center bg-green-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Izin</h5>
-                    <hr class="mb-4">
+                    <hr class="mb-4 border-gray-900">
                     <div class="flex justify-between">
                         <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
                             <?= $absensi ?> Izin
@@ -72,7 +102,7 @@
                 <a href="<?= base_url('user/cuti') ?>"
                     class="w-full p-4 text-center bg-purple-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Cuti</h5>
-                    <hr class="mb-4">
+                    <hr class="mb-4 border-gray-900">
                     <div class="flex justify-between">
                         <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
                             <?= $cuti_count ?> Cuti

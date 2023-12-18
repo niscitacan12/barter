@@ -47,6 +47,26 @@ function nama_user($id_user)
     }
 }
 
+function getNamaHari($date)
+{
+    // Array nama hari dalam bahasa Indonesia
+    $nama_hari = [
+        'Minggu',
+        'Senin',
+        'Selasa',
+        'Rabu',
+        'Kamis',
+        'Jumat',
+        'Sabtu',
+    ];
+
+    // Mendapatkan indeks hari dari timestamp
+    $index_hari = date('w', strtotime($date));
+
+    // Mengembalikan nama hari sesuai dengan indeks
+    return $nama_hari[$index_hari];
+}
+
 function nama_admin($id_admin)
 {
     $ci = &get_instance();

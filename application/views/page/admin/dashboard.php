@@ -27,18 +27,18 @@
             <div
                 class="p-4 text-center bg-gray-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <?php
-                $hari = date('l');
-                $tanggal = date('d');
-                $bulan = date('F');
-                $tahun = date('Y');
+                $currentDateTime = date('d F Y H:i:s');
+                $currentHour = date('H', strtotime($currentDateTime));
+                $date = date('l, d F Y', strtotime($currentDateTime));
                 ?>
                 <h2 class="text-2xl font-semibold mb-4">Selamat Datang
                     <span><?php echo $this->session->userdata(
                         'username'
                     ); ?></span>
                 </h2>
-                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo $hari; ?>
-                    <?php echo $tanggal; ?> <?php echo $bulan; ?> <?php echo $tahun; ?></p>
+                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo getNamaHari(
+                    $date
+                ); ?> <?php echo convDate($date); ?></p>
             </div>
         </div>
         <div class="p-2 mt-5">
@@ -133,7 +133,9 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo convDate($row['tanggal_absen']); ?>
+                                    <?php echo convDate(
+                                        $row['tanggal_absen']
+                                    ); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row['keterangan_izin']; ?>
@@ -213,7 +215,7 @@
                             ?>
                             <?php else: ?>
                             <tr>
-                                <td colspan="4" class="text-center">Tidak ada data cuti</td>
+                                <td colspan="10" class="">Tidak ada data cuti</td>
                             </tr>
                             <?php endif; ?>
                         </tbody>

@@ -1,8 +1,8 @@
 <?php
 // Definisi fungsi convDate
-function convDate($date) 
+function convDate($date)
 {
-    $bulan = array(
+    $bulan = [
         1 => 'Januari',
         2 => 'Februari',
         3 => 'Maret',
@@ -14,14 +14,34 @@ function convDate($date)
         9 => 'September',
         10 => 'Oktober',
         11 => 'November',
-        12 => 'Desember'
-    );
+        12 => 'Desember',
+    ];
 
     $tanggal = date('d', strtotime($date)); // Mengambil tanggal dari timestamp
     $bulan = $bulan[date('n', strtotime($date))]; // Mengambil bulan dalam bentuk string
     $tahun = date('Y', strtotime($date)); // Mengambil tahun dari timestamp
 
     return $tanggal . ' ' . $bulan . ' ' . $tahun; // Mengembalikan tanggal yang diformat
+}
+
+function getNamaHari($date)
+{
+    // Array nama hari dalam bahasa Indonesia
+    $nama_hari = [
+        'Minggu',
+        'Senin',
+        'Selasa',
+        'Rabu',
+        'Kamis',
+        'Jumat',
+        'Sabtu',
+    ];
+
+    // Mendapatkan indeks hari dari timestamp
+    $index_hari = date('w', strtotime($date));
+
+    // Mengembalikan nama hari sesuai dengan indeks
+    return $nama_hari[$index_hari];
 }
 
 function nama_user($id_user)
@@ -58,7 +78,9 @@ function nama_organisasi($id_organisasi)
 {
     $ci = &get_instance();
     $ci->load->database();
-    $result = $ci->db->where('id_organisasi', $id_organisasi)->get('organisasi');
+    $result = $ci->db
+        ->where('id_organisasi', $id_organisasi)
+        ->get('organisasi');
     foreach ($result->result() as $c) {
         $tmt = $c->nama_organisasi;
         return $tmt;
@@ -66,4 +88,5 @@ function nama_organisasi($id_organisasi)
 }
 
 // ... (sisa kode Anda)
+
 ?>

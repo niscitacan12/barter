@@ -18,18 +18,18 @@
             <div
                 class="p-4 text-center bg-gray-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <?php
-                $hari = date('l');
-                $tanggal = date('d');
-                $bulan = date('F');
-                $tahun = date('Y');
+                $currentDateTime = date('d F Y H:i:s');
+                $currentHour = date('H', strtotime($currentDateTime));
+                $date = date('l, d F Y', strtotime($currentDateTime));
                 ?>
                 <h2 class="text-2xl font-semibold mb-4">Selamat Datang
                     <span><?php echo $this->session->userdata(
                         'username'
                     ); ?></span>
                 </h2>
-                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo $hari; ?>
-                    <?php echo $tanggal; ?> <?php echo $bulan; ?> <?php echo $tahun; ?></p>
+                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo getNamaHari(
+                    $date
+                ); ?> <?php echo convDate($date); ?></p>
             </div>
         </div>
         <div class="p-2 mt-5">
@@ -88,7 +88,8 @@
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
-                <thead class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead
+                        class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 No
@@ -115,8 +116,10 @@
                         foreach ($tokens as $row):
                             if ($no < 5):
                                 $no++; ?>
-                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <?php echo $no; ?>
                             </th>
                             <td class="px-6 py-4">

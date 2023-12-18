@@ -23,7 +23,21 @@
                     <div class="mb-4 text-left">
                         <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Absen Masuk</h6>
                         <p class="text-center mb-5">
-                            <?php echo $date; ?>
+                            <?php
+                            $currentDateTime = date('d F Y H:i:s');
+                            $currentHour = date(
+                                'H',
+                                strtotime($currentDateTime)
+                            );
+                            $date = date(
+                                'l, d F Y',
+                                strtotime($currentDateTime)
+                            );
+                            $time = date('H:i', strtotime($currentDateTime));
+                            ?>
+                            <?php echo getNamaHari($date); ?>,
+                            <?php echo convDate($date); ?>
+                            <?php echo $time; ?>
                             <br>
                             <?php echo $greeting; ?>,
                             <span><?php echo $this->session->userdata(

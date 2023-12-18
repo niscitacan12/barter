@@ -7,7 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -19,16 +21,21 @@
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <h6 class="text-left mb-2 text-xl font-bold text-gray-900 dark:text-white">Izin</h6>
                 <p class="text-center mb-5">
-                    <?php echo $date; ?>
+                    <?php echo getNamaHari($date); ?>,
+                    <?php echo convDate($date); ?>
                     <?php echo $time; ?>
                     <br>
                     <?php echo $greeting; ?>,
-                    <span><?php echo $this->session->userdata('username'); ?></span>
+                    <span><?php echo $this->session->userdata(
+                        'username'
+                    ); ?></span>
                 </p>
                 <hr class="mb-7">
 
                 <!-- Formulir untuk permintaan izin -->
-                <form action="<?php echo base_url('user/aksi_izin')?>" method="post">
+                <form action="<?php echo base_url(
+                    'user/aksi_izin'
+                ); ?>" method="post">
                     <!-- Field formulir untuk cuti dari -->
                     <div>
                         <label for="leave_from" class="block text-gray-700 font-bold mb-1 text-left">Keterangan Izin

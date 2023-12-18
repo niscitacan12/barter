@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -18,14 +20,23 @@
                     'user/aksi_pulang'
                 ); ?>" method="post">
                     <!-- 
-                    <input type="hidden" name="id_absensi" value="<?php echo $absen->id_absensi ?>"> -->
+                    <input type="hidden" name="id_absensi" value="<?php echo $absen->id_absensi; ?>"> -->
                     <div class="mb-4 text-left">
                         <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Absen Pulang</h6>
-                        <p class="text-center mb-5">
-                            <?php echo $date; ?>
+                        <p class="text-center mb-5"><?php
+                        $currentDateTime = date('d F Y H:i:s');
+                        $currentHour = date('H', strtotime($currentDateTime));
+                        $date = date('l, d F Y', strtotime($currentDateTime));
+                        $time = date('H:i', strtotime($currentDateTime));
+                        ?>
+                            <?php echo getNamaHari($date); ?>,
+                            <?php echo convDate($date); ?>
+                            <?php echo $time; ?>
                             <br>
                             <?php echo $greeting; ?>,
-                            <span><?php echo $this->session->userdata('username'); ?></span>
+                            <span><?php echo $this->session->userdata(
+                                'username'
+                            ); ?></span>
                         </p>
                         <hr class="mb-7">
                         <label for="location" class="block text-sm font-semibold mb-2">Lokasi:</label>

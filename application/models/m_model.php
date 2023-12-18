@@ -237,19 +237,45 @@ class M_model extends CI_Model
         return $query->row_array();
     }
 
-    public function set_reset_token($user_id, $token)
-    {
-        $this->db->where('id_user', $user_id);
-        $this->db->update('user', [
-            'reset_token' => $token,
-            'token_expiration' => date('Y-m-d H:i:s', strtotime('+1 hour')),
-        ]);
-    }
-
     public function get_user_by_reset_token($token)
     {
-        $query = $this->db->get_where('user', ['reset_token' => $token]);
+        $query = $this->db->get_where('user', ['reset_token' => $token], 1);
         return $query->row_array();
+    }
+
+    public function set_reset_token($user_id, $token)
+    {
+        $token_expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        $data = [
+            'reset_token' => $token,
+            'token_expiration' => $token_expiration,
+        ];
+
+        $this->db->where('id_user', $user_id);
+        $this->db->update('user', $data);
+    }
+
+    public function getPasswordById($id)
+    {
+        $this->db->select('password');
+        $this->db->where('id_user', $id);
+        $query = $this->db->get('user');
+
+        if ($query->num_rows() == 1) {
+            $row = $query->row();
+            return $row->password;
+        } else {
+            return false;
+        }
+    }
+
+    public function update_password($id, $new_password)
+    {
+        $this->db->set('password', $new_password);
+        $this->db->where('id_user', $id);
+        $this->db->update('user');
+
+        return $this->db->affected_rows() > 0;
     }
 }
 ?>

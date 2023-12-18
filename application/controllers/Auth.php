@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 class Auth extends CI_Controller
 {
     function __construct()
@@ -187,7 +191,7 @@ class Auth extends CI_Controller
 
     public function lupa_password()
     {
-        $this->load->view('auth/lupa_password');
+        $this->load->view('auth/lupa_password', $data);
     }
 
     public function send_reset_email()
@@ -200,6 +204,146 @@ class Auth extends CI_Controller
             'trim|required|valid_email'
         );
 
+        if ($this->form_validation->run() === false) {
+            $response = [
+                'status' => 'error',
+                'message' => validation_errors(),
+            ];
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($response));
+        }
+
+        $email = $this->input->post('email');
+        $user = $this->m_model->get_user_by_email($email);
+
+        if (!$user) {
+            $response = [
+                'status' => 'error',
+                'message' => 'User not found.',
+            ];
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($response));
+        }
+
+        $token = bin2hex(random_bytes(32));
+        $this->m_model->set_reset_token($user['id_user'], $token);
+
+        try {
+            require 'vendor/autoload.php'; // Load PHPMailer library
+
+            $mail = new PHPMailer(true);
+
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'mingave11@gmail.com'; // Ganti dengan alamat email Anda
+            $mail->Password = 'loqg vjnb kotu ekye'; // Ganti dengan kata sandi email Anda
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = 465;
+
+            $resetLink = base_url('auth/reset_password/' . $token);
+
+            $mail->setFrom('mingave11@gmail.com', 'Absensi App');
+            $mail->addAddress($email);
+            $mail->isHTML(true);
+            $mail->Subject = 'Reset Password';
+            $mail->Body =
+                '
+            <html>
+            <head>
+                <title>Reset Password</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        margin: 0;
+                        padding: 20px;
+                    }
+                    .container {
+                        background-color: #ffffff;
+                        border-radius: 5px;
+                        padding: 20px;
+                        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                    }
+                    .button {
+                        border: 1px solid #7B66FF;
+                        color: white;
+                        padding: 10px 20px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        border-radius: 5px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h2 style="color: #000000;">Reset Your Password</h2>
+                    <p>You have requested to reset your password. Click the button below to proceed:</p>
+                    <a class="button" href="' .
+                $resetLink .
+                '">Reset Password</a>
+                </div>
+            </body>
+            </html>
+        ';
+
+            $mail->send();
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Email sent successfully!',
+            ];
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($response));
+        } catch (Exception $e) {
+            $response = [
+                'status' => 'error',
+                'message' => 'Failed to send email. ' . $e->getMessage(),
+            ];
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($response));
+        }
+    }
+
+    public function reset_password($token = null)
+    {
+        if ($token) {
+            $user = $this->m_model->get_user_by_reset_token($token);
+
+            if ($user && strtotime($user['token_expiration']) > time()) {
+                $this->load->view('auth/reset_password', ['token' => $token]);
+            } else {
+                echo 'Invalid or expired token';
+            }
+        } else {
+            echo 'Invalid token';
+        }
+    }
+
+    public function update_password()
+    {
+        $token = $this->input->post('token');
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+
+        // Validasi password dan konfirmasi password
+        $this->form_validation->set_rules(
+            'password_baru',
+            'Password Baru',
+            'required|min_length[6]'
+        );
+        $this->form_validation->set_rules(
+            'konfirmasi_password',
+            'Konfirmasi Password',
+            'required|matches[password_baru]'
+        );
+
         if ($this->form_validation->run() == false) {
             // Handle validation errors
             $response = [
@@ -208,83 +352,32 @@ class Auth extends CI_Controller
             ];
             echo json_encode($response);
         } else {
-            $email = $this->input->post('email');
-            $user = $this->m_model->get_user_by_email($email);
+            $user = $this->m_model->get_user_by_reset_token($token);
 
-            if ($user) {
-                // Generate and save reset token
-                $token = bin2hex(random_bytes(32));
-                $this->m_model->set_reset_token($user['id_user'], $token);
+            if ($user && strtotime($user['token_expiration']) > time()) {
+                // Reset token expiration to invalidate the token
+                $this->m_model->set_reset_token($user['id_user'], null);
 
-                // Send email with reset link
-                $this->load->library('email');
-
-                $config = [
-                    'protocol' => 'smtp',
-                    'smtp_host' => 'ssl://smtp.gmail.com',
-                    'smtp_port' => 465,
-                    'smtp_user' => 'mingave11@gmail.com', // Ganti dengan alamat email Anda
-                    'smtp_pass' => 'aveceenaintifadhafirdausming', // Ganti dengan kata sandi email Anda
-                    'mailtype' => 'html',
-                    'charset' => 'utf-8',
-                    'newline' => "\r\n",
-                ];
-
-                $this->email->initialize($config);
-
-                $this->email->from('mingave11@gmail.com', 'Absensi App');
-                $this->email->to($email);
-                $this->email->subject('Reset Password');
-                $this->email->message(
-                    'Click the following link to reset your password: ' .
-                        base_url('auth/reset_password/' . $token)
+                // Update password using MD5 (not recommended for production)
+                $this->m_model->update_password(
+                    $user['id_user'],
+                    md5($password_baru)
                 );
 
-                if ($this->email->send()) {
-                    // Email sent successfully
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'Email sent successfully!',
-                    ];
-                } else {
-                    // Email failed to send
-                    $response = [
-                        'status' => 'error',
-                        'message' =>
-                            'Failed to send email. ' .
-                            $this->email->print_debugger(),
-                    ];
-                }
-
+                $response = [
+                    'status' => 'success',
+                    'message' => 'Password updated successfully!',
+                ];
                 echo json_encode($response);
             } else {
-                // User not found
+                // Token is invalid or expired
                 $response = [
                     'status' => 'error',
-                    'message' => 'User not found.',
+                    'message' => 'Invalid or expired token.',
                 ];
                 echo json_encode($response);
             }
         }
-    }
-
-    public function reset_password($token)
-    {
-        // Check if token is valid and not expired
-        $user = $this->m_model->get_user_by_reset_token($token);
-
-        if ($user && strtotime($user['token_expiration']) > time()) {
-            // Token is valid, load reset password view
-            $this->load->view('reset_password', ['token' => $token]);
-        } else {
-            // Token is invalid or expired
-            echo 'Invalid or expired token';
-        }
-    }
-
-    public function update_password()
-    {
-        // Handle form submission to update password
     }
 }
 ?>

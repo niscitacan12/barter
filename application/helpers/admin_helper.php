@@ -49,7 +49,9 @@ function nama_organisasi($id_organisasi)
 {
     $ci = &get_instance();
     $ci->load->database();
-    $result = $ci->db->where('id_organisasi', $id_organisasi)->get('organisasi');
+    $result = $ci->db
+        ->where('id_organisasi', $id_organisasi)
+        ->get('organisasi');
     foreach ($result->result() as $c) {
         $tmt = $c->nama_organisasi;
         return $tmt;
@@ -218,6 +220,26 @@ function convDate($date)
     $tahun = date('Y', strtotime($date)); // Mengambil tahun dari timestamp
 
     return $tanggal . ' ' . $bulan . ' ' . $tahun; // Mengembalikan tanggal yang diformat
+}
+
+function getNamaHari($date)
+{
+    // Array nama hari dalam bahasa Indonesia
+    $nama_hari = [
+        'Minggu',
+        'Senin',
+        'Selasa',
+        'Rabu',
+        'Kamis',
+        'Jumat',
+        'Sabtu',
+    ];
+
+    // Mendapatkan indeks hari dari timestamp
+    $index_hari = date('w', strtotime($date));
+
+    // Mengembalikan nama hari sesuai dengan indeks
+    return $nama_hari[$index_hari];
 }
 
 // function jumlah_karyawan($id_jabatan)

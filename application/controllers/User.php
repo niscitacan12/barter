@@ -63,7 +63,6 @@ class User extends CI_Controller
         $this->load->view('page/user/absen', $data);
     }
 
-    
     public function cuti()
     {
         $this->load->view('page/user/cuti');
@@ -98,14 +97,16 @@ class User extends CI_Controller
         // $data['absensi'] = $this->user_model->getAbsensiById($id_absensi);
         $this->load->view('page/user/pulang', $data);
     }
-    
+
     public function aksi_pulang()
     {
         setlocale(LC_TIME, 'id_ID');
         date_default_timezone_set('Asia/Jakarta');
         $tanggal = date('Y-m-d');
-        
-        $absensi_belum_selesai = $this->user_model->getAbsensiBelumSelesai($tanggal);
+
+        $absensi_belum_selesai = $this->user_model->getAbsensiBelumSelesai(
+            $tanggal
+        );
 
         if ($absensi_belum_selesai) {
             // Jika ada absensi yang belum selesai (status false)
@@ -128,18 +129,18 @@ class User extends CI_Controller
             file_put_contents($foto_pulang, $data);
 
             // Menyimpan jam pulang
-            $data = array(
+            $data = [
                 'status' => 1, // Update status absensi menjadi true (absen pulang)
                 'jam_pulang' => $jam, // Menyimpan jam saat pulang
                 'foto_pulang' => $foto_pulang, // Menyimpan nama file gambar ke database
                 'lokasi_pulang' => $this->input->post('lokasi_pulang'),
-            );
+            ];
             // Contoh update status absensi pulang
             $this->user_model->updateStatusAbsenPulang($tanggal, $data);
             redirect('user/history_absensi');
         } else {
             // Jika tidak ada absensi yang belum selesai
-            echo "Anda tidak bisa melakukan absen pulang sekarang.";
+            echo 'Anda tidak bisa melakukan absen pulang sekarang.';
         }
     }
 
@@ -154,8 +155,12 @@ class User extends CI_Controller
                 'id_organisasi' => $this->session->userdata('id_organisasi'),
             ];
             $data['shift'] = $this->user_model->getShiftByIdAdmin($id_admin);
-            $data['jabatan'] = $this->user_model->getJabatanByIdAdmin($id_admin);
-            $data['organisasi'] = $this->user_model->get_data('organisasi')->result();
+            $data['jabatan'] = $this->user_model->getJabatanByIdAdmin(
+                $id_admin
+            );
+            $data['organisasi'] = $this->user_model
+                ->get_data('organisasi')
+                ->result();
             $data['user'] = $this->user_model->getUserByID($user_id);
             $this->load->view('page/user/profile', $data);
         } else {
@@ -170,22 +175,30 @@ class User extends CI_Controller
         $username = $this->input->post('username');
         $nama_depan = $this->input->post('nama_depan');
         $nama_belakang = $this->input->post('nama_belakang');
-     
-        $data = array(
+
+        $data = [
             'email' => $email,
             'username' => $username,
             'nama_depan' => $nama_depan,
             'nama_belakang' => $nama_belakang,
-        );
-     
-        $update_result = $this->user_model->update_data('user', $data, array('id_user' => $this->session->userdata('id')));
-     
+        ];
+
+        $update_result = $this->user_model->update_data('user', $data, [
+            'id_user' => $this->session->userdata('id'),
+        ]);
+
         if ($update_result) {
-           $this->session->set_flashdata('berhasil_ubah_foto', 'Data berhasil diperbarui');
-       } else {
-           $this->session->set_flashdata('gagal_update', 'Gagal memperbarui data');
-       }
-     
+            $this->session->set_flashdata(
+                'berhasil_ubah_foto',
+                'Data berhasil diperbarui'
+            );
+        } else {
+            $this->session->set_flashdata(
+                'gagal_update',
+                'Gagal memperbarui data'
+            );
+        }
+
         redirect(base_url('user/profile'));
     }
 
@@ -224,7 +237,7 @@ class User extends CI_Controller
     public function izin_absen($id_absensi)
     {
         $absensi = $this->user_model->get_absensi_by_id($id_absensi); // Ganti dengan metode yang sesuai di model Anda
-        
+
         setlocale(LC_TIME, 'id_ID');
         date_default_timezone_set('Asia/Jakarta');
         $username = $this->session->userdata('username');
@@ -270,10 +283,16 @@ class User extends CI_Controller
         $already_requested = $this->user_model->cek_izin($id_user, $tanggal);
 
         if ($already_absent) {
-            $this->session->set_flashdata('gagal_absen', 'Anda sudah melakukan absen hari ini.');
+            $this->session->set_flashdata(
+                'gagal_absen',
+                'Anda sudah melakukan absen hari ini.'
+            );
             redirect(base_url('user/history_absensi'));
         } elseif ($already_requested) {
-            $this->session->set_flashdata('gagal_absen', 'Anda sudah mengajukan izin hari ini.');
+            $this->session->set_flashdata(
+                'gagal_absen',
+                'Anda sudah mengajukan izin hari ini.'
+            );
             redirect(base_url('user/history_absensi'));
         } else {
             // Lakukan proses absen
@@ -304,9 +323,12 @@ class User extends CI_Controller
 
             // Menyisipkan data absen ke dalam database
             $inserted = $this->user_model->tambah_data('absensi', $data);
-            
+
             if ($inserted) {
-                $this->session->set_flashdata('berhasil_absen', 'Berhasil Absen.');
+                $this->session->set_flashdata(
+                    'berhasil_absen',
+                    'Berhasil Absen.'
+                );
 
                 $options = [
                     'cluster' => 'ap1',
@@ -320,10 +342,13 @@ class User extends CI_Controller
                 );
                 $message['message'] = $email . ' absen.';
                 $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
-                
+
                 redirect(base_url('user/history_absensi'));
             } else {
-                $this->session->set_flashdata('gagal_absen', 'Gagal Absen. Silakan coba lagi.');
+                $this->session->set_flashdata(
+                    'gagal_absen',
+                    'Gagal Absen. Silakan coba lagi.'
+                );
                 redirect(base_url('user/absen'));
             }
         }
@@ -340,10 +365,16 @@ class User extends CI_Controller
         $already_requested = $this->user_model->cek_izin($id_user, $tanggal);
 
         if ($already_requested) {
-            $this->session->set_flashdata('gagal_izin', 'Anda sudah mengajukan izin hari ini.');
+            $this->session->set_flashdata(
+                'gagal_izin',
+                'Anda sudah mengajukan izin hari ini.'
+            );
             redirect(base_url('user/history_absensi'));
         } elseif ($already_absent) {
-            $this->session->set_flashdata('gagal_izin', 'Anda sudah melakukan absen hari ini.');
+            $this->session->set_flashdata(
+                'gagal_izin',
+                'Anda sudah melakukan absen hari ini.'
+            );
             redirect(base_url('user/history_absensi'));
         } else {
             // Lakukan proses pengajuan izin
@@ -365,7 +396,10 @@ class User extends CI_Controller
 
                 // Menyisipkan data izin ke dalam database
                 $this->user_model->tambah_data('absensi', $data);
-                $this->session->set_flashdata('berhasil_izin', 'Berhasil Izin.');
+                $this->session->set_flashdata(
+                    'berhasil_izin',
+                    'Berhasil Izin.'
+                );
 
                 $options = [
                     'cluster' => 'ap1',
@@ -379,10 +413,13 @@ class User extends CI_Controller
                 );
                 $message['message'] = $email . ' mengajukan izin baru.';
                 $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
-                
+
                 redirect(base_url('user/history_absensi'));
             } else {
-                $this->session->set_flashdata('gagal_izin', 'Gagal Izin. Keterangan Izin tidak boleh kosong.');
+                $this->session->set_flashdata(
+                    'gagal_izin',
+                    'Gagal Izin. Keterangan Izin tidak boleh kosong.'
+                );
                 redirect(base_url('user/izin'));
             }
         }
@@ -397,7 +434,7 @@ class User extends CI_Controller
         $awal_cuti = $this->input->post('awal_cuti');
         $akhir_cuti = $this->input->post('akhir_cuti');
         $masuk_kerja = $this->input->post('masuk_kerja');
-        $keperluan_cuti = $this->input->post('keperluan_cuti');    
+        $keperluan_cuti = $this->input->post('keperluan_cuti');
         $id_organisasi = $this->user_model->get_id_organisasi($id_user);
         $this->session->set_userdata('id_organisasi', $id_organisasi);
 
@@ -410,7 +447,9 @@ class User extends CI_Controller
             !empty($id_organisasi)
         ) {
             // Hitung jumlah cuti yang telah diajukan pada tahun ini
-            $jumlah_cuti_setahun_ini = $this->user_model->hitung_cuti_setahun_ini($id_user);
+            $jumlah_cuti_setahun_ini = $this->user_model->hitung_cuti_setahun_ini(
+                $id_user
+            );
 
             // Jika jumlah cuti pada tahun ini masih kurang dari 2
             if ($jumlah_cuti_setahun_ini < 2) {
@@ -521,20 +560,37 @@ class User extends CI_Controller
         $password_baru = $this->input->post('password_baru');
         $konfirmasi_password = $this->input->post('konfirmasi_password');
 
-        $stored_password = $this->user_model->getPasswordById($this->session->userdata('id'));
+        $stored_password = $this->user_model->getPasswordById(
+            $this->session->userdata('id')
+        );
 
         if (md5($password_lama) != $stored_password) {
-            $this->session->set_flashdata('kesalahan_password_lama', 'Password lama yang dimasukkan salah');
+            $this->session->set_flashdata(
+                'kesalahan_password_lama',
+                'Password lama yang dimasukkan salah'
+            );
         } else {
             if ($password_baru === $konfirmasi_password) {
-                $update_result = $this->user_model->update_password($this->session->userdata('id'), md5($password_baru));
+                $update_result = $this->user_model->update_password(
+                    $this->session->userdata('id'),
+                    md5($password_baru)
+                );
                 if ($update_result) {
-                    $this->session->set_flashdata('ubah_password', 'Berhasil mengubah password');
+                    $this->session->set_flashdata(
+                        'ubah_password',
+                        'Berhasil mengubah password'
+                    );
                 } else {
-                    $this->session->set_flashdata('gagal_update', 'Gagal memperbarui password');
+                    $this->session->set_flashdata(
+                        'gagal_update',
+                        'Gagal memperbarui password'
+                    );
                 }
             } else {
-                $this->session->set_flashdata('kesalahan_password', 'Password baru dan Konfirmasi password tidak sama');
+                $this->session->set_flashdata(
+                    'kesalahan_password',
+                    'Password baru dan Konfirmasi password tidak sama'
+                );
             }
         }
         redirect(base_url('user/profile'));
@@ -598,9 +654,15 @@ class User extends CI_Controller
         $this->user_model->updateUserPhoto($user_id, $data);
 
         if ($update_result) {
-            $this->session->set_flashdata('gagal_update', 'Gagal mengubah foto');
+            $this->session->set_flashdata(
+                'gagal_update',
+                'Gagal mengubah foto'
+            );
         } else {
-            $this->session->set_flashdata('berhasil_ubah_foto', 'Berhasil mengubah foto');
+            $this->session->set_flashdata(
+                'berhasil_ubah_foto',
+                'Berhasil mengubah foto'
+            );
         }
 
         // Redirect ke halaman profile
@@ -653,26 +715,35 @@ class User extends CI_Controller
         // Load the view
         $this->load->view('page/user/history_absensi', $data);
     }
-    
-    public function detail_absensi($id_absensi) {
+
+    public function detail_absensi($id_absensi)
+    {
         $data['absensi'] = $this->user_model->getAbsensiDetail($id_absensi);
         $this->load->view('page/user/detail_absensi', $data);
     }
 
-    public function aksi_batal_cuti($id_cuti) {
+    public function aksi_batal_cuti($id_cuti)
+    {
         $deleted_rows = $this->user_model->hapus_cuti($id_cuti);
 
         if ($deleted_rows > 0) {
-            $this->session->set_flashdata('gagal_batal', 'Gagal membatalkan cuti');
+            $this->session->set_flashdata(
+                'gagal_batal',
+                'Gagal membatalkan cuti'
+            );
         } else {
-            $this->session->set_flashdata('berhasil_batal', 'Berhasil membatalkan cuti');
-        }    
+            $this->session->set_flashdata(
+                'berhasil_batal',
+                'Berhasil membatalkan cuti'
+            );
+        }
 
         // Redirect ke halaman setelah pembaruan data
         redirect(base_url('user/history_cuti')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
     }
 
-    public function aksi_ajukan_cuti($id_cuti) {
+    public function aksi_ajukan_cuti($id_cuti)
+    {
         $id_cuti = $this->input->post('id_cuti');
         // Buat data yang akan diupdate
         $data = [
@@ -681,11 +752,7 @@ class User extends CI_Controller
         ];
 
         // Lakukan pembaruan data Admin
-        $eksekusi = $this->user_model->update(
-            'cuti',
-            $data, 
-            $id_cuti
-        );
+        $eksekusi = $this->user_model->update('cuti', $data, $id_cuti);
         $this->session->set_flashdata(
             'berhasil_ajukan',
             'Berhasil Mengajukan cuti kembali'
@@ -695,7 +762,8 @@ class User extends CI_Controller
         redirect(base_url('user/history_cuti')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Admin
     }
 
-    public function aksi_izin_tengah_hari() {
+    public function aksi_izin_tengah_hari()
+    {
         $id_absensi = $this->input->post('id_absensi');
         $keterangan_izin = $this->input->post('keterangan_izin');
 
@@ -707,19 +775,32 @@ class User extends CI_Controller
                 'status' => 1, // Update status absensi menjadi true
                 // Tambahkan field lain jika ada
             ];
-    
+
             // Lakukan pembaruan data Absensi
-            $eksekusi = $this->user_model->update_izin('absensi', $data, $id_absensi);
-    
+            $eksekusi = $this->user_model->update_izin(
+                'absensi',
+                $data,
+                $id_absensi
+            );
+
             if ($eksekusi) {
-                $this->session->set_flashdata('berhasil_ajukan', 'Berhasil Mengajukan cuti kembali');
+                $this->session->set_flashdata(
+                    'berhasil_ajukan',
+                    'Berhasil Mengajukan cuti kembali'
+                );
             } else {
-                $this->session->set_flashdata('gagal_ajukan', 'Gagal Mengajukan cuti');
+                $this->session->set_flashdata(
+                    'gagal_ajukan',
+                    'Gagal Mengajukan cuti'
+                );
             }
         } else {
-            $this->session->set_flashdata('gagal_ajukan', 'ID Absensi atau Keterangan Izin tidak valid');
+            $this->session->set_flashdata(
+                'gagal_ajukan',
+                'ID Absensi atau Keterangan Izin tidak valid'
+            );
         }
-    
+
         // Redirect ke halaman setelah pembaruan data
         redirect(base_url('user/history_absensi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Absensi
     }

@@ -433,5 +433,16 @@ class User_model extends CI_Model
         $this->db->where('id_cuti', $id_cuti);
         $this->db->delete('cuti'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
+
+    public function cancel_permission($id_absensi) {
+        // Tambahkan logika pembatalan izin di sini
+        // Misalnya, ubah status izin menjadi "batal" dan keterangan izin menjadi "masuk kembali" di database
+        $this->db->where('id_absensi', $id_absensi);
+        $this->db->update('absensi', array('status' => 'batal', 'keterangan_izin' => 'masuk kembali'));
+    
+        return true; // Atau false jika ada kesalahan
+    }
+
+
 }
 ?>

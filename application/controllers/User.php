@@ -823,4 +823,18 @@ class User extends CI_Controller
         // Redirect ke halaman setelah pembaruan data
         redirect(base_url('user/history_absensi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Absensi
     }
+
+    public function batal_izin($id_absensi) {
+        // Panggil model untuk membatalkan izin
+        $result = $this->user_model->cancel_permission($id_absensi);
+
+        if ($result) {
+            // Izin berhasil dibatalkan
+            echo "Izin berhasil dibatalkan.";
+        } else {
+            // Ada kesalahan saat membatalkan izin
+            echo "Gagal membatalkan izin. Silakan coba lagi.";
+        }
+        redirect(base_url('user/history_absensi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Absensi
+    }
 }

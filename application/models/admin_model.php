@@ -806,6 +806,14 @@ class Admin_model extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 
+    public function get_jumlah_status_absen($id_user, $status)
+    {
+        return $this->db->where('id_user', $id_user)
+                        ->where('status_absen', $status)
+                        ->from('absensi')
+                        ->count_all_results();
+    }
+
     public function update_data($table, $data, $where)
     {
         $this->db->update($table, $data, $where);

@@ -137,7 +137,10 @@
                                     Jam Pulang
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Lokasi
+                                    Kehadiran
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Aksi
                                 </th>
                             </tr>
                         </thead>
@@ -166,6 +169,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->jam_pulang; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->status_absen; ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <a type="button" href="<?= base_url(

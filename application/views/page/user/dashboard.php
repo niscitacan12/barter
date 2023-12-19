@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </a>
-            <a href="<?= base_url('user/pulang') ?>"
+            <a href="javascript:void(0)" onclick="validatePulang()"
                 class="w-full p-4 text-center bg-indigo-500 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Pulang</h5>
                 <hr class="mb-4 border-gray-900">
@@ -261,6 +261,24 @@
     </div>
     </div>
     </div>
+    <script>
+    function validatePulang() {
+        const currentHour = new Date().getHours();
+
+        // Validasi waktu (hanya dapat pulang setelah jam 16:00)
+        if (currentHour < 16) {
+            // Jika belum pukul 16:00, tampilkan SweetAlert atau pesan lain
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Belum waktunya pulang!',
+            });
+        } else {
+            // Jika sudah pukul 16:00, lanjutkan ke halaman 'user/pulang'
+            window.location.href = '<?= base_url('user/pulang') ?>';
+        }
+    }
+    </script>
     <script>
     const ctx = document.getElementById('myChart');
 

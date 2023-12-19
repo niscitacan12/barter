@@ -50,6 +50,9 @@
                                     Keterangan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Kehadiran
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Aksi
                                 </th>
                             </tr>
@@ -80,6 +83,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->keterangan_izin; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->status_absen; ?>
                                 </td>
                                 <td class="px-5 py-3">
                                     <div class="flex justify-center">
@@ -123,6 +129,9 @@
                         </tbody>
                     </table>
                 </div>
+                <br>
+                <p class="text-left">Terlambat: <?php echo $jumlah_terlambat; ?></p>
+                <p class="text-left">Lebih Awal: <?php echo $jumlah_lebih_awal; ?></p>
             </div>
         </div>
     </div>

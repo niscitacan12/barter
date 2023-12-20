@@ -216,6 +216,7 @@ class Admin extends CI_Controller
                 ->get_data('absensi')
                 ->result();
         }
+        
         $this->load->view('page/admin/absen/absensi', $data);
     }
 

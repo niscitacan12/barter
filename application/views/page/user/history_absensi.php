@@ -50,6 +50,9 @@
                                     Keterangan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Kehadiran
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Aksi
                                 </th>
                             </tr>
@@ -81,6 +84,9 @@
                                 <td class="px-6 py-4">
                                     <?php echo $row->keterangan_izin; ?>
                                 </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->status_absen; ?>
+                                </td>
                                 <td class="px-5 py-3">
                                     <div class="flex justify-center">
                                         <?php if ($row->keterangan_izin == '-') : ?>
@@ -107,11 +113,17 @@
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
                                         <a type="button" href="<?= base_url(
-                                        'user/aksi_batal_izin/' .
+                                        'user/izin_absen/' .
                                             $row->id_absensi
                                         ) ?>"
                                             class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                                             <i class="fa-solid fa-user-plus"></i>
+                                        </a>
+                                        <a type="button" href="<?= base_url('user/batal_izin/' . $row->id_absensi) ?>"
+                                            class="text-white bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
+                                            id="batalButton<?= $row->id_absensi ?>"
+                                            onclick="showCancelConfirmation(this);">
+                                            <i class="fas fa-ban"></i>
                                         </a>
                                         <?php endif; ?>
                                     </div>
@@ -123,6 +135,9 @@
                         </tbody>
                     </table>
                 </div>
+                <br>
+                <p class="text-left">Terlambat: <?php echo $jumlah_terlambat; ?></p>
+                <p class="text-left">Lebih Awal: <?php echo $jumlah_lebih_awal; ?></p>
             </div>
         </div>
     </div>

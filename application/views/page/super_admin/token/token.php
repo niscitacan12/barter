@@ -36,13 +36,13 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    username
+                                    Email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Token
+                                    Masa Berlaku Token
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Dibuat
+                                    Role
                                 </th>
                             </tr>
                         </thead>
@@ -50,10 +50,10 @@
                         <!-- Tabel Body -->
                         <tbody class="text-center">
                             <?php
-                        $no = 0;
-                        foreach ($tokens as $row):
-                            if ($no < 5):
-                                $no++; ?>
+                            $no = 0;
+                            foreach ($user as $row):
+                                if ($no < 5):
+                                    $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
@@ -61,21 +61,21 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
-                                    <?php echo isset($row->username) ? $row->username : 'N/A'; ?>
+                                    <?php echo $row->email; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->token; ?>
+                                    <?php echo $row->token_expiration; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->created; ?>
+                                    <?php echo $row->role; ?>
                                 </td>
                             </tr>
                             <?php
-                            else:
-                                break;
-                            endif;
-                        endforeach;
-                        ?>
+                                else:
+                                    break;
+                                endif;
+                            endforeach;
+                            ?>
                         </tbody>
                     </table>
                 </div>

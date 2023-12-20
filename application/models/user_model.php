@@ -209,12 +209,28 @@ class User_model extends CI_Model
             $this->db->select('*');
             $this->db->from('absensi');
             $this->db->where('id_user', $id_user);
-            return $this->db->get()->result();
+            $absensi = $this->db->get()->result();
+    
+            // Tambahkan informasi jumlah terlambat ke setiap baris data
+            foreach ($absensi as &$absen) {
+                $absen->jumlah_terlambat = $this->get_jumlah_status_absen($absen->id_user, 'Terlambat');
+            }
+    
+            return $absensi;
         } else {
             // Jika $id_user kosong, dapatkan semua data absensi
             return $this->db->get('absensi')->result();
         }
     }
+    
+    public function get_jumlah_status_absen($id_user, $status)
+    {
+        return $this->db->where('id_user', $id_user)
+                        ->where('status_absen', $status)
+                        ->from('absensi')
+                        ->count_all_results();
+    }
+    
 
     public function get($table, $where)
     {
@@ -417,5 +433,16 @@ class User_model extends CI_Model
         $this->db->where('id_cuti', $id_cuti);
         $this->db->delete('cuti'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
+
+    public function cancel_permission($id_absensi) {
+        // Tambahkan logika pembatalan izin di sini
+        // Misalnya, ubah status izin menjadi "batal" dan keterangan izin menjadi "masuk kembali" di database
+        $this->db->where('id_absensi', $id_absensi);
+        $this->db->update('absensi', array('status' => 'batal', 'keterangan_izin' => 'masuk kembali'));
+    
+        return true; // Atau false jika ada kesalahan
+    }
+
+
 }
 ?>

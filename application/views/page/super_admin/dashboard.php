@@ -95,17 +95,13 @@
                                 No
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Nama
+                                Email
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                username
+                                Masa Berlaku Token
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Token
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Dibuat
-                            </th>
+                                Role
                             </th>
                         </tr>
                     </thead>
@@ -113,7 +109,7 @@
                     <tbody class="text-center">
                         <?php
                         $no = 0;
-                        foreach ($tokens as $row):
+                        foreach ($users as $row):
                             if ($no < 5):
                                 $no++; ?>
                         <tr
@@ -123,15 +119,13 @@
                                 <?php echo $no; ?>
                             </th>
                             <td class="px-6 py-4">
-                                <?php echo isset($row->username)
-                                    ? $row->username
-                                    : 'N/A'; ?>
+                                <?php echo $row->email; ?>
                             </td>
                             <td class="px-6 py-4">
-                                <?php echo $row->token; ?>
+                                <?php echo $row->token_expiration; ?>
                             </td>
                             <td class="px-6 py-4">
-                                <?php echo $row->created; ?>
+                                <?php echo $row->role; ?>
                             </td>
                         </tr>
                         <?php

@@ -1638,32 +1638,37 @@ class Admin extends CI_Controller
             ->setBold(true);
 
         $sheet->setCellValue('A3', 'NO');
-        $sheet->setCellValue('B3', 'TANGGAL');
-        $sheet->setCellValue('C3', 'KETERANGAN');
-        $sheet->setCellValue('D3', 'LOKASI MASUK');
-        $sheet->setCellValue('F3', 'JAM MASUK');
-        $sheet->setCellValue('E3', 'LOKASI PULANG');
-        $sheet->setCellValue('G3', 'JAM PULANG');         
+        $sheet->setCellValue('B3', 'USERNAME');
+        $sheet->setCellValue('C3', 'TANGGAL');
+        $sheet->setCellValue('D3', 'KETERANGAN');
+        $sheet->setCellValue('E3', 'LOKASI MASUK');
+        $sheet->setCellValue('F3', 'LOKASI PULANG');
+        $sheet->setCellValue('G3', 'JAM MASUK');         
+        $sheet->setCellValue('H3', 'JAM PULANG');         
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
-        $sheet->getStyle('B3')->applyFromArray($style_col);
-        $sheet->getStyle('C3')->applyFromArray($style_col);
-        $sheet->getStyle('D3')->applyFromArray($style_col);
-        $sheet->getStyle('E3')->applyFromArray($style_col);
-        $sheet->getStyle('F3')->applyFromArray($style_col);
-        $sheet->getStyle('G3')->applyFromArray($style_col);
+         $sheet->getStyle('B3')->applyFromArray($style_col);
+         $sheet->getStyle('C3')->applyFromArray($style_col);
+         $sheet->getStyle('D3')->applyFromArray($style_col);
+         $sheet->getStyle('E3')->applyFromArray($style_col);
+         $sheet->getStyle('F3')->applyFromArray($style_col);
+         $sheet->getStyle('G3')->applyFromArray($style_col);
+         $sheet->getStyle('H3')->applyFromArray($style_col);
 
         $no = 1;
         $numrow = 4;
         foreach ($absensiData as $row) {
+            $formattedDate = convDate($row->tanggal_absen);
+            $user_data = nama_user($row->id_user);
+        
             $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue('B' . $numrow, $row->tanggal_absen);
-            $sheet->setCellValue('C' . $numrow, $row->keterangan_izin);
-            $sheet->setCellValue('D' . $numrow, $row->lokasi_masuk);
-            $sheet->setCellValue('E' . $numrow, $row->lokasi_pulang);
-            $sheet->setCellValue('F' . $numrow, $row->jam_masuk);
-            $sheet->setCellValue('G' . $numrow, $row->jam_pulang);
-
+            $sheet->setCellValue('B' . $numrow, $user_data);
+            $sheet->setCellValue('C' . $numrow, $formattedDate);
+            $sheet->setCellValue('D' . $numrow, $row->keterangan_izin);
+            $sheet->setCellValue('E' . $numrow, $row->lokasi_masuk);
+            $sheet->setCellValue('F' . $numrow, $row->lokasi_pulang);
+            $sheet->setCellValue('G' . $numrow, $row->jam_masuk);
+            $sheet->setCellValue('H' . $numrow, $row->jam_pulang); 
           
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -1672,18 +1677,20 @@ class Admin extends CI_Controller
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
 
             $no++;
             $numrow++;
         }
 
-        $sheet->getColumnDimension('A')->setWidth(5);
+         $sheet->getColumnDimension('A')->setWidth(5);
          $sheet->getColumnDimension('B')->setWidth(25);
          $sheet->getColumnDimension('C')->setWidth(25);
-         $sheet->getColumnDimension('D')->setWidth(40);
+         $sheet->getColumnDimension('D')->setWidth(25);
          $sheet->getColumnDimension('E')->setWidth(40);
-         $sheet->getColumnDimension('F')->setWidth(25);
+         $sheet->getColumnDimension('F')->setWidth(40);
          $sheet->getColumnDimension('G')->setWidth(25);         
+         $sheet->getColumnDimension('H')->setWidth(25);         
      
          $sheet->getDefaultRowDimension()
                ->setRowHeight(-1);

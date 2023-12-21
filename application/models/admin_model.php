@@ -706,7 +706,7 @@ class Admin_model extends CI_Model
     public function get_absensi_data($filter = [])
     {
         $this->db->select(
-            'tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, lokasi_masuk, lokasi_pulang'
+            'id_user, tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, lokasi_masuk, lokasi_pulang'
         );
         $this->db->from('absensi');
 

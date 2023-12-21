@@ -18,18 +18,21 @@
             <div
                 class="p-4 text-center bg-gray-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <?php
-                $currentDateTime = date('d F Y H:i:s');
-                $currentHour = date('H', strtotime($currentDateTime));
-                $date = date('l, d F Y', strtotime($currentDateTime));
-                ?>
+             // Set the default timezone to UTC
+                date_default_timezone_set('UTC');
+                $currentDateTime = new DateTime();
+            // Set the timezone to Asia/Jakarta
+               $currentDateTime->setTimezone(new DateTimeZone('Asia/Jakarta'));
+               $date = $currentDateTime->format('l, d F Y');
+               $timeWIB = $currentDateTime->format('H:i');
+               ?>
+
                 <h2 class="text-2xl font-semibold mb-4">Selamat Datang
-                    <span><?php echo $this->session->userdata(
-                        'username'
-                    ); ?></span>
+                    <span><?php echo $this->session->userdata('username'); ?></span>
                 </h2>
-                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo getNamaHari(
-                    $date
-                ); ?> <?php echo convDate($date); ?></p>
+                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo getNamaHari($date); ?>
+                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB</p>
+
             </div>
         </div>
         <div class="p-2 mt-5">

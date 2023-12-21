@@ -57,6 +57,9 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Username
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Cuti Dari
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -89,6 +92,9 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
+                                <td class="px-6 py-4">
+                                    <?php echo nama_user($row->id_user); ?>
+                                </td>
                                 <td class="px-6 py-4">
                                     <?php echo convDate($row->awal_cuti); ?>
                                 </td>

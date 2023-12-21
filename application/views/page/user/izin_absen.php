@@ -19,7 +19,8 @@
                 class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <h6 class="text-left mb-2 text-xl font-bold text-gray-900 dark:text-white">Izin</h6>
                 <p class="text-center mb-5">
-                    <?php echo $date; ?>
+                    <?php echo getNamaHari($date); ?>,
+                    <?php echo convDate($date); ?>
                     <?php echo $time; ?>
                     <br>
                     <?php echo $greeting; ?>,

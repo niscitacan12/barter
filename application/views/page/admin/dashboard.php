@@ -38,7 +38,7 @@
                 </h2>
                 <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo getNamaHari(
                     $date
-                ); ?> <?php echo convDate($date); ?></p>
+                ); ?> <?php echo convDate($date); ?>, </p>
             </div>
         </div>
         <div class="p-2 mt-5">
@@ -137,6 +137,7 @@
                                         $row['tanggal_absen']
                                     ); ?>
                                 </td>
+
                                 <td class="px-6 py-4">
                                     <?php echo $row['keterangan_izin']; ?>
                                 </td>

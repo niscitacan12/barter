@@ -117,13 +117,13 @@
                                             $row->id_absensi
                                         ) ?>"
                                             class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
-                                            <i class="fa-solid fa-user-plus"></i>
+                                            <i class="fa-solid fa-circle-xmark"></i>
                                         </a>
                                         <a type="button" href="<?= base_url('user/batal_izin/' . $row->id_absensi) ?>"
-                                            class="text-white bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
+                                            class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
                                             id="batalButton<?= $row->id_absensi ?>"
                                             onclick="showCancelConfirmation(this);">
-                                            <i class="fas fa-ban"></i>
+                                            <i class="fa-solid fa-right-to-bracket"></i>
                                         </a>
                                         <?php endif; ?>
                                     </div>

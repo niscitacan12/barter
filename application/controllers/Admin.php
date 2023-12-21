@@ -33,6 +33,7 @@ class Admin extends CI_Controller
          $data['lokasi'] = $this->admin_model->get_lokasi_data();
          $data['organisasi'] = $this->admin_model->get_organisasi_data();
          $data['user'] = $this->admin_model->get_user_data();
+         
  
          // Modifikasi baris di bawah untuk mendapatkan data absen berdasarkan tanggal
          $data[

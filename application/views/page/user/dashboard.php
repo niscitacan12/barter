@@ -138,6 +138,9 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Username
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -145,6 +148,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Jam Pulang
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Kehadiran
                                 </th>
                                 </th>
                             </tr>
@@ -163,6 +169,9 @@
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
+                                    <?php echo nama_user($row->id_user); ?>
+                                </td>
+                                <td class="px-6 py-4">
                                     <?php echo $row->tanggal_absen; ?>
                                 </td>
                                 <td class="px-6 py-4">
@@ -170,6 +179,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->jam_pulang; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->status_absen; ?>
                                 </td>
                             </tr>
                             <?php
@@ -207,9 +219,10 @@
                             class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">No</th>
-                                <th scope="col" class="px-6 py-3">awal cuti</th>
-                                <th scope="col" class="px-6 py-3">akhir cuti</th>
-                                <th scope="col" class="px-6 py-3">keperluan cuti</th>
+                                <th scope="col" class="px-6 py-3">Username</th>
+                                <th scope="col" class="px-6 py-3">Awal Cuti</th>
+                                <th scope="col" class="px-6 py-3">Akhir Cuti</th>
+                                <th scope="col" class="px-6 py-3">Keperluan Cuti</th>
                             </tr>
                         </thead>
                         <!-- Tabel Body -->
@@ -225,6 +238,9 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
+                                <td class="px-6 py-4">
+                                    <?php echo nama_user($row->id_user); ?>
+                                </td>
                                 <td class="px-6 py-4">
                                     <?php echo convDate($row->awal_cuti); ?>
                                 </td>

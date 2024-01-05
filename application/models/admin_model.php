@@ -242,6 +242,7 @@ class Admin_model extends CI_Model
     }
 
     public function GetDataAbsensi(
+        $id_user,
         $bulan = null,
         $tanggal = null,
         $tahun = null
@@ -249,7 +250,9 @@ class Admin_model extends CI_Model
         $this->db->select('*');
         $this->db->from('absensi');
 
-        // Tambahkan filter berdasarkan bulan, tanggal, dan tahun jika ada
+        // Tambahkan filter berdasarkan id_user, bulan, tanggal, dan tahun jika ada
+        $this->db->where('id_user', $id_user);
+
         if ($bulan !== null) {
             $this->db->where('MONTH(tanggal_absen)', $bulan);
         }
@@ -266,6 +269,20 @@ class Admin_model extends CI_Model
             return $query->result();
         } else {
             return false;
+        }
+    }
+
+    public function getIdUserByIdAdmin($id_admin)
+    {
+        $this->db->select('id_user');
+        $this->db->from('user');
+        $this->db->where('id_admin', $id_admin);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->id_user;
+        } else {
+            return null;
         }
     }
 
@@ -808,10 +825,11 @@ class Admin_model extends CI_Model
 
     public function get_jumlah_status_absen($id_user, $status)
     {
-        return $this->db->where('id_user', $id_user)
-                        ->where('status_absen', $status)
-                        ->from('absensi')
-                        ->count_all_results();
+        return $this->db
+            ->where('id_user', $id_user)
+            ->where('status_absen', $status)
+            ->from('absensi')
+            ->count_all_results();
     }
 
     public function update_data($table, $data, $where)

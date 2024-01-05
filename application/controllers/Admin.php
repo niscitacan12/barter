@@ -122,14 +122,23 @@ class Admin extends CI_Controller
 
     public function cuti()
     {
+        // Mendapatkan id_admin yang sedang login (contoh: menggunakan sesi)
+        $id_admin = $this->session->userdata('id_admin');
+
+        // Mendapatkan id_user yang terkait dengan id_admin
+        $id_user = $this->admin_model->getIdUserByIdAdmin($id_admin);
+
+        // Mendapatkan cuti sesuai dengan id_user yang terkait
         $keyword = $this->input->get('keyword');
 
         if ($keyword !== null && $keyword !== '') {
             $data['cuti'] = $this->admin_model
-                ->search_data('cuti', 'keperluan_cuti', $keyword)
+                ->search_data('cuti', 'keperluan_cuti', $keyword, $id_user)
                 ->result();
         } else {
-            $data['cuti'] = $this->admin_model->get_data('cuti')->result();
+            $data['cuti'] = $this->admin_model
+                ->getCutiByIdUser($id_user)
+                ->result();
         }
 
         $this->load->view('page/admin/cuti/cuti', $data);
@@ -448,6 +457,10 @@ class Admin extends CI_Controller
             ->get_data('organisasi')
             ->result();
 
+        $data['admin'] = $this->admin_model
+            ->get_data('admin')
+            ->result();
+
         // Menampilkan view dengan data
         $this->load->view('page/admin/lokasi/lokasi', $data);
     }
@@ -459,13 +472,15 @@ class Admin extends CI_Controller
 
         // Get organizational data
         $data['organisasi'] = $this->admin_model->get_all_organisasii();
+        $data['admin'] = $this->admin_model->get_all_admin();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya
             $lokasi_data = [
                 'nama_lokasi' => $this->input->post('nama_lokasi'),
                 'alamat' => $this->input->post('alamat_kantor'),
-                'id_organisasi' => $this->input->post('id_organisasi'), // Fix the input field name
+                'id_organisasi' => $this->input->post('id_organisasi'),
+                'id_admin' => $this->input->post('id_admin'),  // Ensure this matches the name in your form
                 // tambahkan kolom lainnya sesuai kebutuhan
             ];
 

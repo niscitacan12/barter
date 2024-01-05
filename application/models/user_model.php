@@ -48,13 +48,19 @@ class User_model extends CI_Model
         }
     }
 
-    public function get_cuti_data()
+    public function get_cuti_data($id_user)
     {
-        // Assuming you have a table named 'absensi'
-        $query = $this->db->get('cuti');
+        $this->db->select('*');
+        $this->db->from('cuti');
+        $this->db->where('id_user', $id_user);
 
-        // Assuming 'absensi' is the name of the table
-        return $query->result(); // This assumes you want to get multiple rows as a result
+        $query = $this->db->get();
+
+        if ($query) {
+            return $query->result();
+        } else {
+            return false;
+        }
     }
 
     public function get_absensi_data()
@@ -66,7 +72,8 @@ class User_model extends CI_Model
         return $query->result(); // This assumes you want to get multiple rows as a result
     }
 
-    public function getAbsensiById($id_absensi) {
+    public function getAbsensiById($id_absensi)
+    {
         $this->db->where('id_absensi', $id_absensi);
         $query = $this->db->get('absensi');
 
@@ -194,7 +201,7 @@ class User_model extends CI_Model
 
         return $result ? $result->id_organisasi : null;
     }
-    
+
     public function id_organisasi()
     {
         // Gantilah dengan logika aplikasi yang sesuai
@@ -204,33 +211,37 @@ class User_model extends CI_Model
         return $id_organisasi;
     }
 
-    public function get_absen_data($id_user = NULL) {
-        if ($id_user !== NULL) {
+    public function get_absen_data($id_user = null)
+    {
+        if ($id_user !== null) {
             $this->db->select('*');
             $this->db->from('absensi');
             $this->db->where('id_user', $id_user);
             $absensi = $this->db->get()->result();
-    
+
             // Tambahkan informasi jumlah terlambat ke setiap baris data
             foreach ($absensi as &$absen) {
-                $absen->jumlah_terlambat = $this->get_jumlah_status_absen($absen->id_user, 'Terlambat');
+                $absen->jumlah_terlambat = $this->get_jumlah_status_absen(
+                    $absen->id_user,
+                    'Terlambat'
+                );
             }
-    
+
             return $absensi;
         } else {
             // Jika $id_user kosong, dapatkan semua data absensi
             return $this->db->get('absensi')->result();
         }
     }
-    
+
     public function get_jumlah_status_absen($id_user, $status)
     {
-        return $this->db->where('id_user', $id_user)
-                        ->where('status_absen', $status)
-                        ->from('absensi')
-                        ->count_all_results();
+        return $this->db
+            ->where('id_user', $id_user)
+            ->where('status_absen', $status)
+            ->from('absensi')
+            ->count_all_results();
     }
-    
 
     public function get($table, $where)
     {
@@ -243,14 +254,15 @@ class User_model extends CI_Model
         return $query->row_array();
     }
 
-    public function getAbsensiDetail($id_absensi) {
+    public function getAbsensiDetail($id_absensi)
+    {
         $this->db->where('id_absensi', $id_absensi);
         $query = $this->db->get('absensi');
-        return $query->row(); 
+        return $query->row();
     }
 
-
-    public function cek_absen($id_user, $tanggal) {
+    public function cek_absen($id_user, $tanggal)
+    {
         $this->db->where('id_user', $id_user);
         $this->db->where('tanggal_absen', $tanggal);
         $query = $this->db->get('absensi');
@@ -258,7 +270,8 @@ class User_model extends CI_Model
         return $query->num_rows() > 0 ? true : false;
     }
 
-    public function cek_izin($id_user, $tanggal) {
+    public function cek_izin($id_user, $tanggal)
+    {
         $this->db->where('id_user', $id_user);
         $this->db->where('tanggal_absen', $tanggal);
         $query = $this->db->get_where('absensi', ['status' => 'true']); // Ganti dengan status izin jika ada
@@ -288,7 +301,7 @@ class User_model extends CI_Model
             return false; // Mengembalikan false jika tidak ditemukan data
         }
     }
-    
+
     public function updateUserPhoto($user_id, $data)
     {
         $update_result = $this->db->update('user', $data, [
@@ -324,16 +337,18 @@ class User_model extends CI_Model
     }
 
     // Memperbarui data dalam tabel berdasarkan kondisi tertentu
-    public function update_data($table, $data, $where) {
+    public function update_data($table, $data, $where)
+    {
         $this->db->update($table, $data, $where);
         return $this->db->affected_rows();
     }
 
     // Memperbarui gambar pengguna
-    public function update_image($user_id, $new_image) {
-        $data = array(
-            'image' => $new_image
-        );
+    public function update_image($user_id, $new_image)
+    {
+        $data = [
+            'image' => $new_image,
+        ];
 
         $this->db->where('id_user', $user_id);
         $this->db->update('user', $data);
@@ -342,7 +357,8 @@ class User_model extends CI_Model
     }
 
     // Mendapatkan gambar saat ini berdasarkan ID pengguna
-    public function get_current_image($user_id) {
+    public function get_current_image($user_id)
+    {
         $this->db->select('image');
         $this->db->from('user');
         $this->db->where('id_user', $user_id);
@@ -392,7 +408,8 @@ class User_model extends CI_Model
         return null;
     }
 
-    public function updateStatusAbsenPulang($tanggal, $data) {
+    public function updateStatusAbsenPulang($tanggal, $data)
+    {
         $this->db->update('absensi', $data);
         return $this->db->affected_rows(); // Mengembalikan jumlah baris yang terpengaruh oleh query
     }
@@ -408,11 +425,12 @@ class User_model extends CI_Model
         $this->db->where('id_user', $id_user);
         $this->db->from('absensi'); // Ganti 'nama_tabel_absensi' dengan nama tabel Anda
         $query = $this->db->get();
-        
+
         return $query->result();
     }
 
-    public function get_absensi_by_id($id_absensi) {
+    public function get_absensi_by_id($id_absensi)
+    {
         // Ganti 'nama_tabel_absensi' dengan nama tabel absensi yang sesuai dalam database Anda
         $this->db->where('id_absensi', $id_absensi);
         $query = $this->db->get('absensi');
@@ -421,11 +439,12 @@ class User_model extends CI_Model
         return $query->row();
     }
 
-    public function update_izin($table, $data, $id_absensi) {
+    public function update_izin($table, $data, $id_absensi)
+    {
         $this->db->where('id_absensi', $id_absensi);
         return $this->db->update($table, $data);
     }
-    
+
     public function hapus_cuti($id_cuti)
     {
         // Misalnya, menggunakan query database untuk menghapus data cuti berdasarkan ID
@@ -434,15 +453,17 @@ class User_model extends CI_Model
         $this->db->delete('cuti'); // Gantilah 'nama_tabel_organisasi' dengan nama tabel sebenarnya
     }
 
-    public function cancel_permission($id_absensi) {
+    public function cancel_permission($id_absensi)
+    {
         // Tambahkan logika pembatalan izin di sini
         // Misalnya, ubah status izin menjadi "batal" dan keterangan izin menjadi "masuk kembali" di database
         $this->db->where('id_absensi', $id_absensi);
-        $this->db->update('absensi', array('status' => 'batal', 'keterangan_izin' => 'masuk kembali'));
-    
+        $this->db->update('absensi', [
+            'status' => 'batal',
+            'keterangan_izin' => 'masuk kembali',
+        ]);
+
         return true; // Atau false jika ada kesalahan
     }
-
-
 }
 ?>

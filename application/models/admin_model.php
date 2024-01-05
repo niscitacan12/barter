@@ -272,6 +272,21 @@ class Admin_model extends CI_Model
         }
     }
 
+    public function getCutiByIdUser($id_user)
+    {
+        $this->db->select('*');
+        $this->db->from('cuti');
+        $this->db->where('id_user', $id_user);
+
+        $query = $this->db->get();
+
+        if ($query) {
+            return $query;
+        } else {
+            return false;
+        }
+    }
+
     public function getIdUserByIdAdmin($id_admin)
     {
         $this->db->select('id_user');

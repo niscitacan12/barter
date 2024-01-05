@@ -122,14 +122,23 @@ class Admin extends CI_Controller
 
     public function cuti()
     {
+        // Mendapatkan id_admin yang sedang login (contoh: menggunakan sesi)
+        $id_admin = $this->session->userdata('id_admin');
+
+        // Mendapatkan id_user yang terkait dengan id_admin
+        $id_user = $this->admin_model->getIdUserByIdAdmin($id_admin);
+
+        // Mendapatkan cuti sesuai dengan id_user yang terkait
         $keyword = $this->input->get('keyword');
 
         if ($keyword !== null && $keyword !== '') {
             $data['cuti'] = $this->admin_model
-                ->search_data('cuti', 'keperluan_cuti', $keyword)
+                ->search_data('cuti', 'keperluan_cuti', $keyword, $id_user)
                 ->result();
         } else {
-            $data['cuti'] = $this->admin_model->get_data('cuti')->result();
+            $data['cuti'] = $this->admin_model
+                ->getCutiByIdUser($id_user)
+                ->result();
         }
 
         $this->load->view('page/admin/cuti/cuti', $data);

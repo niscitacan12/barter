@@ -48,7 +48,7 @@ class User_model extends CI_Model
         }
     }
 
-    public function get_cuti_data($id_user)
+    public function get_cuti_data_byuser($id_user)
     {
         $this->db->select('*');
         $this->db->from('cuti');
@@ -61,6 +61,15 @@ class User_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+    public function get_cuti_data()
+    {
+        // Assuming you have a table named 'absensi'
+        $query = $this->db->get('cuti');
+
+        // Assuming 'absensi' is the name of the table
+        return $query->result(); // This assumes you want to get multiple rows as a result
     }
 
     public function get_absensi_data()

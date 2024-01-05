@@ -715,7 +715,7 @@ class User extends CI_Controller
     public function history_cuti()
     {
         $id_user = $this->session->userdata('id');
-        $data['cuti'] = $this->user_model->get_cuti_data($id_user);
+        $data['cuti'] = $this->user_model->get_cuti_data_byuser($id_user);
 
         // Load the view
         $this->load->view('page/user/history_cuti', $data);

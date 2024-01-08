@@ -30,16 +30,20 @@ class Admin extends CI_Controller
         $data['user_count'] = $this->admin_model->get_user_count();
         $data['absensi']['count'] = $this->admin_model->get_absensi_count();
         $data['absensi']['data'] = $this->admin_model->get_absen_data();
-        $data['lokasi'] = $this->admin_model->get_lokasi_data();
+        $data['lokasi'] = $this->admin_model->get_lokasi_data_by_admin(
+            $id_admin
+        );
         $data['organisasi'] = $this->admin_model->get_organisasi_data();
-        $data['user'] = $this->admin_model->get_user_data();
+        $data['user'] = $this->admin_model->get_user_data_by_admin($id_admin);
 
         // Modifikasi baris di bawah untuk mendapatkan data absen berdasarkan tanggal
         $data[
             'absensi_by_date'
         ] = $this->admin_model->get_absensi_count_by_date('2023-11-21'); // Ganti '2023-11-21' dengan tanggal yang diinginkan
 
-        $data['jabatan'] = $this->admin_model->get_jabatan_data();
+        $data['jabatan'] = $this->admin_model->get_jabatan_data_by_admin(
+            $id_admin
+        );
         $this->load->view('page/admin/dashboard', $data);
     }
 
@@ -457,9 +461,7 @@ class Admin extends CI_Controller
             ->get_data('organisasi')
             ->result();
 
-        $data['admin'] = $this->admin_model
-            ->get_data('admin')
-            ->result();
+        $data['admin'] = $this->admin_model->get_data('admin')->result();
 
         // Menampilkan view dengan data
         $this->load->view('page/admin/lokasi/lokasi', $data);
@@ -480,7 +482,7 @@ class Admin extends CI_Controller
                 'nama_lokasi' => $this->input->post('nama_lokasi'),
                 'alamat' => $this->input->post('alamat_kantor'),
                 'id_organisasi' => $this->input->post('id_organisasi'),
-                'id_admin' => $this->input->post('id_admin'),  // Ensure this matches the name in your form
+                'id_admin' => $this->input->post('id_admin'), // Ensure this matches the name in your form
                 // tambahkan kolom lainnya sesuai kebutuhan
             ];
 

@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -39,6 +41,9 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Nama Shift
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -66,6 +71,9 @@
                                     <?php echo ++$start; ?>
                                 </th>
                                 <td class="px-6 py-4">
+                                    <?php echo nama_admin($row->id_admin); ?>
+                                </td>
+                                <td class="px-6 py-4">
                                     <?php echo $row->nama_shift; ?>
                                 </td>
                                 <td class="px-6 py-4">
@@ -75,20 +83,17 @@
                                     <?php echo $row->jam_pulang; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo nama_admin($row->id_admin); ?>
-                                </td>
-                                <td class="px-6 py-4">
                                     <div class="flex justify-center">
                                         <a type="button" href="<?php echo base_url(
                                             'superadmin/detail_shift/' .
-                                            $row->id_shift
+                                                $row->id_shift
                                         ); ?>"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
                                         <a type="button" href="<?php echo base_url(
-                                            'superadmin/update_shift/' . 
-                                            $row->id_shift
+                                            'superadmin/update_shift/' .
+                                                $row->id_shift
                                         ); ?>"
                                             class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-pen-to-square"></i>
@@ -100,15 +105,13 @@
                                     </div>
                                 </td>
                             </tr>
-                            <?php
-                            endforeach;
-                            ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
                 <hr class="my-8">
                 <div class="flex justify-end">
-                    <?= $this->pagination->create_links(); ?>
+                    <?= $this->pagination->create_links() ?>
                 </div>
             </div>
         </div>
@@ -128,13 +131,15 @@ function hapusShift(idShift) {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "<?php echo base_url('superadmin/hapus_shift/'); ?>" + idShift;
+            window.location.href = "<?php echo base_url(
+                'superadmin/hapus_shift/'
+            ); ?>" + idShift;
         }
     });
 }
 </script>
 
-<?php if($this->session->flashdata('berhasil_update')){ ?>
+<?php if ($this->session->flashdata('berhasil_update')) { ?>
 <script>
 Swal.fire({
     title: "Berhasil",
@@ -146,7 +151,7 @@ Swal.fire({
 </script>
 <?php } ?>
 
-<?php if($this->session->flashdata('berhasil_tambah')){ ?>
+<?php if ($this->session->flashdata('berhasil_tambah')) { ?>
 <script>
 Swal.fire({
     title: "Berhasil",

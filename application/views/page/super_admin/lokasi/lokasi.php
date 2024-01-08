@@ -39,13 +39,13 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Nama Lokasi
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Alamat
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Admin
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Organisasi
@@ -64,31 +64,39 @@
                                 <td class="px-6 py-4"><?php echo $counter; ?></td>
 
                                 <td class="px-6 py-4"><?php echo isset(
-                                $data->nama_lokasi
-                            )
-                                ? $data->nama_lokasi
-                                : ''; ?>
+                                    $data->id_admin
+                                )
+                                    ? nama_admin($data->id_admin)
+                                    : ''; ?></td>
+                                <td class="px-6 py-4"><?php echo isset(
+                                    $data->nama_lokasi
+                                )
+                                    ? $data->nama_lokasi
+                                    : ''; ?>
                                 </td>
                                 <td class="px-6 py-4"><?php echo isset(
-                                $data->alamat
-                            )
-                                ? $data->alamat
-                                : ''; ?></td>
-                                <td class="px-6 py-4"><?php echo isset($data->id_admin) ? nama_admin($data->id_admin) : ''; ?></td>
-                                <td class="px-6 py-4"><?php echo isset($data->id_organisasi) ? organisasi($data->id_organisasi) : ''; ?></td>
+                                    $data->alamat
+                                )
+                                    ? $data->alamat
+                                    : ''; ?></td>
+                                <td class="px-6 py-4"><?php echo isset(
+                                    $data->id_organisasi
+                                )
+                                    ? organisasi($data->id_organisasi)
+                                    : ''; ?></td>
                                 <td class="px-6 py-4">
                                     <div class="flex justify-center">
                                         <a type="button" href="<?= base_url(
-                                        'superadmin/detail_lokasi/' .
-                                            $data->id_lokasi
-                                    ) ?>"
+                                            'superadmin/detail_lokasi/' .
+                                                $data->id_lokasi
+                                        ) ?>"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
                                         <a type="button" href="<?php echo base_url(
-                                        'superadmin/update_lokasi/' .
-                                            $data->id_lokasi
-                                    ); ?>"
+                                            'superadmin/update_lokasi/' .
+                                                $data->id_lokasi
+                                        ); ?>"
                                             class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>

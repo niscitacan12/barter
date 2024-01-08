@@ -754,16 +754,6 @@ class Admin_model extends CI_Model
         // Mengembalikan array kosong jika tidak ada data yang ditemukan
     }
 
-    public function get_absen_data()
-    {
-        return $this->db->get('absensi')->result_array();
-    }
-
-    public function get_cuti_data()
-    {
-        return $this->db->get('cuti')->result();
-    }
-
     public function get_jabatan_data()
     {
         $query = $this->db->get('jabatan');
@@ -881,7 +871,8 @@ class Admin_model extends CI_Model
             return false;
         }
     }
-    public function get_all_admin() {
+    public function get_all_admin()
+    {
         // Assuming you have a table named 'admin' with columns like 'id_admin', 'nama_admin', etc.
 
         $this->db->select('*');
@@ -893,8 +884,61 @@ class Admin_model extends CI_Model
         if ($query->num_rows() > 0) {
             return $query->result(); // Return the result set as an array of objects
         } else {
-            return array(); // Return an empty array if no results found
+            return []; // Return an empty array if no results found
         }
+    }
+
+    public function get_absen_data()
+    {
+        $id_admin = $this->session->userdata('id');
+        $this->db->select('*');
+        $this->db->from('absensi');
+        $this->db->join('user', 'absensi.id_user = user.id_user');
+        $this->db->where('user.id_admin', $id_admin); // Menambahkan kondisi WHERE
+        $this->db->order_by('tanggal_absen', 'desc');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_jabatan_data_by_admin($id_admin)
+    {
+        $this->db->select('*');
+        $this->db->from('jabatan');
+        $this->db->where('id_admin', $id_admin); // Sesuaikan nama kolom sesuai dengan struktur tabel Anda
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    // Model Function to Get Cuti Data
+    public function get_cuti_data()
+    {
+        $id_admin = $this->session->userdata('id');
+        $this->db->select('cuti.*, user.*, admin.*'); // Pilih kolom yang dibutuhkan
+        $this->db->from('cuti');
+        $this->db->join('user', 'cuti.id_user = user.id_user');
+        $this->db->join('admin', 'user.id_admin = admin.id_admin');
+        $this->db->where('admin.id_admin', $id_admin); // Filter berdasarkan id_admin yang sedang login
+        $this->db->order_by('cuti.awal_cuti', 'desc'); // Sesuaikan dengan kolom tanggal cuti
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+    public function get_lokasi_data_by_admin($id_admin)
+    {
+        // Gantilah 'id_admin' dan 'id_lokasi' dengan nama kolom yang sesuai di tabel database Anda
+        $this->db->select('*');
+        $this->db->from('lokasi');
+        $this->db->where('id_admin', $id_admin);
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    public function get_user_data_by_admin($id_admin)
+    {
+        $this->db->where('id_admin', $id_admin);
+        return $this->db->get('user')->result_array();
     }
 }
 ?>

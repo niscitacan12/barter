@@ -45,6 +45,12 @@
                                     Alamat
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Organisasi
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Aksi
                                 </th>
                             </tr>
@@ -68,6 +74,8 @@
                             )
                                 ? $data->alamat
                                 : ''; ?></td>
+                                <td class="px-6 py-4"><?php echo isset($data->id_admin) ? nama_admin($data->id_admin) : ''; ?></td>
+                                <td class="px-6 py-4"><?php echo isset($data->id_organisasi) ? organisasi($data->id_organisasi) : ''; ?></td>
                                 <td class="px-6 py-4">
                                     <div class="flex justify-center">
                                         <a type="button" href="<?= base_url(

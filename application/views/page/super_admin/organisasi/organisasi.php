@@ -41,6 +41,9 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Admin
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Nama
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -67,6 +70,9 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo ++$start; ?>
                                 </th>
+                                <td class="px-6 py-4">
+                                    <?php echo nama_admin($row->id_admin); ?>
+                                </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->nama_organisasi; ?>
                                 </td>
@@ -128,7 +134,9 @@ function hapusOrganisasi(idOrganisasi) {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "<?php echo base_url('superadmin/hapus_organisasi/'); ?>" + idOrganisasi;
+            window.location.href = "<?php echo base_url(
+                'superadmin/hapus_organisasi/'
+            ); ?>" + idOrganisasi;
         }
     });
 }

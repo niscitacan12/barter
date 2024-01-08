@@ -433,37 +433,39 @@ class Super_model extends CI_Model
         return $update_result ? true : false;
     }
 
-     // untuk uubah password
-     public function getPasswordById($id_superadmin)
-     {
-         $this->db->select('password');
-         $this->db->from('superadmin'); // Replace 'your_user_table' with the actual table name
-         $this->db->where('id_superadmin', $id_superadmin);
-         $query = $this->db->get();
- 
-         if ($query->num_rows() > 0) {
-             $row = $query->row();
-             return $row->password;
-         } else {
-             return false;
-         }
-     }
- 
-     public function update_password($id_superadmin, $new_password)
-     {
-         $this->db->set('password', $new_password);
-         $this->db->where('id_superadmin', $id_superadmin);
-         $this->db->update('superadmin'); // Replace 'your_user_table' with the actual table name
- 
-         return $this->db->affected_rows() > 0;
-     }
+    // untuk uubah password
+    public function getPasswordById($id_superadmin)
+    {
+        $this->db->select('password');
+        $this->db->from('superadmin'); // Replace 'your_user_table' with the actual table name
+        $this->db->where('id_superadmin', $id_superadmin);
+        $query = $this->db->get();
 
-     public function update_data($table, $data, $where) {
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->password;
+        } else {
+            return false;
+        }
+    }
+
+    public function update_password($id_superadmin, $new_password)
+    {
+        $this->db->set('password', $new_password);
+        $this->db->where('id_superadmin', $id_superadmin);
+        $this->db->update('superadmin'); // Replace 'your_user_table' with the actual table name
+
+        return $this->db->affected_rows() > 0;
+    }
+
+    public function update_data($table, $data, $where)
+    {
         $this->db->update($table, $data, $where);
         return $this->db->affected_rows();
     }
 
-    public function get_current_image($user_id) {
+    public function get_current_image($user_id)
+    {
         $this->db->select('image');
         $this->db->from('superadmin');
         $this->db->where('id_superadmin', $user_id);
@@ -477,11 +479,12 @@ class Super_model extends CI_Model
         return null;
     }
 
-     // Memperbarui gambar pengguna
-     public function update_image($user_id, $new_image) {
-        $data = array(
-            'image' => $new_image
-        );
+    // Memperbarui gambar pengguna
+    public function update_image($user_id, $new_image)
+    {
+        $data = [
+            'image' => $new_image,
+        ];
 
         $this->db->where('id_superadmin', $user_id);
         $this->db->update('superadmin', $data);

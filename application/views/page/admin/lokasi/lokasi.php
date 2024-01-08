@@ -137,9 +137,17 @@ function hapusLokasi(idLokasi) {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "<?php echo base_url(
-                'admin/hapus_lokasi/'
-            ); ?>" + idLokasi;
+            // Contoh SweetAlert berhasil (gantilah ini dengan respons server sebenarnya)
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Data lokasi berhasil dihapus.',
+                icon: 'success',
+                timer: 1500, // Waktu dalam milidetik sebelum SweetAlert ditutup secara otomatis (1.5 detik dalam contoh ini)
+                showConfirmButton: false // Menyembunyikan tombol OK
+            }).then(() => {
+                // Redirect atau lakukan tindakan lain setelah penghapusan berhasil
+                window.location.href = "<?php echo base_url('admin/hapus_lokasi/'); ?>" + idLokasi;
+            });
         }
     });
 }

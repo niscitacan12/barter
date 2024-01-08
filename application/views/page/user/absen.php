@@ -37,7 +37,7 @@
                             ?>
                             <?php echo getNamaHari($date); ?>,
                             <?php echo convDate($date); ?>
-                            <?php echo $time; ?>
+                            <span id="currentTime"></span>
                             <br>
                             <?php echo $greeting; ?>,
                             <span><?php echo $this->session->userdata(
@@ -83,7 +83,32 @@
                         </button> -->
                     </div>
                 </form>
+                <!-- script unutk menampilkan jam -->
+                <script>
+                function getCurrentTimeWIB() {
+                    const currentTime = new Date();
+                    const options = {
+                        timeZone: 'Asia/Jakarta', // Setel zona waktu ke WIB (Asia/Jakarta)
+                        hour12: false, // Format 24 jam
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric'
+                    };
+                    return currentTime.toLocaleTimeString('en-US', options);
+                }
 
+                // Fungsi untuk menampilkan waktu saat ini dalam format jam WIB
+                function showCurrentTime() {
+                    const timeElement = document.getElementById("currentTime");
+                    if (timeElement) {
+                        timeElement.textContent = getCurrentTimeWIB();
+                    }
+                }
+
+                // Panggil fungsi showCurrentTime setiap detik
+                setInterval(showCurrentTime, 1000);
+                </script>
+                <!-- script untuk menampilkan lokasi -->
                 <script>
                 // Deklarasikan variabel global untuk menyimpan data gambar
                 let capturedImageData = '';

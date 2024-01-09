@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -25,11 +28,14 @@
                 <div class="mt-5 text-left">
                     <!-- Form Input -->
 
-                    <form action="<?php echo base_url(''); ?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo base_url(
+                        ''
+                    ); ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id_absensi" value="<?php echo $absensi->id_absensi; ?>">
                         <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="tanggal" id="tanggal"
-                                value="<?php echo convDate($absensi->tanggal_absen); ?>"
+                            <input type="text" name="tanggal" id="tanggal" value="<?php echo convDate(
+                                    $absensi->tanggal_absen
+                                ); ?>"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                 placeholder=" " autocomplete="off" required readonly />
                             <label for="tanggal"
@@ -80,8 +86,12 @@
                             </div>
                             <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
                                 <?php if (!empty($absensi->foto_masuk)): ?>
-                                <a href="<?= base_url($absensi->foto_masuk); ?>" data-lightbox="foto-pulang">
-                                    <img src="<?= base_url($absensi->foto_masuk); ?>" name="foto_masuk" alt="Foto pulang"
+                                <a href="<?= base_url(
+                                    $absensi->foto_masuk
+                                ) ?>" data-lightbox="foto-pulang">
+                                    <img src="<?= base_url(
+                                        $absensi->foto_masuk
+                                    ) ?>" name="foto_masuk" alt="Foto pulang"
                                         class="block py-2.5 px-0 w-80 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                         id="foto_masuk" required />
                                 </a>
@@ -95,8 +105,12 @@
                             </div>
                             <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
                                 <?php if (!empty($absensi->foto_pulang)): ?>
-                                <a href="<?= base_url($absensi->foto_pulang); ?>" data-lightbox="foto-pulang">
-                                    <img src="<?= base_url($absensi->foto_pulang); ?>" name="foto_pulang" alt="Foto pulang"
+                                <a href="<?= base_url(
+                                    $absensi->foto_pulang
+                                ) ?>" data-lightbox="foto-pulang">
+                                    <img src="<?= base_url(
+                                        $absensi->foto_pulang
+                                    ) ?>" name="foto_pulang" alt="Foto pulang"
                                         class="block py-2.5 px-0 w-80 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                         id="foto_pulang" required />
                                 </a>

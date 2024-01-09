@@ -20,7 +20,7 @@
                 <div class="flex justify-between">
                     <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Data Jabatan</h6>
                     <a type="button" href="<?php echo base_url(
-                        'admin/tambah_jabatan'
+                        'superadmin/tambah_jabatan'
                     ); ?>"
                         class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover-bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                         <i class="fa-solid fa-plus"></i>
@@ -36,9 +36,6 @@
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Admin
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Nama Jabatan
@@ -63,27 +60,16 @@
                                         <?php echo $no; ?>
                                     </th>
                                     <td class="px-6 py-4">
-                                        <?php echo nama_admin(
-                                            $row->id_admin
-                                        ); ?>
-                                    </td>
-                                    <td class="px-6 py-4">
                                         <?php echo $row->nama_jabatan; ?>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex justify-center">
-                                            <a href="<?= base_url(
-                                                'superadmin/detail_jabatan/' .
-                                                    $row->id_jabatan
-                                            ) ?>"
+                                            <a href="<?= base_url('superadmin/detail_jabatan/' . $row->id_jabatan) ?>"
                                                 class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                                 <i class="fa-solid fa-circle-info"></i>
                                             </a>
 
-                                            <a href="<?= base_url(
-                                                'superadmin/update_jabatan/' .
-                                                    $row->id_jabatan
-                                            ) ?>"
+                                            <a href="<?= base_url('superadmin/update_jabatan/' . $row->id_jabatan) ?>"
                                                 class="text-white bg-yellow-400 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
@@ -117,9 +103,7 @@ function hapusJabatan(idJabatan) {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "<?php echo base_url(
-                'admin/hapus_jabatan/'
-            ); ?>" + idJabatan;
+            window.location.href = "<?php echo base_url('superadmin/hapus_jabatan/'); ?>" + idJabatan;
         }
     });
 }

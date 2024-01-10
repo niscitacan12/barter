@@ -261,16 +261,16 @@ class Super_model extends CI_Model
         }
     }
 
-    public function pagination($table_name, $limit, $offset)
-    {
-        $this->db->limit($limit, $offset);
-        $query = $this->db->get($table_name);
+    // public function pagination($table_name, $limit, $offset)
+    // {
+    //     $this->db->limit($limit, $offset);
+    //     $query = $this->db->get($table_name);
 
-        if ($query->num_rows() > 0) {
-            return $query->result();
-        }
-        return [];
-    }
+    //     if ($query->num_rows() > 0) {
+    //         return $query->result();
+    //     }
+    //     return [];
+    // }
 
     public function count_all($table_name)
     {

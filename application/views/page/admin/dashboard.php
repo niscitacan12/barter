@@ -190,6 +190,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     Keperluan
                                 </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Status
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -215,6 +218,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->keperluan_cuti; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->status; ?>
                                 </td>
                             </tr>
                             <?php

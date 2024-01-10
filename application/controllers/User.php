@@ -30,6 +30,7 @@ class User extends CI_Controller
         $data['total'] = $data['absensi'] + $data['absensi_count'];
         $data['absen'] = $this->user_model->get_absensi_data_by_user($id_user);
         $data['cuti'] = $this->user_model->get_cuti_data();
+        $data['id_user'] = $id_user;
         $this->load->view('page/user/dashboard', $data);
     }
 
@@ -557,11 +558,16 @@ class User extends CI_Controller
         redirect(base_url('user/profile'));
     }
 
-    // 3. Lain-lain
     public function get_realtime_absensi()
     {
         // Panggil metode di dalam model untuk mendapatkan data absensi real-time
         $realtime_absensi = $this->user_model->get_realtime_absensi();
+
+        // Tambahkan log untuk melihat data sebelum dikirim
+        log_message(
+            'debug',
+            'Realtime Absensi Data: ' . json_encode($realtime_absensi)
+        );
 
         // Mengirim data dalam format JSON
         echo json_encode($realtime_absensi);

@@ -27,20 +27,26 @@
             <div
                 class="p-4 text-center bg-gray-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <?php
-             // Set the default timezone to UTC
+                // Set the default timezone to UTC
                 date_default_timezone_set('UTC');
                 $currentDateTime = new DateTime();
-            // Set the timezone to Asia/Jakarta
-               $currentDateTime->setTimezone(new DateTimeZone('Asia/Jakarta'));
-               $date = $currentDateTime->format('l, d F Y');
-               $timeWIB = $currentDateTime->format('H:i');
-               ?>
+                // Set the timezone to Asia/Jakarta
+                $currentDateTime->setTimezone(new DateTimeZone('Asia/Jakarta'));
+                $date = $currentDateTime->format('l, d F Y');
+                $timeWIB = $currentDateTime->format('H:i');
+                ?>
 
                 <h2 class="text-2xl font-semibold mb-4">Selamat Datang
-                    <span><?php echo $this->session->userdata('username'); ?></span>
+                    <span><?php echo $this->session->userdata(
+                        'username'
+                    ); ?></span>
                 </h2>
-                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo getNamaHari($date); ?>
-                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB</p>
+                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo getNamaHari(
+                    $date
+                ); ?>
+                    <?php echo convDate(
+                        $date
+                    ); ?>, <?php echo $timeWIB; ?> WIB</p>
 
             </div>
         </div>
@@ -231,9 +237,11 @@
                         <tbody class="text-center">
                             <?php if (!empty($cuti)): ?>
                             <?php
-                            $no = 0;
-                            foreach ($cuti as $row):
-                                $no++; ?>
+                                $no = 0;
+                                foreach ($cuti as $row):
+                                    // Tambahkan kondisi untuk memeriksa id_user
+                                    if ($row->id_user == $id_user):
+                                        $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
@@ -254,8 +262,9 @@
                                 </td>
                             </tr>
                             <?php
-                            endforeach;
-                            ?>
+                                    endif;
+                                endforeach;
+                                ?>
                             <?php else: ?>
                             <tr>
                                 <td colspan="4" class="text-center">Tidak ada data cuti</td>
@@ -320,7 +329,7 @@
     }
 
     // Set interval untuk memperbarui grafik setiap beberapa detik
-    setInterval(updateChart, 1000); // Ganti sesuai dengan kebutuhan
+    setInterval(updateChart, 500); // Ganti sesuai dengan kebutuhan
 
     const myChart = new Chart(ctx, {
         type: 'bar',

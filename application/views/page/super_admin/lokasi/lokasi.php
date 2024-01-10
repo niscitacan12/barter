@@ -8,6 +8,9 @@
     <link rel="icon" href="<?php echo base_url(
         './src/assets/image/absensi.png'
     ); ?>" type="image/gif">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <title>Data Lokasi</title>
 </head>
 
@@ -30,7 +33,8 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 text-center">
+                    <table id="dataLokasi"
+                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400 text-center">
 
                         <!-- Tabel Head -->
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -119,7 +123,11 @@
         </div>
     </div>
 </body>
-
+<script>
+$(document).ready(function() {
+    $('#dataLokasi').DataTable();
+});
+</script>
 <script>
 function hapusLokasi(idLokasi) {
     Swal.fire({

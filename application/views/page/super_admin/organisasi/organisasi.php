@@ -34,8 +34,9 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 mb-5">
-                    <table id="dataOrganisasi" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4 mb-4">
+                    <table id="dataOrganisasi"
+                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
 
                         <!-- Tabel Head -->
                         <thead
@@ -66,7 +67,7 @@
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody class="text-center">
+                        <tbody>
                             <?php foreach ($organisasi as $row): ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">

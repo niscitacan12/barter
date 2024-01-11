@@ -33,8 +33,8 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table id="shift" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+                    <table id="shift" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
 
                         <!-- Tabel Head -->
                         <thead
@@ -51,7 +51,7 @@
 
 
                         <!-- Tabel Body -->
-                        <tbody class="text-center">
+                        <tbody>
                             <?php foreach ($shift as $row): ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">

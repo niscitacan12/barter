@@ -39,55 +39,12 @@ class SuperAdmin extends CI_Controller
     // Page Organisasi
     public function organisasi()
     {
-        // Config
-        $config['base_url'] = base_url('superadmin/organisasi');
-        $config['total_rows'] = $this->super_model->count_all('organisasi'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 10;
-
-        // Styling pagination
-        $config['full_tag_open'] =
-            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
-        $config['full_tag_close'] = '</ul></nav>';
-
-        $config['first_link'] = 'First';
-        $config['first_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['first_tag_close'] = '</li>';
-
-        $config['last_link'] = 'Last';
-        $config['last_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['last_tag_close'] = '</li>';
-
-        $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['next_tag_close'] = '</li>';
-
-        $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['prev_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] =
-            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
-        $config['cur_tag_close'] = '</li>';
-
-        // Applying Tailwind Classes
-        $config['num_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['num_tag_close'] = '</li>';
-
-        // Initialize
-        $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
         // Data Organisasi
-        $data['organisasi'] = $this->super_model->pagination(
-            'organisasi',
-            $config['per_page'],
-            $data['start']
-        );
+        $data['organisasi'] = $this->super_model
+            ->get_data('organisasi')
+            ->result();
         $this->load->view('page/super_admin/organisasi/organisasi', $data);
     }
 
@@ -136,6 +93,15 @@ class SuperAdmin extends CI_Controller
         $this->load->view('page/super_admin/admin/admin', $data);
     }
 
+    // Page Jabatan
+    public function jabatan()
+    {
+        $data['start'] = $this->uri->segment(3);
+
+        $data['jabatan'] = $this->super_model->get_data('jabatan')->result();
+        $this->load->view('page/super_admin/jabatan/jabatan', $data);
+    }
+
     // Page Tambah Admin
     public function tambah_admin()
     {
@@ -166,56 +132,9 @@ class SuperAdmin extends CI_Controller
     // Page User
     public function user()
     {
-        // Config
-        $config['base_url'] = base_url('superadmin/user');
-        $config['total_rows'] = $this->super_model->count_all('user'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 10;
-
-        // Styling pagination
-        $config['full_tag_open'] =
-            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
-        $config['full_tag_close'] = '</ul></nav>';
-
-        $config['first_link'] = 'First';
-        $config['first_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['first_tag_close'] = '</li>';
-
-        $config['last_link'] = 'Last';
-        $config['last_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['last_tag_close'] = '</li>';
-
-        $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['next_tag_close'] = '</li>';
-
-        $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['prev_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] =
-            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
-        $config['cur_tag_close'] = '</li>';
-
-        // Applying Tailwind Classes
-        $config['num_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['num_tag_close'] = '</li>';
-
-        // Initialize
-        $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
-        // Data User
-        $user_id = $this->session->userdata('id');
-        $data['user'] = $this->super_model->pagination(
-            'user',
-            $config['per_page'],
-            $data['start']
-        );
+        $data['user'] = $this->super_model->get_data('user')->result();
         $this->load->view('page/super_admin/user/user', $data);
     }
 
@@ -250,111 +169,13 @@ class SuperAdmin extends CI_Controller
     // Page Absensi
     public function absensi()
     {
-        // Config
-        $config['base_url'] = base_url('superadmin/absensi');
-        $config['total_rows'] = $this->super_model->count_all('absensi'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 10;
-
-        // Styling pagination
-        $config['full_tag_open'] =
-            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
-        $config['full_tag_close'] = '</ul></nav>';
-
-        $config['first_link'] = 'First';
-        $config['first_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['first_tag_close'] = '</li>';
-
-        $config['last_link'] = 'Last';
-        $config['last_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['last_tag_close'] = '</li>';
-
-        $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['next_tag_close'] = '</li>';
-
-        $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['prev_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] =
-            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
-        $config['cur_tag_close'] = '</li>';
-
-        // Applying Tailwind Classes
-        $config['num_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['num_tag_close'] = '</li>';
-
-        // Initialize
-        $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
         // Data absensi
-        $data['absensi'] = $this->super_model->pagination(
-            'absensi',
-            $config['per_page'],
-            $data['start']
-        );
-        $this->load->view('page/super_admin/absen/absensi', $data);
-    }
-
-    // Page Jabatan
-    public function jabatan()
-    {
-        // Config
-        $config['base_url'] = base_url('superadmin/jabatan');
-        $config['total_rows'] = $this->super_model->count_all('jabatan'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 10;
-
-        // Styling pagination
-        $config['full_tag_open'] =
-            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
-        $config['full_tag_close'] = '</ul></nav>';
-
-        $config['first_link'] = 'First';
-        $config['first_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['first_tag_close'] = '</li>';
-
-        $config['last_link'] = 'Last';
-        $config['last_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['last_tag_close'] = '</li>';
-
-        $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['next_tag_close'] = '</li>';
-
-        $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['prev_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] =
-            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
-        $config['cur_tag_close'] = '</li>';
-
-        // Applying Tailwind Classes
-        $config['num_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['num_tag_close'] = '</li>';
-
-        // Initialize
-        $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
-        // Data n
-        $data['jabatan'] = $this->super_model->pagination(
-            'jabatan',
-            $config['per_page'],
-            $data['start']
-        );
-        $this->load->view('page/super_admin/jabatan/jabatan', $data);
+        $data['absensi'] = $this->super_model->get_data('absensi')->result();
+        $this->load->view('page/super_admin/absen/absensi', $data);
     }
 
     // Page Tambah Jabatan
@@ -374,56 +195,9 @@ class SuperAdmin extends CI_Controller
     // Page Shift
     public function shift()
     {
-        // Config
-        $config['base_url'] = base_url('superadmin/shift');
-        $config['total_rows'] = $this->super_model->count_all('shift'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 10;
-
-        // Styling pagination
-        $config['full_tag_open'] =
-            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
-        $config['full_tag_close'] = '</ul></nav>';
-
-        $config['first_link'] = 'First';
-        $config['first_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['first_tag_close'] = '</li>';
-
-        $config['last_link'] = 'Last';
-        $config['last_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['last_tag_close'] = '</li>';
-
-        $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['next_tag_close'] = '</li>';
-
-        $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['prev_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] =
-            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
-        $config['cur_tag_close'] = '</li>';
-
-        // Applying Tailwind Classes
-        $config['num_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['num_tag_close'] = '</li>';
-
-        // Initialize
-        $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
-        // Data Shift
-        $data['shift'] = $this->super_model->pagination(
-            'shift',
-            $config['per_page'],
-            $data['start']
-        );
-        // $data['shift'] = $this->super_model->get_data('shift')->result();
+        $data['shift'] = $this->super_model->get_data('shift')->result();
         $this->load->view('page/super_admin/shift/shift', $data);
     }
 
@@ -494,55 +268,10 @@ class SuperAdmin extends CI_Controller
 
     public function lokasi()
     {
-        // Config
-        $config['base_url'] = base_url('superadmin/lokasi');
-        $config['total_rows'] = $this->super_model->count_all('lokasi'); // Ganti 'nama_tabel' dengan nama tabel yang sesuai
-        $config['per_page'] = 10;
-
-        // Styling pagination
-        $config['full_tag_open'] =
-            '<nav class="flowbite-nav" aria-label="Page navigation example"><ul class="flowbite-pagination flex items-center -space-x-px h-8 text-sm">';
-        $config['full_tag_close'] = '</ul></nav>';
-
-        $config['first_link'] = 'First';
-        $config['first_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['first_tag_close'] = '</li>';
-
-        $config['last_link'] = 'Last';
-        $config['last_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['last_tag_close'] = '</li>';
-
-        $config['next_link'] = '&raquo;';
-        $config['next_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['next_tag_close'] = '</li>';
-
-        $config['prev_link'] = '&laquo;';
-        $config['prev_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['prev_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] =
-            '<li aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">';
-        $config['cur_tag_close'] = '</li>';
-
-        // Applying Tailwind Classes
-        $config['num_tag_open'] =
-            '<li class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">';
-        $config['num_tag_close'] = '</li>';
-
-        // Initialize
-        $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(3);
 
         // Data lokasi
-        $data['lokasi'] = $this->super_model->pagination(
-            'lokasi',
-            $config['per_page'],
-            $data['start']
-        );
+        $data['lokasi'] = $this->super_model->get_data('lokasi')->result();
         $data['organisasi'] = $this->super_model
             ->get_data('organisasi')
             ->result();

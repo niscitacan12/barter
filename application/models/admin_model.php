@@ -490,15 +490,10 @@ class Admin_model extends CI_Model
         return $this->db->get($table_name)->num_rows();
     }
 
-    // Pagination by id_admin
-    public function pagination_by_id_admin(
-        $tableName,
-        $perPage,
-        $start,
-        $id_admin
-    ) {
+    public function get_data_by_id_admin($table, $id_admin)
+    {
         $this->db->where('id_admin', $id_admin);
-        return $this->db->get($tableName, $perPage, $start)->result_array();
+        return $this->db->get($table);
     }
 
     // Pagination absen per id_admin

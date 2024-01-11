@@ -5,7 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
@@ -24,13 +29,13 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 text-center">
+                    <table id="dataAbsen" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 text-center">
 
                         <!-- Tabel Head -->
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
-                                    No
+                                    Noo
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Nama
@@ -76,8 +81,10 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex justify-center">
-                                        <a type="button"
-                                            href="<?= base_url('superadmin/detail_absen/' .  $row->id_absensi) ?>"
+                                        <a type="button" href="<?= base_url(
+                                            'superadmin/detail_absen/' .
+                                                $row->id_absensi
+                                        ) ?>"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
@@ -92,11 +99,16 @@
                 </div>
                 <hr class="my-8">
                 <div class="flex justify-end">
-                    <?= $this->pagination->create_links(); ?>
+                    <?= $this->pagination->create_links() ?>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script>
+$(document).ready(function() {
+    $('#dataAbsen').DataTable();
+});
+</script>
 
 </html>

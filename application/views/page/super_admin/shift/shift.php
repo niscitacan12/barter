@@ -8,6 +8,9 @@
     <link rel="icon" href="<?php echo base_url(
         './src/assets/image/absensi.png'
     ); ?>" type="image/gif">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
@@ -31,35 +34,21 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table id="shift" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
                         <thead
                             class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    No
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Admin
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Nama Shift
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Jam Masuk
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Jam Pulang
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Admin
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Aksi
-                                </th>
+                                <th scope="col" class="px-6 py-3">No</th>
+                                <th scope="col" class="px-6 py-3">Admin</th>
+                                <th scope="col" class="px-6 py-3">Nama Shift</th>
+                                <th scope="col" class="px-6 py-3">Jam Masuk</th>
+                                <th scope="col" class="px-6 py-3">Jam Pulang</th>
+                                <th scope="col" class="px-6 py-3">Aksi</th>
                             </tr>
                         </thead>
+
 
                         <!-- Tabel Body -->
                         <tbody class="text-center">
@@ -117,7 +106,11 @@
         </div>
     </div>
 </body>
-
+<script>
+$(document).ready(function() {
+    $('#shift').DataTable();
+});
+</script>
 <script>
 function hapusShift(idShift) {
     Swal.fire({

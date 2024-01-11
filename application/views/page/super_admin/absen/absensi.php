@@ -28,43 +28,40 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table id="dataAbsen" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 text-center">
-
-                        <!-- Tabel Head -->
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+                    <table id="dataAbsen" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
+                        <!-- Kepala Tabel -->
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Noo
+                                <th scope="col" class="px-6 py-4">
+                                    No
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Nama
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Tanggal
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Jam Masuk
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Jam Pulang
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Aksi
                                 </th>
                             </tr>
                         </thead>
 
-                        <!-- Tabel Body -->
+                        <!-- Tubuh Tabel -->
                         <tbody>
                             <?php
                             $no = 0;
                             foreach ($absensi as $row):
                                 $no++; ?>
-                            <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">

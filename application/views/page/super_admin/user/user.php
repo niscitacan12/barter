@@ -16,7 +16,7 @@
 <body>
     <?php $this->load->view('components/sidebar_super_admin'); ?>
     <div class="p-4 sm:ml-64">
-        <div class="p-5 ">
+        <div class="p-5">
 
             <!-- Card -->
             <div
@@ -34,25 +34,25 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table id="dataUser" class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+                    <table id="dataUser" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
 
                         <!-- Tabel Head -->
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     No
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Username
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Email
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Admin
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-4">
                                     Aksi
                                 </th>
                             </tr>

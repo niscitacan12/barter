@@ -43,60 +43,58 @@
                                 Tanggal
                             </label>
                         </div>
-                        <div class="grid md:grid-cols-2 md:gap-6">
+                        <div class="grid md:grid-cols-2 md:gap-6 text-left">
                             <div class="relative z-0 w-full mb-6 group">
                                 <input type="text" name="jam_masuk" id="jam_masuk"
                                     value="<?php echo $absensi->jam_masuk; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " autocomplete="off" required readonly />
                                 <label for="jam_masuk"
-                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Jam
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Jam 
                                     Masuk
                                 </label>
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
-                                <input type="text" name="jam_pulang" id="jam_pulang"
+                                <input type="text" name="jam_pulang" id="jam_pulang" 
                                     value="<?php echo $absensi->jam_pulang; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " autocomplete="off" required readonly />
                                 <label for="jam_pulang"
-                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Jam
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Jam 
                                     Pulang
                                 </label>
                             </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 md:gap-6 text-left">
                             <div class="relative z-0 w-full mb-6 group">
                                 <input type="text" name="lokasi_masuk" id="lokasi_masuk"
                                     value="<?php echo $absensi->lokasi_masuk; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " autocomplete="off" required readonly />
                                 <label for="lokasi_masuk"
-                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lokasi
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lokasi 
                                     Masuk
                                 </label>
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
-                                <input type="text" name="lokasi_pulang" id="lokasi_pulang"
+                                <input type="text" name="lokasi_pulang" id="lokasi_pulang" 
                                     value="<?php echo $absensi->lokasi_pulang; ?>"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " autocomplete="off" required readonly />
                                 <label for="lokasi_pulang"
-                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lokasi
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lokasi 
                                     Pulang
                                 </label>
                             </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 md:gap-6 text-left">
                             <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
                                 <?php if (!empty($absensi->foto_masuk)): ?>
-                                <a href="<?= base_url(
-                                    $absensi->foto_masuk
-                                ) ?>" data-lightbox="foto-pulang">
-                                    <img src="<?= base_url(
-                                        $absensi->foto_masuk
-                                    ) ?>" name="foto_masuk" alt="Foto pulang"
-                                        class="block py-2.5 px-0 w-80 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    <img src="<?= base_url($absensi->foto_masuk); ?>" name="foto_masuk" alt="Foto Masuk"
+                                        class="block py-2.5 px-0 w-80 max-h-96 max-w-full h-auto text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                         id="foto_masuk" required />
-                                </a>
                                 <?php else: ?>
-                                <span class="text-gray-500 dark:text-gray-400">Foto Masuk tidak tersedia</span>
+                                    <span class="text-gray-500 dark:text-gray-400">Foto Masuk tidak tersedia</span>
                                 <?php endif; ?>
                                 <label for="foto_masuk"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Foto
@@ -104,24 +102,19 @@
                                 </label>
                             </div>
                             <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
-                                <?php if (!empty($absensi->foto_pulang)): ?>
-                                <a href="<?= base_url(
-                                    $absensi->foto_pulang
-                                ) ?>" data-lightbox="foto-pulang">
-                                    <img src="<?= base_url(
-                                        $absensi->foto_pulang
-                                    ) ?>" name="foto_pulang" alt="Foto pulang"
-                                        class="block py-2.5 px-0 w-80 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        id="foto_pulang" required />
-                                </a>
+                                <?php if (!empty($absensi->foto_masuk)): ?>
+                                    <img src="<?= base_url($absensi->foto_pulang); ?>" name="foto_pulang" alt="Foto Pulang"
+                                    class="block py-2.5 px-0 w-80 max-w-full h-auto text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    id="foto_pulang" required />
                                 <?php else: ?>
-                                <span class="text-gray-500 dark:text-gray-400">Foto pulang tidak tersedia</span>
+                                    <span class="text-gray-500 dark:text-gray-400">Foto Masuk tidak tersedia</span>
                                 <?php endif; ?>
-                                <label for="foto_pulang"
-                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Foto
-                                    pulang
+                                <label for="lokasi_pulang"
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Foto 
+                                    Pulang
                                 </label>
                             </div>
+                        </div>
                         </div>
                         <!-- Button -->
                         <div class="flex justify-between">

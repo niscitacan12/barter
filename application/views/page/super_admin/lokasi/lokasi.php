@@ -32,12 +32,13 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+                <div class="mt-4">
                     <table id="dataLokasi"
                         class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
 
                         <!-- Tabel Head -->
-                        <thead class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -89,7 +90,7 @@
                                     ? organisasi($data->id_organisasi)
                                     : ''; ?></td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-start">
                                         <a type="button" href="<?= base_url(
                                             'superadmin/detail_lokasi/' .
                                                 $data->id_lokasi
@@ -114,10 +115,6 @@
                         </tr> <?php $counter++; ?>
                         <?php endforeach; ?>
                     </table>
-                </div>
-                <hr class="my-8">
-                <div class="flex justify-end">
-                    <?= $this->pagination->create_links() ?>
                 </div>
             </div>
         </div>

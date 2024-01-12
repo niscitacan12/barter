@@ -36,6 +36,33 @@ function convDate($date)
     return $tanggal . ' ' . $bulan . ' ' . $tahun; // Mengembalikan tanggal yang diformat
 }
 
+function convDateTime($dateTime)
+{
+    $bulan = [
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember',
+    ];
+
+    $tanggal = date('d', strtotime($dateTime)); // Mengambil tanggal dari timestamp
+    $bulan = $bulan[date('n', strtotime($dateTime))]; // Mengambil bulan dalam bentuk string
+    $tahun = date('Y', strtotime($dateTime)); // Mengambil tahun dari timestamp
+    $jam = date('H', strtotime($dateTime)); // Mengambil jam dari timestamp
+    $menit = date('i', strtotime($dateTime)); // Mengambil menit dari timestamp
+    $detik = date('s', strtotime($dateTime)); // Mengambil detik dari timestamp
+
+    return $tanggal . ' ' . $bulan . ' ' . $tahun . ' ' . $jam . ':' . $menit . ':' . $detik; // Mengembalikan datetime yang diformat
+}
+
 function nama_user($id_user)
 {
     $ci = &get_instance();

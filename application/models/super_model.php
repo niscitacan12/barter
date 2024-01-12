@@ -393,15 +393,6 @@ class Super_model extends CI_Model
         return $update_result ? true : false;
     }
 
-    public function get_token_data()
-    {
-        $this->db->select('tokens.*, user.username');
-        $this->db->from('tokens');
-        $this->db->join('user', 'user.id_user = tokens.user_id', 'left');
-        $query = $this->db->get();
-        return $query->result();
-    }
-
     public function getAbsensiDetails($id_absensi)
     {
         // Gantilah 'nama_table' dengan nama tabel yang sesuai di database Anda

@@ -34,7 +34,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+                <div class="mt-4">
                     <table id="dataAdmin" style="width:100%"
                         class="display w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
 
@@ -74,7 +74,7 @@
                                     <?php echo $row->username; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-start">
                                         <!-- button detail admin -->
                                         <a type="button" href="<?php echo base_url(
                                             'superadmin/detail_admin/' .
@@ -102,10 +102,6 @@
                         </tbody>
                     </table>
                 </div>
-                <hr class="my-8">
-                <!-- <div class="flex justify-end">
-                    <?= $this->pagination->create_links() ?>
-                </div> -->
             </div>
         </div>
     </div>

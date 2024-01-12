@@ -34,11 +34,12 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
-                    <table id="dataUser" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
+                <div class='mt-4'>
+                    <table id="dataUser" class="w-full text-sm text-gray-500 dark:text-gray-400 mb-4 mt-4">
 
                         <!-- Tabel Head -->
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-4">
                                     No
@@ -59,7 +60,7 @@
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody>
+                        <tbody class='text-left'>
                             <?php foreach ($user as $row): ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -77,7 +78,7 @@
                                     <?php echo nama_admin($row->id_admin); ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-start">
                                         <a type="button" href="<?php echo base_url(
                                             'superadmin/detail_user/' .
                                                 $row->id_user
@@ -102,10 +103,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
-                <hr class="my-8">
-                <div class="flex justify-end">
-                    <?= $this->pagination->create_links() ?>
                 </div>
             </div>
         </div>

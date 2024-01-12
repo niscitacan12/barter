@@ -28,8 +28,9 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
-                    <table id="dataAbsen" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
+                <div class="mt-4">
+                    <table id="dataAbsen"
+                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
                         <!-- Kepala Tabel -->
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -60,8 +61,10 @@
                             $no = 0;
                             foreach ($absensi as $row):
                                 $no++; ?>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
                                 <td class="px-6 py-4">
@@ -77,7 +80,7 @@
                                     <?php echo $row->jam_pulang; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-start">
                                         <a type="button" href="<?= base_url(
                                             'superadmin/detail_absen/' .
                                                 $row->id_absensi
@@ -93,10 +96,6 @@
                             ?>
                         </tbody>
                     </table>
-                </div>
-                <hr class="my-8">
-                <div class="flex justify-end">
-                    <?= $this->pagination->create_links() ?>
                 </div>
             </div>
         </div>

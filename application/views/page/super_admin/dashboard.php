@@ -14,7 +14,7 @@
     <?php $this->load->view('components/sidebar_super_admin'); ?>
     <div class="p-2 sm:ml-64">
         <!-- Card Selamat Datang -->
-        <div class="mt-5 w-full">
+        <div class="mt-5 mb-5 w-full">
             <div
                 class="p-4 text-center bg-gray-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <?php
@@ -27,11 +27,14 @@
                $timeWIB = $currentDateTime->format('H:i');
                ?>
 
-                <h2 class="text-2xl font-semibold mb-4">Selamat Datang
-                    <span><?php echo $this->session->userdata('username'); ?></span>
+                <h2 class="text-2xl font-semibold mb-4">
+                    Selamat Datang DiApplikasi Absensi
+                    <span>@<?php echo $this->session->userdata('username'); ?></span>
                 </h2>
-                <p class="text-gray-600">Selamat datang di aplikasi Absensi, <?php echo getNamaHari($date); ?>
-                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB</p>
+                <p class="text-gray-600">
+                    <?php echo getNamaHari($date); ?>
+                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB
+                </p>
 
             </div>
         </div>
@@ -79,7 +82,6 @@
             </div>
         </div>
         <br>
-        <br>
         <div
             class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div class="flex justify-between">
@@ -125,7 +127,7 @@
                                 <?php echo $row->email; ?>
                             </td>
                             <td class="px-6 py-4">
-                                <?php echo $row->token_expiration; ?>
+                                <?php echo convDateTime($row->token_expiration); ?>
                             </td>
                             <td class="px-6 py-4">
                                 <?php echo $row->role; ?>

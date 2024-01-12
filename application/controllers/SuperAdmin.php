@@ -31,7 +31,6 @@ class SuperAdmin extends CI_Controller
             ->num_rows();
         $data['admin'] = $this->super_model->get_admin_count();
         $data['user'] = $this->super_model->get_user_count();
-        $data['tokens'] = $this->super_model->get_token_data();
         $data['users'] = $this->super_model->get_user();
         $this->load->view('page/super_admin/dashboard', $data);
     }

@@ -8,6 +8,9 @@
     <link rel="icon" href="<?php echo base_url(
         './src/assets/image/absensi.png'
     ); ?>" type="image/gif">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
@@ -25,12 +28,11 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <div class="mt-5">
+                    <table id="dataToken" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
-                        <thead
-                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -48,7 +50,7 @@
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody class="text-center">
+                        <tbody>
                             <?php
                             $no = 0;
                             foreach ($user as $row):
@@ -64,7 +66,7 @@
                                     <?php echo $row->email; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <?php echo $row->token_expiration; ?>
+                                    <?php echo convDateTime($row->token_expiration); ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->role; ?>
@@ -79,15 +81,16 @@
                         </tbody>
                     </table>
                 </div>
-                <hr class="my-8">
-                <div class="flex justify-end">
-                    <?= $this->pagination->create_links() ?>
-                </div>
             </div>
         </div>
     </div>
 </body>
 
+<script>
+$(document).ready(function() {
+    $('#dataToken').DataTable();
+});
+</script>
 <?php if ($this->session->flashdata('gagal_tambah')) { ?>
 <script>
 Swal.fire({

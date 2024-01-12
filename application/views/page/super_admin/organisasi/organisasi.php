@@ -34,7 +34,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4 mb-4">
+                <div class="mt-4">
                     <table id="dataOrganisasi"
                         class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto mb-4">
 
@@ -91,7 +91,7 @@
                                     <?php echo $row->email_organisasi; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-strat">
                                         <a type="button" href="<?= base_url(
                                             'superadmin/detail_organisasi/' .
                                                 $row->id_organisasi
@@ -116,10 +116,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
-                <hr class="my-8">
-                <div class="flex justify-end">
-                    <?= $this->pagination->create_links() ?>
                 </div>
             </div>
         </div>

@@ -33,7 +33,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+                <div class="mt-4">
                     <table id="shift" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
 
                         <!-- Tabel Head -->
@@ -72,7 +72,7 @@
                                     <?php echo $row->jam_pulang; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-start">
                                         <a type="button" href="<?php echo base_url(
                                             'superadmin/detail_shift/' .
                                                 $row->id_shift
@@ -97,10 +97,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
-                <hr class="my-8">
-                <div class="flex justify-end">
-                    <?= $this->pagination->create_links() ?>
                 </div>
             </div>
         </div>

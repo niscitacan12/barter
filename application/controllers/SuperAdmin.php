@@ -576,6 +576,44 @@ class SuperAdmin extends CI_Controller
         redirect('superadmin/shift');
     }
 
+    private function deleteOldImage($old_image)
+    {
+        // Check if the old image exists
+        if (!empty($old_image)) {
+            $image_path = './images/logo/' . $old_image;
+
+            // Check if the file exists before attempting to delete it
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
+        }
+    }
+
+    private function upload_image_logo($value, $old_image)
+    {
+        $kode = round(microtime(true) * 1000);
+
+        // Konfigurasi upload
+        $config['upload_path'] = './images/logo/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload($value)) {
+            return [false, ''];
+        } else {
+            // Jika upload berhasil, dapatkan informasi file baru
+            $fn = $this->upload->data();
+            $new_image = $fn['file_name'];
+
+            // Hapus file lama
+            $this->deleteOldImage($old_image);
+
+            return [true, $new_image];
+        }
+    }
+
     // Aksi Update Organisasi
     public function aksi_edit_organisasi()
     {
@@ -589,6 +627,16 @@ class SuperAdmin extends CI_Controller
         $kabupaten = $this->input->post('kabupaten');
         $provinsi = $this->input->post('provinsi');
 
+        // Ambil data organisasi dari model berdasarkan ID
+        $organisasi = $this->super_model->get_organisasi_by_id($id_organisasi);
+
+        // Tambahkan ini untuk upload logo
+        $image = $this->upload_image_logo('image', $organisasi->image);
+        if ($image[0] == true) {
+            // Set properti image pada objek $organisasi
+            $organisasi->image = $image[1];
+        }
+
         // Buat data yang akan diupdate
         $data = [
             'nama_organisasi' => $nama_organisasi,
@@ -598,6 +646,7 @@ class SuperAdmin extends CI_Controller
             'alamat' => $alamat,
             'kabupaten' => $kabupaten,
             'provinsi' => $provinsi,
+            'image' => $image[1],
             // Tambahkan field lain jika ada
         ];
 

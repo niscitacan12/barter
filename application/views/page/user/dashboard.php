@@ -82,7 +82,7 @@
 
         <div class="p-2 mt-5">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
-                <a href="<?= base_url('') ?>"
+                <a href="#"
                     class="w-full p-4 text-center bg-blue-400 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Total</h5>
                     <hr class="mb-4 border-gray-900">
@@ -237,11 +237,11 @@
                         <tbody class="text-center">
                             <?php if (!empty($cuti)): ?>
                             <?php
-                                $no = 0;
-                                foreach ($cuti as $row):
-                                    // Tambahkan kondisi untuk memeriksa id_user
-                                    if ($row->id_user == $id_user):
-                                        $no++; ?>
+                            $no = 0;
+                            foreach ($cuti as $row):
+                                // Tambahkan kondisi untuk memeriksa id_user
+                                if ($row->id_user == $id_user):
+                                    $no++; ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
@@ -262,9 +262,9 @@
                                 </td>
                             </tr>
                             <?php
-                                    endif;
-                                endforeach;
-                                ?>
+                                endif;
+                            endforeach;
+                            ?>
                             <?php else: ?>
                             <tr>
                                 <td colspan="4" class="text-center">Tidak ada data cuti</td>
@@ -293,7 +293,7 @@
         const currentHour = new Date().getHours();
 
         // Validasi waktu (hanya dapat pulang setelah jam 16:00)
-        if (currentHour < 16) {
+        if (currentHour < script 16) {
             // Jika belum pukul 16:00, tampilkan SweetAlert atau pesan lain
             Swal.fire({
                 icon: 'error',
@@ -306,6 +306,7 @@
         }
     }
     </script>
+
     <script>
     const ctx = document.getElementById('myChart');
 

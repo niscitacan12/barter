@@ -26,9 +26,8 @@
                     <?php echo $time; ?>
                     <br>
                     <?php echo $greeting; ?>,
-                    <span><?php echo $this->session->userdata(
-                        'username'
-                    ); ?></span>
+                    <span><?php echo $this->session->userdata('username'); ?>
+                    </span>
                 </p>
                 <hr class="mb-7">
 
@@ -38,21 +37,21 @@
                 ); ?>" method="post">
                     <!-- Field formulir untuk cuti dari -->
                     <div>
-                        <label for="leave_from" class="block text-gray-700 font-bold mb-1 text-left">Keterangan Izin
-                            :</label>
+                        <label for="leave_from" class="block text-gray-700 font-bold mb-1 text-left">Keterangan
+                            Izin:</label>
                         <textarea id="message" name="keterangan_izin" rows="4"
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Keterangan . . ." autocomplete="off"></textarea>
+                            placeholder="Keterangan . . ." autocomplete="off">
+                        </textarea>
                     </div>
                     <br>
-
                     <!-- Tombol Izin -->
                     <div class="text-right">
                         <button type="submit"
                             class="bg-indigo-500 hover:bg-indigo500 text-white py-2 px-4 rounded-md"><i
-                                class="fa-solid fa-calendar-xmark"></i></button>
+                                class="fa-solid fa-calendar-xmark"></i>
+                        </button>
                     </div>
-
                 </form>
             </div>
         </div>

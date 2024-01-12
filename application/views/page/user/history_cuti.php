@@ -8,7 +8,13 @@
     <link rel="icon" href="<?php echo base_url(
         './src/assets/image/absensi.png'
     ); ?>" type="image/gif">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" /> -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+
 </head>
+
 
 <body>
     <?php $this->load->view('components/sidebar_user'); ?>
@@ -24,31 +30,9 @@
 
                 <hr>
 
-                <div class="flex flex-col sm:flex-row sm:items-end justify-between mt-5 sm:mb-5">
-                    <!-- Search -->
-                    <form action="<?= base_url(
-                        'user/history_cuti'
-                    ) ?>" method="get" class="relative mb-3 sm:mb-0 sm:ml-auto">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </div>
-                            <input type="search" id="default-search" name="keyword"
-                                class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Search . . . " required autocomplete="off">
-                            <button type="submit"
-                                class="text-white absolute right-2.5 bottom-2.5 bg-indigo-500 hover:bg-indigo focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <hr>
-
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table id="dataCuti" class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -129,7 +113,14 @@
         </div>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#dataCuti').DataTable();
+});
+</script>
+
+
 
 <script>
 function batal_cuti(id_cuti) {
@@ -144,7 +135,9 @@ function batal_cuti(id_cuti) {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "<?php echo base_url('user/aksi_batal_cuti/'); ?>" + id_cuti;
+            window.location.href = "<?php echo base_url(
+                'user/aksi_batal_cuti/'
+            ); ?>" + id_cuti;
         }
     });
 }

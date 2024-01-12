@@ -86,18 +86,7 @@ class Admin extends CI_Controller
         // Mendapatkan id_user yang terkait dengan id_admin
         $id_user = $this->admin_model->getIdUserByIdAdmin($id_admin);
 
-        // Mendapatkan cuti sesuai dengan id_user yang terkait
-        $keyword = $this->input->get('keyword');
-
-        if ($keyword !== null && $keyword !== '') {
-            $data['cuti'] = $this->admin_model
-                ->search_data('cuti', 'keperluan_cuti', $keyword, $id_user)
-                ->result();
-        } else {
-            $data['cuti'] = $this->admin_model
-                ->getCutiByIdUser($id_user)
-                ->result();
-        }
+        $data['cuti'] = $this->admin_model->getCutiByIdUser($id_user)->result();
 
         $this->load->view('page/admin/cuti/cuti', $data);
     }

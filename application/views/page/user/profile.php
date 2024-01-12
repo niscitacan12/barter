@@ -5,9 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/responsive.css'); ?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/profile.css'); ?>">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(
+        'assets/css/responsive.css'
+    ); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(
+        'assets/css/profile.css'
+    ); ?>">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -27,16 +33,19 @@
                             <?php if (isset($user)): ?>
                             <div id="profile-picture-container"
                                 class="rounded-full mt-2 mx-auto my-auto w-48 h-48 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-64 xl:h-64 object-cover">
-                                <img class="h-full object-cover rounded-full"
-                                    src="<?= base_url('./images/user/' . $user->image) ?>" alt="Profile Picture">
+                                <img class="h-full object-cover rounded-full" src="<?= base_url(
+                                    './images/user/' . $user->image
+                                ) ?>" alt="Profile Picture">
                             </div>
                             <?php endif; ?>
-                            <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                            <div class="small font-italic text-muted mb-2">JPG atau PNG tidak lebih besar dari 5 MB
+                            </div>
                             <p>Disarankan Berukuran 1:1</p>
-                            <form action="<?= base_url('user/aksi_ubah_foto') ?>" method="post" class="grid gap-4"
-                                enctype="multipart/form-data">
+                            <form action="<?= base_url(
+                                'user/aksi_ubah_foto'
+                            ) ?>" method="post" class="grid gap-4" enctype="multipart/form-data">
                                 <div>
-                                    <div class="text-xl font-semibold mb-4">Previews</div>
+                                    <div class="text-xl font-semibold mb-2">Previews</div>
                                 </div>
                                 <div id="image-preview" class="hidden flex items-center justify-center">
                                     <img id="preview"
@@ -67,7 +76,9 @@
                 <div class="lg:w-11/12 relative border border-gray-300 rounded-md mb-8">
                     <div class="bg-white rounded-lg shadow-md p-8">
                         <div class="text-3xl font-semibold mb-8">Detail Akun</div>
-                        <form method="post" action="<?= base_url('user/edit_profile') ?>">
+                        <form method="post" action="<?= base_url(
+                            'user/edit_profile'
+                        ) ?>">
                             <div class="mb-4">
                                 <label for="username" class="block mb-1 text-sm">Username</label>
                                 <input type="text" autocomplete="off" class="border rounded-md w-full p-2" id="username"
@@ -92,24 +103,27 @@
                             </div>
                             <div class="mb-4">
                                 <label for="id_organisasi" class="block mb-1 text-sm">Organisasi</label>
-                                <input type="text" class="border rounded-md w-full p-2"
-                                    value="<?php echo nama_organisasi($id_organisasi); ?>" readOnly>
+                                <input type="text" class="border rounded-md w-full p-2" value="<?php echo nama_organisasi(
+                                    $id_organisasi
+                                ); ?>" readOnly>
                             </div>
                             <div class="mb-4">
                                 <label for="id_jabatan" class="block mb-1 text-sm">Jabatan</label>
-                                <input type="text" class="border rounded-md w-full p-2"
-                                    value="<?php echo nama_jabatan($id_jabatan); ?>" readOnly>
+                                <input type="text" class="border rounded-md w-full p-2" value="<?php echo nama_jabatan(
+                                    $id_jabatan
+                                ); ?>" readOnly>
                             </div>
                             <div class="mb-4">
                                 <label for="id_shift" class="block mb-1 text-sm">Shift</label>
-                                <input type="text" class="border rounded-md w-full p-2"
-                                    value="<?php echo nama_shift($id_shift); ?>" readOnly>
+                                <input type="text" class="border rounded-md w-full p-2" value="<?php echo nama_shift(
+                                    $id_shift
+                                ); ?>" readOnly>
                             </div>
                             <!-- <div class="flex flex-col lg:flex-row lg:gap-4 mb-4">
                                 <select name="id_jabatan"
                                     class="bg-gray-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                                    <option selected value="<?php echo $id_jabatan ?>">
-                                        <?php echo nama_jabatan($id_jabatan) ?>
+                                    <option selected value="<?php echo $id_jabatan; ?>">
+                                        <?php echo nama_jabatan($id_jabatan); ?>
                                     </option>
                                     <?php foreach ($jabatan as $row): ?>
                                     <option value="<?php echo $row->id_jabatan; ?>">
@@ -119,8 +133,8 @@
                                 </select>
                                 <select name="id_shift"
                                     class="bg-gray-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                                    <option selected value="<?php echo $id_shift ?>">
-                                        <?php echo nama_shift($id_shift) ?>
+                                    <option selected value="<?php echo $id_shift; ?>">
+                                        <?php echo nama_shift($id_shift); ?>
                                     </option>
                                     <?php foreach ($shift as $row): ?>
                                     <option value="<?php echo $row->id_shift; ?>">
@@ -140,7 +154,9 @@
                         <hr class="my-4">
 
                         <div class="text-xl font-semibold mb-4">Ganti Password</div>
-                        <form method="post" action="<?= base_url('user/update_password') ?>">
+                        <form method="post" action="<?= base_url(
+                            'user/update_password'
+                        ) ?>">
                             <div class="w-full lg:w-1/2 m-2 mb-4 lg:mb-0">
                                 <label for="passwordLama" class="block mb-1 text-sm">Password Lama</label>
                                 <input type="password" class="border rounded-md w-full p-2" id="passwordLama"
@@ -237,7 +253,7 @@
     }
     </script>
     </script>
-    <?php if($this->session->flashdata('kesalahan_password')){ ?>
+    <?php if ($this->session->flashdata('kesalahan_password')) { ?>
     <script>
     Swal.fire({
         title: "Error!",
@@ -249,7 +265,7 @@
     </script>
     <?php } ?>
 
-    <?php if($this->session->flashdata('gagal_update')){ ?>
+    <?php if ($this->session->flashdata('gagal_update')) { ?>
     <script>
     Swal.fire({
         title: "Error!",
@@ -261,7 +277,7 @@
     </script>
     <?php } ?>
 
-    <?php if($this->session->flashdata('error_profile')){ ?>
+    <?php if ($this->session->flashdata('error_profile')) { ?>
     <script>
     Swal.fire({
         title: "Error!",
@@ -273,11 +289,13 @@
     </script>
     <?php } ?>
 
-    <?php if($this->session->flashdata('kesalahan_password_lama')){ ?>
+    <?php if ($this->session->flashdata('kesalahan_password_lama')) { ?>
     <script>
     Swal.fire({
         title: "Error!",
-        text: "<?php echo $this->session->flashdata('kesalahan_password_lama'); ?>",
+        text: "<?php echo $this->session->flashdata(
+            'kesalahan_password_lama'
+        ); ?>",
         icon: "error",
         showConfirmButton: false,
         timer: 1500
@@ -285,7 +303,7 @@
     </script>
     <?php } ?>
 
-    <?php if($this->session->flashdata('berhasil_ubah_foto')){ ?>
+    <?php if ($this->session->flashdata('berhasil_ubah_foto')) { ?>
     <script>
     Swal.fire({
         title: "Berhasil",
@@ -297,7 +315,7 @@
     </script>
     <?php } ?>
 
-    <?php if($this->session->flashdata('ubah_password')){ ?>
+    <?php if ($this->session->flashdata('ubah_password')) { ?>
     <script>
     Swal.fire({
         title: "Success!",
@@ -309,7 +327,7 @@
     </script>
     <?php } ?>
 
-    <?php if($this->session->flashdata('update_ubah_foto')){ ?>
+    <?php if ($this->session->flashdata('update_ubah_foto')) { ?>
     <script>
     Swal.fire({
         title: "Success!",

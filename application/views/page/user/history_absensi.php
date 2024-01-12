@@ -9,6 +9,9 @@
         './src/assets/image/absensi.png'
     ); ?>" type="image/gif">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 </head>
 
 <body>
@@ -26,7 +29,7 @@
 
                 <!-- Tabel -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table id="dataAbsen" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <thead
                             class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -89,37 +92,42 @@
                                 </td>
                                 <td class="px-5 py-3">
                                     <div class="flex justify-center">
-                                        <?php if ($row->keterangan_izin == '-') : ?>
+                                        <?php if (
+                                            $row->keterangan_izin == '-'
+                                        ): ?>
                                         <a type="button" href="<?= base_url(
-                                        'user/detail_absensi/' .
-                                            $row->id_absensi
+                                            'user/detail_absensi/' .
+                                                $row->id_absensi
                                         ) ?>"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
                                         <a type="button" href="<?= base_url(
-                                        'user/izin_absen/' .
-                                            $row->id_absensi
+                                            'user/izin_absen/' .
+                                                $row->id_absensi
                                         ) ?>"
                                             class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                                             <i class="fa-solid fa-user-plus"></i>
                                         </a>
                                         <?php else: ?>
                                         <a type="button" href="<?= base_url(
-                                        'user/detail_absensi/' .
-                                            $row->id_absensi
+                                            'user/detail_absensi/' .
+                                                $row->id_absensi
                                         ) ?>"
                                             class="text-white bg-indigo-500 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800">
                                             <i class="fa-solid fa-circle-info"></i>
                                         </a>
                                         <a type="button" href="<?= base_url(
-                                        'user/izin_absen/' .
-                                            $row->id_absensi
+                                            'user/izin_absen/' .
+                                                $row->id_absensi
                                         ) ?>"
                                             class="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                                             <i class="fa-solid fa-circle-xmark"></i>
                                         </a>
-                                        <a type="button" href="<?= base_url('user/batal_izin/' . $row->id_absensi) ?>"
+                                        <a type="button" href="<?= base_url(
+                                            'user/batal_izin/' .
+                                                $row->id_absensi
+                                        ) ?>"
                                             class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
                                             id="batalButton<?= $row->id_absensi ?>"
                                             onclick="showCancelConfirmation(this);">
@@ -143,6 +151,12 @@
     </div>
 
 </body>
+
+<script>
+$(document).ready(function() {
+    $('#dataAbsen').DataTable();
+});
+</script>
 
 <?php if ($this->session->flashdata('berhasil_absen')) { ?>
 <script>

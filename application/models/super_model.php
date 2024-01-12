@@ -10,6 +10,18 @@ class Super_model extends CI_Model
         return $query->num_rows();
     }
 
+    public function get_organisasi_by_id($id_organisasi)
+    {
+        $this->db->where('id_organisasi', $id_organisasi);
+        $query = $this->db->get('organisasi'); // Ganti 'nama_tabel_organisasi' dengan nama tabel organisasi Anda
+
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            return null; // Return null jika organisasi tidak ditemukan
+        }
+    }
+
     // Menampilkan Jumlah Admin
     public function get_admin_count()
     {

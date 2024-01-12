@@ -286,13 +286,15 @@ class SuperAdmin extends CI_Controller
 
         // Get organizational data
         $data['organisasi'] = $this->super_model->get_all_organisasi();
-
+        $data['admin'] = $this->super_model->get_all_admin();
+        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Form telah disubmit, lakukan logika penyimpanan data ke database atau tindakan lainnya
             $lokasi_data = [
                 'nama_lokasi' => $this->input->post('nama_lokasi'),
                 'alamat' => $this->input->post('alamat_kantor'),
                 'id_organisasi' => $this->input->post('id_organisasi'), // Fix the input field name
+                'id_admin' => $this->input->post('id_admin'), // Fix the input field name
                 // tambahkan kolom lainnya sesuai kebutuhan
             ];
 

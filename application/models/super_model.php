@@ -494,5 +494,22 @@ class Super_model extends CI_Model
 
         return $this->db->affected_rows();
     }
+
+    public function get_all_admin()
+    {
+        // Assuming you have a table named 'admin' with columns like 'id_admin', 'nama_admin', etc.
+
+        $this->db->select('*');
+        $this->db->from('admin');
+
+        $query = $this->db->get();
+
+        // Check if there are results
+        if ($query->num_rows() > 0) {
+            return $query->result(); // Return the result set as an array of objects
+        } else {
+            return []; // Return an empty array if no results found
+        }
+    }
 }
 ?>

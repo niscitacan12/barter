@@ -28,7 +28,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                <div class="relative overflow-x-auto mt-5">
                     <table id="dataCuti" class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <!-- Tabel Head -->
@@ -62,7 +62,7 @@
                         </thead>
 
                         <!-- Tabel Body -->
-                        <tbody>
+                        <tbody class="text-left">
                             <?php
                             $no = 0;
                             foreach ($cuti as $row):
@@ -92,7 +92,7 @@
                                     <?php echo $row->status; ?>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-content-between">
+                                    <div class="flex justify-start">
                                         <?php if (
                                             $row->status !== 'Dibatalkan'
                                         ): ?>

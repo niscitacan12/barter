@@ -31,7 +31,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                <div class="relative overflow-x-auto mt-5">
                     <table id="dataLokasi"
                         class="w-full text-center text-sm text-left text-gray-500 dark:text-gray-400">
 
@@ -75,7 +75,7 @@
                                 ); ?>
                             </td>
                             <td class="px-6 py-4">
-                                <div class="flex justify-center">
+                                <div class="flex justify-start">
                                     <a type="button" href="<?= base_url(
                                         'admin/detail_lokasi/' .
                                             $data->id_lokasi

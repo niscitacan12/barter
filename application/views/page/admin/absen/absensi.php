@@ -112,7 +112,7 @@
                 </form>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                <div class="relative overflow-x-auto mt-5">
                     <table id="absensi-table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <!-- Tabel Head -->
                         <thead
@@ -144,7 +144,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody class="text-left">
                             <?php
                             $no = 0;
                             foreach ($absensi as $row):

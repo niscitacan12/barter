@@ -148,21 +148,6 @@
                     getGeoLocation();
                 };
 
-                // document.addEventListener('DOMContentLoaded', function() {
-                //     const video = document.getElementById('video');
-                //     const captureBtn = document.getElementById('capture-btn');
-
-                //     navigator.mediaDevices.getUserMedia({
-                //             video: true
-                //         })
-                //         .then(stream => {
-                //             video.srcObject = stream;
-                //         })
-                //         .catch(err => console.error('Error accessing camera:', err));
-
-                //     captureBtn.addEventListener('click', captureAndSubmit);
-                // });
-
                 // Fungsi untuk mengambil foto dan menjalankan aksi pulang
                 function captureAndSubmit() {
                     const video = document.getElementById('video');

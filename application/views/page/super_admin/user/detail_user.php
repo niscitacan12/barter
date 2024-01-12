@@ -11,19 +11,15 @@
         margin: 0;
         padding: 0;
         font-family: 'Arial', sans-serif;
-        overflow-y: hidden;
-        /* Disable vertical scrollbar */
+        overflow-y: hidden; /* Disable vertical scrollbar */
     }
 
     .container {
         max-width: 1200px;
         margin: auto;
-        /* Reduced margin to move the container up */
         padding: auto;
         min-height: 100vh;
-        /* Set the minimum height of the container to 100% of the viewport height */
-        overflow-y: auto;
-        /* Enable vertical scrollbar for the container */
+        overflow-y: auto; /* Enable vertical scrollbar for the container on smaller screens */
     }
 
     img.max-width-100 {
@@ -34,7 +30,8 @@
     .max-height-96 {
         max-height: 96px;
     }
-    </style>
+</style>
+
 
 </head>
 

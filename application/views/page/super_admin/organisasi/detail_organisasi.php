@@ -7,40 +7,47 @@
     <title>Absensi App</title>
     <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
     <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Arial', sans-serif;
-        overflow-y: hidden;
-        /* Disable vertical scrollbar */
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Menonaktifkan scrollbar vertikal */
+        }
 
-    .container {
-        max-width: 1200px;
-        margin: auto;
-        /* Reduced margin to move the container up */
-        padding: auto;
-        min-height: 100vh;
-        /* Set the minimum height of the container to 100% of the viewport height */
-        overflow-y: auto;
-        /* Enable vertical scrollbar for the container */
-    }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            min-height: 100vh;
+            overflow: auto; /* Mengaktifkan scrollbar vertikal jika diperlukan */
+        }
 
-    img.max-width-100 {
-        max-width: 100%;
-        height: auto;
-    }
+        img.max-width-100 {
+            max-width: 100%;
+            height: auto;
+        }
 
-    .max-height-96 {
-        max-height: 96px;
-    }
+        .max-height-96 {
+            max-height: 96px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 100vw; /* Membuat container lebar penuh pada perangkat kecil */
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .p-4.sm\:ml-64 {
+                margin-left: 0;
+            }
+        }
     </style>
+
 </head>
 
 <body>
     <?php $this->load->view('components/sidebar_super_admin'); ?>
-    <div class="container">
-        <div class="p-4 sm:ml-64">
+        <div class="container p-4 sm:ml-64">
             <div class="p-5 mt-2">
 
                 <!-- Card -->
@@ -148,7 +155,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 </body>
 
 </html>

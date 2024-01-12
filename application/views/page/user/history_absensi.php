@@ -37,9 +37,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     No
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Username
-                                </th>
+
                                 <th scope="col" class="px-6 py-3">
                                     Tanggal
                                 </th>
@@ -72,9 +70,7 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
-                                <td class="px-6 py-4">
-                                    <?php echo nama_user($row->id_user); ?>
-                                </td>
+
                                 <td class="px-6 py-4">
                                     <?php echo convDate($row->tanggal_absen); ?>
                                 </td>
@@ -131,7 +127,7 @@
                                             class="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 mx-1 py-2.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800"
                                             id="batalButton<?= $row->id_absensi ?>"
                                             onclick="showCancelConfirmation(this);">
-                                            <i class="fa-solid fa-right-to-bracket"></i>
+                                            <i class="fa-solid fa-house-chimney-window"></i>
                                         </a>
                                         <?php endif; ?>
                                     </div>

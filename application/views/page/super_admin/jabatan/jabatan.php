@@ -34,7 +34,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="mt-4">
+                <div class="relative overflow-x-auto mt-4">
                     <table id="jabatan" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mb-4">
                         <!-- Tabel Head -->
                         <thead

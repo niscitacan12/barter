@@ -146,9 +146,6 @@
                                     No
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Username
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Tanggal
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -176,9 +173,6 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
-                                <td class="px-6 py-4">
-                                    <?php echo nama_user($row->id_user); ?>
-                                </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->tanggal_absen; ?>
                                 </td>
@@ -227,7 +221,6 @@
                             class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">No</th>
-                                <th scope="col" class="px-6 py-3">Username</th>
                                 <th scope="col" class="px-6 py-3">Awal Cuti</th>
                                 <th scope="col" class="px-6 py-3">Akhir Cuti</th>
                                 <th scope="col" class="px-6 py-3">Keperluan Cuti</th>
@@ -248,9 +241,6 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <?php echo $no; ?>
                                 </th>
-                                <td class="px-6 py-4">
-                                    <?php echo nama_user($row->id_user); ?>
-                                </td>
                                 <td class="px-6 py-4">
                                     <?php echo convDate($row->awal_cuti); ?>
                                 </td>

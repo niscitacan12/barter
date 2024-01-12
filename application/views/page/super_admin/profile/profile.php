@@ -16,12 +16,12 @@
     <?php $this->load->view('components/sidebar_super_admin'); ?>
     <div class="p-5 sm:ml-64">
         <div class="p-5 mt-10">
-            <div class="flex flex-col lg:flex-row mx-auto max-w-7xl px-4 lg:px-0 justify-between">
+            <div class="flex flex-col lg:flex-row mx-auto max-w-7xl px-4 lg:px-0 justify-between lg:flex-row">
 
                 <!-- Profile Picture -->
-                <div class="lg:w-8/12 relative rounded-md mb-8">
+                <div class="lg:w-7/12 relative rounded-md mb-8">
                     <div class="bg-white rounded-lg shadow-md p-8 border border-gray-300">
-                        <div class=" text-2xl font-semibold mb-5">Profile Picture</div>
+                        <div class="text-2xl font-semibold mb-5">Profile Picture</div>
                         <hr>
                         <div class="card-body text-center">
 
@@ -31,7 +31,8 @@
                                     src="<?= base_url('./images/superadmin/' . $superadmin->image) ?>"
                                     alt="Profile Picture">
                             </div>
-                            <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                            <div class="small font-italic text-muted mb-4">JPG atau PNG tidak lebih besar dari 5 MB
+                            </div>
                             <p class="small font-italic text-muted mb-4">Disarankan berukuran 1:1</p>
                             <form action="<?= base_url('superadmin/aksi_ubah_foto') ?>" method="post" class="grid gap-4"
                                 enctype="multipart/form-data">
@@ -64,7 +65,7 @@
                 </div>
 
                 <!-- Account Details -->
-                <div class="lg:w-11/12 relative border border-gray-300 rounded-md mb-8">
+                <div class="lg:w-5/12 relative border border-gray-300 rounded-md mb-8 lg:ml-4">
                     <div class="bg-white rounded-lg shadow-md p-8">
                         <div class="text-3xl font-semibold mb-8">Detail Akun</div>
                         <form method="post" action="<?= base_url('superadmin/edit_profile') ?>">

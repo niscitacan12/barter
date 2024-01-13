@@ -79,7 +79,8 @@
                                 Pulang
                             </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
+
+                        <div class="relative z-0 w-full mb-6 group">
                             <?php if (!empty($absensi->foto_masuk)): ?>
                             <a href="<?= base_url($absensi->foto_masuk); ?>" data-lightbox="foto-pulang">
                                 <img src="<?= base_url($absensi->foto_masuk); ?>" name="foto_masuk" alt="Foto pulang"
@@ -94,7 +95,8 @@
                                 Masuk
                             </label>
                         </div>
-                        <div class="relative z-0 w-full mb-6 group flex justify-center items-center">
+
+                        <div class="relative z-0 w-full mb-6 group">
                             <?php if (!empty($absensi->foto_pulang)): ?>
                             <a href="<?= base_url($absensi->foto_pulang); ?>" data-lightbox="foto-pulang">
                                 <img src="<?= base_url($absensi->foto_pulang); ?>" name="foto_pulang" alt="Foto pulang"

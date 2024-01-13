@@ -28,7 +28,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                <div class="relative overflow-x-auto mt-5">
                     <table id="dataAbsen" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <thead
@@ -59,7 +59,7 @@
                             </tr>
                         </thead>
                         <!-- Tabel Body -->
-                        <tbody class="text-center">
+                        <tbody class="text-left">
                             <?php
                             $no = 0;
                             foreach ($absensi as $row):
@@ -87,7 +87,7 @@
                                     <?php echo $row->status_absen; ?>
                                 </td>
                                 <td class="px-5 py-3">
-                                    <div class="flex justify-center">
+                                    <div class="flex justify-start">
                                         <?php if (
                                             $row->keterangan_izin == '-'
                                         ): ?>

@@ -234,7 +234,6 @@ class Auth extends CI_Controller
             require 'vendor/autoload.php'; // Load PHPMailer library
 
             $mail = new PHPMailer(true);
-
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
@@ -242,7 +241,6 @@ class Auth extends CI_Controller
             $mail->Password = 'loqg vjnb kotu ekye'; // Ganti dengan kata sandi email Anda
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port = 465;
-
             $resetLink = base_url('auth/reset_password/' . $token);
 
             $mail->setFrom('mingave11@gmail.com', 'Absensi App');

@@ -38,10 +38,11 @@
                     Selamat Datang DiApplikasi Absensi
                     <span>@<?php echo $this->session->userdata('username'); ?></span>
                 </h2>
-                <p class="text-gray-600">
-                    <?php echo getNamaHari($date); ?>
-                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB
-                </p>
+                <p class="text-gray-600">Selamat datang di aplikasi Absensi,
+                    <br>
+                     <?php echo getNamaHari($date); ?>
+                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB</p>
+                 </p>
 
             </div>
         </div>

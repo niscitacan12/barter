@@ -35,7 +35,10 @@
                     <?php echo getNamaHari($date); ?>
                     <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB
                 </p>
-
+                <p class="text-gray-600">Selamat datang di aplikasi Absensi,
+                    <br>
+                     <?php echo getNamaHari($date); ?>
+                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB</p>
             </div>
         </div>
         <div class="p-2 mt-5">

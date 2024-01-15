@@ -1607,6 +1607,18 @@ class Admin extends CI_Controller
             $sheet->setCellValue('G' . $numrow, $row->jam_masuk);
             $sheet->setCellValue('H' . $numrow, $row->jam_pulang);
 
+            // Tambahkan warna untuk baris yang memiliki status_absen "Terlambat"
+            if ($row->jam_masuk == '00:00:00') {
+                $sheet
+                    ->getStyle('A' . $numrow . ':H' . $numrow)
+                    ->getFill()
+                    ->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )
+                    ->getStartColor()
+                    ->setARGB('blue'); // Orange color
+            }
+
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);

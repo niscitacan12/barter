@@ -1616,7 +1616,7 @@ class Admin extends CI_Controller
                         \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
                     )
                     ->getStartColor()
-                    ->setARGB('blue'); // Orange color
+                    ->setARGB('09CEFE'); // Orange color
             }
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);

@@ -40,9 +40,10 @@
                 </h2>
                 <p class="text-gray-600">Selamat datang di aplikasi Absensi,
                     <br>
-                     <?php echo getNamaHari($date); ?>
-                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB</p>
-                 </p>
+                    <?php echo getNamaHari($date); ?>
+                    <?php echo convDate($date); ?>, <?php echo $timeWIB; ?> WIB
+                </p>
+                </p>
 
             </div>
         </div>
@@ -381,6 +382,53 @@
                             <?php
                             endforeach;
                             ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+
+            <div
+                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-between">
+                    <h6 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Kehadiran Lebih Awal</h6>
+                </div>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead
+                            class="text-center text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">No</th>
+                                <th scope="col" class="px-6 py-3">Username</th>
+                                <th scope="col" class="px-6 py-3">Jabatan</th>
+                                <th scope="col" class="px-6 py-3">Jumlah Lebih Awal</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <?php
+                $no = 0;
+                foreach ($early_attendance as $attendance):
+                    $no++; ?>
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <?php echo $no; ?>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <?php echo $attendance['username']; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $attendance['nama_jabatan']; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $attendance['early_attendance_count']; ?>
+                                </td>
+                            </tr>
+                            <?php
+                endforeach;
+                ?>
                         </tbody>
                     </table>
                 </div>

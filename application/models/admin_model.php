@@ -574,6 +574,40 @@ class Admin_model extends CI_Model
         return $result;
     }
 
+    /// Di dalam Admin_model
+    public function get_early_attendance_by_user($id_admin)
+    {
+        $this->db->select(
+            'u.username, j.nama_jabatan, COUNT(*) as early_attendance_count'
+        );
+        $this->db->from('absensi a');
+        $this->db->join('user u', 'a.id_user = u.id_user', 'left');
+        $this->db->join('jabatan j', 'u.id_jabatan = j.id_jabatan', 'left');
+        $this->db->join('admin adm', 'u.id_admin = adm.id_admin', 'left');
+        $this->db->where('adm.id_admin', $id_admin);
+        $this->db->where('a.status_absen', 'Lebih Awal');
+        $this->db->group_by('u.username, j.nama_jabatan');
+        $this->db->order_by('early_attendance_count', 'DESC'); // Menambahkan order by
+        return $this->db->get()->result_array();
+    }
+
+    public function getKehadiranData($id_admin)
+    {
+        $query = $this->db
+            ->select(
+                'user.username, jabatan.id_jabatan, 
+                   COUNT(CASE WHEN absensi.status_absen = "Terlambat" THEN 1 END) AS jumlah_terlambat, 
+                   COUNT(CASE WHEN absensi.status_absen = "Lebih Awal" THEN 1 END) AS jumlah_lebih_awal'
+            )
+            ->from('user')
+            ->join('absensi', 'user.id_user = absensi.id_user', 'left') // Menggunakan left join agar semua user tetap ditampilkan
+            ->join('jabatan', 'user.id_jabatan = jabatan.id_jabatan') // Sesuaikan dengan kolom yang menunjukkan hubungan antara user dan jabatan
+            ->where('user.id_admin', $id_admin)
+            ->group_by('user.id_user'); // Mengelompokkan data berdasarkan id_user
+
+        return $query->get()->result_array();
+    }
+
     // Mendapatkan data per hari berdasarkan tanggal
     public function getRekapHarian($tanggal)
     {

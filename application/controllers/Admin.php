@@ -35,6 +35,9 @@ class Admin extends CI_Controller
         );
         $data['organisasi'] = $this->admin_model->get_organisasi_data();
         $data['user'] = $this->admin_model->get_user_data_by_admin($id_admin);
+        $data[
+            'early_attendance'
+        ] = $this->admin_model->get_early_attendance_by_user($id_admin);
 
         // Modifikasi baris di bawah untuk mendapatkan data absen berdasarkan tanggal
         $data[
@@ -1701,6 +1704,18 @@ class Admin extends CI_Controller
         ob_clean();
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+    }
+
+    public function kehadiran()
+    {
+        // Mendapatkan id_admin yang sedang login (contoh: menggunakan sesi)
+        $id_admin = $this->session->userdata('id_admin');
+
+        // Mendapatkan id_user yang terkait dengan id_admin
+        $id_user = $this->admin_model->getIdUserByIdAdmin($id_admin);
+
+        $data['user'] = $this->admin_model->getKehadiranData($id_admin);
+        $this->load->view('page/admin/kehadiran/kehadiran', $data);
     }
 }
 ?>

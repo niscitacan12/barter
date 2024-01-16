@@ -1106,13 +1106,14 @@ class Admin extends CI_Controller
             ->setBold(true);
 
         $sheet->setCellValue('A3', 'NO');
-        $sheet->setCellValue('B3', 'TANGGAL');
-        $sheet->setCellValue('C3', 'KETERANGAN');
-        $sheet->setCellValue('D3', 'JAM MASUK');
-        $sheet->setCellValue('E3', 'LOKASI MASUK'); // Kolom baru
-        $sheet->setCellValue('F3', 'JAM PULANG');
-        $sheet->setCellValue('G3', 'LOKASI PULANG'); // Kolom baru
-        $sheet->setCellValue('H3', 'STATUS');
+        $sheet->setCellValue('B3', 'USERNAME');
+        $sheet->setCellValue('C3', 'TANGGAL');
+        $sheet->setCellValue('D3', 'KETERANGAN');
+        $sheet->setCellValue('E3', 'JAM MASUK');
+        $sheet->setCellValue('F3', 'LOKASI MASUK'); // Kolom baru
+        $sheet->setCellValue('G3', 'JAM PULANG');
+        $sheet->setCellValue('H3', 'LOKASI PULANG'); // Kolom baru
+        $sheet->setCellValue('I3', 'KEHADIRAN');
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -1122,6 +1123,7 @@ class Admin extends CI_Controller
         $sheet->getStyle('F3')->applyFromArray($style_col);
         $sheet->getStyle('G3')->applyFromArray($style_col);
         $sheet->getStyle('H3')->applyFromArray($style_col);
+        $sheet->getStyle('I3')->applyFromArray($style_col);
 
         $data = $this->admin_model->get_bulanan($bulan);
 
@@ -1129,13 +1131,38 @@ class Admin extends CI_Controller
         $numrow = 4;
         foreach ($data as $data) {
             $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue('B' . $numrow, $data->tanggal_absen);
-            $sheet->setCellValue('C' . $numrow, $data->keterangan_izin);
-            $sheet->setCellValue('D' . $numrow, $data->jam_masuk);
-            $sheet->setCellValue('E' . $numrow, $data->lokasi_masuk); // Kolom baru
-            $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
-            $sheet->setCellValue('G' . $numrow, $data->lokasi_pulang); // Kolom baru
-            $sheet->setCellValue('H' . $numrow, $data->status);
+            $sheet->setCellValue('B' . $numrow, nama_user($data->id_user));
+            $sheet->setCellValue('C' . $numrow, convDate($data->tanggal_absen));
+            $sheet->setCellValue('D' . $numrow, $data->keterangan_izin);
+            $sheet->setCellValue('E' . $numrow, $data->jam_masuk);
+            $sheet->setCellValue('F' . $numrow, $data->lokasi_masuk); // Kolom baru
+            $sheet->setCellValue('G' . $numrow, $data->jam_pulang);
+            $sheet->setCellValue('H' . $numrow, $data->lokasi_pulang); // Kolom baru
+            $sheet->setCellValue('I' . $numrow, $data->status_absen);
+
+            // Tambahkan warna untuk baris yang memiliki status_absen "Terlambat"
+            if ($data->status_absen == 'Terlambat') {
+                $sheet
+                    ->getStyle('A' . $numrow . ':I' . $numrow)
+                    ->getFill()
+                    ->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )
+                    ->getStartColor()
+                    ->setARGB('FEFA03'); // Orange color
+            }
+
+            // Tambahkan warna untuk baris yang memiliki status_absen "Terlambat"
+            if ($data->jam_masuk == '00:00:00') {
+                $sheet
+                    ->getStyle('A' . $numrow . ':H' . $numrow)
+                    ->getFill()
+                    ->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )
+                    ->getStartColor()
+                    ->setARGB('09CEFE'); // Orange color
+            }
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -1145,6 +1172,7 @@ class Admin extends CI_Controller
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('I' . $numrow)->applyFromArray($style_row);
 
             $no++;
             $numrow++;
@@ -1158,6 +1186,7 @@ class Admin extends CI_Controller
         $sheet->getColumnDimension('F')->setWidth(30);
         $sheet->getColumnDimension('G')->setWidth(30);
         $sheet->getColumnDimension('H')->setWidth(30);
+        $sheet->getColumnDimension('I')->setWidth(30);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 
@@ -1414,11 +1443,12 @@ class Admin extends CI_Controller
             ->setBold(true);
 
         $sheet->setCellValue('A3', 'NO');
-        $sheet->setCellValue('B3', 'TANGGAL');
-        $sheet->setCellValue('C3', 'KETERANGAN');
-        $sheet->setCellValue('D3', 'JAM MASUK');
-        $sheet->setCellValue('E3', 'JAM PULANG');
-        $sheet->setCellValue('F3', 'STATUS');
+        $sheet->setCellValue('B3', 'Username');
+        $sheet->setCellValue('C3', 'TANGGAL');
+        $sheet->setCellValue('D3', 'KETERANGAN');
+        $sheet->setCellValue('E3', 'JAM MASUK');
+        $sheet->setCellValue('F3', 'JAM PULANG');
+        $sheet->setCellValue('G3', 'KEHADIRAN');
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -1426,16 +1456,42 @@ class Admin extends CI_Controller
         $sheet->getStyle('D3')->applyFromArray($style_col);
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
+        $sheet->getStyle('G3')->applyFromArray($style_col);
 
         $no = 1;
         $numrow = 4;
         foreach ($data['perhari'] as $row) {
             $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue('B' . $numrow, $row->tanggal_absen);
-            $sheet->setCellValue('C' . $numrow, $row->keterangan_izin);
-            $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
-            $sheet->setCellValue('E' . $numrow, $row->jam_pulang);
-            $sheet->setCellValue('F' . $numrow, $row->status);
+            $sheet->setCellValue('B' . $numrow, nama_user($row->id_user));
+            $sheet->setCellValue('C' . $numrow, convDate($row->tanggal_absen));
+            $sheet->setCellValue('D' . $numrow, $row->keterangan_izin);
+            $sheet->setCellValue('E' . $numrow, $row->jam_masuk);
+            $sheet->setCellValue('F' . $numrow, $row->jam_pulang);
+            $sheet->setCellValue('G' . $numrow, $row->status_absen);
+
+            // Tambahkan warna untuk baris yang memiliki status_absen "Terlambat"
+            if ($row->status_absen == 'Terlambat') {
+                $sheet
+                    ->getStyle('A' . $numrow . ':I' . $numrow)
+                    ->getFill()
+                    ->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )
+                    ->getStartColor()
+                    ->setARGB('FEFA03'); // Orange color
+            }
+
+            // Tambahkan warna untuk baris yang memiliki status_absen "Terlambat"
+            if ($row->jam_masuk == '00:00:00') {
+                $sheet
+                    ->getStyle('A' . $numrow . ':H' . $numrow)
+                    ->getFill()
+                    ->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )
+                    ->getStartColor()
+                    ->setARGB('09CEFE'); // Orange color
+            }
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -1443,6 +1499,7 @@ class Admin extends CI_Controller
             $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
 
             $no++;
             $numrow++;
@@ -1454,6 +1511,7 @@ class Admin extends CI_Controller
         $sheet->getColumnDimension('D')->setWidth(20);
         $sheet->getColumnDimension('E')->setWidth(30);
         $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('G')->setWidth(30);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 

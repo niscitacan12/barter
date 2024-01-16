@@ -172,6 +172,16 @@ $image = $_SESSION['image'];
                     </a>
                 </li>
 
+                <li>
+                    <a href="<?php echo base_url('user/izin_terlambat'); ?>"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <!-- Ganti kelas ikon sesuai dengan kategori "Izin Terlambat" -->
+                        <i
+                            class="fa-solid fa-clock fa-fw fa-lg me-3 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ml-3 whitespace-nowrap">Izin Terlambat</span>
+                    </a>
+                </li>
+
                 <!-- Menu Cuti -->
                 <li>
                     <a href="<?php echo base_url('user/cuti'); ?>"
@@ -181,7 +191,6 @@ $image = $_SESSION['image'];
                         <span class="flex-1 ml-3 whitespace-nowrap">Cuti</span>
                     </a>
                 </li>
-
 
                 <li>
                     <a href="<?php echo base_url('user/history_cuti'); ?>"

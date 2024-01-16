@@ -58,6 +58,9 @@
                                     Keterangan
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Keterangan Terlambat
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Kehadiran
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -95,6 +98,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->keterangan_izin; ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo $row->keterangan_terlambat; ?>
                                 </td>
                                 <td class="px-6 py-4">
                                     <?php echo $row->status_absen; ?>

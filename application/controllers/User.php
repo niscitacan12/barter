@@ -853,4 +853,111 @@ class User extends CI_Controller
         }
         redirect(base_url('user/history_absensi')); // Sesuaikan dengan halaman yang diinginkan setelah pembaruan data Absensi
     }
+
+    public function aksi_izinn()
+    {
+        $id_user = $this->session->userdata('id');
+        $email = $this->session->userdata('email');
+        date_default_timezone_set('Asia/Jakarta');
+        $tanggal = date('Y-m-d');
+        $jam_masuk_sekarang = date('H:i:s');
+    
+        // Check jika user sudah melakukan absen atau izin pada hari ini
+        $already_absent = $this->user_model->cek_absen($id_user, $tanggal);
+        $already_requested = $this->user_model->cek_izin($id_user, $tanggal);
+    
+        if ($already_requested) {
+            $this->session->set_flashdata(
+                'gagal_izin',
+                'Anda sudah mengajukan izin hari ini.'
+            );
+            redirect(base_url('user/history_absensi'));
+        } elseif ($already_absent) {
+            $this->session->set_flashdata(
+                'gagal_izin',
+                'Anda sudah melakukan absen hari ini.'
+            );
+            redirect(base_url('user/history_absensi'));
+        } else {
+            // Lakukan proses pengajuan izin
+            $keterangan_terlambat = $this->input->post('keterangan_terlambat');
+    
+            if (!empty($keterangan_terlambat)) {
+                $data = [
+                    'id_user' => $id_user,
+                    'tanggal_absen' => $tanggal,
+                    'keterangan_terlambat' => $keterangan_terlambat,
+                    'jam_masuk' => $jam_masuk_sekarang,
+                    'foto_masuk' => '-',
+                    'jam_pulang' => '00:00:00',
+                    'foto_pulang' => '-',
+                    'lokasi_masuk' => '-',
+                    'lokasi_pulang' => '-',
+                    'status' => 'true',
+                    'status_absen' => 'terlambat',
+                ];
+    
+                // Menyisipkan data izin ke dalam database
+                $this->user_model->tambah_data('absensi', $data);
+                $this->session->set_flashdata(
+                    'berhasil_izin',
+                    'Berhasil Izin.'
+                );
+    
+                $options = [
+                    'cluster' => 'ap1',
+                    'useTLS' => true,
+                ];
+                $pusher = new Pusher(
+                    '33407527b00e1d0ff775',
+                    '9fb7fb6f4c554ecba9fb',
+                    '1712968',
+                    $options
+                );
+                $message['message'] = $email . ' mengajukan izin baru.';
+                $pusher->trigger('ExcAbsensiVersi1', 'my-event', $message);
+    
+                redirect(base_url('user/history_absensi'));
+            } else {
+                $this->session->set_flashdata(
+                    'gagal_izin',
+                    'Gagal Izin. Keterangan Izin tidak boleh kosong.'
+                );
+                redirect(base_url('user/izin_terlambat'));
+            }
+        }
+    }    
+
+    public function izin_terlambat()
+    {
+        setlocale(LC_TIME, 'id_ID');
+        date_default_timezone_set('Asia/Jakarta');
+        $username = $this->session->userdata('username');
+        $currentDateTime = date('d F Y H:i:s');
+        $currentHour = date('H', strtotime($currentDateTime));
+        $date = date('l, d F Y', strtotime($currentDateTime));
+        $time = date('H:i', strtotime($currentDateTime));
+        $greeting = '';
+
+        if ($currentHour >= 1 && $currentHour < 10) {
+            $greeting = 'Selamat Pagi';
+        } elseif ($currentHour >= 10 && $currentHour < 15) {
+            $greeting = 'Selamat Siang';
+        } elseif ($currentHour >= 15 && $currentHour < 19) {
+            $greeting = 'Selamat Sore';
+        } else {
+            $greeting = 'Selamat Malam';
+        }
+
+        // Melewatkan variabel ke view menggunakan array
+        $data = [
+            'username' => $username,
+            'greeting' => $greeting,
+            'date' => $date,
+            'time' => $time,
+        ];
+
+        $this->load->view('page/user/izin_terlambat', $data);
+    }
+
 }

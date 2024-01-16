@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absensi App</title>
-    <link rel="icon" href="<?php echo base_url('./src/assets/image/absensi.png'); ?>" type="image/gif">
+    <link rel="icon" href="<?php echo base_url(
+        './src/assets/image/absensi.png'
+    ); ?>" type="image/gif">
 </head>
 
 <body>
@@ -20,24 +22,28 @@
                 <hr>
 
                 <form method="get" id="filterForm"
-      class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
-    <input type="date"
-           class="appearance-none block w-full bg-white border border-gray-300 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500"
-           id="tanggal" name="tanggal" value="<?= isset($_GET['tanggal']) ? $_GET['tanggal'] : '' ?>">
+                    class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-5">
+                    <input type="date"
+                        class="appearance-none block w-full bg-white border border-gray-300 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500"
+                        id="tanggal" name="tanggal" value="<?= isset(
+                            $_GET['tanggal']
+                        )
+                            ? $_GET['tanggal']
+                            : '' ?>">
 
-    <div class="flex sm:flex-row gap-4 mx-auto items-center">
-        <button type="button"
-                class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"
-                onclick="submitForm('filter')">
-            <i class="fa-solid fa-filter"></i> Filter
-        </button>
-        <button type="button"
-                class="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
-                onclick="submitForm('export')">
-            <i class="fa-solid fa-file-export"></i> Export
-        </button>
-    </div>
-</form>
+                    <div class="flex sm:flex-row gap-4 mx-auto items-center">
+                        <button type="button"
+                            class="bg-indigo-500 hover:bg-indigo text-white font-bold py-2 px-4 rounded inline-block"
+                            onclick="submitForm('filter')">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                        <button type="button"
+                            class="exp bg-green-500 hover:bg-green text-white font-bold py-2 px-4 rounded inline-block ml-auto"
+                            onclick="submitForm('export')">
+                            <i class="fa-solid fa-file-export"></i>
+                        </button>
+                    </div>
+                </form>
                 <?php if (empty($perhari)): ?>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 py-3">
                     <h1 class="text-2xl font-bold text-center text-gray-900 dark:text-white mt-5 mb-3">Data Kosong!!
@@ -47,7 +53,8 @@
                 <?php else: ?>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     No
@@ -111,19 +118,19 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-    function submitForm(action) {
-        var form = $('#filterForm');
-        
-        // Set the form action based on the button clicked
-        if (action === 'filter') {
-            form.attr('action', "<?= base_url('admin/rekap_harian'); ?>");
-        } else if (action === 'export') {
-            form.attr('action', "<?= base_url('admin/export_harian'); ?>");
-        }
+function submitForm(action) {
+    var form = $('#filterForm');
 
-        // Submit the form
-        form.submit();
+    // Set the form action based on the button clicked
+    if (action === 'filter') {
+        form.attr('action', "<?= base_url('admin/rekap_harian') ?>");
+    } else if (action === 'export') {
+        form.attr('action', "<?= base_url('admin/export_harian') ?>");
     }
+
+    // Submit the form
+    form.submit();
+}
 </script>
 
 </html>

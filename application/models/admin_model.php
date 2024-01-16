@@ -587,39 +587,46 @@ class Admin_model extends CI_Model
         return $query->result();
         // Mengembalikan array kosong jika tidak ada data yang ditemukan
     }
+
     public function exportRekapHarian()
     {
         // Replace this with your actual database query to retrieve the data
         $query = $this->db->get('absensi');
         return $query->result();
     }
-    // Mendapatkan Export per minggu berdasarkan rentang tanggal
-    public function getRekapPerMinggu()
+
+    public function getRekapPerMinggu($start_date, $end_date)
     {
-        $this->load->database();
-        $end_date = date('Y-m-d');
-        $start_date = date('Y-m-d', strtotime('-7 days', strtotime($end_date)));
         $query = $this->db
             ->select(
-                'tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, status,COUNT(*) AS total_absences'
+                'tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, status, COUNT(*) AS total_absences'
             )
             ->from('absensi')
             ->where('tanggal_absen >=', $start_date)
             ->where('tanggal_absen <=', $end_date)
             ->group_by(
-                'tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, status, '
+                'tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, status'
             )
             ->get();
-        return $query->result();
+        return $query->result_array();
     }
+
     // Mendapatkan rekap per minggu berdasarkan rentang tanggal
     public function RekapPerMinggu($start_date, $end_date)
     {
         $this->db->select('absensi.*, user.*');
         $this->db->from('absensi');
         $this->db->join('user', 'absensi.id_user = user.id_user', 'left');
-        $this->db->where('tanggal_absen >=', $start_date);
-        $this->db->where('tanggal_absen <=', $end_date);
+        $this->db->where(
+            'DATE(tanggal_absen) >=',
+            "STR_TO_DATE('$start_date', '%Y-%m-%d')",
+            false
+        );
+        $this->db->where(
+            'DATE(tanggal_absen) <=',
+            "STR_TO_DATE('$end_date', '%Y-%m-%d')",
+            false
+        );
         $query = $this->db->get();
         return $query->result();
     }
@@ -729,11 +736,19 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
+    public function get_bulanan($date)
+    {
+        $this->db->from('absensi');
+        $this->db->where("DATE_FORMAT(absensi.tanggal_absen, '%m') =", $date);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     // Export absensi
     public function get_absensi_data($filter = [])
     {
         $this->db->select(
-            'id_user, tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, lokasi_masuk, lokasi_pulang'
+            'id_user, tanggal_absen, keterangan_izin, jam_masuk, jam_pulang, lokasi_masuk, lokasi_pulang, status_absen'
         );
         $this->db->from('absensi');
 

@@ -14,6 +14,13 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 </head>
 
+<style>
+.terlambat-row {
+    background-color: yellow !important;
+}
+</style>
+
+
 <body>
     <?php $this->load->view('components/sidebar_user'); ?>
     <div class="p-4 sm:ml-64">
@@ -28,7 +35,7 @@
                 <hr>
 
                 <!-- Tabel -->
-                <div class="relative overflow-x-auto mt-5">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                     <table id="dataAbsen" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                         <thead
@@ -59,11 +66,17 @@
                             </tr>
                         </thead>
                         <!-- Tabel Body -->
-                        <tbody class="text-left">
+                        <tbody class="text-center">
                             <?php
                             $no = 0;
                             foreach ($absensi as $row):
-                                $no++; ?>
+
+                                $no++;
+                                $rowClass =
+                                    $row->status_absen == 'Terlambat'
+                                        ? 'terlambat-row'
+                                        : '';
+                                ?>
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row"
@@ -87,7 +100,7 @@
                                     <?php echo $row->status_absen; ?>
                                 </td>
                                 <td class="px-5 py-3">
-                                    <div class="flex justify-start">
+                                    <div class="flex justify-center">
                                         <?php if (
                                             $row->keterangan_izin == '-'
                                         ): ?>
@@ -150,7 +163,13 @@
 
 <script>
 $(document).ready(function() {
-    $('#dataAbsen').DataTable();
+    $('#dataAbsen').DataTable({
+        "createdRow": function(row, data, dataIndex) {
+            if (data[5] === "Terlambat") {
+                $(row).addClass('terlambat-row');
+            }
+        }
+    });
 });
 </script>
 

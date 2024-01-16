@@ -193,15 +193,14 @@ class Admin extends CI_Controller
         $this->load->view('page/admin/rekap/rekap_harian', $data);
     }
 
-    // Page rekap mingguan
     public function rekap_mingguan()
     {
         $start_date = $this->input->get('start_date');
         $end_date = $this->input->get('end_date');
 
-        if ($start_date) {
-            $end_date = date('Y-m-d', strtotime($start_date . ' + 7 days'));
-            $data['perminggu'] = $this->admin_model->RekapPerMinggu(
+        if ($start_date && $end_date) {
+            // Panggil fungsi model dengan rentang tanggal yang sesuai
+            $data['perminggu'] = $this->admin_model->getRekapPerMinggu(
                 $start_date,
                 $end_date
             );
@@ -215,8 +214,9 @@ class Admin extends CI_Controller
     // Page rekap bulanan
     public function rekap_bulanan()
     {
-        $bulan = $this->input->get('bulan');
-        $data['perbulan'] = $this->admin_model->getRekapHarianByBulan($bulan);
+        $bulan = $this->input->post('bulan'); // Menggunakan post karena form menggunakan method="post"
+        $data['absen'] = $this->admin_model->get_bulanan($bulan);
+        $this->session->set_flashdata('bulan', $bulan);
         $this->load->view('page/admin/rekap/rekap_bulanan', $data);
     }
 
@@ -1034,7 +1034,8 @@ class Admin extends CI_Controller
     // Untuk mengexport data per bulanan
     public function export_bulanan()
     {
-        $data['perbulan'] = $this->admin_model->getRekapPerBulan();
+        $bulan = $this->session->flashdata('bulan');
+        $data = $this->admin_model->get_bulanan($bulan);
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -1119,17 +1120,19 @@ class Admin extends CI_Controller
         $sheet->getStyle('G3')->applyFromArray($style_col);
         $sheet->getStyle('H3')->applyFromArray($style_col);
 
+        $data = $this->admin_model->get_bulanan($bulan);
+
         $no = 1;
         $numrow = 4;
-        foreach ($data['perbulan'] as $row) {
+        foreach ($data as $data) {
             $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue('B' . $numrow, $row->tanggal_absen);
-            $sheet->setCellValue('C' . $numrow, $row->keterangan_izin);
-            $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
-            $sheet->setCellValue('E' . $numrow, $row->lokasi_masuk); // Kolom baru
-            $sheet->setCellValue('F' . $numrow, $row->jam_pulang);
-            $sheet->setCellValue('G' . $numrow, $row->lokasi_pulang); // Kolom baru
-            $sheet->setCellValue('H' . $numrow, $row->status);
+            $sheet->setCellValue('B' . $numrow, $data->tanggal_absen);
+            $sheet->setCellValue('C' . $numrow, $data->keterangan_izin);
+            $sheet->setCellValue('D' . $numrow, $data->jam_masuk);
+            $sheet->setCellValue('E' . $numrow, $data->lokasi_masuk); // Kolom baru
+            $sheet->setCellValue('F' . $numrow, $data->jam_pulang);
+            $sheet->setCellValue('G' . $numrow, $data->lokasi_pulang); // Kolom baru
+            $sheet->setCellValue('H' . $numrow, $data->status);
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -1174,14 +1177,27 @@ class Admin extends CI_Controller
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
     }
+
     // Untuk mengexport data per minggu
     public function export_mingguan()
     {
-        $start_date = $this->input->get('start_date');
-        $end_date = $this->input->get('end_date');
+        $week_input = $this->input->get('week');
 
-        if ($start_date) {
-            $end_date = date('Y-m-d', strtotime($start_date . ' + 7 days'));
+        // Perubahan untuk handling format minggu
+        $year = date('Y');
+        $week_parts = explode('-', $week_input);
+
+        if (count($week_parts) == 2) {
+            list($year, $week) = $week_parts;
+        } else {
+            $week = $week_input;
+        }
+
+        $start_date = date('Y-m-d', strtotime($year . 'W' . $week));
+        $end_date = date('Y-m-d', strtotime($year . 'W' . $week . ' + 6 days'));
+
+        if ($week_input) {
+            // Perubahan di baris ini, panggil model untuk mendapatkan data mingguan
             $data['perminggu'] = $this->admin_model->getRekapPerMinggu(
                 $start_date,
                 $end_date
@@ -1268,17 +1284,20 @@ class Admin extends CI_Controller
         $sheet->getStyle('E3')->applyFromArray($style_col);
         $sheet->getStyle('F3')->applyFromArray($style_col);
 
-        $data = $this->admin_model->getRekapPerMinggu();
+        $data_per_minggu = $this->admin_model->getRekapPerMinggu(
+            $start_date,
+            $end_date
+        );
 
         $no = 1;
         $numrow = 4;
-        foreach ($data as $row) {
+        foreach ($data_per_minggu as $row) {
             $sheet->setCellValue('A' . $numrow, $no);
-            $sheet->setCellValue('B' . $numrow, $row->tanggal_absen);
-            $sheet->setCellValue('C' . $numrow, $row->keterangan_izin);
-            $sheet->setCellValue('D' . $numrow, $row->jam_masuk);
-            $sheet->setCellValue('E' . $numrow, $row->jam_pulang);
-            $sheet->setCellValue('F' . $numrow, $row->status);
+            $sheet->setCellValue('B' . $numrow, $row['tanggal_absen']);
+            $sheet->setCellValue('C' . $numrow, $row['keterangan_izin']);
+            $sheet->setCellValue('D' . $numrow, $row['jam_masuk']);
+            $sheet->setCellValue('E' . $numrow, $row['jam_pulang']);
+            $sheet->setCellValue('F' . $numrow, $row['status']);
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -1319,10 +1338,13 @@ class Admin extends CI_Controller
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
     }
+
     // Untuk mengexport data per hari
     public function export_harian()
     {
-        $data['perhari'] = $this->admin_model->exportRekapHarian();
+        $tanggal = date('Y-m-d'); // Ambil tanggal hari ini
+
+        $data['perhari'] = $this->admin_model->getRekapHarian($tanggal);
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -1582,6 +1604,7 @@ class Admin extends CI_Controller
         $sheet->setCellValue('F3', 'LOKASI PULANG');
         $sheet->setCellValue('G3', 'JAM MASUK');
         $sheet->setCellValue('H3', 'JAM PULANG');
+        $sheet->setCellValue('I3', 'KEHADIRAN');
 
         $sheet->getStyle('A3')->applyFromArray($style_col);
         $sheet->getStyle('B3')->applyFromArray($style_col);
@@ -1591,6 +1614,7 @@ class Admin extends CI_Controller
         $sheet->getStyle('F3')->applyFromArray($style_col);
         $sheet->getStyle('G3')->applyFromArray($style_col);
         $sheet->getStyle('H3')->applyFromArray($style_col);
+        $sheet->getStyle('I3')->applyFromArray($style_col);
 
         $no = 1;
         $numrow = 4;
@@ -1606,6 +1630,19 @@ class Admin extends CI_Controller
             $sheet->setCellValue('F' . $numrow, $row->lokasi_pulang);
             $sheet->setCellValue('G' . $numrow, $row->jam_masuk);
             $sheet->setCellValue('H' . $numrow, $row->jam_pulang);
+            $sheet->setCellValue('I' . $numrow, $row->status_absen);
+
+            // Tambahkan warna untuk baris yang memiliki status_absen "Terlambat"
+            if ($row->status_absen == 'Terlambat') {
+                $sheet
+                    ->getStyle('A' . $numrow . ':I' . $numrow)
+                    ->getFill()
+                    ->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )
+                    ->getStartColor()
+                    ->setARGB('FEFA03'); // Orange color
+            }
 
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
@@ -1615,6 +1652,7 @@ class Admin extends CI_Controller
             $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('G' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('H' . $numrow)->applyFromArray($style_row);
+            $sheet->getStyle('I' . $numrow)->applyFromArray($style_row);
 
             $no++;
             $numrow++;
@@ -1628,6 +1666,7 @@ class Admin extends CI_Controller
         $sheet->getColumnDimension('F')->setWidth(40);
         $sheet->getColumnDimension('G')->setWidth(25);
         $sheet->getColumnDimension('H')->setWidth(25);
+        $sheet->getColumnDimension('I')->setWidth(40);
 
         $sheet->getDefaultRowDimension()->setRowHeight(-1);
 

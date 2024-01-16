@@ -1644,6 +1644,18 @@ class Admin extends CI_Controller
                     ->setARGB('FEFA03'); // Orange color
             }
 
+            // Tambahkan warna untuk baris yang memiliki status_absen "Terlambat"
+            if ($row->jam_masuk == '00:00:00') {
+                $sheet
+                    ->getStyle('A' . $numrow . ':H' . $numrow)
+                    ->getFill()
+                    ->setFillType(
+                        \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID
+                    )
+                    ->getStartColor()
+                    ->setARGB('09CEFE'); // Orange color
+            }
+
             $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
             $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);

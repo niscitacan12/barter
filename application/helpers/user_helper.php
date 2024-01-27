@@ -1,5 +1,16 @@
 <?php
-// Definisi fungsi convDate
+function nama_user($id_user)
+{
+    $ci = &get_instance();
+    $ci->load->database();
+    $result = $ci->db->where('id_user', $id_user)->get('user');
+    foreach ($result->result() as $c) {
+        $tmt = $c->username;
+        return $tmt;
+    }
+}
+
+// Format tanggal Indonesia
 function convDate($date)
 {
     $bulan = [
@@ -17,76 +28,10 @@ function convDate($date)
         12 => 'Desember',
     ];
 
-    $tanggal = date('d', strtotime($date)); // Mengambil tanggal dari timestamp
-    $bulan = $bulan[date('n', strtotime($date))]; // Mengambil bulan dalam bentuk string
-    $tahun = date('Y', strtotime($date)); // Mengambil tahun dari timestamp
+    $tanggal = date('d', strtotime($date)); 
+    $bulan = $bulan[date('n', strtotime($date))]; 
+    $tahun = date('Y', strtotime($date));
 
-    return $tanggal . ' ' . $bulan . ' ' . $tahun; // Mengembalikan tanggal yang diformat
+    return $tanggal . ' ' . $bulan . ' ' . $tahun; 
 }
-
-function getNamaHari($date)
-{
-    // Array nama hari dalam bahasa Indonesia
-    $nama_hari = [
-        'Minggu',
-        'Senin',
-        'Selasa',
-        'Rabu',
-        'Kamis',
-        'Jumat',
-        'Sabtu',
-    ];
-
-    // Mendapatkan indeks hari dari timestamp
-    $index_hari = date('w', strtotime($date));
-
-    // Mengembalikan nama hari sesuai dengan indeks
-    return $nama_hari[$index_hari];
-}
-
-function nama_user($id_user)
-{
-    $ci = &get_instance();
-    $ci->load->database();
-    $result = $ci->db->where('id_user', $id_user)->get('user');
-    foreach ($result->result() as $c) {
-        $tmt = $c->username;
-        return $tmt;
-    }
-}
-function nama_jabatan($id_jabatan)
-{
-    $ci = &get_instance();
-    $ci->load->database();
-    $result = $ci->db->where('id_jabatan', $id_jabatan)->get('jabatan');
-    foreach ($result->result() as $c) {
-        $tmt = $c->nama_jabatan;
-        return $tmt;
-    }
-}
-function nama_shift($id_shift)
-{
-    $ci = &get_instance();
-    $ci->load->database();
-    $result = $ci->db->where('id_shift', $id_shift)->get('shift');
-    foreach ($result->result() as $c) {
-        $tmt = $c->nama_shift;
-        return $tmt;
-    }
-}
-function nama_organisasi($id_organisasi)
-{
-    $ci = &get_instance();
-    $ci->load->database();
-    $result = $ci->db
-        ->where('id_organisasi', $id_organisasi)
-        ->get('organisasi');
-    foreach ($result->result() as $c) {
-        $tmt = $c->nama_organisasi;
-        return $tmt;
-    }
-}
-
-// ... (sisa kode Anda)
-
 ?>

@@ -52,3 +52,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'auth/';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['auth/login_barter'] = 'auth/login_barter';
+$route['user/edit_barter'] = 'user/edit_barter';
